@@ -236,7 +236,7 @@ body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
 // ==================== 教程章节数据 ====================
 const SECTIONS = [
   {
-    id:'intro',title:'TypeScript 简介',
+    id:'intro', icon:'🚀', title:'TypeScript 简介',
     desc:`<p>在开始学习之前，先来理解一个核心问题：<strong>TypeScript 是什么？它为什么这么流行？</strong></p>
 <h4>JavaScript 的"自由"带来的问题</h4>
 <p>JavaScript 是一门非常灵活的语言。比如你可以这样写：</p>
@@ -276,7 +276,7 @@ console.log("今年是 " + year + " 年");`,
     ]
   },
   {
-    id:'basic-types',title:'基础类型',
+    id:'basic-types', icon:'🔤', title:'基础类型',
     desc:`<p>TypeScript 的核心就是<strong>类型系统</strong>。每个变量都可以标注一个类型，告诉程序这个变量能存放什么数据。</p>
 <h4>标注类型的语法</h4>
 <p>在变量名后面加 <code>: 类型</code>：<code>let name: string = "小明";</code></p>
@@ -335,7 +335,7 @@ logMsg("void 函数不返回值");`,
     ]
   },
   {
-    id:'interface-type',title:'接口与类型别名',
+    id:'interface-type', icon:'📐', title:'接口与类型别名',
     desc:`<p>当需要描述一个<strong>对象</strong>的形状时，就要用到接口（Interface）和类型别名（Type Alias）。</p>
 <h4>Interface（接口）</h4>
 <p>接口用来定义对象的<strong>结构</strong>——它有哪些属性，每个属性的类型是什么：</p>
@@ -385,7 +385,7 @@ console.log("Tom:", tom);`,
     ]
   },
   {
-    id:'functions',title:'函数类型',
+    id:'functions', icon:'🔧', title:'函数类型',
     desc:`<p>函数是 TypeScript 中类型标注最实用的场景。通过给参数和返回值加上类型，函数的用途一目了然。</p>
 <h4>参数类型与返回值类型</h4>
 <pre><code>function add(a: number, b: number): number {\n  return a + b;\n}</code></pre>
@@ -431,7 +431,7 @@ console.log("sumAll(1,2,3,4,5) =", sumAll(1, 2, 3, 4, 5));`,
     ]
   },
   {
-    id:'classes',title:'类与面向对象',
+    id:'classes', icon:'🏛️', title:'类与面向对象',
     desc:`<p>TypeScript 对 ES6 的 class 进行了<strong>增强</strong>，加入了访问修饰符和抽象类等面向对象特性。</p>
 <h4>访问修饰符</h4>
 <ul><li><code>public</code> — 默认值，任何地方都可以访问</li>
@@ -484,7 +484,7 @@ console.log(c.describe());`,
     ]
   },
   {
-    id:'generics',title:'泛型',
+    id:'generics', icon:'🔷', title:'泛型',
     desc:`<p><strong>泛型（Generics）</strong>让你在定义函数、接口或类时<strong>不指定具体类型</strong>，而是在使用时才确定类型。这就像给代码留了一个"类型占位符"。</p>
 <h4>为什么需要泛型</h4>
 <p>假设你要写一个函数，接收一个值并原样返回。如果用 <code>any</code>：</p>
@@ -529,7 +529,7 @@ logLength([1, 2, 3]);`,
     ]
   },
   {
-    id:'advanced-types',title:'高级类型',
+    id:'advanced-types', icon:'⚡', title:'高级类型',
     desc:`<p>TypeScript 提供了一系列高级类型工具，让你可以更精确地组合和操作类型。</p>
 <h4>联合类型（Union Types）</h4>
 <p>用 <code>|</code> 表示"或"：<code>string | number</code> 表示可以是字符串或数字。联合类型配合<strong>类型守卫</strong>（Type Guards）可以缩窄类型范围。</p>
@@ -583,7 +583,7 @@ console.log("交叉类型:", obj);`,
     ]
   },
   {
-    id:'utility-types',title:'工具命令与内置类型',
+    id:'utility-types', icon:'🛠️', title:'工具命令与内置类型',
     desc:`<p>TypeScript 提供了一系列<strong>类型操作符</strong>和<strong>内置工具类型</strong>，让你能从已有类型灵活地派生新类型。</p>
 <h4>类型操作符</h4>
 <p><strong>typeof</strong> — 从<strong>值</strong>提取类型：</p>
@@ -628,7 +628,7 @@ console.log("Omit:", simple);`,
     ]
   },
   {
-    id:'modules',title:'模块化',
+    id:'modules', icon:'📦', title:'模块化',
     desc:`<p>当项目变大时，需要将代码拆分为多个文件。TypeScript 支持 ES Module 标准模块系统。</p>
 <h4>导出与导入</h4>
 <pre><code>// math.ts
@@ -670,7 +670,7 @@ console.log("计算器结果:", calc.getResult());
 // logger.log("模块化成功!");`
   },
   {
-    id:'project-setup', title:'TypeScript 项目配置',
+    id:'project-setup', icon:'⚙️', title:'TypeScript 项目配置',
     desc:`<p>学到这里，你已经掌握了 TypeScript 语法。但如何在<strong>真实项目</strong>中使用它？这需要了解项目配置。</p>
 <h4>tsconfig.json 是什么</h4>
 <p>tsconfig.json 是 TypeScript 项目的<strong>配置文件</strong>，放在项目根目录。它告诉 TypeScript 编译器如何编译你的代码。</p>
@@ -715,7 +715,7 @@ console.log("提示: 将鼠标悬停在变量上查看类型");`,
     exercises:[]
   },
   {
-    id:'async', title:'异步编程与 Promise',
+    id:'async', icon:'⏳', title:'异步编程与 Promise',
     desc:`<p>实际项目中大量使用<strong>异步操作</strong>：网络请求、文件读写、定时任务等。TypeScript 为异步编程提供了完善的类型支持。</p>
 <h4>Promise&lt;T&gt; 泛型</h4>
 <p>Promise 是一个泛型类型：<code>Promise&lt;T&gt;</code> 表示最终会返回一个 T 类型的值。</p>
@@ -765,7 +765,7 @@ fetchAll();`,
     ]
   },
   {
-    id:'todo-project', title:'实战项目：Todo 管理器',
+    id:'todo-project', icon:'✅', title:'实战项目：Todo 管理器',
     desc:`<p>让我们用 TypeScript 构建一个<strong>完整的 Todo 管理器</strong>。通过这个实战项目，你将把前面学到的所有知识串联起来。</p>
 <h4>项目结构</h4>
 <pre><code>todo-app/\n├── src/\n│   ├── types.ts    # 类型定义\n│   ├── todo.ts     # 核心逻辑\n│   └── main.ts     # 入口\n├── tsconfig.json\n└── package.json</code></pre>
@@ -836,7 +836,7 @@ console.log("删除后:", manager.list());`,
     ]
   },
   {
-    id:'type-defs', title:'第三方库与类型定义',
+    id:'type-defs', icon:'📚', title:'第三方库与类型定义',
     desc:`<p>实际开发中会大量使用第三方库（npm 包）。TypeScript 通过<strong>类型定义文件</strong>让这些库也能获得类型支持。</p>
 <h4>@types/xxx</h4>
 <p>许多流行的 JavaScript 库没有内置 TypeScript 类型，但社区通过 <code>@types/</code> 提供了类型定义：</p>
@@ -958,7 +958,7 @@ function renderSidebar() {
     const doneCount = done ? Object.keys(done).length : 0;
     const doneMark = count > 0 && doneCount >= count ? ' <span class="done">✓全部</span>' : '';
     return '<a class="section" data-id="' + s.id + '" href="javascript:void(0)">'
-      + '<span class="num">' + (i + 1) + '.</span> ' + s.title + doneMark
+      + '<span class="num">' + (i + 1) + '.</span> ' + (s.icon || '') + ' ' + s.title + doneMark
     + '</a>';
   }).join('<div class="divider"></div>');
   sidebar.addEventListener('click', (e) => {
@@ -1139,7 +1139,7 @@ function createEditor() {
     container.innerHTML = '';
     container.style.height = '380px';
 
-    const savedTheme = localStorage.getItem('ts-theme') || 'dark';
+    const savedTheme = localStorage.getItem('ts-theme') || 'light';
     const isLight = savedTheme === 'light';
     if (isLight) document.body.classList.add('light');
     const monacoTheme = isLight ? 'vs' : 'vs-dark';
@@ -1409,7 +1409,7 @@ function setFontSize(level) {
 
 function loadPreferences() {
   const savedSize = localStorage.getItem('ts-font-size') || 'medium';
-  const savedTheme = localStorage.getItem('ts-theme') || 'dark';
+  const savedTheme = localStorage.getItem('ts-theme') || 'light';
   if (savedTheme === 'light') document.body.classList.add('light');
   if (savedSize !== 'medium') setFontSize(savedSize);
   else document.querySelector('.font-btn[data-size="medium"]')?.classList.add('active');

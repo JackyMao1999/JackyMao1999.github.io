@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 快速入门教程 - 学练一体</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f1419;--surface:#1a2332;--border:#2d3b4f;--text:#e6edf3;--text-dim:#8b949e;--primary:#58a6ff;--primary-hover:#79c0ff;--success:#3fb950;--success-bg:rgba(63,185,80,.12);--error:#f85149;--error-bg:rgba(248,81,73,.12);--warning:#d29922;--sidebar-w:280px;--header-h:56px;--fs-base:15px;--fs-mono:13px;--fs-title:26px;--fs-desc:15px;--fs-code:13px;--fs-small:12px;--fs-sidebar:14px;--fs-tab:13px}
+body.light{--bg:#ffffff;--surface:#f6f8fa;--border:#d0d7de;--text:#1f2328;--text-dim:#656d76;--primary:#0969da;--primary-hover:#0550ae;--success:#1a7f37;--success-bg:rgba(26,127,55,.12);--error:#cf222e;--error-bg:rgba(207,34,46,.12);--warning:#9a6700}
+body.light #sidebar .section:hover{background:rgba(0,0,0,.03)}
+body.light #section-desc pre{background:#f6f8fa}
+body.light .exercise-hint{background:rgba(154,103,0,.08);border-color:rgba(154,103,0,.2)}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji";background:var(--bg);color:var(--text);overflow:hidden;height:100vh}
+a{color:var(--primary);text-decoration:none}
+header{height:var(--header-h);display:flex;align-items:center;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100}
+header h1{font-size:18px;font-weight:600;flex:1}
+header .version{font-size:12px;color:var(--text-dim);background:var(--border);padding:2px 10px;border-radius:4px;flex-shrink:0}
+#menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;margin-right:8px}
+#theme-toggle{background:none;border:none;cursor:pointer;font-size:18px;padding:4px 8px;border-radius:4px;margin-right:8px;transition:background .15s;line-height:1;flex-shrink:0}
+#theme-toggle:hover{background:rgba(255,255,255,.08)}
+body.light #theme-toggle:hover{background:rgba(0,0,0,.06)}
+#theme-toggle::before{content:'\2601'}
+body.light #theme-toggle::before{content:'\2600'}
+#font-controls{display:flex;gap:2px;margin-right:12px;align-items:center;flex-shrink:0}
+#font-controls .font-btn{background:none;border:1px solid var(--border);color:var(--text-dim);cursor:pointer;padding:2px 7px;border-radius:3px;font-size:12px;transition:all .15s;line-height:1.4;font-family:inherit}
+#font-controls .font-btn:hover{background:rgba(255,255,255,.08);color:var(--text)}
+body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
+#font-controls .font-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+#font-controls .font-btn[data-size="small"]{font-size:10px}
+#font-controls .font-btn[data-size="medium"]{font-size:12px}
+#font-controls .font-btn[data-size="large"]{font-size:14px}
+#app{display:flex;height:calc(100vh - var(--header-h));margin-top:var(--header-h)}
+#sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:12px 0}
+#sidebar .section{display:block;padding:10px 20px;cursor:pointer;font-size:var(--fs-sidebar);color:var(--text-dim);border-left:3px solid transparent;transition:all .15s;text-decoration:none}
+#sidebar .section:hover{color:var(--text);background:rgba(255,255,255,.04)}
+#sidebar .section.active{color:var(--primary);border-left-color:var(--primary);background:rgba(88,166,255,.08)}
+#sidebar .section .num{display:inline-block;width:20px;font-size:12px;color:var(--text-dim);margin-right:6px}
+#sidebar .section.active .num{color:var(--primary)}
+#sidebar .divider{height:1px;background:var(--border);margin:8px 12px}
+#sidebar .section .done{float:right;font-size:11px;color:var(--success)}
+#content{flex:1;min-width:0;overflow-y:auto;padding:28px 36px}
+#section-title{font-size:var(--fs-title);font-weight:700;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--primary);display:inline-block}
+#section-progress{font-size:var(--fs-small);color:var(--text-dim);margin-bottom:16px}
+.section-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0}
+.section-tab{padding:8px 18px;cursor:pointer;font-size:var(--fs-tab);color:var(--text-dim);border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;transition:all .15s;background:transparent;white-space:nowrap}
+.section-tab:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.section-tab.active{color:var(--primary);background:var(--surface);border-color:var(--border);position:relative}
+.section-tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--surface)}
+.section-tab .check{display:none;margin-left:5px;font-size:11px}
+.section-tab.done .check{display:inline;color:var(--success)}
+#section-desc{font-size:var(--fs-desc);line-height:1.8;color:var(--text-dim);margin-bottom:20px;max-width:860px}
+#section-desc h4{color:var(--text);font-size:16px;margin:18px 0 8px}
+#section-desc p{margin:8px 0}
+#section-desc code{background:var(--border);padding:2px 6px;border-radius:3px;font-size:13px;color:var(--primary)}
+#section-desc strong{color:var(--text)}
+#section-desc ul{margin:8px 0;padding-left:22px}
+#section-desc li{margin:5px 0}
+#section-desc pre{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin:10px 0;overflow-x:auto;font-size:13px;line-height:1.5;font-family:"SF Mono","Fira Code",monospace}
+#section-desc pre code{background:none;padding:0;color:var(--text);font-size:inherit}
+#exercise-area{display:none;margin-bottom:16px}
+#exercise-area.show{display:block}
+#exercise-title{font-size:16px;font-weight:600;color:var(--primary);margin-bottom:8px}
+#exercise-desc{font-size:var(--fs-desc);line-height:1.7;color:var(--text-dim);margin-bottom:10px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:6px}
+#exercise-desc code{background:var(--border);padding:1px 5px;border-radius:3px;font-size:13px;color:var(--primary)}
+#exercise-hint{display:none;font-size:13px;color:var(--warning);margin-bottom:10px;padding:10px 14px;background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.25);border-radius:6px}
+#exercise-hint.show{display:block}
+#exercise-hint code{background:rgba(210,153,34,.15);padding:1px 5px;border-radius:3px}
+.toggle-hint{background:none;border:none;color:var(--warning);cursor:pointer;font-size:13px;padding:0;text-decoration:underline}
+.toggle-hint:hover{color:var(--primary-hover)}
+#editor-wrap{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px}
+#editor-container{height:380px}
+#editor-container.loading{display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:14px}
+#controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+#controls button{display:flex;align-items:center;gap:5px;padding:8px 18px;border:none;border-radius:6px;cursor:pointer;font-size:var(--fs-small);font-weight:500;transition:all .15s}
+#controls button:disabled{opacity:.4;cursor:not-allowed}
+#run-btn{background:var(--success);color:#fff}
+#run-btn:hover:not(:disabled){filter:brightness(1.15)}
+#run-btn.running{opacity:.7;pointer-events:none}
+#reset-btn{background:var(--border);color:var(--text)}
+#reset-btn:hover:not(:disabled){background:var(--text-dim);color:var(--bg)}
+#submit-btn{background:var(--primary);color:#fff;display:none}
+#submit-btn:hover:not(:disabled){background:var(--primary-hover)}
+#submit-btn.show{display:flex}
+#hint-btn{background:transparent;color:var(--warning);border:1px solid var(--warning)!important;display:none}
+#hint-btn.show{display:flex}
+#hint-btn:hover{background:rgba(210,153,34,.1)}
+#back-btn{background:var(--border);color:var(--text-dim);display:none;font-size:12px}
+#back-btn.show{display:flex}
+#back-btn:hover{color:var(--text)}
+#controls button svg{width:15px;height:15px;fill:currentColor;flex-shrink:0}
+#output{display:none;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px}
+#output.show{display:block}
+#output-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--border);font-size:var(--fs-small);color:var(--text-dim)}
+#output-header .badge{font-size:11px;padding:2px 8px;border-radius:3px}
+#output-header .badge.success{background:var(--success-bg);color:var(--success)}
+#output-header .badge.error{background:var(--error-bg);color:var(--error)}
+#output-content{padding:16px;font-family:"SF Mono","Fira Code","Cascadia Code",monospace;font-size:var(--fs-mono);line-height:1.6;white-space:pre-wrap;word-break:break-word;min-height:50px;max-height:350px;overflow-y:auto;background:var(--bg);color:var(--text);margin:0}
+#output-content .out-log{color:var(--text)}
+#output-content .out-err{color:var(--error)}
+#output-content .out-info{color:var(--text-dim);font-style:italic}
+.result-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;margin:4px 0;border-radius:4px;font-size:var(--fs-mono);line-height:1.5}
+.result-item.pass{background:var(--success-bg)}
+.result-item.fail{background:var(--error-bg)}
+.result-item .icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.result-item .icon.pass{color:var(--success)}
+.result-item .icon.fail{color:var(--error)}
+.result-item .detail{flex:1}
+.result-item .detail .args{color:var(--text-dim);font-size:12px}
+.result-item .detail .got{color:var(--error);font-size:12px}
+.result-item .detail .expected{color:var(--success);font-size:12px}
+.result-summary{font-size:15px;font-weight:600;padding:10px 0 4px}
+.result-summary.all-pass{color:var(--success)}
+.result-summary.has-fail{color:var(--error)}
+#sidebar::-webkit-scrollbar,#content::-webkit-scrollbar{width:6px}
+#sidebar::-webkit-scrollbar-track,#content::-webkit-scrollbar-track{background:transparent}
+#sidebar::-webkit-scrollbar-thumb,#content::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s}
+#loading-overlay.hide{opacity:0;pointer-events:none}
+#loading-overlay .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading-overlay .text{color:var(--text-dim);font-size:14px}
+@media(max-width:820px){
+  #sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:90;transform:translateX(-100%);transition:transform .25s;width:260px;min-width:260px}
+  #sidebar.open{transform:translateX(0)}
+  #menu-toggle{display:block}
+  #content{padding:20px 14px}
+  #editor-container{height:260px}
+  #section-title{font-size:calc(var(--fs-title) - 4px)}
+  #section-desc{font-size:calc(var(--fs-desc) - 1px)}
+  #controls button{padding:7px 12px}
+  .section-tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:0}
+  .section-tab{padding:7px 12px}
+  #font-controls{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="text">正在加载 Python 教程 ...</div>
+</div>
+
+<header>
+  <button id="menu-toggle" aria-label="菜单">&#9776;</button>
+  <button id="theme-toggle" aria-label="切换主题" title="切换暗色/淡色主题"></button>
+  <h1>Python 快速入门教程</h1>
+  <div id="font-controls">
+    <button class="font-btn" data-size="small" title="小字号">A</button>
+    <button class="font-btn active" data-size="medium" title="中字号（默认）">A</button>
+    <button class="font-btn" data-size="large" title="大字号">A</button>
+  </div>
+  <span class="version">v3.12</span>
+</header>
+
+<div id="app">
+  <nav id="sidebar"></nav>
+
+  <main id="content">
+    <h2 id="section-title"></h2>
+    <div id="section-progress"></div>
+
+    <div class="section-tabs" id="section-tabs"></div>
+
+    <div id="section-desc"></div>
+
+    <div id="exercise-area">
+      <div id="exercise-title"></div>
+      <div id="exercise-desc"></div>
+      <div id="exercise-hint"></div>
+    </div>
+
+    <div id="editor-wrap">
+      <div id="editor-container" class="loading">加载编辑器中...</div>
+    </div>
+
+    <div id="controls">
+      <button id="back-btn">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        返回学习
+      </button>
+      <button id="run-btn">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        运行代码
+      </button>
+      <button id="submit-btn">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        提交答案
+      </button>
+      <button id="hint-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        查看提示
+      </button>
+      <button id="reset-btn">
+        <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        重置代码
+      </button>
+    </div>
+
+    <div id="output">
+      <div id="output-header">
+        <span>输出结果</span>
+        <span id="output-status"></span>
+      </div>
+      <pre id="output-content"></pre>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+<script>
+// ==================== 教程章节数据 ====================
+const SECTIONS = [
+  {
+    id:'intro', icon:'🐍', title:'Python 简介',
+    desc:`<p>欢迎开始学习 Python！Python 是目前<strong>最流行、最易上手</strong>的编程语言之一，被广泛应用于 Web 开发、数据分析、人工智能、自动化脚本等领域。</p>
+<h4>为什么选择 Python</h4>
+<p><strong>语法简洁</strong> — Python 的代码像英语一样自然，让你专注于解决问题，而不是和复杂的语法斗争。</p>
+<p><strong>缩进即代码块</strong> — 和其他语言用大括号不同，Python 通过<strong>缩进</strong>来划分代码块。这强迫你写出整洁、一致的代码。</p>
+<pre><code># 其他语言用 {}，Python 用缩进
+if True:
+    print("这是 Python 的代码块")
+    # 缩进 4 个空格（或 1 个 Tab）
+print("这行不在 if 里面")</code></pre>
+<h4>运行 Python</h4>
+<p>你不需安装任何软件！这个教程内置了 <strong>在线 Python 解释器</strong>，你可以在浏览器中直接编写和运行 Python 代码。</p>
+<h4>本教程的学习方式</h4>
+<p>每一章都包含：📖 详细讲解 → 💻 可运行示例 → ✏️ 练习题（自动批改）</p>
+<p>现在就点击下面的"运行代码"按钮，试试你的第一个 Python 程序！</p>`,
+    code:`# 你的第一个 Python 程序
+print("Hello, World!")
+
+# Python 用缩进表示代码块
+name = "Python"
+print(f"你好, {name}!")
+
+# 计算圆的面积
+radius = 5
+area = 3.14159 * radius ** 2
+print(f"半径为 {radius} 的圆面积 = {area}")
+
+# 注释用 # 开头
+# 试试修改上面的代码！`,
+    exercises:[
+      {id:'intro-1',title:'编写 say_hello 函数',desc:'编写一个名为 <code>say_hello</code> 的函数，接收 <code>name</code> 参数，返回 <code>"Hello, " + name</code>。',hint:'def say_hello(name): return "Hello, " + name',starterCode:'# 编写 say_hello 函数\n# 参数: name\n# 返回值: "Hello, " + name\n\ndef say_hello(name):\n    pass  # 在这里写代码',solution:'def say_hello(name):\n    return "Hello, " + name',fn:'say_hello',tests:[{args:['World'],expect:'Hello, World'},{args:['Python'],expect:'Hello, Python'},{args:['小明'],expect:'Hello, 小明'}]},
+      {id:'intro-2',title:'判断成年',desc:'编写 <code>is_adult</code> 函数，接收 <code>age</code> 参数，返回布尔值。年龄 >= 18 返回 <code>True</code>，否则 <code>False</code>。',hint:'def is_adult(age): return age >= 18',starterCode:'# 编写 is_adult 函数\n# 参数: age\n# 返回值: True 如果 age >= 18，否则 False\n\ndef is_adult(age):\n    pass  # 在这里写代码',solution:'def is_adult(age):\n    return age >= 18',fn:'is_adult',tests:[{args:[20],expect:true},{args:[15],expect:false},{args:[18],expect:true}]},
+      {id:'intro-3',title:'温度转换',desc:'编写 <code>celsius_to_fahrenheit</code>，接收 <code>celsius</code>，返回华氏温度。公式：华氏 = 摄氏 × 9/5 + 32。',hint:'def celsius_to_fahrenheit(c): return c * 9/5 + 32',starterCode:'# 编写 celsius_to_fahrenheit 函数\n# 参数: celsius\n# 返回值: 华氏温度\n# 公式: 华氏 = 摄氏 * 9/5 + 32\n\ndef celsius_to_fahrenheit(celsius):\n    pass',solution:'def celsius_to_fahrenheit(celsius):\n    return celsius * 9/5 + 32',fn:'celsius_to_fahrenheit',tests:[{args:[0],expect:32},{args:[100],expect:212},{args:[-40],expect:-40}]},
+      {id:'intro-4',title:'计算圆面积',desc:'编写 <code>circle_area</code> 函数，接收 <code>radius</code>，返回面积。用 <code>3.14159 * radius ** 2</code>。',hint:'def circle_area(r): return 3.14159 * r ** 2',starterCode:'# 编写 circle_area 函数\n# 参数: radius\n# 返回值: 圆的面积 (3.14159 * radius ** 2)\n\ndef circle_area(radius):\n    pass',solution:'def circle_area(radius):\n    return 3.14159 * radius ** 2',fn:'circle_area',tests:[{args:[1],expect:3.14159},{args:[5],expect:78.53975},{args:[0],expect:0}]},
+    ]
+  },
+  {
+    id:'basic-types', icon:'🔤', title:'基础数据类型',
+    desc:`<p>Python 中的每个值都有<strong>类型</strong>。了解类型是编程的基础。</p>
+<h4>最常用的基础类型</h4>
+<p><strong>int（整数）</strong> — 没有小数点的数字：<code>42</code>、<code>-10</code>、<code>0</code></p>
+<p><strong>float（浮点数）</strong> — 带小数点的数字：<code>3.14</code>、<code>-0.5</code>、<code>1.0</code></p>
+<p><strong>str（字符串）</strong> — 文本，用引号包裹：<code>"hello"</code>、<code>'world'</code></p>
+<p><strong>bool（布尔值）</strong> — 只有 <code>True</code> 和 <code>False</code> 两个值</p>
+<p><strong>NoneType（空值）</strong> — 表示"没有值"，只有一个值 <code>None</code></p>
+<h4>type() 函数</h4>
+<p>使用 <code>type()</code> 可以查看任何值的类型：</p>
+<pre><code>print(type(42))       # &lt;class 'int'&gt;
+print(type("hello"))  # &lt;class 'str'&gt;
+print(type(True))     # &lt;class 'bool'&gt;</code></pre>
+<h4>类型转换</h4>
+<p>可以用 <code>int()</code>、<code>float()</code>、<code>str()</code>、<code>bool()</code> 进行类型转换：</p>
+<pre><code>int("42")    # 42 (字符串转整数)
+str(3.14)    # "3.14" (浮点数转字符串)
+float("2.5") # 2.5</code></pre>`,
+    code:`# ===== 基础类型 =====
+# int (整数)
+age = 25
+count = -10
+print(f"整数: {age}, {count}")
+
+# float (浮点数)
+pi = 3.14159
+temp = -5.5
+print(f"浮点数: {pi}, {temp}")
+
+# str (字符串)
+name = "Python"
+lang = '编程'
+print(f"字符串: {name}, {lang}")
+
+# bool (布尔值)
+is_fun = True
+is_boring = False
+print(f"布尔值: {is_fun}, {is_boring}")
+
+# None (空值)
+result = None
+print(f"None: {result}")
+
+# type() 查看类型
+print(f"type(42) = {type(42)}")
+print(f"type('hello') = {type('hello')}")
+print(f"type(True) = {type(True)}")
+
+# 类型转换
+print(f"int('42') = {int('42')}")
+print(f"str(3.14) = {str(3.14)}")`,
+    exercises:[
+      {id:'basic-1',title:'声明变量',desc:'创建 4 个变量：<code>product_name</code>（字符串）、<code>price</code>（浮点数）、<code>is_available</code>（布尔值）、<code>stock</code>（整数）。分别赋值后用 <code>print()</code> 输出。',hint:'product_name = "笔记本电脑"',starterCode:'# 声明变量并赋值\n# product_name: str (产品名称)\n# price: float (价格)\n# is_available: bool (是否可用)\n# stock: int (库存数量)\n# 然后用 print 输出它们\n\nproduct_name = None\nprice = None\nis_available = None\nstock = None',solution:'product_name = "笔记本电脑"\nprice = 4999.99\nis_available = True\nstock = 100\nprint(product_name, price, is_available, stock)',fn:'checkVars'},
+      {id:'basic-2',title:'类型检查',desc:'编写 <code>get_type_name</code> 函数，接收一个参数 <code>value</code>，返回其类型名称的字符串（如 <code>"int"</code>、<code>"str"</code> 等）。提示：用 <code>type(value).__name__</code>。',hint:'def get_type_name(value): return type(value).__name__',starterCode:'# 编写 get_type_name 函数\n# 参数: value\n# 返回值: 类型名称字符串 (如 "int", "str")\n# 提示: type(value).__name__\n\ndef get_type_name(value):\n    pass',solution:'def get_type_name(value):\n    return type(value).__name__',fn:'get_type_name',tests:[{args:[42],expect:'int'},{args:['hello'],expect:'str'},{args:[true],expect:'bool'},{args:[3.14],expect:'float'}]},
+      {id:'basic-3',title:'布尔值判断',desc:'编写 <code>is_positive</code> 函数，接收 <code>n</code>，如果 n > 0 返回 <code>True</code>，否则 <code>False</code>。',hint:'def is_positive(n): return n > 0',starterCode:'# 编写 is_positive 函数\n# 参数: n\n# 返回值: n > 0 返回 True，否则 False\n\ndef is_positive(n):\n    pass',solution:'def is_positive(n):\n    return n > 0',fn:'is_positive',tests:[{args:[5],expect:true},{args:[0],expect:false},{args:[-1],expect:false}]},
+      {id:'basic-4',title:'简单计算器',desc:'编写 <code>add</code> 函数，接收 <code>a, b</code> 两个数字，返回它们的和。',hint:'def add(a, b): return a + b',starterCode:'# 编写 add 函数\n# 参数: a, b (数字)\n# 返回值: a + b\n\ndef add(a, b):\n    pass',solution:'def add(a, b):\n    return a + b',fn:'add',tests:[{args:[3,5],expect:8},{args:[-1,1],expect:0},{args:[0,0],expect:0}]},
+    ]
+  },
+  {
+    id:'string-io', icon:'📝', title:'字符串与输入输出',
+    desc:`<p>Python 的字符串操作非常强大，几乎任何文本处理需求都有对应的内置方法。</p>
+<h4>f-string（格式化字符串）</h4>
+<p>在字符串前加 <code>f</code>，用 <code>{变量名}</code> 插入变量值，是最推荐的格式化方式：</p>
+<pre><code>name = "小明"
+age = 18
+print(f"我叫{name}，今年{age}岁")
+# 输出: 我叫小明，今年18岁</code></pre>
+<h4>常用字符串方法</h4>
+<p><code>.upper()</code> — 转大写 &nbsp; <code>.lower()</code> — 转小写 &nbsp; <code>.strip()</code> — 去两端空格</p>
+<p><code>.split(sep)</code> — 按分隔符拆成列表 &nbsp; <code>sep.join(列表)</code> — 将列表合成字符串</p>
+<p><code>.replace(old, new)</code> — 替换 &nbsp; <code>len(s)</code> — 获取长度</p>
+<h4>输入</h4>
+<p><code>input(prompt)</code> — 从控制台读取用户输入，返回字符串：</p>
+<pre><code>name = input("请输入你的名字: ")
+print(f"你好, {name}!")</code></pre>`,
+    code:`# ===== 字符串操作 =====
+# f-string
+name = "小明"
+age = 18
+print(f"我叫{name}，今年{age}岁")
+
+# 字符串方法
+text = "  Hello, Python!  "
+print(f"原始: '{text}'")
+print(f"小写: '{text.lower()}'")
+print(f"大写: '{text.upper()}'")
+print(f"去空格: '{text.strip()}'")
+print(f"替换: '{text.replace('Python', 'World')}'")
+
+# split 和 join
+words = "apple,banana,orange".split(",")
+print(f"split: {words}")
+print(f"join: '-'.join(words) = {'-'.join(words)}")
+
+# 字符串索引
+s = "Python"
+print(f"s[0] = '{s[0]}', s[-1] = '{s[-1]}'")
+print(f"切片 [1:4] = '{s[1:4]}'")
+print(f"反转: '{s[::-1]}'")`,
+    exercises:[
+      {id:'str-1',title:'创建介绍',desc:'编写 <code>create_intro</code> 函数，接收 <code>name</code> 和 <code>age</code>，返回 <code>f"我叫{name}，今年{age}岁"</code>。',hint:'def create_intro(name, age): return f"我叫{name}，今年{age}岁"',starterCode:'# 编写 create_intro 函数\n# 参数: name, age\n# 返回值: f"我叫{name}，今年{age}岁"\n\ndef create_intro(name, age):\n    pass',solution:'def create_intro(name, age):\n    return f"我叫{name}，今年{age}岁"',fn:'create_intro',tests:[{args:['小明',18],expect:'我叫小明，今年18岁'},{args:['小红',20],expect:'我叫小红，今年20岁'}]},
+      {id:'str-2',title:'字符串长度',desc:'编写 <code>string_length</code> 函数，接收 <code>s</code>，返回字符串长度。',hint:'def string_length(s): return len(s)',starterCode:'# 编写 string_length 函数\n# 参数: s\n# 返回值: 字符串长度\n\ndef string_length(s):\n    pass',solution:'def string_length(s):\n    return len(s)',fn:'string_length',tests:[{args:['Python'],expect:6},{args:['你好'],expect:2},{args:[''],expect:0}]},
+      {id:'str-3',title:'字符串反转',desc:'编写 <code>reverse_string</code> 函数，接收 <code>s</code>，返回反转后的字符串。',hint:'def reverse_string(s): return s[::-1]',starterCode:'# 编写 reverse_string 函数\n# 参数: s\n# 返回值: 反转后的字符串\n# 提示: s[::-1]\n\ndef reverse_string(s):\n    pass',solution:'def reverse_string(s):\n    return s[::-1]',fn:'reverse_string',tests:[{args:['Python'],expect:'nohtyP'},{args:['hello'],expect:'olleh'},{args:[''],expect:''}]},
+      {id:'str-4',title:'首字母大写',desc:'编写 <code>capitalize_words</code> 函数，接收 <code>s</code>，返回每个单词首字母大写的字符串（用 <code>s.title()</code>）。',hint:'def capitalize_words(s): return s.title()',starterCode:'# 编写 capitalize_words 函数\n# 参数: s\n# 返回值: 每个单词首字母大写\n# 提示: s.title()\n\ndef capitalize_words(s):\n    pass',solution:'def capitalize_words(s):\n    return s.title()',fn:'capitalize_words',tests:[{args:['hello world'],expect:'Hello World'},{args:['python is fun'],expect:'Python Is Fun'}]},
+    ]
+  },
+  {
+    id:'control-flow', icon:'🔀', title:'控制流',
+    desc:`<p>控制流让程序能够根据条件<strong>做出决策</strong>和<strong>重复执行</strong>代码。</p>
+<h4>条件判断：if/elif/else</h4>
+<pre><code>score = 85
+if score >= 90:
+    print("优秀")
+elif score >= 60:
+    print("及格")
+else:
+    print("不及格")</code></pre>
+<p>注意：条件后面有 <code>:</code>，代码块要<strong>缩进</strong>！</p>
+<h4>比较运算符</h4>
+<p><code>==</code> 等于 &nbsp; <code>!=</code> 不等于 &nbsp; <code>&gt;</code> 大于 &nbsp; <code>&lt;</code> 小于 &nbsp; <code>&gt;=</code> 大于等于 &nbsp; <code>&lt;=</code> 小于等于</p>
+<h4>逻辑运算符</h4>
+<p><code>and</code> 与 &nbsp; <code>or</code> 或 &nbsp; <code>not</code> 非</p>
+<h4>循环：for 和 while</h4>
+<p><code>for</code> 用于<strong>遍历</strong>序列（如 range、列表、字符串）：</p>
+<pre><code>for i in range(5):   # 0, 1, 2, 3, 4
+    print(i)</code></pre>
+<p><code>while</code> 在条件为真时持续执行：</p>
+<pre><code>n = 3
+while n > 0:
+    print(n)
+    n -= 1</code></pre>
+<p><code>break</code> 跳出循环，<code>continue</code> 跳过当前循环的剩余部分。</p>`,
+    code:`# ===== 条件判断 =====
+score = 85
+if score >= 90:
+    grade = "优秀"
+elif score >= 80:
+    grade = "良好"
+elif score >= 70:
+    grade = "中等"
+elif score >= 60:
+    grade = "及格"
+else:
+    grade = "不及格"
+print(f"分数 {score} -> {grade}")
+
+# for 循环
+print("\\n1 到 5:")
+for i in range(1, 6):
+    print(i, end=" ")
+print()
+
+# 遍历列表
+fruits = ["苹果", "香蕉", "橘子"]
+for fruit in fruits:
+    print(f"  - {fruit}")
+
+# while 循环
+print("\\n倒计时:")
+n = 5
+while n > 0:
+    print(n, end=" ")
+    n -= 1
+print()
+
+# break 和 continue
+print("\\n1-10 中的偶数:")
+for i in range(1, 11):
+    if i % 2 != 0:
+        continue
+    print(i, end=" ")
+print()`,
+    exercises:[
+      {id:'flow-1',title:'等级判断',desc:'编写 <code>get_grade</code> 函数，接收 <code>score</code>，返回中文等级："优秀"(>=90)、"良好"(>=80)、"及格"(>=60)、"不及格"(其他)。',hint:'def get_grade(score):\\n    if score >= 90: return "优秀"\\n    elif score >= 80: return "良好"\\n    elif score >= 60: return "及格"\\n    else: return "不及格"',starterCode:'# 编写 get_grade 函数\n# 参数: score\n# 返回值: "优秀"/"良好"/"及格"/"不及格"\n\ndef get_grade(score):\n    pass',solution:'def get_grade(score):\n    if score >= 90:\n        return "优秀"\n    elif score >= 80:\n        return "良好"\n    elif score >= 60:\n        return "及格"\n    else:\n        return "不及格"',fn:'get_grade',tests:[{args:[95],expect:'优秀'},{args:[85],expect:'良好'},{args:[60],expect:'及格'},{args:[30],expect:'不及格'}]},
+      {id:'flow-2',title:'求和',desc:'编写 <code>sum_range</code> 函数，接收 <code>n</code>，返回 1 到 n 的总和。',hint:'def sum_range(n): return sum(range(1, n+1))',starterCode:'# 编写 sum_range 函数\n# 参数: n\n# 返回值: 1 + 2 + ... + n\n\ndef sum_range(n):\n    pass',solution:'def sum_range(n):\n    total = 0\n    for i in range(1, n + 1):\n        total += i\n    return total',fn:'sum_range',tests:[{args:[5],expect:15},{args:[10],expect:55},{args:[1],expect:1}]},
+      {id:'flow-3',title:'FizzBuzz',desc:'编写 <code>fizz_buzz</code> 函数，接收 <code>n</code>。如果 n 能被 3 和 5 整除返回 "FizzBuzz"；只被 3 整除返回 "Fizz"；只被 5 整除返回 "Buzz"；否则返回字符串格式的 n。',hint:'if n % 15 == 0: return "FizzBuzz"\\nelif n % 3 == 0: return "Fizz"\\nelif n % 5 == 0: return "Buzz"\\nelse: return str(n)',starterCode:'# 编写 fizz_buzz 函数\n# 参数: n\n# 返回值: "FizzBuzz" / "Fizz" / "Buzz" / str(n)\n\ndef fizz_buzz(n):\n    pass',solution:'def fizz_buzz(n):\n    if n % 15 == 0:\n        return "FizzBuzz"\n    elif n % 3 == 0:\n        return "Fizz"\n    elif n % 5 == 0:\n        return "Buzz"\n    else:\n        return str(n)',fn:'fizz_buzz',tests:[{args:[15],expect:'FizzBuzz'},{args:[9],expect:'Fizz'},{args:[10],expect:'Buzz'},{args:[7],expect:'7'}]},
+      {id:'flow-4',title:'列表中的偶数',desc:'编写 <code>filter_even</code> 函数，接收数字列表 <code>nums</code>，返回只包含偶数的列表。',hint:'def filter_even(nums): return [n for n in nums if n % 2 == 0]',starterCode:'# 编写 filter_even 函数\n# 参数: nums (数字列表)\n# 返回值: 只包含偶数的列表\n\ndef filter_even(nums):\n    pass',solution:'def filter_even(nums):\n    result = []\n    for n in nums:\n        if n % 2 == 0:\n            result.append(n)\n    return result',fn:'filter_even',tests:[{args:[[1,2,3,4,5,6]],expect:'[2, 4, 6]'},{args:[[1,3,5]],expect:'[]'}]},
+    ]
+  },
+  {
+    id:'list-tuple', icon:'📋', title:'列表与元组',
+    desc:`<p>列表和元组都是<strong>有序序列</strong>，可以包含任意类型的元素。</p>
+<h4>列表（List）</h4>
+<p>用 <code>[]</code> 创建，<strong>可修改</strong>（增删改）：</p>
+<pre><code>fruits = ["苹果", "香蕉", "橘子"]
+fruits.append("葡萄")    # 添加到最后
+fruits.remove("香蕉")    # 删除指定元素
+fruits[0] = "西瓜"        # 修改元素
+print(len(fruits))       # 长度</code></pre>
+<h4>元组（Tuple）</h4>
+<p>用 <code>()</code> 创建，<strong>不可修改</strong>（只读）：</p>
+<pre><code>point = (3, 4)
+x, y = point  # 元组解包</code></pre>
+<h4>索引和切片</h4>
+<p>正向索引从 0 开始，反向索引从 -1 开始：</p>
+<pre><code>nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+nums[0]      # 第一个元素: 0
+nums[-1]     # 最后一个元素: 9
+nums[2:5]    # 索引 2 到 4: [2, 3, 4]
+nums[:3]     # 前三个: [0, 1, 2]
+nums[::2]    # 每隔一个: [0, 2, 4, 6, 8]</code></pre>`,
+    code:`# ===== 列表 =====
+fruits = ["苹果", "香蕉", "橘子"]
+print(f"列表: {fruits}")
+print(f"第一个: {fruits[0]}")
+print(f"最后一个: {fruits[-1]}")
+
+# 列表方法
+fruits.append("葡萄")
+print(f"添加: {fruits}")
+fruits.remove("香蕉")
+print(f"删除: {fruits}")
+print(f"长度: {len(fruits)}")
+
+# 切片
+nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+print(f"nums[2:5] = {nums[2:5]}")
+print(f"nums[:3] = {nums[:3]}")
+print(f"nums[::2] = {nums[::2]}")
+
+# 元组
+point = (3, 4)
+x, y = point
+print(f"坐标: ({x}, {y})")
+
+# 列表排序
+scores = [88, 95, 72, 90, 66]
+scores.sort(reverse=True)
+print(f"排序后: {scores}")`,
+    exercises:[
+      {id:'list-1',title:'双倍列表',desc:'编写 <code>double_list</code> 函数，接收列表 <code>lst</code>，返回每个元素乘以 2 后的新列表。',hint:'def double_list(lst): return [x * 2 for x in lst]',starterCode:'# 编写 double_list 函数\n# 参数: lst (数字列表)\n# 返回值: 每个元素乘以 2 的列表\n\ndef double_list(lst):\n    pass',solution:'def double_list(lst):\n    return [x * 2 for x in lst]',fn:'double_list',tests:[{args:[[1,2,3]],expect:'[2, 4, 6]'},{args:[[10,20]],expect:'[20, 40]'}]},
+      {id:'list-2',title:'列表反转',desc:'编写 <code>reverse_list</code> 函数，接收列表 <code>lst</code>，返回反转后的新列表（不要修改原列表）。提示：<code>lst[::-1]</code>。',hint:'def reverse_list(lst): return lst[::-1]',starterCode:'# 编写 reverse_list 函数\n# 参数: lst\n# 返回值: 反转后的列表\n# 提示: lst[::-1]\n\ndef reverse_list(lst):\n    pass',solution:'def reverse_list(lst):\n    return lst[::-1]',fn:'reverse_list',tests:[{args:[[1,2,3]],expect:'[3, 2, 1]'},{args:[['a','b','c']],expect:'[\'c\', \'b\', \'a\']'}]},
+      {id:'list-3',title:'列表平均值',desc:'编写 <code>list_avg</code> 函数，接收数字列表 <code>lst</code>，返回平均值（浮点数）。空列表返回 0。',hint:'def list_avg(lst): return sum(lst) / len(lst) if lst else 0',starterCode:'# 编写 list_avg 函数\n# 参数: lst (数字列表)\n# 返回值: 平均值 (空列表返回 0)\n\ndef list_avg(lst):\n    pass',solution:'def list_avg(lst):\n    if not lst:\n        return 0\n    return sum(lst) / len(lst)',fn:'list_avg',tests:[{args:[[1,2,3,4,5]],expect:3.0},{args:[[10,20]],expect:15.0},{args:[[]],expect:0}]},
+      {id:'list-4',title:'元组解包',desc:'编写 <code>swap</code> 函数，接收元组 <code>(a, b)</code>，返回 <code>(b, a)</code>。',hint:'def swap(t): return (t[1], t[0])',starterCode:'# 编写 swap 函数\n# 参数: t (包含两个元素的元组)\n# 返回值: 交换后的元组 (t[1], t[0])\n\ndef swap(t):\n    pass',solution:'def swap(t):\n    return (t[1], t[0])',fn:'swap',tests:[{args:[(1,2)],expect:'(2, 1)'},{args:[('a','b')],expect:'(\'b\', \'a\')'}]},
+    ]
+  },
+  {
+    id:'dict-set', icon:'📖', title:'字典与集合',
+    desc:`<p>字典和集合是 Python 中两种重要的<strong>映射和集合</strong>数据类型。</p>
+<h4>字典（Dict）</h4>
+<p>用 <code>{}</code> 创建，存储<strong>键值对</strong>。键必须是不可变类型（字符串、数字、元组等）。</p>
+<pre><code>student = {
+    "name": "小明",
+    "age": 18,
+    "score": 95
+}
+print(student["name"])    # 取值
+print(student.get("age")) # 安全取值，不存在返回 None
+student["grade"] = "高三" # 添加或修改
+del student["grade"]      # 删除</code></pre>
+<h4>遍历字典</h4>
+<pre><code>for key, value in student.items():
+    print(f"{key}: {value}")</code></pre>
+<h4>集合（Set）</h4>
+<p>用 <code>{}</code> 创建，元素<strong>唯一且无序</strong>，支持集合运算：</p>
+<pre><code>a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+a | b  # 并集: {1,2,3,4,5,6}
+a & b  # 交集: {3,4}
+a - b  # 差集: {1,2}</code></pre>`,
+    code:`# ===== 字典 =====
+student = {
+    "name": "小明",
+    "age": 18,
+    "score": 95,
+    "subjects": ["数学", "语文", "英语"]
+}
+print(f"学生: {student}")
+print(f"姓名: {student['name']}")
+print(f"年龄: {student.get('age', '未知')}")
+
+# 添加和修改
+student["grade"] = "高三"
+print(f"添加后: {student}")
+del student["grade"]
+
+# 遍历
+print("\\n所有信息:")
+for key, value in student.items():
+    print(f"  {key}: {value}")
+
+# ===== 集合 =====
+a = {1, 2, 3, 4, 5}
+b = {4, 5, 6, 7, 8}
+print(f"\\n并集: {a | b}")
+print(f"交集: {a & b}")
+print(f"差集: {a - b}")`,
+    exercises:[
+      {id:'dict-1',title:'获取学生信息',desc:'编写 <code>get_student_info</code>，接收 <code>students</code>（字典列表）和 <code>name</code>，返回名字匹配的学生字典。没找到返回 <code>None</code>。',hint:'def get_student_info(students, name):\\n    for s in students:\\n        if s["name"] == name: return s\\n    return None',starterCode:'# 编写 get_student_info 函数\n# 参数: students (字典列表), name (要查找的姓名)\n# 返回值: 匹配的学生字典，未找到返回 None\n\ndef get_student_info(students, name):\n    pass',solution:'def get_student_info(students, name):\n    for s in students:\n        if s["name"] == name:\n            return s\n    return None',fn:'get_student_info',tests:[{args:[[{"name":"小明","age":18},{"name":"小红","age":20}],"小明"],expect:'{"name": "小明", "age": 18}'},{args:[[{"name":"小明","age":18}],"小刚"],expect:'None'}]},
+      {id:'dict-2',title:'合并字典',desc:'编写 <code>merge_dicts</code> 函数，接收两个字典 <code>d1</code> 和 <code>d2</code>，返回合并后的字典。如果键相同，d2 的值覆盖 d1。提示：<code>{**d1, **d2}</code>。',hint:'def merge_dicts(d1, d2): return {**d1, **d2}',starterCode:'# 编写 merge_dicts 函数\n# 参数: d1, d2 (字典)\n# 返回值: 合并后的字典\n# 提示: {**d1, **d2}\n\ndef merge_dicts(d1, d2):\n    pass',solution:'def merge_dicts(d1, d2):\n    return {**d1, **d2}',fn:'merge_dicts',tests:[{args:[{"a":1,"b":2},{"c":3}],expect:'{"a": 1, "b": 2, "c": 3}'},{args:[{"x":1},{"x":2,"y":3}],expect:'{"x": 2, "y": 3}'}]},
+      {id:'dict-3',title:'单词计数器',desc:'编写 <code>word_count</code> 函数，接收字符串 <code>text</code>，返回每个单词出现次数的字典。假设单词用空格分隔。',hint:'def word_count(text):\\n    words = text.split()\\n    result = {}\\n    for w in words: result[w] = result.get(w, 0) + 1\\n    return result',starterCode:'# 编写 word_count 函数\n# 参数: text (字符串)\n# 返回值: {单词: 次数} 字典\n# 提示: text.split() 分词\n\ndef word_count(text):\n    pass',solution:'def word_count(text):\n    words = text.split()\n    result = {}\n    for w in words:\n        result[w] = result.get(w, 0) + 1\n    return result',fn:'word_count',tests:[{args:['hello world hello'],expect:'{"hello": 2, "world": 1}'},{args:['a b c a b a'],expect:'{"a": 3, "b": 2, "c": 1}'}]},
+      {id:'dict-4',title:'集合交集',desc:'编写 <code>common_elements</code> 函数，接收两个列表 <code>a</code> 和 <code>b</code>，返回它们共同元素的集合。',hint:'def common_elements(a, b): return set(a) & set(b)',starterCode:'# 编写 common_elements 函数\n# 参数: a, b (列表)\n# 返回值: 共同元素的集合\n# 提示: set(a) & set(b)\n\ndef common_elements(a, b):\n    pass',solution:'def common_elements(a, b):\n    return set(a) & set(b)',fn:'common_elements',tests:[{args:[[1,2,3,4],[3,4,5,6]],expect:'{3, 4}'},{args:[['a','b','c'],['b','c','d']],expect:'{\'b\', \'c\'}'}]},
+    ]
+  },
+  {
+    id:'functions', icon:'🔧', title:'函数',
+    desc:`<p>函数是<strong>组织代码</strong>的基本方式。把重复使用的代码封装成函数，让你的程序更清晰、可复用。</p>
+<h4>定义和调用函数</h4>
+<pre><code>def greet(name):
+    """返回问候语"""  # 文档字符串
+    return f"你好, {name}!"
+
+print(greet("小明"))  # 调用函数</code></pre>
+<h4>参数类型</h4>
+<p><strong>位置参数</strong> — 按顺序传入：<code>add(3, 5)</code></p>
+<p><strong>默认参数</strong> — 给参数默认值，调用时可省略：</p>
+<pre><code>def greet(name, greeting="你好"):
+    return f"{greeting}, {name}!"
+greet("小明")          # "你好, 小明!"
+greet("Tom", "Hello") # "Hello, Tom!"</code></pre>
+<h4>返回值</h4>
+<p>用 <code>return</code> 返回值。没有 <code>return</code> 的函数返回 <code>None</code>。</p>
+<p>可以返回<strong>多个值</strong>（本质是元组）：</p>
+<pre><code>def min_max(lst):
+    return min(lst), max(lst)
+mn, mx = min_max([3, 1, 4, 1, 5])</code></pre>`,
+    code:`# ===== 基本函数 =====
+def add(a, b):
+    """返回两个数的和"""
+    return a + b
+print(f"add(3, 5) = {add(3, 5)}")
+
+# 默认参数
+def greet(name, greeting="你好"):
+    return f"{greeting}, {name}!"
+print(greet("小明"))
+print(greet("Tom", "Hello"))
+
+# 多返回值
+def min_max(lst):
+    return min(lst), max(lst)
+
+mn, mx = min_max([3, 1, 4, 1, 5, 9])
+print(f"最小值: {mn}, 最大值: {mx}")
+
+# 函数作为参数
+def apply_twice(func, x):
+    return func(func(x))
+
+result = apply_twice(lambda n: n * 2, 5)
+print(f"apply_twice(*2, 5) = {result}")`,
+    exercises:[
+      {id:'fn-1',title:'乘法函数',desc:'编写 <code>multiply</code> 函数，接收 <code>a, b</code>，返回 <code>a * b</code>。',hint:'def multiply(a, b): return a * b',starterCode:'# 编写 multiply 函数\n# 参数: a, b\n# 返回值: a * b\n\ndef multiply(a, b):\n    pass',solution:'def multiply(a, b):\n    return a * b',fn:'multiply',tests:[{args:[3,5],expect:15},{args:[-2,4],expect:-8}]},
+      {id:'fn-2',title:'默认参数问候',desc:'编写 <code>greet_user</code>，接收 <code>name</code> 和可选的 <code>greeting="你好"</code>，返回 <code>f"{greeting}, {name}!"</code>。',hint:'def greet_user(name, greeting="你好"): return f"{greeting}, {name}!"',starterCode:'# 编写 greet_user 函数\n# 参数: name, greeting="你好"\n# 返回值: f"{greeting}, {name}!"\n\ndef greet_user(name, greeting="你好"):\n    pass',solution:'def greet_user(name, greeting="你好"):\n    return f"{greeting}, {name}!"',fn:'greet_user',tests:[{args:['小明'],expect:'你好, 小明!'},{args:['Tom','Hello'],expect:'Hello, Tom!'}]},
+      {id:'fn-3',title:'列表平均值',desc:'编写 <code>calc_average</code>，接收数字列表 <code>nums</code>，返回平均值。空列表返回 0。',hint:'def calc_average(nums): return sum(nums)/len(nums) if nums else 0',starterCode:'# 编写 calc_average 函数\n# 参数: nums (数字列表)\n# 返回值: 平均值 (空列表返回 0)\n\ndef calc_average(nums):\n    pass',solution:'def calc_average(nums):\n    if not nums:\n        return 0\n    return sum(nums) / len(nums)',fn:'calc_average',tests:[{args:[[10,20,30]],expect:20.0},{args:[[5,15]],expect:10.0},{args:[[]],expect:0}]},
+      {id:'fn-4',title:'阶乘',desc:'编写 <code>factorial</code> 函数，接收 <code>n</code>，返回 n 的阶乘（n! = n × (n-1) × ... × 1）。0! = 1。',hint:'def factorial(n): return 1 if n <= 1 else n * factorial(n-1)',starterCode:'# 编写 factorial 函数\n# 参数: n\n# 返回值: n! (n 的阶乘)\n# 0! = 1, 3! = 3*2*1 = 6\n\ndef factorial(n):\n    pass',solution:'def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)',fn:'factorial',tests:[{args:[5],expect:120},{args:[3],expect:6},{args:[0],expect:1}]},
+    ]
+  },
+  {
+    id:'advanced-functions', icon:'⚡', title:'函数进阶与作用域',
+    desc:`<p>Python 的函数还有很多强大特性，让你写出更灵活的代码。</p>
+<h4>*args - 可变位置参数</h4>
+<p>用 <code>*args</code> 接收任意数量的位置参数，函数内部作为一个<strong>元组</strong>使用：</p>
+<pre><code>def sum_all(*args):
+    return sum(args)
+print(sum_all(1, 2, 3))    # 6
+print(sum_all(10, 20, 30, 40))  # 100</code></pre>
+<h4>**kwargs - 可变关键字参数</h4>
+<p>用 <code>**kwargs</code> 接收任意数量的关键字参数，函数内部作为一个<strong>字典</strong>使用：</p>
+<pre><code>def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+print_info(name="小明", age=18, city="北京")</code></pre>
+<h4>lambda 表达式</h4>
+<p>简洁的<strong>匿名函数</strong>，用 <code>lambda</code> 关键字：</p>
+<pre><code>square = lambda x: x ** 2
+print(square(5))  # 25
+
+# 常用于排序
+students.sort(key=lambda s: s[1])</code></pre>
+<h4>变量作用域</h4>
+<p>函数内部定义的变量是<strong>局部变量</strong>，函数外的是<strong>全局变量</strong>。用 <code>global</code> 在函数内修改全局变量。</p>`,
+    code:`# ===== *args 可变参数 =====
+def sum_all(*args):
+    return sum(args)
+print(f"sum_all(1, 2, 3) = {sum_all(1, 2, 3)}")
+print(f"sum_all(10, 20, 30, 40, 50) = {sum_all(10, 20, 30, 40, 50)}")
+
+# ===== **kwargs =====
+def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"  {key}: {value}")
+print("用户信息:")
+print_info(name="小明", age=18, city="北京")
+
+# ===== lambda =====
+square = lambda x: x ** 2
+print(f"\\nsquare(5) = {square(5)}")
+
+# lambda 排序
+students = [("小明", 95), ("小红", 88), ("小刚", 92)]
+students.sort(key=lambda s: s[1], reverse=True)
+print(f"按分数排序: {students}")`,
+    exercises:[
+      {id:'advfn-1',title:'可变参数求和',desc:'编写 <code>sum_squares</code> 函数，用 <code>*args</code> 接收任意数量的数字，返回每个数字平方的和。',hint:'def sum_squares(*args): return sum(x**2 for x in args)',starterCode:'# 编写 sum_squares 函数\n# 参数: *args (任意数量的数字)\n# 返回值: 每个数字平方的和\n\ndef sum_squares(*args):\n    pass',solution:'def sum_squares(*args):\n    return sum(x ** 2 for x in args)',fn:'sum_squares',tests:[{args:[1,2,3],expect:14},{args:[2,4],expect:20}]},
+      {id:'advfn-2',title:'连接字符串',desc:'编写 <code>concat_strings</code>，用 <code>*args</code> 接收任意数量字符串，用空格连接后返回。',hint:'def concat_strings(*args): return " ".join(args)',starterCode:'# 编写 concat_strings 函数\n# 参数: *args (任意数量的字符串)\n# 返回值: 用空格连接所有字符串\n\ndef concat_strings(*args):\n    pass',solution:'def concat_strings(*args):\n    return " ".join(args)',fn:'concat_strings',tests:[{args:['Hello','World'],expect:'Hello World'},{args:['a','b','c'],expect:'a b c'}]},
+      {id:'advfn-3',title:'创建个人信息',desc:'编写 <code>create_profile</code>，接收 <code>name, age</code> 和 <code>**kwargs</code>。返回字典 <code>{"name": name, "age": age, **kwargs}</code>。',hint:'def create_profile(name, age, **kwargs): return {"name": name, "age": age, **kwargs}',starterCode:'# 编写 create_profile 函数\n# 参数: name, age, **kwargs\n# 返回值: {"name": name, "age": age, **kwargs}\n\ndef create_profile(name, age, **kwargs):\n    pass',solution:'def create_profile(name, age, **kwargs):\n    profile = {"name": name, "age": age}\n    profile.update(kwargs)\n    return profile',fn:'create_profile',tests:[{args:['小明',18],expect:'{"name": "小明", "age": 18}'},{args:['小红',20,'北京'],expect:'{"name": "小红", "age": 20}'}],extArgs:['Beijing'],argKeys:['city']},
+    ]
+  },
+  {
+    id:'exceptions', icon:'⚠️', title:'错误与异常',
+    desc:`<p>程序运行时难免出错，Python 用<strong>异常（Exception）</strong>来代表错误。学会异常处理让你的程序更稳健。</p>
+<h4>try/except</h4>
+<p>把可能出错的代码放在 <code>try</code> 块中，出错时跳到 <code>except</code>：</p>
+<pre><code>try:
+    result = 10 / 0
+    print("这行不会执行")
+except ZeroDivisionError:
+    print("除以零错误!")
+# 输出: 除以零错误!</code></pre>
+<h4>捕获多种异常</h4>
+<pre><code>try:
+    x = int("abc")
+except ValueError:
+    print("无法转换为整数")
+except (TypeError, ZeroDivisionError):
+    print("其他错误")</code></pre>
+<h4>完整的异常处理结构</h4>
+<pre><code>try:
+    # 可能出错的代码
+except SomeError:
+    # 出错时执行
+else:
+    # 没出错时执行
+finally:
+    # 不管有没有错都执行</code></pre>
+<h4>主动抛出异常</h4>
+<p>用 <code>raise</code> 主动触发异常：</p>
+<pre><code>def divide(a, b):
+    if b == 0:
+        raise ValueError("除数不能为零")
+    return a / b</code></pre>`,
+    code:`# ===== try/except =====
+def safe_divide(a, b):
+    try:
+        result = a / b
+        return result
+    except ZeroDivisionError:
+        return "错误: 不能除以零"
+    except TypeError:
+        return "错误: 类型不正确"
+
+print(f"safe_divide(10, 2) = {safe_divide(10, 2)}")
+print(f"safe_divide(10, 0) = {safe_divide(10, 0)}")
+
+# try/except/else/finally
+def parse_int(value):
+    try:
+        result = int(value)
+    except (ValueError, TypeError):
+        print("转换失败!")
+        return None
+    else:
+        print("转换成功!")
+        return result
+    finally:
+        print("--- 执行完毕 ---")
+
+print(f"\\nparse_int('42') = {parse_int('42')}")
+print(f"\\nparse_int('abc') = {parse_int('abc')}")`,
+    exercises:[
+      {id:'exc-1',title:'安全除法',desc:'编写 <code>safe_divide</code>，接收 <code>a, b</code>，返回 <code>a / b</code>。如果 b 为 0，返回 <code>"Cannot divide by zero"</code>。',hint:'try: return a/b\\nexcept ZeroDivisionError: return "Cannot divide by zero"',starterCode:'# 编写 safe_divide 函数\n# 参数: a, b\n# 返回值: a/b 或 "Cannot divide by zero"\n\ndef safe_divide(a, b):\n    pass',solution:'def safe_divide(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return "Cannot divide by zero"',fn:'safe_divide',tests:[{args:[10,2],expect:5.0},{args:[5,0],expect:'Cannot divide by zero'}]},
+      {id:'exc-2',title:'安全字符串转整数',desc:'编写 <code>safe_int</code>，接收 <code>s</code>，尝试用 <code>int(s)</code> 转为整数。成功返回整数，失败返回 <code>None</code>。',hint:'try: return int(s)\\nexcept: return None',starterCode:'# 编写 safe_int 函数\n# 参数: s\n# 返回值: int(s) 成功返回整数，失败返回 None\n\ndef safe_int(s):\n    pass',solution:'def safe_int(s):\n    try:\n        return int(s)\n    except (ValueError, TypeError):\n        return None',fn:'safe_int',tests:[{args:['42'],expect:42},{args:['abc'],expect:'None'},{args:['3.14'],expect:'None'}]},
+      {id:'exc-3',title:'安全获取元素',desc:'编写 <code>safe_get</code>，接收 <code>lst</code>（列表）和 <code>index</code>（索引），返回 <code>lst[index]</code>。如果索引越界，返回 <code>"Index out of range"</code>。',hint:'try: return lst[index]\\nexcept IndexError: return "Index out of range"',starterCode:'# 编写 safe_get 函数\n# 参数: lst (列表), index (索引)\n# 返回值: lst[index] 或 "Index out of range"\n\ndef safe_get(lst, index):\n    pass',solution:'def safe_get(lst, index):\n    try:\n        return lst[index]\n    except IndexError:\n        return "Index out of range"',fn:'safe_get',tests:[{args:[[10,20,30],1],expect:20},{args:[[10,20,30],5],expect:'Index out of range'}]},
+    ]
+  },
+  {
+    id:'modules', icon:'📦', title:'模块与包',
+    desc:`<p>Python 有"自备电池"（Batteries Included）的理念——内置了大量功能强大的<strong>标准库模块</strong>，不需要额外安装就能使用。</p>
+<h4>使用 import 导入模块</h4>
+<pre><code>import math          # 导入整个模块
+print(math.pi)       # 用 模块名.函数 调用
+print(math.sqrt(16)) # 4.0
+
+from random import randint, choice  # 导入指定函数
+print(randint(1, 10))  # 直接使用函数名
+
+import datetime as dt  # 导入并起别名
+print(dt.datetime.now())</code></pre>
+<h4>常用标准库模块</h4>
+<p><strong>math</strong> — 数学函数（sin、cos、sqrt、pi）</p>
+<p><strong>random</strong> — 随机数（randint、choice、shuffle）</p>
+<p><strong>datetime</strong> — 日期时间（now、timedelta）</p>
+<p><strong>json</strong> — JSON 数据（dumps、loads）</p>
+<p><strong>os</strong> — 操作系统接口</p>
+<h4>if __name__ == '__main__'</h4>
+<p>当你写一个 Python 文件，它既可以作为模块被导入，也可以作为脚本直接运行。<code>if __name__ == '__main__'</code> 让代码只在作为脚本运行时执行：</p>
+<pre><code>def main():
+    print("程序启动!")
+if __name__ == '__main__':
+    main()</code></pre>`,
+    code:`# ===== 导入模块 =====
+import math
+import random
+from datetime import datetime
+
+# math 模块
+print(f"圆周率: {math.pi}")
+print(f"sin(90°): {math.sin(math.pi/2)}")
+print(f"平方根: {math.sqrt(16)}")
+
+# random 模块
+print(f"\\n随机数 [1,10]: {random.randint(1, 10)}")
+items = ["苹果", "香蕉", "橘子"]
+print(f"随机选择: {random.choice(items)}")
+
+# datetime 模块
+now = datetime.now()
+print(f"\\n当前时间: {now}")
+print(f"年份: {now.year}")
+
+# json 模拟
+import json
+data = {"name": "小明", "scores": [95, 88, 92]}
+print(f"\\nJSON: {json.dumps(data, ensure_ascii=False)}")`,
+    exercises:[
+      {id:'mod-1',title:'随机骰子',desc:'编写 <code>roll_dice</code> 函数，用 <code>random.randint</code> 返回 1 到 6 之间的随机整数。',hint:'import random\\ndef roll_dice(): return random.randint(1, 6)',starterCode:'# 编写 roll_dice 函数\n# 功能: 返回 1-6 的随机整数\n# 提示: import random, 然后 random.randint(1, 6)\n\nimport random\n\ndef roll_dice():\n    pass',solution:'import random\ndef roll_dice():\n    return random.randint(1, 6)',fn:'roll_dice',tests:[{id:'mod-1'}]},
+      {id:'mod-2',title:'使用 math 模块',desc:'编写 <code>circle_circumference</code>，接收 <code>radius</code>，用 <code>math.pi</code> 计算周长（2 × π × r）。',hint:'import math\\ndef circle_circumference(r): return 2 * math.pi * r',starterCode:'# 编写 circle_circumference 函数\n# 参数: radius\n# 返回值: 圆的周长 (2 * math.pi * radius)\n# 提示: import math, 使用 math.pi\n\nimport math\n\ndef circle_circumference(radius):\n    pass',solution:'import math\ndef circle_circumference(radius):\n    return 2 * math.pi * radius',fn:'circle_circumference',tests:[{args:[1],expect:6.283185307179586},{args:[5],expect:31.41592653589793}]},
+      {id:'mod-3',title:'随机选择',desc:'编写 <code>random_element</code>，接收列表 <code>lst</code>，用 <code>random.choice</code> 返回随机元素。',hint:'import random\\ndef random_element(lst): return random.choice(lst)',starterCode:'# 编写 random_element 函数\n# 参数: lst (列表)\n# 返回值: 列表中的随机元素\n\nimport random\n\ndef random_element(lst):\n    pass',solution:'import random\ndef random_element(lst):\n    return random.choice(lst)',fn:'random_element',tests:[{id:'mod-3', noexpect:true}]},
+    ]
+  },
+  {
+    id:'classes', icon:'🏛️', title:'面向对象编程',
+    desc:`<p>面向对象编程（OOP）是一种组织代码的方式，把数据和操作数据的方法打包在一起，形成<strong>对象</strong>。</p>
+<h4>类（Class）和对象（Object）</h4>
+<p><strong>类</strong>是模板，<strong>对象</strong>是根据模板创建的实例：</p>
+<pre><code>class Student:
+    def __init__(self, name, age):  # 构造方法
+        self.name = name            # 实例属性
+        self.age = age
+    
+    def introduce(self):            # 实例方法
+        return f"我叫{self.name}, 今年{self.age}岁"
+
+# 创建对象
+s = Student("小明", 18)
+print(s.introduce())</code></pre>
+<h4>__init__ 和 self</h4>
+<p><code>__init__</code> 是构造方法，创建对象时自动调用。<code>self</code> 代表实例本身，必须作为第一个参数。</p>
+<h4>继承</h4>
+<p>子类可以<strong>继承</strong>父类的属性和方法，并可以添加或重写：</p>
+<pre><code>class CollegeStudent(Student):
+    def __init__(self, name, age, major):
+        super().__init__(name, age)  # 调用父类构造
+        self.major = major
+    
+    def introduce(self):  # 重写方法
+        return f"我是{self.major}专业的{self.name}"</code></pre>
+<h4>特殊方法（Dunder Methods）</h4>
+<p><code>__str__</code> — 定义 <code>print(obj)</code> 的输出。 <code>__repr__</code> — 定义对象的"官方"字符串表示。</p>`,
+    code:`# ===== 类定义 =====
+class Student:
+    def __init__(self, name, age, score):
+        self.name = name
+        self.age = age
+        self.score = score
+    
+    def introduce(self):
+        return f"我叫{self.name}，今年{self.age}岁，考了{self.score}分"
+    
+    def __str__(self):
+        return f"Student({self.name}, {self.score}分)"
+
+# 创建对象
+s1 = Student("小明", 18, 95)
+s2 = Student("小红", 17, 88)
+print(s1.introduce())
+print(s2)
+
+# ===== 继承 =====
+class CollegeStudent(Student):
+    def __init__(self, name, age, score, major):
+        super().__init__(name, age, score)
+        self.major = major
+    
+    def introduce(self):
+        return f"我是{self.major}专业的学生{self.name}"
+
+cs = CollegeStudent("小刚", 20, 92, "计算机")
+print(cs.introduce())`,
+    exercises:[
+      {id:'class-1',title:'创建 Book 类',desc:'创建 <code>Book</code> 类，<code>__init__(self, title, author)</code> 保存书名和作者。添加 <code>get_summary(self)</code> 方法，返回 <code>f"{self.title} by {self.author}"</code>。',hint:'class Book:\\n    def __init__(self, title, author):\\n        self.title = title\\n        self.author = author\\n    def get_summary(self):\\n        return f"{self.title} by {self.author}"',starterCode:'# 创建 Book 类\n# __init__(self, title, author)\n# get_summary(self) 返回 f"{self.title} by {self.author}"\n\nclass Book:\n    def __init__(self, title, author):\n        pass\n    \n    def get_summary(self):\n        pass',solution:'class Book:\n    def __init__(self, title, author):\n        self.title = title\n        self.author = author\n    def get_summary(self):\n        return f"{self.title} by {self.author}"\nb = Book("Python入门", "小明")\nprint(b.get_summary())',fn:'Book'},
+      {id:'class-2',title:'创建 Rectangle 类',desc:'创建 <code>Rectangle</code> 类，<code>__init__(self, width, height)</code>。添加 <code>area(self)</code> 方法返回面积（width × height）。',hint:'class Rectangle:\\n    def __init__(self, w, h):\\n        self.width = w\\n        self.height = h\\n    def area(self):\\n        return self.width * self.height',starterCode:'# 创建 Rectangle 类\n# __init__(self, width, height)\n# area(self) 返回面积\n\nclass Rectangle:\n    def __init__(self, width, height):\n        pass\n    \n    def area(self):\n        pass',solution:'class Rectangle:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    def area(self):\n        return self.width * self.height\nr = Rectangle(5, 3)\nprint(f"面积: {r.area()}")',fn:'Rectangle'},
+      {id:'class-3',title:'银行账户类',desc:'创建 <code>BankAccount</code> 类，<code>__init__(self, balance=0)</code>。添加 <code>deposit(self, amount)</code>（存款）、<code>withdraw(self, amount)</code>（取款）、<code>get_balance(self)</code>（查余额）。取款不能超过余额。',hint:'class BankAccount:\\n    def __init__(self, balance=0): self.balance = balance\\n    def deposit(self, n): self.balance += n\\n    def withdraw(self, n):\\n        if n <= self.balance: self.balance -= n\\n    def get_balance(self): return self.balance',starterCode:'# 创建 BankAccount 类\n# __init__(self, balance=0)\n# deposit(self, amount)\n# withdraw(self, amount)\n# get_balance(self)\n\nclass BankAccount:\n    def __init__(self, balance=0):\n        self.balance = balance\n    \n    def deposit(self, amount):\n        pass\n    \n    def withdraw(self, amount):\n        pass\n    \n    def get_balance(self):\n        pass',solution:'class BankAccount:\n    def __init__(self, balance=0):\n        self.balance = balance\n    def deposit(self, amount):\n        self.balance += amount\n    def withdraw(self, amount):\n        if amount <= self.balance:\n            self.balance -= amount\n    def get_balance(self):\n        return self.balance\nacc = BankAccount(100)\nacc.deposit(50)\nacc.withdraw(30)\nprint(f"余额: {acc.get_balance()}")',fn:'BankAccount'},
+      {id:'class-4',title:'继承练习',desc:'创建 <code>Animal</code> 类（<code>__init__(self, name)</code>，方法 <code>speak(self)</code> 返回 <code>"..."</code>）。创建 <code>Dog</code> 类继承 Animal，重写 <code>speak(self)</code> 返回 <code>"汪汪!"</code>。',hint:'class Dog(Animal):\\n    def speak(self): return "汪汪!"',starterCode:'# 创建 Animal 类\n# __init__(self, name)\n# speak(self) 返回 "..."\n# 创建 Dog 类继承 Animal\n# 重写 speak(self) 返回 "汪汪!"\n\nclass Animal:\n    def __init__(self, name):\n        self.name = name\n    \n    def speak(self):\n        return "...",\n\nclass Dog(Animal):\n    def speak(self):\n        pass',solution:'class Animal:\n    def __init__(self, name):\n        self.name = name\n    def speak(self):\n        return "..."\nclass Dog(Animal):\n    def speak(self):\n        return "汪汪!"\nd = Dog("旺财")\nprint(f"{d.name}: {d.speak()}")',fn:'Dog'},
+    ]
+  },
+  {
+    id:'comprehensions', icon:'🔄', title:'列表推导式与生成器',
+    desc:`<p>列表推导式是 Python 最优雅的特性之一，让你用<strong>一行代码</strong>实现复杂的循环逻辑。</p>
+<h4>列表推导式（List Comprehension）</h4>
+<p>基本语法：<code>[表达式 for 变量 in 可迭代对象 if 条件]</code></p>
+<pre><code># 生成 0-9 的平方
+squares = [x**2 for x in range(10)]
+print(squares)  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+# 偶数平方
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+print(even_squares)  # [0, 4, 16, 36, 64]
+
+# 相当于：
+result = []
+for x in range(10):
+    if x % 2 == 0:
+        result.append(x**2)</code></pre>
+<h4>字典和集合推导式</h4>
+<pre><code>square_dict = {x: x**2 for x in range(5)}  # 字典
+square_set = {x**2 for x in range(5)}      # 集合</code></pre>
+<h4>生成器（Generator）</h4>
+<p>用 <code>yield</code> 关键字创建生成器函数，一次生成一个值，<strong>节省内存</strong>：</p>
+<pre><code>def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+for num in fibonacci(10):
+    print(num)</code></pre>`,
+    code:`# ===== 列表推导式 =====
+squares = [x**2 for x in range(10)]
+print(f"平方: {squares}")
+
+even_squares = [x**2 for x in range(20) if x % 2 == 0]
+print(f"偶数的平方: {even_squares}")
+
+# 字典推导式
+square_dict = {x: x**2 for x in range(5)}
+print(f"字典: {square_dict}")
+
+# 集合推导式
+unique_lengths = {len(word) for word in ["hello", "world", "python", "hi"]}
+print(f"不同长度: {unique_lengths}")
+
+# ===== 生成器 =====
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+fib = list(fibonacci(10))
+print(f"斐波那契: {fib}")`,
+    exercises:[
+      {id:'comp-1',title:'平方列表',desc:'用列表推导式编写 <code>square_list</code>，接收 <code>n</code>，返回 <code>[0, 1, 4, 9, ..., (n-1)^2]</code>。',hint:'def square_list(n): return [x**2 for x in range(n)]',starterCode:'# 编写 square_list 函数\n# 参数: n\n# 返回值: [0, 1, 4, 9, ..., (n-1)^2]\n# 提示: 用列表推导式 [x**2 for x in range(n)]\n\ndef square_list(n):\n    pass',solution:'def square_list(n):\n    return [x ** 2 for x in range(n)]',fn:'square_list',tests:[{args:[5],expect:'[0, 1, 4, 9, 16]'},{args:[3],expect:'[0, 1, 4]'}]},
+      {id:'comp-2',title:'过滤偶数',desc:'编写 <code>get_even</code>，用列表推导式从 <code>lst</code> 中选出所有偶数。',hint:'def get_even(lst): return [x for x in lst if x % 2 == 0]',starterCode:'# 编写 get_even 函数\n# 参数: lst (数字列表)\n# 返回值: 只含偶数的列表\n# 提示: [x for x in lst if x % 2 == 0]\n\ndef get_even(lst):\n    pass',solution:'def get_even(lst):\n    return [x for x in lst if x % 2 == 0]',fn:'get_even',tests:[{args:[[1,2,3,4,5,6]],expect:'[2, 4, 6]'},{args:[[1,3,5]],expect:'[]'}]},
+      {id:'comp-3',title:'字典推导式',desc:'编写 <code>to_square_dict</code>，接收 <code>n</code>，返回 <code>{x: x**2 for x in range(n)}</code>。',hint:'def to_square_dict(n): return {x: x**2 for x in range(n)}',starterCode:'# 编写 to_square_dict 函数\n# 参数: n\n# 返回值: {0:0, 1:1, 2:4, ..., (n-1):(n-1)^2}\n# 提示: {x: x**2 for x in range(n)}\n\ndef to_square_dict(n):\n    pass',solution:'def to_square_dict(n):\n    return {x: x ** 2 for x in range(n)}',fn:'to_square_dict',tests:[{args:[4],expect:'{0: 0, 1: 1, 2: 4, 3: 9}'},{args:[3],expect:'{0: 0, 1: 1, 2: 4}'}]},
+      {id:'comp-4',title:'斐波那契生成器',desc:'编写生成器函数 <code>fib_generator</code>，接收 <code>n</code>，用 <code>yield</code> 生成前 n 个斐波那契数。',hint:'def fib_generator(n):\\n    a, b = 0, 1\\n    for _ in range(n):\\n        yield a\\n        a, b = b, a + b',starterCode:'# 编写生成器函数 fib_generator\n# 参数: n\n# 功能: yield 出前 n 个斐波那契数\n# 提示: a, b = 0, 1; for _ in range(n): yield a; a, b = b, a + b\n\ndef fib_generator(n):\n    pass',solution:'def fib_generator(n):\n    a, b = 0, 1\n    for _ in range(n):\n        yield a\n        a, b = b, a + b\nprint(list(fib_generator(10)))',fn:'fib_generator'},
+    ]
+  },
+  {
+    id:'builtins', icon:'🧰', title:'实用内置函数与高阶函数',
+    desc:`<p>Python 提供了大量<strong>内置函数</strong>，让你的代码更简洁、更高效。</p>
+<h4>map（映射）</h4>
+<p>对序列中每个元素执行同一个操作，返回迭代器：</p>
+<pre><code>nums = [1, 2, 3, 4, 5]
+squares = list(map(lambda x: x**2, nums))
+print(squares)  # [1, 4, 9, 16, 25]</code></pre>
+<h4>filter（过滤）</h4>
+<p>根据条件过滤序列：</p>
+<pre><code>evens = list(filter(lambda x: x % 2 == 0, nums))
+print(evens)  # [2, 4]</code></pre>
+<h4>zip（拉链）</h4>
+<p>将多个序列按位置配对：</p>
+<pre><code>names = ["小明", "小红"]
+scores = [95, 88]
+pairs = list(zip(names, scores))
+print(pairs)  # [("小明", 95), ("小红", 88)]</code></pre>
+<h4>enumerate（枚举）</h4>
+<p>遍历时同时获取索引和值：</p>
+<pre><code>for i, name in enumerate(names):
+    print(f"{i+1}. {name}")</code></pre>
+<h4>sorted（排序）</h4>
+<p>返回排序后的新列表：</p>
+<pre><code>sorted([3, 1, 4, 1, 5])           # [1, 1, 3, 4, 5]
+sorted([3, 1, 4], reverse=True)   # [4, 3, 1]</code></pre>
+<h4>any / all</h4>
+<p><code>any</code> — 任一为真返回 True &nbsp; <code>all</code> — 全部为真返回 True</p>`,
+    code:`# ===== map =====
+nums = [1, 2, 3, 4, 5]
+squares = list(map(lambda x: x**2, nums))
+print(f"map 平方: {squares}")
+
+# ===== filter =====
+evens = list(filter(lambda x: x % 2 == 0, nums))
+print(f"filter 偶数: {evens}")
+
+# ===== zip =====
+names = ["小明", "小红", "小刚"]
+scores = [95, 88, 92]
+pairs = list(zip(names, scores))
+print(f"zip: {pairs}")
+
+# ===== enumerate =====
+print("\\n名单:")
+for i, name in enumerate(names):
+    print(f"  {i+1}. {name}")
+
+# ===== sorted =====
+data = [3, 1, 4, 1, 5, 9]
+print(f"\\nsorted: {sorted(data)}")
+print(f"reverse: {sorted(data, reverse=True)}")
+
+# ===== any / all =====
+print(f"\\nany 偶数: {any(x % 2 == 0 for x in nums)}")
+print(f"all 正数: {all(x > 0 for x in nums)}")`,
+    exercises:[
+      {id:'built-1',title:'map 双倍',desc:'编写 <code>double_all</code>，用 <code>map</code> 和 <code>lambda</code> 将列表中每个元素乘以 2，返回新列表。',hint:'def double_all(lst): return list(map(lambda x: x*2, lst))',starterCode:'# 编写 double_all 函数\n# 参数: lst (数字列表)\n# 返回值: 每个元素乘 2 的列表\n# 提示: list(map(lambda x: x*2, lst))\n\ndef double_all(lst):\n    pass',solution:'def double_all(lst):\n    return list(map(lambda x: x * 2, lst))',fn:'double_all',tests:[{args:[[1,2,3]],expect:'[2, 4, 6]'},{args:[[10,20,30]],expect:'[20, 40, 60]'}]},
+      {id:'built-2',title:'filter 短词',desc:'编写 <code>filter_short_words</code>，接收 <code>words</code>（字符串列表）和 <code>max_len</code>，返回长度小于 max_len 的单词列表。',hint:'def filter_short_words(words, max_len): return list(filter(lambda w: len(w) < max_len, words))',starterCode:'# 编写 filter_short_words 函数\n# 参数: words (字符串列表), max_len (最大长度)\n# 返回值: 长度小于 max_len 的单词列表\n# 提示: filter(lambda w: len(w) < max_len, words)\n\ndef filter_short_words(words, max_len):\n    pass',solution:'def filter_short_words(words, max_len):\n    return list(filter(lambda w: len(w) < max_len, words))',fn:'filter_short_words',tests:[{args:[['apple','is','good','fruit'],4],expect:'[\'is\', \'good\']'},{args:[['hi','hello','hey'],3],expect:'[\'hi\']'}]},
+      {id:'built-3',title:'zip 转字典',desc:'编写 <code>make_dict</code>，接收 <code>keys</code> 和 <code>values</code> 两个列表，用 <code>zip</code> 和 <code>dict</code> 合并为字典。',hint:'def make_dict(keys, values): return dict(zip(keys, values))',starterCode:'# 编写 make_dict 函数\n# 参数: keys (列表), values (列表)\n# 返回值: dict(zip(keys, values))\n\ndef make_dict(keys, values):\n    pass',solution:'def make_dict(keys, values):\n    return dict(zip(keys, values))',fn:'make_dict',tests:[{args:[['a','b','c'],[1,2,3]],expect:'{"a": 1, "b": 2, "c": 3}'},{args:[['x','y'],['hello','world']],expect:'{"x": "hello", "y": "world"}'}]},
+      {id:'built-4',title:'按分数排序',desc:'编写 <code>sort_by_score</code>，接收包含字典 <code>[{"name":..., "score":...}, ...]</code> 的列表，按 score 从高到低排序返回。提示：<code>sorted(students, key=lambda s: s["score"], reverse=True)</code>。',hint:'def sort_by_score(students): return sorted(students, key=lambda s: s["score"], reverse=True)',starterCode:'# 编写 sort_by_score 函数\n# 参数: students (字典列表，每项有 "name" 和 "score")\n# 返回值: 按 score 从高到低排序的列表\n# 提示: sorted(students, key=lambda s: s["score"], reverse=True)\n\ndef sort_by_score(students):\n    pass',solution:'def sort_by_score(students):\n    return sorted(students, key=lambda s: s["score"], reverse=True)',fn:'sort_by_score',tests:[{args:[[{"name":"小明","score":95},{"name":"小红","score":88},{"name":"小刚","score":92}]],expect:'[{"name": "小明", "score": 95}, {"name": "小刚", "score": 92}, {"name": "小红", "score": 88}]'}]},
+    ]
+  },
+  {
+    id:'todo-project', icon:'✅', title:'实战项目：Todo 管理器',
+    desc:`<p>让我们用 Python 构建一个<strong>完整的 Todo 管理器</strong>！通过这个实战项目，你将把前面学到的所有知识串联起来。</p>
+<h4>我们的目标</h4>
+<p>实现一个 Todo 管理器，支持以下功能：</p>
+<ul><li>✅ 创建 Todo 任务</li>
+<li>✅ 列出所有任务</li>
+<li>✅ 标记任务为已完成</li>
+<li>✅ 删除任务</li>
+<li>✅ 统计任务状态</li></ul>
+<h4>数据模型</h4>
+<p>每个 Todo 包含：<code>id</code>（编号）、<code>title</code>（标题）、<code>completed</code>（是否完成，默认为 False）</p>
+<h4>学习目标</h4>
+<p>这个项目会用到：类与对象、列表操作、字典、条件判断、循环、函数封装等核心知识。</p>
+<p>请按顺序完成下面的练习，逐步构建完整的 Todo 应用！</p>`,
+    code:`# 完整的 Todo 管理器
+class Todo:
+    def __init__(self, id, title):
+        self.id = id
+        self.title = title
+        self.completed = False
+    
+    def __str__(self):
+        status = "✓" if self.completed else "○"
+        return f"[{status}] {self.id}. {self.title}"
+
+class TodoManager:
+    def __init__(self):
+        self.todos = []
+        self.next_id = 1
+    
+    def add(self, title):
+        todo = Todo(self.next_id, title)
+        self.todos.append(todo)
+        self.next_id += 1
+        return todo
+    
+    def list_all(self):
+        return self.todos
+    
+    def complete(self, id):
+        for todo in self.todos:
+            if todo.id == id:
+                todo.completed = True
+                return todo
+        return None
+    
+    def remove(self, id):
+        for i, todo in enumerate(self.todos):
+            if todo.id == id:
+                return self.todos.pop(i)
+        return None
+    
+    def stats(self):
+        total = len(self.todos)
+        completed = sum(1 for t in self.todos if t.completed)
+        return {"total": total, "active": total - completed, "completed": completed}
+
+# 测试
+manager = TodoManager()
+manager.add("学习 Python")
+manager.add("编写 Todo 应用")
+manager.add("提交代码")
+manager.complete(1)
+manager.complete(2)
+print("全部 Todo:")
+for t in manager.list_all():
+    print(f"  {t}")
+print(f"\\n统计: {manager.stats()}")`,
+    exercises:[
+      {id:'todo-1',title:'创建 Todo（函数版）',desc:'编写 <code>create_todo</code> 函数，使用全局变量 <code>next_id</code> 自增生成 id，返回字典 <code>{"id": id, "title": title, "completed": False}</code>。',hint:'next_id = 1\\ndef create_todo(title):\\n    global next_id\\n    todo = {"id": next_id, "title": title, "completed": False}\\n    next_id += 1\\n    return todo',starterCode:'# 编写 create_todo 函数\n# 使用全局变量 next_id\n# 返回: {"id": id, "title": title, "completed": False}\n\nnext_id = 1\n\ndef create_todo(title):\n    pass',solution:'next_id = 1\ndef create_todo(title):\n    global next_id\n    todo = {"id": next_id, "title": title, "completed": False}\n    next_id += 1\n    return todo\nprint(create_todo("学习Python"))\nprint(create_todo("写代码"))',fn:'create_todo',tests:[{args:['学习Python'],expect:'{"id": 1, "title": "学习Python", "completed": false}'},{args:['写代码'],expect:'{"id": 2, "title": "写代码", "completed": false}'}]},
+      {id:'todo-2',title:'获取未完成任务',desc:'编写 <code>get_active</code>，接收 <code>todos</code>（字典列表），返回所有 <code>completed</code> 为 <code>False</code> 的 todo 列表。',hint:'def get_active(todos): return [t for t in todos if not t["completed"]]',starterCode:'# 编写 get_active 函数\n# 参数: todos (字典列表)\n# 返回值: 所有未完成的 todo 列表\n\ndef get_active(todos):\n    pass',solution:'def get_active(todos):\n    return [t for t in todos if not t["completed"]]',fn:'get_active',tests:[{args:[[{"id":1,"title":"a","completed":false},{"id":2,"title":"b","completed":true}]],expect:'[{"id": 1, "title": "a", "completed": false}]'}]},
+      {id:'todo-3',title:'标记完成',desc:'编写 <code>mark_completed</code>，接收 <code>todos</code> 和 <code>id</code>，找到对应 id 的 todo 将 completed 设为 True，返回它。没找到返回 <code>None</code>。',hint:'def mark_completed(todos, id):\\n    for t in todos:\\n        if t["id"] == id:\\n            t["completed"] = True\\n            return t\\n    return None',starterCode:'# 编写 mark_completed 函数\n# 参数: todos (列表), id (整数)\n# 返回值: 标记后的 todo 或 None\n\ndef mark_completed(todos, id):\n    pass',solution:'def mark_completed(todos, id):\n    for t in todos:\n        if t["id"] == id:\n            t["completed"] = True\n            return t\n    return None',fn:'mark_completed',tests:[{args:[[{"id":1,"title":"a","completed":false}],1],expect:'{"id": 1, "title": "a", "completed": true}'},{args:[[{"id":1,"title":"a","completed":false}],999],expect:'None'}]},
+      {id:'todo-4',title:'统计函数',desc:'编写 <code>get_stats</code>，接收 <code>todos</code>，返回 <code>{"total": 总数, "active": 未完成数, "completed": 已完成数}</code>。',hint:'def get_stats(todos):\\n    total = len(todos)\\n    completed = sum(1 for t in todos if t["completed"])\\n    return {"total": total, "active": total - completed, "completed": completed}',starterCode:'# 编写 get_stats 函数\n# 参数: todos\n# 返回值: {"total": 总数, "active": 未完成, "completed": 已完成}\n\ndef get_stats(todos):\n    pass',solution:'def get_stats(todos):\n    total = len(todos)\n    completed = sum(1 for t in todos if t["completed"])\n    return {"total": total, "active": total - completed, "completed": completed}',fn:'get_stats',tests:[{args:[[{"id":1,"title":"a","completed":false},{"id":2,"title":"b","completed":true},{"id":3,"title":"c","completed":false}]],expect:'{"total": 3, "active": 2, "completed": 1}'}]},
+    ]
+  }
+];
+
+// ==================== 全局变量 ====================
+let editor = null;
+let editorReady = false;
+let currentSectionId = 'intro';
+let currentTab = 'learn';
+let currentExerciseIndex = -1;
+let isRunning = false;
+let exerciseResults = {};
+let pyReady = false;
+
+const originalCodes = {};
+SECTIONS.forEach(s => { originalCodes[s.id] = s.code; });
+
+// ==================== Skulpt Python 运行时 ====================
+function runPython(code, outputCallback, errorCallback) {
+  if (!window.Sk) {
+    errorCallback('Python 运行时尚未加载，请稍后重试');
+    return;
+  }
+
+  const stdout = [];
+  const stderr = [];
+
+  Sk.configure({
+    output: function(text) { stdout.push(text); },
+    read: function(name) {
+      if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][name] === undefined) {
+        throw new Error("File not found: " + name);
+      }
+      return Sk.builtinFiles["files"][name];
+    },
+    __future__: Sk.python3
+  });
+
+  Sk.misceval.asyncToPromise(function() {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  }).then(function() {
+    outputCallback(stdout.join(''));
+  }, function(err) {
+    const msg = err.toString();
+    stderr.push(msg);
+    errorCallback(stderr.join('\n'));
+  });
+}
+
+// ==================== 练习进度持久化 ====================
+function loadProgress() {
+  try {
+    const saved = localStorage.getItem('py-tutorial-progress');
+    if (saved) exerciseResults = JSON.parse(saved);
+  } catch(e) {}
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem('py-tutorial-progress', JSON.stringify(exerciseResults));
+  } catch(e) {}
+}
+
+function markExerciseDone(sectionId, exerciseId) {
+  if (!exerciseResults[sectionId]) exerciseResults[sectionId] = {};
+  exerciseResults[sectionId][exerciseId] = true;
+  saveProgress();
+}
+
+// ==================== 工具函数 ====================
+function toPythonLiteral(val) {
+  if (val === null || val === undefined) return 'None';
+  if (typeof val === 'boolean') return val ? 'True' : 'False';
+  if (typeof val === 'number') {
+    if (Number.isInteger(val) && Math.abs(val) < 1e15) return String(val);
+    return String(val);
+  }
+  if (typeof val === 'string') {
+    const escaped = val.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+    return "'" + escaped + "'";
+  }
+  if (Array.isArray(val)) return '[' + val.map(toPythonLiteral).join(', ') + ']';
+  if (typeof val === 'object') {
+    const items = Object.entries(val).map(([k, v]) => toPythonLiteral(k) + ': ' + toPythonLiteral(v));
+    return '{' + items.join(', ') + '}';
+  }
+  return String(val);
+}
+
+function formatValue(val) {
+  if (val === null) return 'None';
+  if (val === undefined) return 'None';
+  if (typeof val === 'object') {
+    try { return JSON.stringify(val, null, 2); }
+    catch(e) { return String(val); }
+  }
+  return String(val);
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ==================== 初始化 ====================
+function init() {
+  hideLoading();
+  loadProgress();
+  loadPreferences();
+  renderSidebar();
+  setupKeyboardShortcut();
+  setupMenuToggle();
+  setupButtons();
+  createEditor();
+}
+
+function setupButtons() {
+  const runBtn = document.getElementById('run-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const submitBtn = document.getElementById('submit-btn');
+  const hintBtn = document.getElementById('hint-btn');
+  const backBtn = document.getElementById('back-btn');
+  if (runBtn) runBtn.addEventListener('click', runCode);
+  if (resetBtn) resetBtn.addEventListener('click', resetCode);
+  if (submitBtn) submitBtn.addEventListener('click', submitExercise);
+  if (hintBtn) hintBtn.addEventListener('click', toggleHint);
+  if (backBtn) backBtn.addEventListener('click', goBackToLearn);
+
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+
+  document.querySelectorAll('.font-btn').forEach(btn => {
+    btn.addEventListener('click', () => setFontSize(btn.dataset.size));
+  });
+}
+
+function hideLoading() {
+  const el = document.getElementById('loading-overlay');
+  if (el) el.classList.add('hide');
+}
+
+// ==================== 侧边栏 ====================
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  sidebar.innerHTML = SECTIONS.map((s, i) => {
+    const done = exerciseResults[s.id];
+    const count = s.exercises ? s.exercises.length : 0;
+    const doneCount = done ? Object.keys(done).length : 0;
+    const doneMark = count > 0 && doneCount >= count ? ' <span class="done">✓全部</span>' : '';
+    return '<a class="section" data-id="' + s.id + '" href="javascript:void(0)">'
+      + '<span class="num">' + (i + 1) + '.</span> ' + (s.icon || '') + ' ' + s.title + doneMark
+    + '</a>';
+  }).join('<div class="divider"></div>');
+  sidebar.addEventListener('click', (e) => {
+    const el = e.target.closest('.section');
+    if (el) {
+      const id = el.dataset.id;
+      if (id !== currentSectionId) {
+        loadSection(id);
+        document.getElementById('sidebar').classList.remove('open');
+      }
+    }
+  });
+}
+
+function highlightSidebar(id) {
+  document.querySelectorAll('#sidebar .section').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === id);
+  });
+}
+
+// ==================== 章节加载 ====================
+function loadSection(id) {
+  const section = SECTIONS.find(s => s.id === id);
+  if (!section) return;
+  currentSectionId = id;
+  currentTab = 'learn';
+  currentExerciseIndex = -1;
+
+  document.getElementById('section-title').textContent = section.title;
+  document.getElementById('section-desc').innerHTML = section.desc;
+  document.getElementById('content').scrollTop = 0;
+  highlightSidebar(id);
+  document.getElementById('output').classList.remove('show');
+
+  updateProgress(section);
+  renderTabs(section);
+
+  document.getElementById('section-desc').style.display = 'block';
+  document.getElementById('exercise-area').classList.remove('show');
+  document.getElementById('submit-btn').classList.remove('show');
+  document.getElementById('hint-btn').classList.remove('show');
+  document.getElementById('back-btn').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(section.code);
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function updateProgress(section) {
+  const el = document.getElementById('section-progress');
+  if (!section.exercises || section.exercises.length === 0) {
+    el.textContent = '';
+    return;
+  }
+  const done = exerciseResults[section.id] || {};
+  const doneCount = Object.keys(done).length;
+  const total = section.exercises.length;
+  el.textContent = '练习进度: ' + doneCount + '/' + total + (doneCount >= total ? ' 🎉 全部完成!' : '');
+}
+
+// ==================== 标签页 ====================
+function renderTabs(section) {
+  const tabsEl = document.getElementById('section-tabs');
+  let html = '<div class="section-tab active" data-tab="learn">📖 学习</div>';
+  if (section.exercises) {
+    section.exercises.forEach((ex, i) => {
+      const done = exerciseResults[section.id] && exerciseResults[section.id][ex.id];
+      html += '<div class="section-tab' + (done ? ' done' : '') + '" data-tab="' + i + '">练习 ' + (i+1) + (done ? '<span class="check">✓</span>' : '') + '</div>';
+    });
+  }
+  tabsEl.innerHTML = html;
+
+  tabsEl.querySelectorAll('.section-tab').forEach(el => {
+    el.addEventListener('click', () => {
+      const tab = el.dataset.tab;
+      if (tab === 'learn') {
+        switchToLearn(section);
+      } else {
+        switchToExercise(section, parseInt(tab));
+      }
+    });
+  });
+}
+
+function switchToLearn(section) {
+  currentTab = 'learn';
+  currentExerciseIndex = -1;
+
+  document.querySelectorAll('#section-tabs .section-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === 'learn');
+  });
+
+  document.getElementById('section-desc').style.display = 'block';
+  document.getElementById('exercise-area').classList.remove('show');
+  document.getElementById('submit-btn').classList.remove('show');
+  document.getElementById('hint-btn').classList.remove('show');
+  document.getElementById('back-btn').classList.remove('show');
+  document.getElementById('output').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(section.code);
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function switchToExercise(section, index) {
+  if (!section.exercises || !section.exercises[index]) return;
+
+  currentTab = 'exercise';
+  currentExerciseIndex = index;
+  const ex = section.exercises[index];
+
+  document.querySelectorAll('#section-tabs .section-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === String(index));
+  });
+
+  document.getElementById('section-desc').style.display = 'none';
+  document.getElementById('exercise-area').classList.add('show');
+  document.getElementById('exercise-title').textContent = ex.title;
+  document.getElementById('exercise-desc').innerHTML = ex.desc;
+  document.getElementById('exercise-hint').innerHTML = ex.hint || '';
+  document.getElementById('exercise-hint').classList.remove('show');
+  document.getElementById('submit-btn').classList.add('show');
+  document.getElementById('hint-btn').classList.add('show');
+  document.getElementById('back-btn').classList.add('show');
+  document.getElementById('output').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(ex.starterCode);
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function goBackToLearn() {
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (section) switchToLearn(section);
+}
+
+function toggleHint() {
+  const hint = document.getElementById('exercise-hint');
+  hint.classList.toggle('show');
+  document.getElementById('hint-btn').textContent = hint.classList.contains('show') ? '隐藏提示' : '查看提示';
+}
+
+// ==================== Monaco Editor ====================
+function createEditor() {
+  if (editorReady) return;
+  editorReady = true;
+
+  require.config({
+    paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }
+  });
+
+  require(['vs/editor/editor.main'], () => {
+    const container = document.getElementById('editor-container');
+    if (!container) return;
+    container.classList.remove('loading');
+    container.innerHTML = '';
+    container.style.height = '380px';
+
+    const savedTheme = localStorage.getItem('py-theme') || 'light';
+    const isLight = savedTheme === 'light';
+    if (isLight) document.body.classList.add('light');
+    const monacoTheme = isLight ? 'vs' : 'vs-dark';
+
+    editor = monaco.editor.create(container, {
+      value: SECTIONS[0].code,
+      language: 'python',
+      theme: monacoTheme,
+      minimap: { enabled: false },
+      fontSize: 14,
+      lineNumbers: 'on',
+      scrollBeyondLastLine: false,
+      automaticLayout: true,
+      wordWrap: 'on',
+      tabSize: 4,
+      renderWhitespace: 'selection',
+      padding: { top: 12 },
+    });
+
+    loadSection(currentSectionId);
+
+    editor.onDidChangeModelContent(() => {
+      const lineCount = editor.getModel().getLineCount();
+      const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
+      container.style.height = newHeight + 'px';
+      editor.layout();
+    });
+  });
+}
+
+// ==================== 运行代码 ====================
+function runCode() {
+  if (isRunning || !editor) return;
+
+  const btn = document.getElementById('run-btn');
+  btn.classList.add('running');
+  isRunning = true;
+
+  const code = editor.getValue();
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">⏳ 正在执行 ...</span>';
+
+  runPython(code,
+    function(stdout) {
+      const html = stdout ? escapeHtml(stdout) : '<span class="out-info">✓ 代码已执行（无输出内容）</span>';
+      outputContent.innerHTML = html.replace(/\n/g, '<br>');
+      statusEl.innerHTML = '<span class="badge success">✓ 执行成功</span>';
+      btn.classList.remove('running');
+      isRunning = false;
+    },
+    function(stderr) {
+      outputContent.innerHTML = '<span class="out-err">⛔ ' + escapeHtml(stderr) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">✗ 执行失败</span>';
+      btn.classList.remove('running');
+      isRunning = false;
+    }
+  );
+}
+
+function resetCode() {
+  if (!editor) return;
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (currentTab === 'learn' || currentExerciseIndex === -1) {
+    editor.setValue(section.code);
+  } else if (section.exercises && section.exercises[currentExerciseIndex]) {
+    editor.setValue(section.exercises[currentExerciseIndex].starterCode);
+  }
+  document.getElementById('output').classList.remove('show');
+}
+
+// ==================== 提交练习 ====================
+function submitExercise() {
+  if (isRunning || !editor) return;
+
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (!section || !section.exercises || currentExerciseIndex < 0) return;
+
+  const exercise = section.exercises[currentExerciseIndex];
+  const userCode = editor.getValue();
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">⏳ 正在判题 ...</span>';
+
+  if (!exercise.tests || exercise.tests.length === 0 || exercise.tests[0].noexpect) {
+    outputContent.innerHTML = '<span class="out-info">此练习需要手动验证，请点击"运行代码"查看输出。</span>';
+    statusEl.innerHTML = '';
+    return;
+  }
+
+  if (!exercise.fn) {
+    outputContent.innerHTML = '<span class="out-info">此练习需要手动验证，请点击"运行代码"查看输出。</span>';
+    statusEl.innerHTML = '';
+    return;
+  }
+
+  // 构建测试代码
+  let testCode = userCode + '\n\n';
+  testCode += 'import json\n';
+  testCode += '_results = []\n';
+
+  exercise.tests.forEach((test, i) => {
+    if (test.noexpect) return;
+    const argsStr = test.args.map(a => toPythonLiteral(a)).join(', ');
+    const expectStr = toPythonLiteral(test.expect);
+    testCode += 'try:\n';
+    testCode += '  _r = ' + exercise.fn + '(' + argsStr + ')\n';
+    testCode += '  _results.append({"pass": _r == ' + expectStr + ', "actual": repr(_r), "expected": repr(' + expectStr + ')})\n';
+    testCode += 'except Exception as _e:\n';
+    testCode += '  _results.append({"pass": false, "actual": str(_e), "expected": ' + expectStr + '})\n';
+  });
+
+  testCode += '\nprint("__PY_RESULTS__")\n';
+  testCode += 'print(json.dumps(_results, ensure_ascii=False))';
+
+  runPython(testCode,
+    function(stdout) {
+      const lines = stdout.split('\n');
+      const resultLine = lines.find(l => l.trim().startsWith('__PY_RESULTS__'));
+      if (!resultLine) {
+        outputContent.innerHTML = '<span class="out-err">⛔ 无法解析测试结果</span>';
+        statusEl.innerHTML = '<span class="badge error">✗ 提交失败</span>';
+        return;
+      }
+      const idx = lines.indexOf(resultLine);
+      const jsonStr = lines[idx + 1] || '[]';
+      let results;
+      try {
+        results = JSON.parse(jsonStr);
+      } catch(e) {
+        outputContent.innerHTML = '<span class="out-err">⛔ 测试结果解析失败: ' + escapeHtml(e.message) + '</span>';
+        statusEl.innerHTML = '<span class="badge error">✗ 提交失败</span>';
+        return;
+      }
+
+      let passedCount = 0;
+      let failedCount = 0;
+      let detailsHtml = '';
+
+      results.forEach((r, i) => {
+        if (r.pass) passedCount++;
+        else failedCount++;
+
+        detailsHtml += '<div class="result-item ' + (r.pass ? 'pass' : 'fail') + '">';
+        detailsHtml += '<div class="icon ' + (r.pass ? 'pass' : 'fail') + '">' + (r.pass ? '✓' : '✗') + '</div>';
+        detailsHtml += '<div class="detail">';
+        detailsHtml += '<div>测试 ' + (i + 1) + '</div>';
+        if (!r.pass) {
+          detailsHtml += '<div class="got">你的结果: ' + escapeHtml(r.actual) + '</div>';
+          detailsHtml += '<div class="expected">期望结果: ' + escapeHtml(r.expected) + '</div>';
+        } else {
+          detailsHtml += '<div class="expected">结果: ' + escapeHtml(r.actual) + ' ✓</div>';
+        }
+        detailsHtml += '</div></div>';
+      });
+
+      const allPassed = failedCount === 0;
+      const summary = '<div class="result-summary ' + (allPassed ? 'all-pass' : 'has-fail') + '">'
+        + (allPassed ? '🎉 全部通过！' : '😅 通过了 ' + passedCount + '/' + (passedCount + failedCount) + ' 个测试')
+        + ' (' + passedCount + ' 通过, ' + failedCount + ' 失败)</div>';
+
+      outputContent.innerHTML = summary + detailsHtml;
+      statusEl.innerHTML = '<span class="badge ' + (allPassed ? 'success' : 'error') + '">'
+        + (allPassed ? '✓ 通过' : '✗ 未通过') + '</span>';
+
+      if (allPassed) {
+        markExerciseDone(section.id, exercise.id);
+        renderSidebar();
+        renderTabs(section);
+        updateProgress(section);
+      }
+    },
+    function(stderr) {
+      outputContent.innerHTML = '<span class="out-err">⛔ ' + escapeHtml(stderr) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">✗ 执行失败</span>';
+    }
+  );
+}
+
+// ==================== 主题切换 ====================
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  const theme = isLight ? 'light' : 'dark';
+  localStorage.setItem('py-theme', theme);
+  if (editor) monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark');
+}
+
+// ==================== 字号控制 ====================
+function setFontSize(level) {
+  const sizes = {
+    small: { base:'13px', mono:'12px', title:'22px', desc:'13px', code:'12px', small:'11px', sidebar:'12px', tab:'12px' },
+    medium: { base:'15px', mono:'14px', title:'26px', desc:'15px', code:'13px', small:'12px', sidebar:'14px', tab:'13px' },
+    large: { base:'17px', mono:'16px', title:'30px', desc:'17px', code:'15px', small:'13px', sidebar:'15px', tab:'14px' },
+  };
+  const s = sizes[level] || sizes.medium;
+  const root = document.documentElement;
+  root.style.setProperty('--fs-base', s.base);
+  root.style.setProperty('--fs-mono', s.mono);
+  root.style.setProperty('--fs-title', s.title);
+  root.style.setProperty('--fs-desc', s.desc);
+  root.style.setProperty('--fs-code', s.code);
+  root.style.setProperty('--fs-small', s.small);
+  root.style.setProperty('--fs-sidebar', s.sidebar);
+  root.style.setProperty('--fs-tab', s.tab);
+  if (editor) editor.updateOptions({ fontSize: parseInt(s.mono) });
+
+  document.querySelectorAll('.font-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.size === level);
+  });
+  localStorage.setItem('py-font-size', level);
+}
+
+function loadPreferences() {
+  const savedSize = localStorage.getItem('py-font-size') || 'medium';
+  const savedTheme = localStorage.getItem('py-theme') || 'light';
+  if (savedTheme === 'light') document.body.classList.add('light');
+  if (savedSize !== 'medium') setFontSize(savedSize);
+  else document.querySelector('.font-btn[data-size="medium"]')?.classList.add('active');
+}
+
+function setupKeyboardShortcut() {
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      if (currentTab === 'exercise' && currentExerciseIndex >= 0) {
+        submitExercise();
+      } else {
+        runCode();
+      }
+    }
+  });
+}
+
+function setupMenuToggle() {
+  document.getElementById('menu-toggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+}
+
+// ==================== 启动 ====================
+function boot() {
+  if (typeof require === 'undefined') {
+    showError('加载 Monaco Editor 失败，请刷新页面重试');
+    return;
+  }
+  init();
+}
+
+function showError(msg) {
+  hideLoading();
+  const container = document.getElementById('editor-container');
+  if (container) container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">' + escapeHtml(msg) + '</div>';
+}
+
+if (document.readyState === 'complete') {
+  boot();
+} else {
+  window.addEventListener('load', boot);
+}
+
+setTimeout(() => {
+  hideLoading();
+  if (!editor) {
+    const container = document.getElementById('editor-container');
+    if (container && container.classList.contains('loading')) {
+      container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">⛔ Monaco Editor 加载超时，请检查网络连接后刷新页面</div>';
+    }
+    loadPreferences();
+    renderSidebar();
+    setupButtons();
+    setupKeyboardShortcut();
+    setupMenuToggle();
+    loadSection(currentSectionId);
+  }
+}, 15000);
+</script>
+</body>
+</html>

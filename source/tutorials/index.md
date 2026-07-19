@@ -28,6 +28,22 @@ layout: docs
     </div>
   </a>
 
+  <a href="/python-tutorial/" class="tutorial-card">
+    <div class="card-icon">
+      <i class="fa-brands fa-python"></i>
+    </div>
+    <div class="card-body">
+      <h2>Python 快速入门</h2>
+      <p>从零开始的 Python 教程，涵盖基础数据类型、控制流、函数、面向对象、列表推导式等核心概念。内含在线代码编辑器，可直接运行 Python 代码。</p>
+      <div class="card-tags">
+        <span class="tag">Python</span>
+        <span class="tag">入门</span>
+        <span class="tag">后端</span>
+      </div>
+      <span class="card-link">开始学习 <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+  </a>
+
 </div>
 
 <style>
