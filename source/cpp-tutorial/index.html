@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ 快速入门教程 - 学练一体</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f1419;--surface:#1a2332;--border:#2d3b4f;--text:#e6edf3;--text-dim:#8b949e;--primary:#58a6ff;--primary-hover:#79c0ff;--success:#3fb950;--success-bg:rgba(63,185,80,.12);--error:#f85149;--error-bg:rgba(248,81,73,.12);--warning:#d29922;--sidebar-w:280px;--header-h:56px;--fs-base:15px;--fs-mono:13px;--fs-title:26px;--fs-desc:15px;--fs-code:13px;--fs-small:12px;--fs-sidebar:14px;--fs-tab:13px}
+body.light{--bg:#ffffff;--surface:#f6f8fa;--border:#d0d7de;--text:#1f2328;--text-dim:#656d76;--primary:#0969da;--primary-hover:#0550ae;--success:#1a7f37;--success-bg:rgba(26,127,55,.12);--error:#cf222e;--error-bg:rgba(207,34,46,.12);--warning:#9a6700}
+body.light #sidebar .section:hover{background:rgba(0,0,0,.03)}
+body.light #section-desc pre{background:#f6f8fa}
+body.light .exercise-hint{background:rgba(154,103,0,.08);border-color:rgba(154,103,0,.2)}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji";background:var(--bg);color:var(--text);overflow:hidden;height:100vh}
+a{color:var(--primary);text-decoration:none}
+header{height:var(--header-h);display:flex;align-items:center;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100}
+header h1{font-size:18px;font-weight:600;flex:1}
+header .version{font-size:12px;color:var(--text-dim);background:var(--border);padding:2px 10px;border-radius:4px;flex-shrink:0}
+#menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;margin-right:8px}
+#theme-toggle{background:none;border:none;cursor:pointer;font-size:18px;padding:4px 8px;border-radius:4px;margin-right:8px;transition:background .15s;line-height:1;flex-shrink:0}
+#theme-toggle:hover{background:rgba(255,255,255,.08)}
+body.light #theme-toggle:hover{background:rgba(0,0,0,.06)}
+#theme-toggle::before{content:'\2601'}
+body.light #theme-toggle::before{content:'\2600'}
+#font-controls{display:flex;gap:2px;margin-right:12px;align-items:center;flex-shrink:0}
+#font-controls .font-btn{background:none;border:1px solid var(--border);color:var(--text-dim);cursor:pointer;padding:2px 7px;border-radius:3px;font-size:12px;transition:all .15s;line-height:1.4;font-family:inherit}
+#font-controls .font-btn:hover{background:rgba(255,255,255,.08);color:var(--text)}
+body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
+#font-controls .font-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+#font-controls .font-btn[data-size="small"]{font-size:10px}
+#font-controls .font-btn[data-size="medium"]{font-size:12px}
+#font-controls .font-btn[data-size="large"]{font-size:14px}
+#app{display:flex;height:calc(100vh - var(--header-h));margin-top:var(--header-h)}
+#sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:12px 0}
+#sidebar .section{display:block;padding:10px 20px;cursor:pointer;font-size:var(--fs-sidebar);color:var(--text-dim);border-left:3px solid transparent;transition:all .15s;text-decoration:none}
+#sidebar .section:hover{color:var(--text);background:rgba(255,255,255,.04)}
+#sidebar .section.active{color:var(--primary);border-left-color:var(--primary);background:rgba(88,166,255,.08)}
+#sidebar .section .num{display:inline-block;width:20px;font-size:12px;color:var(--text-dim);margin-right:6px}
+#sidebar .section.active .num{color:var(--primary)}
+#sidebar .divider{height:1px;background:var(--border);margin:8px 12px}
+#sidebar .section .done{float:right;font-size:11px;color:var(--success)}
+#content{flex:1;min-width:0;overflow-y:auto;padding:28px 36px}
+#section-title{font-size:var(--fs-title);font-weight:700;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--primary);display:inline-block}
+#section-progress{font-size:var(--fs-small);color:var(--text-dim);margin-bottom:16px}
+.section-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0}
+.section-tab{padding:8px 18px;cursor:pointer;font-size:var(--fs-tab);color:var(--text-dim);border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;transition:all .15s;background:transparent;white-space:nowrap}
+.section-tab:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.section-tab.active{color:var(--primary);background:var(--surface);border-color:var(--border);position:relative}
+.section-tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--surface)}
+.section-tab .check{display:none;margin-left:5px;font-size:11px}
+.section-tab.done .check{display:inline;color:var(--success)}
+#section-desc{font-size:var(--fs-desc);line-height:1.8;color:var(--text-dim);margin-bottom:20px;max-width:860px}
+#section-desc h4{color:var(--text);font-size:16px;margin:18px 0 8px}
+#section-desc p{margin:8px 0}
+#section-desc code{background:var(--border);padding:2px 6px;border-radius:3px;font-size:13px;color:var(--primary)}
+#section-desc strong{color:var(--text)}
+#section-desc ul{margin:8px 0;padding-left:22px}
+#section-desc li{margin:5px 0}
+#section-desc pre{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin:10px 0;overflow-x:auto;font-size:13px;line-height:1.5;font-family:"SF Mono","Fira Code",monospace}
+#section-desc pre code{background:none;padding:0;color:var(--text);font-size:inherit}
+#exercise-area{display:none;margin-bottom:16px}
+#exercise-area.show{display:block}
+#exercise-title{font-size:16px;font-weight:600;color:var(--primary);margin-bottom:8px}
+#exercise-desc{font-size:var(--fs-desc);line-height:1.7;color:var(--text-dim);margin-bottom:10px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:6px}
+#exercise-desc code{background:var(--border);padding:1px 5px;border-radius:3px;font-size:13px;color:var(--primary)}
+#exercise-hint{display:none;font-size:13px;color:var(--warning);margin-bottom:10px;padding:10px 14px;background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.25);border-radius:6px}
+#exercise-hint.show{display:block}
+#exercise-hint code{background:rgba(210,153,34,.15);padding:1px 5px;border-radius:3px}
+.toggle-hint{background:none;border:none;color:var(--warning);cursor:pointer;font-size:13px;padding:0;text-decoration:underline}
+.toggle-hint:hover{color:var(--primary-hover)}
+#editor-wrap{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px}
+#editor-container{height:380px}
+#editor-container.loading{display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:14px}
+#controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+#controls button{display:flex;align-items:center;gap:5px;padding:8px 18px;border:none;border-radius:6px;cursor:pointer;font-size:var(--fs-small);font-weight:500;transition:all .15s}
+#controls button:disabled{opacity:.4;cursor:not-allowed}
+#run-btn{background:var(--success);color:#fff}
+#run-btn:hover:not(:disabled){filter:brightness(1.15)}
+#run-btn.running{opacity:.7;pointer-events:none}
+#reset-btn{background:var(--border);color:var(--text)}
+#reset-btn:hover:not(:disabled){background:var(--text-dim);color:var(--bg)}
+#submit-btn{background:var(--primary);color:#fff;display:none}
+#submit-btn:hover:not(:disabled){background:var(--primary-hover)}
+#submit-btn.show{display:flex}
+#hint-btn{background:transparent;color:var(--warning);border:1px solid var(--warning)!important;display:none}
+#hint-btn.show{display:flex}
+#hint-btn:hover{background:rgba(210,153,34,.1)}
+#back-btn{background:var(--border);color:var(--text-dim);display:none;font-size:12px}
+#back-btn.show{display:flex}
+#back-btn:hover{color:var(--text)}
+#controls button svg{width:15px;height:15px;fill:currentColor;flex-shrink:0}
+#output{display:none;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px}
+#output.show{display:block}
+#output-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--border);font-size:var(--fs-small);color:var(--text-dim)}
+#output-header .badge{font-size:11px;padding:2px 8px;border-radius:3px}
+#output-header .badge.success{background:var(--success-bg);color:var(--success)}
+#output-header .badge.error{background:var(--error-bg);color:var(--error)}
+#output-content{padding:16px;font-family:"SF Mono","Fira Code","Cascadia Code",monospace;font-size:var(--fs-mono);line-height:1.6;white-space:pre-wrap;word-break:break-word;min-height:50px;max-height:350px;overflow-y:auto;background:var(--bg);color:var(--text);margin:0}
+#output-content .out-log{color:var(--text)}
+#output-content .out-err{color:var(--error)}
+#output-content .out-info{color:var(--text-dim);font-style:italic}
+.result-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;margin:4px 0;border-radius:4px;font-size:var(--fs-mono);line-height:1.5}
+.result-item.pass{background:var(--success-bg)}
+.result-item.fail{background:var(--error-bg)}
+.result-item .icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.result-item .icon.pass{color:var(--success)}
+.result-item .icon.fail{color:var(--error)}
+.result-item .detail{flex:1}
+.result-item .detail .args{color:var(--text-dim);font-size:12px}
+.result-item .detail .got{color:var(--error);font-size:12px}
+.result-item .detail .expected{color:var(--success);font-size:12px}
+.result-summary{font-size:15px;font-weight:600;padding:10px 0 4px}
+.result-summary.all-pass{color:var(--success)}
+.result-summary.has-fail{color:var(--error)}
+#sidebar::-webkit-scrollbar,#content::-webkit-scrollbar{width:6px}
+#sidebar::-webkit-scrollbar-track,#content::-webkit-scrollbar-track{background:transparent}
+#sidebar::-webkit-scrollbar-thumb,#content::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s}
+#loading-overlay.hide{opacity:0;pointer-events:none}
+#loading-overlay .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading-overlay .text{color:var(--text-dim);font-size:14px}
+@media(max-width:820px){
+  #sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:90;transform:translateX(-100%);transition:transform .25s;width:260px;min-width:260px}
+  #sidebar.open{transform:translateX(0)}
+  #menu-toggle{display:block}
+  #content{padding:20px 14px}
+  #editor-container{height:260px}
+  #section-title{font-size:calc(var(--fs-title) - 4px)}
+  #section-desc{font-size:calc(var(--fs-desc) - 1px)}
+  #controls button{padding:7px 12px}
+  .section-tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:0}
+  .section-tab{padding:7px 12px}
+  #font-controls{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="text">正在加载 C++ 教程 ...</div>
+</div>
+
+<header>
+  <button id="menu-toggle" aria-label="菜单">&#9776;</button>
+  <button id="theme-toggle" aria-label="切换主题" title="切换暗色/淡色主题"></button>
+  <h1>C++ 快速入门教程</h1>
+  <div id="font-controls">
+    <button class="font-btn" data-size="small" title="小字号">A</button>
+    <button class="font-btn active" data-size="medium" title="中字号（默认）">A</button>
+    <button class="font-btn" data-size="large" title="大字号">A</button>
+  </div>
+  <span class="version">C++17</span>
+</header>
+
+<div id="app">
+  <nav id="sidebar"></nav>
+
+  <main id="content">
+    <h2 id="section-title"></h2>
+    <div id="section-progress"></div>
+
+    <div class="section-tabs" id="section-tabs"></div>
+
+    <div id="section-desc"></div>
+
+    <div id="exercise-area">
+      <div id="exercise-title"></div>
+      <div id="exercise-desc"></div>
+      <div id="exercise-hint"></div>
+    </div>
+
+    <div id="editor-wrap">
+      <div id="editor-container" class="loading">加载编辑器中...</div>
+    </div>
+
+    <div id="controls">
+      <button id="back-btn">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        返回学习
+      </button>
+      <button id="run-btn">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        运行代码
+      </button>
+      <button id="submit-btn">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        提交答案
+      </button>
+      <button id="hint-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        查看提示
+      </button>
+      <button id="reset-btn">
+        <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        重置代码
+      </button>
+    </div>
+
+    <div id="output">
+      <div id="output-header">
+        <span>输出结果</span>
+        <span id="output-status"></span>
+      </div>
+      <pre id="output-content"></pre>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+<script>
+// ==================== 教程章节数据 ====================
+const SECTIONS = [
+  {
+    "id": "intro",
+    "icon": "⚡",
+    "title": "C++ 简介",
+    "desc": "<p>C++ 是 C 语言的超集，加入<strong>面向对象</strong>和<strong>泛型编程</strong>支持。</p><h4>第一个程序</h4><pre><code>#include <iostream>\\nint main() {\\n    std::cout << \"Hello, World!\" << std::endl;\\n    return 0;\\n}</code></pre>",
+    "code": "#include <iostream>\\nint main() {\\n    std::cout << \"Hello, World!\" << std::endl;\\n    std::string name = \"C++\";\\n    std::cout << \"你好, \" << name << \"!\" << std::endl;\\n    return 0;\\n}",
+    "exercises": [
+      {
+        "id": "cpp-i1",
+        "title": "加法函数",
+        "desc": "编写 <code>add</code> 接收 <code>int a, int b</code> 返回 <code>int</code> 和。",
+        "hint": "int add(int a, int b) { return a + b; }",
+        "starterCode": "// 编写 add 函数",
+        "solution": "int add(int a, int b) { return a + b; }",
+        "fn": "add",
+        "tests": [
+          {
+            "args": [
+              3,
+              5
+            ],
+            "expect": 8
+          }
+        ]
+      }
+    ]
+  }
+];
+
+
+// ==================== 全局变量 ====================
+let editor = null;
+let editorReady = false;
+let currentSectionId = 'intro';
+let currentTab = 'learn';
+let currentExerciseIndex = -1;
+let isRunning = false;
+let exerciseResults = {};
+
+const originalCodes = {};
+SECTIONS.forEach(s => { originalCodes[s.id] = s.code; });
+
+
+
+
+// ==================== 练习进度持久化 ====================
+function loadProgress() {
+  try {
+    const saved = localStorage.getItem('cpp-tutorial-progress');
+    if (saved) exerciseResults = JSON.parse(saved);
+  } catch(e) {}
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem('cpp-tutorial-progress', JSON.stringify(exerciseResults));
+  } catch(e) {}
+}
+
+function markExerciseDone(sectionId, exerciseId) {
+  if (!exerciseResults[sectionId]) exerciseResults[sectionId] = {};
+  exerciseResults[sectionId][exerciseId] = true;
+  saveProgress();
+}
+
+// ==================== 工具函数 ====================
+function toPythonLiteral(val) {
+  if (val === null || val === undefined) return 'None';
+  if (typeof val === 'boolean') return val ? 'True' : 'False';
+  if (typeof val === 'number') {
+    if (Number.isInteger(val) && Math.abs(val) < 1e15) return String(val);
+    return String(val);
+  }
+  if (typeof val === 'string') {
+    const escaped = val.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+    return "'" + escaped + "'";
+  }
+  if (Array.isArray(val)) return '[' + val.map(toPythonLiteral).join(', ') + ']';
+  if (typeof val === 'object') {
+    const items = Object.entries(val).map(([k, v]) => toPythonLiteral(k) + ': ' + toPythonLiteral(v));
+    return '{' + items.join(', ') + '}';
+  }
+  return String(val);
+}
+
+function formatValue(val) {
+  if (val === null) return 'None';
+  if (val === undefined) return 'None';
+  if (typeof val === 'object') {
+    try { return JSON.stringify(val, null, 2); }
+    catch(e) { return String(val); }
+  }
+  return String(val);
+}
+
+function escHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ==================== 代码缓存 ====================
+function cacheKey() {
+  if (currentTab === 'learn' || currentExerciseIndex === -1) return 'cpp-' + currentSectionId;
+  return 'cpp-' + currentSectionId + '-' + currentExerciseIndex;
+}
+
+function saveCode() {
+  if (!editor) return;
+  try { localStorage.setItem(cacheKey(), editor.getValue()); } catch(e) {}
+}
+
+function loadCachedCode(fallback) {
+  try {
+    const cached = localStorage.getItem(cacheKey());
+    return cached !== null ? cached : fallback;
+  } catch(e) { return fallback; }
+}
+
+function clearCachedCode() {
+  try { localStorage.removeItem(cacheKey()); } catch(e) {}
+}
+
+// ==================== 初始化 ====================
+function init() {
+  hideLoading();
+  loadProgress();
+  loadPreferences();
+  renderSidebar();
+  setupKeyboardShortcut();
+  setupMenuToggle();
+  setupButtons();
+  createEditor();
+}
+
+function setupButtons() {
+  const runBtn = document.getElementById('run-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const submitBtn = document.getElementById('submit-btn');
+  const hintBtn = document.getElementById('hint-btn');
+  const backBtn = document.getElementById('back-btn');
+  if (runBtn) runBtn.addEventListener('click', runCode);
+  if (resetBtn) resetBtn.addEventListener('click', resetCode);
+  if (submitBtn) submitBtn.addEventListener('click', submitExercise);
+  if (hintBtn) hintBtn.addEventListener('click', toggleHint);
+  if (backBtn) backBtn.addEventListener('click', goBackToLearn);
+
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+
+  document.querySelectorAll('.font-btn').forEach(btn => {
+    btn.addEventListener('click', () => setFontSize(btn.dataset.size));
+  });
+}
+
+function hideLoading() {
+  const el = document.getElementById('loading-overlay');
+  if (el) el.classList.add('hide');
+}
+
+// ==================== 侧边栏 ====================
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  sidebar.innerHTML = SECTIONS.map((s, i) => {
+    const done = exerciseResults[s.id];
+    const count = s.exercises ? s.exercises.length : 0;
+    const doneCount = done ? Object.keys(done).length : 0;
+    const doneMark = count > 0 && doneCount >= count ? ' <span class="done">✓全部</span>' : '';
+    return '<a class="section" data-id="' + s.id + '" href="javascript:void(0)">'
+      + '<span class="num">' + (i + 1) + '.</span> ' + (s.icon || '') + ' ' + s.title + doneMark
+    + '</a>';
+  }).join('<div class="divider"></div>');
+  sidebar.addEventListener('click', (e) => {
+    const el = e.target.closest('.section');
+    if (el) {
+      const id = el.dataset.id;
+      if (id !== currentSectionId) {
+        loadSection(id);
+        document.getElementById('sidebar').classList.remove('open');
+      }
+    }
+  });
+}
+
+function highlightSidebar(id) {
+  document.querySelectorAll('#sidebar .section').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === id);
+  });
+}
+
+// ==================== 章节加载 ====================
+function loadSection(id) {
+  const section = SECTIONS.find(s => s.id === id);
+  if (!section) return;
+  currentSectionId = id;
+  currentTab = 'learn';
+  currentExerciseIndex = -1;
+
+  document.getElementById('section-title').textContent = section.title;
+  document.getElementById('section-desc').innerHTML = section.desc;
+  document.getElementById('content').scrollTop = 0;
+  highlightSidebar(id);
+  document.getElementById('output').classList.remove('show');
+
+  updateProgress(section);
+  renderTabs(section);
+
+  document.getElementById('section-desc').style.display = 'block';
+  document.getElementById('exercise-area').classList.remove('show');
+  document.getElementById('submit-btn').classList.remove('show');
+  document.getElementById('hint-btn').classList.remove('show');
+  document.getElementById('back-btn').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(section.code);
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function updateProgress(section) {
+  const el = document.getElementById('section-progress');
+  if (!section.exercises || section.exercises.length === 0) {
+    el.textContent = '';
+    return;
+  }
+  const done = exerciseResults[section.id] || {};
+  const doneCount = Object.keys(done).length;
+  const total = section.exercises.length;
+  el.textContent = '练习进度: ' + doneCount + '/' + total + (doneCount >= total ? ' 🎉 全部完成!' : '');
+}
+
+// ==================== 标签页 ====================
+function renderTabs(section) {
+  const tabsEl = document.getElementById('section-tabs');
+  let html = '<div class="section-tab active" data-tab="learn">📖 学习</div>';
+  if (section.exercises) {
+    section.exercises.forEach((ex, i) => {
+      const done = exerciseResults[section.id] && exerciseResults[section.id][ex.id];
+      html += '<div class="section-tab' + (done ? ' done' : '') + '" data-tab="' + i + '">练习 ' + (i+1) + (done ? '<span class="check">✓</span>' : '') + '</div>';
+    });
+  }
+  tabsEl.innerHTML = html;
+
+  tabsEl.querySelectorAll('.section-tab').forEach(el => {
+    el.addEventListener('click', () => {
+      const tab = el.dataset.tab;
+      if (tab === 'learn') {
+        switchToLearn(section);
+      } else {
+        switchToExercise(section, parseInt(tab));
+      }
+    });
+  });
+}
+
+function switchToLearn(section) {
+  currentTab = 'learn';
+  currentExerciseIndex = -1;
+
+  document.querySelectorAll('#section-tabs .section-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === 'learn');
+  });
+
+  document.getElementById('section-desc').style.display = 'block';
+  document.getElementById('exercise-area').classList.remove('show');
+  document.getElementById('submit-btn').classList.remove('show');
+  document.getElementById('hint-btn').classList.remove('show');
+  document.getElementById('back-btn').classList.remove('show');
+  document.getElementById('output').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(loadCachedCode(section.code));
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function switchToExercise(section, index) {
+  if (!section.exercises || !section.exercises[index]) return;
+
+  currentTab = 'exercise';
+  currentExerciseIndex = index;
+  const ex = section.exercises[index];
+
+  document.querySelectorAll('#section-tabs .section-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === String(index));
+  });
+
+  document.getElementById('section-desc').style.display = 'none';
+  document.getElementById('exercise-area').classList.add('show');
+  document.getElementById('exercise-title').textContent = ex.title;
+  document.getElementById('exercise-desc').innerHTML = ex.desc;
+  document.getElementById('exercise-hint').innerHTML = ex.hint || '';
+  document.getElementById('exercise-hint').classList.remove('show');
+  document.getElementById('submit-btn').classList.add('show');
+  document.getElementById('hint-btn').classList.add('show');
+  document.getElementById('back-btn').classList.add('show');
+  document.getElementById('output').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(loadCachedCode(ex.starterCode));
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function goBackToLearn() {
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (section) switchToLearn(section);
+}
+
+function toggleHint() {
+  const hint = document.getElementById('exercise-hint');
+  hint.classList.toggle('show');
+  document.getElementById('hint-btn').textContent = hint.classList.contains('show') ? '隐藏提示' : '查看提示';
+}
+
+// ==================== Monaco Editor ====================
+function createEditor() {
+  if (editorReady) return;
+  editorReady = true;
+
+  require.config({
+    paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }
+  });
+
+  require(['vs/editor/editor.main'], () => {
+    const container = document.getElementById('editor-container');
+    if (!container) return;
+    container.classList.remove('loading');
+    container.innerHTML = '';
+    container.style.height = '380px';
+
+    const savedTheme = localStorage.getItem('cpp-theme') || 'light';
+    const isLight = savedTheme === 'light';
+    if (isLight) document.body.classList.add('light');
+
+    editor = monaco.editor.create(container, {
+      value: SECTIONS[0].code,
+      language: 'cpp',
+      theme: isLight ? 'vs' : 'vs-dark',
+      minimap: { enabled: false },
+      fontSize: 14,
+      lineNumbers: 'on',
+      scrollBeyondLastLine: false,
+      automaticLayout: true,
+      wordWrap: 'on',
+      tabSize: 4,
+      renderWhitespace: 'selection',
+      padding: { top: 12 },
+    });
+
+    loadSection(currentSectionId);
+
+    let saveTimer;
+    editor.onDidChangeModelContent(() => {
+      const lineCount = editor.getModel().getLineCount();
+      const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
+      container.style.height = newHeight + 'px';
+      editor.layout();
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveCode, 500);
+    });
+  });
+}
+
+
+function resetCode() {
+  if (!editor) return;
+  clearCachedCode();
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (currentTab === 'learn' || currentExerciseIndex === -1) {
+    editor.setValue(section.code);
+  } else if (section.exercises && section.exercises[currentExerciseIndex]) {
+    editor.setValue(section.exercises[currentExerciseIndex].starterCode);
+  }
+  document.getElementById('output').classList.remove('show');
+}
+
+// ==================== 主题切换 ====================
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  const theme = isLight ? 'light' : 'dark';
+  localStorage.setItem('cpp-theme', theme);
+  if (editor) monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark');
+}
+
+// ==================== 字号控制 ====================
+function setFontSize(level) {
+  const sizes = {
+    small: { base:'13px', mono:'12px', title:'22px', desc:'13px', code:'12px', small:'11px', sidebar:'12px', tab:'12px' },
+    medium: { base:'15px', mono:'14px', title:'26px', desc:'15px', code:'13px', small:'12px', sidebar:'14px', tab:'13px' },
+    large: { base:'17px', mono:'16px', title:'30px', desc:'17px', code:'15px', small:'13px', sidebar:'15px', tab:'14px' },
+  };
+  const s = sizes[level] || sizes.medium;
+  const root = document.documentElement;
+  root.style.setProperty('--fs-base', s.base);
+  root.style.setProperty('--fs-mono', s.mono);
+  root.style.setProperty('--fs-title', s.title);
+  root.style.setProperty('--fs-desc', s.desc);
+  root.style.setProperty('--fs-code', s.code);
+  root.style.setProperty('--fs-small', s.small);
+  root.style.setProperty('--fs-sidebar', s.sidebar);
+  root.style.setProperty('--fs-tab', s.tab);
+  if (editor) editor.updateOptions({ fontSize: parseInt(s.mono) });
+
+  document.querySelectorAll('.font-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.size === level);
+  });
+  localStorage.setItem('cpp-font-size', level);
+}
+
+function loadPreferences() {
+  const savedSize = localStorage.getItem('cpp-font-size') || 'medium';
+  const savedTheme = localStorage.getItem('cpp-theme') || 'light';
+  if (savedTheme === 'light') document.body.classList.add('light');
+  if (savedSize !== 'medium') setFontSize(savedSize);
+  else document.querySelector('.font-btn[data-size="medium"]')?.classList.add('active');
+}
+
+function setupKeyboardShortcut() {
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      if (currentTab === 'exercise' && currentExerciseIndex >= 0) {
+        submitExercise();
+      } else {
+        runCode();
+      }
+    }
+  });
+}
+
+function setupMenuToggle() {
+  document.getElementById('menu-toggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+}
+
+// ==================== 启动 ====================
+function boot() {
+  if (typeof require === 'undefined') {
+    showError('加载 Monaco Editor 失败，请刷新页面重试');
+    return;
+  }
+  init();
+}
+
+function showError(msg) {
+  hideLoading();
+  const container = document.getElementById('editor-container');
+  if (container) container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">' + escHtml(msg) + '</div>';
+}
+
+if (document.readyState === 'complete') {
+  boot();
+} else {
+  window.addEventListener('load', boot);
+}
+
+setTimeout(() => {
+  hideLoading();
+  if (!editor) {
+    const container = document.getElementById('editor-container');
+    if (container && container.classList.contains('loading')) {
+      container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">⛔ Monaco Editor 加载超时，请检查网络连接后刷新页面</div>';
+    }
+    loadPreferences();
+    renderSidebar();
+    setupButtons();
+    setupKeyboardShortcut();
+    setupMenuToggle();
+    loadSection(currentSectionId);
+  }
+}, 15000);
+</script>
+</body>
+</html>

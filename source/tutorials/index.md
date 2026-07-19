@@ -44,6 +44,102 @@ layout: docs
     </div>
   </a>
 
+  <a href="/go-tutorial/" class="tutorial-card" target="_blank" rel="noopener noreferrer">
+    <div class="card-icon">
+      <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="25" fill="#00ADD8"/><text x="25" y="35" text-anchor="middle" font-size="24" fill="#fff" font-weight="bold" font-family="Arial,sans-serif">Go</text></svg>
+    </div>
+    <div class="card-body">
+      <h2>Go 快速入门</h2>
+      <p>从零开始的 Go 教程，涵盖基础类型、控制流、切片与映射、并发编程等核心概念。内含在线代码编辑器，可直接运行 Go 代码。</p>
+      <div class="card-tags">
+        <span class="tag">Go</span>
+        <span class="tag">入门</span>
+        <span class="tag">后端</span>
+      </div>
+      <span class="card-link">开始学习 <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+  </a>
+
+  <a href="/rust-tutorial/" class="tutorial-card">
+    <div class="card-icon">
+      <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="25" fill="#DEA584"/><text x="25" y="35" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold" font-family="Arial,sans-serif">Rs</text></svg>
+    </div>
+    <div class="card-body">
+      <h2>Rust 快速入门</h2>
+      <p>从零开始的 Rust 教程，涵盖基础类型、所有权、借用、生命周期等核心概念。内含在线代码编辑器，可直接运行 Rust 代码。</p>
+      <div class="card-tags">
+        <span class="tag">Rust</span>
+        <span class="tag">入门</span>
+        <span class="tag">系统编程</span>
+      </div>
+      <span class="card-link">开始学习 <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+  </a>
+
+  <a href="/c-tutorial/" class="tutorial-card">
+    <div class="card-icon">
+      <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="25" fill="#555555"/><text x="25" y="35" text-anchor="middle" font-size="22" fill="#fff" font-weight="bold" font-family="Arial,sans-serif">C</text></svg>
+    </div>
+    <div class="card-body">
+      <h2>C 语言快速入门</h2>
+      <p>从零开始的 C 语言教程，涵盖基础类型、指针、数组、结构体等核心概念。内含在线代码编辑器，可直接运行 C 代码。</p>
+      <div class="card-tags">
+        <span class="tag">C</span>
+        <span class="tag">入门</span>
+        <span class="tag">系统编程</span>
+      </div>
+      <span class="card-link">开始学习 <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+  </a>
+
+  <a href="/cpp-tutorial/" class="tutorial-card">
+    <div class="card-icon">
+      <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="25" fill="#00599C"/><text x="25" y="35" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold" font-family="Arial,sans-serif">C++</text></svg>
+    </div>
+    <div class="card-body">
+      <h2>C++ 快速入门</h2>
+      <p>从零开始的 C++ 教程，涵盖基础类型、类与对象、STL、模板等核心概念。内含在线代码编辑器，可直接运行 C++ 代码。</p>
+      <div class="card-tags">
+        <span class="tag">C++</span>
+        <span class="tag">入门</span>
+        <span class="tag">系统编程</span>
+      </div>
+      <span class="card-link">开始学习 <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+  </a>
+
+  <a href="/csharp-tutorial/" class="tutorial-card">
+    <div class="card-icon">
+      <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="25" fill="#68217A"/><text x="25" y="35" text-anchor="middle" font-size="20" fill="#fff" font-weight="bold" font-family="Arial,sans-serif">C#</text></svg>
+    </div>
+    <div class="card-body">
+      <h2>C# 快速入门</h2>
+      <p>从零开始的 C# 教程，涵盖基础类型、面向对象、LINQ、异步编程等核心概念。内含在线代码编辑器，可直接运行 C# 代码。</p>
+      <div class="card-tags">
+        <span class="tag">C#</span>
+        <span class="tag">入门</span>
+        <span class="tag">后端</span>
+      </div>
+      <span class="card-link">开始学习 <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+  </a>
+
+  <a href="/kotlin-tutorial/" class="tutorial-card">
+    <div class="card-icon">
+      <svg viewBox="0 0 50 50" width="50" height="50"><rect width="50" height="50" rx="8" fill="#7F52FF"/><text x="25" y="36" text-anchor="middle" font-size="24" fill="#fff" font-weight="bold" font-family="Arial,sans-serif">Kt</text></svg>
+    </div>
+    <div class="card-body">
+      <h2>Kotlin 快速入门</h2>
+      <p>从零开始的 Kotlin 教程，涵盖基础类型、函数、面向对象、协程等核心概念。内含在线代码编辑器，可直接运行 Kotlin 代码。</p>
+      <div class="card-tags">
+        <span class="tag">Kotlin</span>
+        <span class="tag">入门</span>
+        <span class="tag">Android</span>
+      </div>
+      <span class="card-link">开始学习 <i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+  </a>
+
 </div>
 
 <style>
