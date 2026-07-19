@@ -208,35 +208,119 @@ body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
   </main>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
 <script>
 // ==================== 教程章节数据 ====================
 const SECTIONS = [
   {
-    "id": "intro",
-    "icon": "🅺",
-    "title": "Kotlin 简介",
-    "desc": "<p>Kotlin 是一种<strong>现代 JVM 语言</strong>，Google 官方推荐的 Android 开发语言。</p><h4>第一个程序</h4><pre><code>fun main() {\\n    println(\"Hello, World!\")\\n}</code></pre>",
-    "code": "fun main() {\\n    println(\"Hello, World!\")\\n    val name = \"Kotlin\"\\n    println(\"你好, $name!\")\\n}",
-    "exercises": [
+    "id":"intro","icon":"🔳","title":"Kotlin 简介","desc":"<p>Kotlin 是由 JetBrains 公司于 2011 年开发的<strong>现代静态类型编程语言</strong>，运行在 JVM（Java 虚拟机）之上。2017 年 Google 宣布 Kotlin 成为 Android 官方开发语言，2019 年更成为 Android 开发的首选语言。Kotlin 的设计目标是<strong>更简洁、更安全、更互操作</strong>——你可以在同一个项目中混合使用 Kotlin 和 Java 代码，两者完美兼容、无缝调用。</p><svg viewBox=\"0 0 640 330\" style=\"max-width:100%;height:auto;margin:14px 0;border-radius:10px;background:#1a2332\"><defs><marker id=\"ja\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0 0L10 5L0 10z\" fill=\"#58a6ff\"/></marker></defs><rect x=\"0\" y=\"0\" width=\"640\" height=\"330\" rx=\"8\" fill=\"#0f1419\"/><text x=\"320\" y=\"30\" text-anchor=\"middle\" fill=\"#e6edf3\" font-size=\"15\" font-weight=\"bold\">Kotlin / JVM 架构图</text><rect x=\"30\" y=\"45\" width=\"580\" height=\"48\" rx=\"6\" fill=\"#1a2332\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><text x=\"320\" y=\"63\" text-anchor=\"middle\" fill=\"#79c0ff\" font-size=\"13\" font-weight=\"bold\">Kotlin 源文件 (*.kt)</text><text x=\"320\" y=\"81\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">kotlinc 编译器 → 语法分析 → 语义分析 → 字节码生成</text><line x1=\"320\" y1=\"93\" x2=\"320\" y2=\"108\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#ja)\"/><rect x=\"30\" y=\"108\" width=\"580\" height=\"32\" rx=\"6\" fill=\"#1a2332\" stroke=\"#3fb950\" stroke-width=\"1.5\"/><text x=\"320\" y=\"129\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"14\" font-weight=\"bold\">JVM 字节码 (*.class) — 与 Java 字节码完全兼容</text><line x1=\"320\" y1=\"140\" x2=\"320\" y2=\"155\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#ja)\"/><text x=\"320\" y=\"172\" text-anchor=\"middle\" fill=\"#e6edf3\" font-size=\"13\" font-weight=\"bold\">JVM 运行时数据区</text><rect x=\"30\" y=\"180\" width=\"130\" height=\"40\" rx=\"4\" fill=\"#1a2332\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"95\" y=\"205\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"11\">方法区</text><rect x=\"175\" y=\"180\" width=\"130\" height=\"40\" rx=\"4\" fill=\"#1a2332\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"240\" y=\"205\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"11\">堆</text><rect x=\"320\" y=\"180\" width=\"130\" height=\"40\" rx=\"4\" fill=\"#1a2332\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"385\" y=\"205\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"11\">虚拟机栈</text><rect x=\"465\" y=\"180\" width=\"90\" height=\"40\" rx=\"4\" fill=\"#1a2332\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"510\" y=\"205\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"11\">PC 寄存器</text><rect x=\"565\" y=\"180\" width=\"50\" height=\"40\" rx=\"4\" fill=\"#1a2332\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"590\" y=\"205\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"9\">本地<br/>栈</text><line x1=\"320\" y1=\"220\" x2=\"320\" y2=\"238\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#ja)\"/><rect x=\"30\" y=\"238\" width=\"580\" height=\"38\" rx=\"6\" fill=\"#1a2332\" stroke=\"#f85149\" stroke-width=\"1.5\"/><text x=\"320\" y=\"257\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"13\" font-weight=\"bold\">执行引擎：解释器 | JIT 编译器 | 垃圾回收器 (GC)</text><line x1=\"320\" y1=\"276\" x2=\"320\" y2=\"292\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#ja)\"/><rect x=\"30\" y=\"292\" width=\"580\" height=\"30\" rx=\"6\" fill=\"#1a2332\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><text x=\"320\" y=\"312\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"12\" font-weight=\"bold\">操作系统 (Linux / Windows / macOS) + 硬件</text></svg><h4>Kotlin 的核心特性</h4><ul><li><strong>空安全</strong>：通过类型系统在<strong>编译期</strong>消除空指针异常（NPE），?.、?:、!! 等运算符让你优雅地处理 null</li><li><strong>扩展函数</strong>：无需继承即可为已有类添加新方法</li><li><strong>数据类</strong>：一行 data class 自动生成 toString、equals、hashCode、copy 方法</li><li><strong>函数式编程</strong>：Lambda 表达式、高阶函数、集合操作符（filter、map、reduce）让代码更声明式</li><li><strong>协程</strong>：轻量级线程，用同步的方式写异步代码，极大简化并发编程</li><li><strong>智能类型转换</strong>：类型检查后自动转换，无需显式强制转型</li></ul><h4>Kotlin 应用场景</h4><p>Android 开发、后端服务（Spring Boot / Ktor）、多平台项目（KMP，一套代码跨 iOS/Android/Web）、数据科学、Gradle 脚本等。Kotlin 的生态正在快速扩展，已成为 JVM 生态中不可忽视的重要力量。</p><h4>第一个程序解析</h4><p>每个 Kotlin 程序的入口是 <code>fun main()</code> 函数。<code>println()</code> 用于输出文本到控制台。<code>val</code> 声明只读变量（不可重新赋值），<code>var</code> 声明可变变量。<code>$name</code> 是<strong>字符串模板</strong>语法，可以将变量的值嵌入到字符串中。</p>","code":"fun main() {\n    println(\"Hello, World!\")\n    val language = \"Kotlin\"\n    val year = 2011\n    println(\"$language was created in $year\")\n    val sum = 1 + 2 + 3 + 4 + 5\n    println(\"Sum = $sum\")\n    println(\"Version: ${sum + 1}\")\n}",
+    "exercises":[
       {
-        "id": "kt-i1",
-        "title": "加法函数",
-        "desc": "编写 <code>add</code> 接收 <code>a: Int, b: Int</code> 返回 <code>Int</code> 和。",
-        "hint": "fun add(a: Int, b: Int): Int { return a + b }",
-        "starterCode": "// 编写 add 函数",
-        "solution": "fun add(a: Int, b: Int): Int { return a + b }",
-        "fn": "add",
-        "tests": [
-          {
-            "args": [
-              3,
-              5
-            ],
-            "expect": 8
-          }
-        ]
-      }
+          "id":"kt-i1","title":"你好，世界！","desc":"编写程序，读入用户名字并打印问候语。","hint":"使用 readln() 读取输入，println() 输出，字符串模板 $name 嵌入变量。","starterCode":"fun main() {\n    val name = readln()\n    println(\"你好, $name!\")\n}","solution":"fun main() {\n    val name = readln()\n    println(\"你好, $name!\")\n}","fn":"","tests":[]
+        },
+      {
+          "id":"kt-i2","title":"字符串模板","desc":"使用字符串模板计算并打印表达式结果。","hint":"使用 ${a + b} 在字符串中嵌入表达式。","starterCode":"fun main() {\n    val a = 15\n    val b = 27\n    println(\"$a + $b = ${a + b}\")\n}","solution":"fun main() {\n    val a = 15\n    val b = 27\n    println(\"$a + $b = ${a + b}\")\n}","fn":"","tests":[]
+        },
+      {
+          "id":"kt-i3","title":"简单计算器","desc":"实现 calc(a: Int, b: Int, op: String): Int，支持 + - * 。","hint":"使用 when 表达式分支 op，when 可以直接返回结果。","starterCode":"fun calc(a: Int, b: Int, op: String): Int = when (op) {\n    \"+\" -> a + b\n    \"-\" -> a - b\n    \"*\" -> a * b\n    else -> 0\n}","solution":"fun calc(a: Int, b: Int, op: String): Int = when (op) {\n    \"+\" -> a + b\n    \"-\" -> a - b\n    \"*\" -> a * b\n    else -> 0\n}","fn":"calc","tests":[{args:[3,5,"+"],expect:8},{args:[10,4,"-"],expect:6},{args:[6,7,"*"],expect:42},{args:[1,2,"/"],expect:0}]
+        }
+    ]
+  },
+  {
+    "id":"types","icon":"🔤","title":"类型与变量","desc":"<p>Kotlin 是<strong>静态类型语言</strong>——每个变量的类型在编译时就已确定。但 Kotlin 提供了强大的<strong>类型推导</strong>能力，你可以在大多数情况下省略类型声明，代码既简洁又安全。</p><h4>val 和 var</h4><p><code>val</code>（value）声明<strong>只读引用</strong>，初始化后不可重新赋值（类似于 Java 的 final）。<code>var</code>（variable）声明<strong>可变引用</strong>，可以多次赋值。编程原则：能用 val 就不用 var，尽可能使用不可变性来减少程序的状态复杂性。</p><h4>基本数据类型</h4><ul><li><strong>数字</strong>：<code>Int</code>（32位整数）、<code>Long</code>（64位，用 L 后缀）、<code>Double</code>（64位浮点）、<code>Float</code>（32位，用 f 后缀）</li><li><strong>布尔</strong>：<code>Boolean</code>，值 <code>true</code> / <code>false</code></li><li><strong>字符</strong>：<code>Char</code>，单引号 <code>'A'</code></li><li><strong>字符串</strong>：<code>String</code>，双引号 <code>\"Hello\"</code>，支持字符串模板 <code>\"值 = $value\"</code></li></ul><h4>类型转换</h4><p>Kotlin 没有隐式类型转换，必须显式调用转换方法：<code>toInt()</code>、<code>toDouble()</code>、<code>toString()</code>、<code>toLong()</code> 等。例如：<code>val x: Int = \"42\".toInt()</code>。这样可以避免许多隐式转换带来的隐藏错误。</p><h4>类型检测与智能转换</h4><p>使用 <code>is</code> 运算符检测变量的类型，一旦类型检查通过，Kotlin 会自动将变量转换为检测到的类型——这称为<strong>智能类型转换</strong>（Smart Cast）。例如：<code>if (obj is String) println(obj.length)</code>，在条件分支内 obj 自动变为 String 类型。</p><h4>可空类型</h4><p>任何类型加上 <code>?</code> 后缀就变成了可空类型：<code>String?</code>。可空类型不能直接调用方法，必须通过安全调用 <code>?.</code> 或 Elvis 操作符 <code>?:</code> 来处理 null 情况。。比如，<code>val x = 10L</code> 自动推导为 Long 类型，<code>val y = 3.14f</code> 自动推导为 Float。字符串模板中可以嵌入任意表达式：<code>\"和为 ${a + b}\"</code>。这些语法糖让代码更简洁、更易读。</p><h4></p>","code":"fun main() {\n    val a = 42\n    var b = 3.14\n    val s = \"Kotlin\"\n    val flag = true\n    println(\"Int: $a, Double: $b, String: $s, Boolean: $flag\")\n    val fromStr = \"100\".toInt()\n    val fromInt = 3.14159.toString()\n    println(\"Parse: $fromStr, ToString: $fromInt\")\n    var nullable: String? = \"not null\"\n    println(nullable?.length)\n    nullable = null\n    println(nullable?.length ?: -1)\n    b = 2.718\n    println(\"Pi ~ $b\")\n}",
+    "exercises":[
+      {
+          "id":"kt-t1","title":"可空类型","desc":"实现 safeLen(s: String?): Int，返回长度，null 返回 0。","hint":"使用 s?.length ?: 0","starterCode":"fun safeLen(s: String?): Int = s?.length ?: 0","solution":"fun safeLen(s: String?): Int = s?.length ?: 0","fn":"safeLen","tests":[{args:["hello"],expect:5},{args:[""],expect:0},{args:[null],expect:0},{args:["Kotlin"],expect:6}]
+        },
+      {
+          "id":"kt-t2","title":"温度转换","desc":"实现 celsiusToFahrenheit(c: Double): Double，摄氏转华氏。F = C × 9/5 + 32","hint":"返回 c * 9.0 / 5.0 + 32.0","starterCode":"fun celsiusToFahrenheit(c: Double): Double = c * 9.0 / 5.0 + 32.0","solution":"fun celsiusToFahrenheit(c: Double): Double = c * 9.0 / 5.0 + 32.0","fn":"celsiusToFahrenheit","tests":[{args:[0],expect:32},{args:[100],expect:212},{args:[-40],expect:-40},{args:[37],expect:98.6}]
+        },
+      {
+          "id":"kt-t3","title":"类型检测","desc":"实现 describeType(obj: Any): String，检测类型返回描述。","hint":"使用 when + is 类型检测","starterCode":"fun describeType(obj: Any): String = when (obj) {\n    is Int -> \"整数\"\n    is Double -> \"浮点数\"\n    is String -> \"字符串\"\n    else -> \"未知\"\n}","solution":"fun describeType(obj: Any): String = when (obj) {\n    is Int -> \"整数\"\n    is Double -> \"浮点数\"\n    is String -> \"字符串\"\n    else -> \"未知\"\n}","fn":"describeType","tests":[{args:[42],expect:"整数"},{args:[3.14],expect:"浮点数"},{args:["hi"],expect:"字符串"},{args:[true],expect:"未知"}]
+        }
+    ]
+  },
+  {
+    "id":"control","icon":"🔀","title":"控制流","desc":"<p>控制流是编程语言的<strong>骨架</strong>，它决定了程序的执行路径。Kotlin 的控制流既有传统的 if、for、while，也有它独有的强大特性<strong>when 表达式</strong>。</p><h4>if 表达式</h4><p>Kotlin 的 if 是<strong>表达式</strong>（有返回值）而不是语句——这是与 Java 最大的不同之一。你可以写：<code>val max = if (a > b) a else b</code>。三元运算符 <code>? :</code> 在 Kotlin 中不存在，直接用 if 表达式替代。</p><h4>when 表达式</h4><svg viewBox=\"0 0 600 320\" style=\"max-width:100%;height:auto;margin:14px 0;border-radius:10px;background:#1a2332\"><defs><marker id=\"wa\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0 0L10 5L0 10z\" fill=\"#58a6ff\"/></marker></defs><rect x=\"0\" y=\"0\" width=\"600\" height=\"320\" rx=\"8\" fill=\"#0f1419\"/><text x=\"300\" y=\"30\" text-anchor=\"middle\" fill=\"#e6edf3\" font-size=\"15\" font-weight=\"bold\">when 表达式分支流程图</text><ellipse cx=\"300\" cy=\"62\" rx=\"80\" ry=\"22\" fill=\"#1a2332\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><text x=\"300\" y=\"66\" text-anchor=\"middle\" fill=\"#79c0ff\" font-size=\"13\" font-weight=\"bold\">when (value)</text><line x1=\"300\" y1=\"84\" x2=\"300\" y2=\"100\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#wa)\"/><line x1=\"300\" y1=\"100\" x2=\"140\" y2=\"130\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><line x1=\"300\" y1=\"100\" x2=\"300\" y2=\"130\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><line x1=\"300\" y1=\"100\" x2=\"460\" y2=\"130\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><rect x=\"55\" y=\"130\" width=\"170\" height=\"44\" rx=\"6\" fill=\"#1a2332\" stroke=\"#3fb950\" stroke-width=\"1.5\"/><text x=\"140\" y=\"148\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"12\" font-weight=\"bold\">1 → println(\"one\")</text><text x=\"140\" y=\"164\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">值匹配</text><rect x=\"215\" y=\"130\" width=\"170\" height=\"44\" rx=\"6\" fill=\"#1a2332\" stroke=\"#d29922\" stroke-width=\"1.5\"/><text x=\"300\" y=\"148\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"12\" font-weight=\"bold\">in 2..5 → println(\"2-5\")</text><text x=\"300\" y=\"164\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">范围匹配</text><rect x=\"375\" y=\"130\" width=\"170\" height=\"44\" rx=\"6\" fill=\"#1a2332\" stroke=\"#f85149\" stroke-width=\"1.5\"/><text x=\"460\" y=\"148\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"12\" font-weight=\"bold\">else → println(\"other\")</text><text x=\"460\" y=\"164\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">默认分支</text><line x1=\"140\" y1=\"174\" x2=\"140\" y2=\"200\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><line x1=\"300\" y1=\"174\" x2=\"300\" y2=\"200\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><line x1=\"460\" y1=\"174\" x2=\"460\" y2=\"200\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><line x1=\"140\" y1=\"200\" x2=\"460\" y2=\"200\" stroke=\"#8b949e\" stroke-width=\"1\"/><line x1=\"300\" y1=\"200\" x2=\"300\" y2=\"220\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#wa)\"/><rect x=\"130\" y=\"222\" width=\"340\" height=\"44\" rx=\"8\" fill=\"#1a2332\" stroke=\"#58a6ff\" stroke-width=\"1.5\" stroke-dasharray=\"5,3\"/><text x=\"300\" y=\"242\" text-anchor=\"middle\" fill=\"#79c0ff\" font-size=\"12\" font-weight=\"bold\">when 可作为表达式返回值：</text><text x=\"300\" y=\"258\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">val result = when (x) { 1 -> \"one\" else -> \"other\" }</text><line x1=\"300\" y1=\"266\" x2=\"300\" y2=\"285\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#wa)\"/><rect x=\"100\" y=\"286\" width=\"400\" height=\"26\" rx=\"6\" fill=\"#1a2332\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"300\" y=\"303\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"11\">优点：无需 break、支持任意类型、穷尽检查</text></svg><p>when 是 Kotlin 对 Java switch 的<strong>全方位升级</strong>。它不仅支持任意类型的分支条件，还支持范围匹配 <code>in 1..10</code>、类型匹配 <code>is String</code>、甚至任意布尔表达式。最重要的是，when 也是表达式——可以返回一个值。没有 break 穿透问题。</p><h4>for 循环</h4><p><code>for</code> 用于遍历任何可迭代对象：<code>for (i in 1..10)</code> 遍历范围、<code>for (item in list)</code> 遍历集合、<code>for ((index, value) in list.withIndex())</code> 同时获取索引和值。还可以使用 <code>downTo</code>、<code>step</code> 控制步进方向：<code>for (i in 10 downTo 1 step 2)</code>。</p><h4>while 循环</h4><p><code>while</code> 和 <code>do-while</code> 与 Java 类似。<code>break</code> 跳出循环，<code>continue</code> 跳过当前迭代。Kotlin 支持<strong>标签</strong>（label）来 break 到指定外层循环：<code>outer@ for (...) { for (...) { break@outer } }</code>。</p>","code":"fun main() {\n    println(\"=== when 表达式 ===\")\n    val x = 3\n    val desc = when (x) {\n        1 -> \"one\"\n        2 -> \"two\"\n        in 3..5 -> \"three to five\"\n        else -> \"other\"\n    }\n    println(\"$x is $desc\")\n    println(\"\\n=== for 循环 ===\")\n    for (i in 1..5) {\n        val msg = if (i % 2 == 0) \"even\" else \"odd\"\n        println(\"$i is $msg\")\n    }\n    println(\"\\n=== while 循环 ===\")\n    var count = 3\n    while (count > 0) {\n        println(\"Countdown: $count\")\n        count--\n    }\n    println(\"\\n=== 标签 break ===\")\n    outer@ for (i in 1..3) {\n        for (j in 1..3) {\n            if (i * j > 3) break@outer\n            println(\"($i, $j)\")\n        }\n    }\n}",
+    "exercises":[
+      {
+          "id":"kt-c1","title":"阶乘计算","desc":"实现 fact(n: Int): Int，计算 n!。","hint":"使用 for 1..n 累乘","starterCode":"fun fact(n: Int): Int {\n    var r = 1\n    for (i in 1..n) r *= i\n    return r\n}","solution":"fun fact(n: Int): Int {\n    var r = 1\n    for (i in 1..n) r *= i\n    return r\n}","fn":"fact","tests":[{args:[5],expect:120},{args:[1],expect:1},{args:[3],expect:6},{args:[0],expect:1}]
+        },
+      {
+          "id":"kt-c2","title":"FizzBuzz","desc":"实现 fizzBuzz(n: Int): String。","hint":"先检查 n % 15，再检查 % 3 和 % 5","starterCode":"fun fizzBuzz(n: Int): String = when {\n    n % 15 == 0 -> \"FizzBuzz\"\n    n % 3 == 0 -> \"Fizz\"\n    n % 5 == 0 -> \"Buzz\"\n    else -> n.toString()\n}","solution":"fun fizzBuzz(n: Int): String = when {\n    n % 15 == 0 -> \"FizzBuzz\"\n    n % 3 == 0 -> \"Fizz\"\n    n % 5 == 0 -> \"Buzz\"\n    else -> n.toString()\n}","fn":"fizzBuzz","tests":[{args:[3],expect:"Fizz"},{args:[5],expect:"Buzz"},{args:[15],expect:"FizzBuzz"},{args:[7],expect:"7"},{args:[30],expect:"FizzBuzz"}]
+        },
+      {
+          "id":"kt-c3","title":"三个数最大值","desc":"实现 maxOfThree(a: Int, b: Int, c: Int): Int。","hint":"使用嵌套 if-else，if 是表达式可以返回值","starterCode":"fun maxOfThree(a: Int, b: Int, c: Int): Int = if (a >= b && a >= c) a else if (b >= c) b else c","solution":"fun maxOfThree(a: Int, b: Int, c: Int): Int = if (a >= b && a >= c) a else if (b >= c) b else c","fn":"maxOfThree","tests":[{args:[1,2,3],expect:3},{args:[5,5,2],expect:5},{args:[-1,-5,-3],expect:-1},{args:[100,50,100],expect:100}]
+        }
+    ]
+  },
+  {
+    "id":"function","icon":"🧩","title":"函数与 Lambda","desc":"<p>函数是 Kotlin 中的<strong>一等公民</strong>——你可以把函数作为参数传递、作为返回值返回、存储在变量中。Kotlin 的函数设计融合了面向对象和函数式编程的优点。</p><h4>函数定义</h4><p>使用 <code>fun</code> 关键字定义函数。如果函数体只有单个表达式，可以简化为<strong>单表达式函数</strong>：<code>fun add(a: Int, b: Int) = a + b</code>。返回值类型可以省略。</p><h4>参数特性</h4><ul><li><strong>默认参数</strong>：<code>fun greet(name: String = \"World\")</code></li><li><strong>具名参数</strong>：<code>greet(name = \"Kotlin\")</code></li><li><strong>可变参数</strong>：<code>fun sum(vararg nums: Int): Int</code></li></ul><h4>Lambda 表达式</h4><p>Lambda 是<strong>匿名函数</strong>的简洁写法，语法：<code>{ 参数 -> 函数体 }</code>。单个参数可用隐含名称 <code>it</code> 代替，例如 <code>list.filter { it > 0 }</code>。Lambda 可以存储在变量中：<code>val square = { x: Int -> x * x }</code>。</p><h4>高阶函数与内联</h4><p><strong>高阶函数</strong>是以函数为参数或返回值的函数。如果 Lambda 是最后一个参数，可以写在括号外，这称为<strong>尾 Lambda 语法</strong>。使用 <code>inline</code> 关键字可以消除 Lambda 创建的匿名类开销，同时支持非局部返回（<code>return</code> 跳出外层函数）。。Kotlin 标准库中有大量实用的高阶函数，比如 <code>filter</code> 用于过滤元素，<code>map</code> 用于转换元素，<code>reduce</code> 用于归约，<code>forEach</code> 用于遍历。这些函数可以链式调用，形成声明式的数据处理链：<code>list.filter { it > 0 }.map { it * 2 }.sum()</code>。。学习 Lambda 和高阶函数是掌握 Kotlin 函数式编程的关键，它们让你的代码更简洁、更易于维护。在实际开发中，高阶函数和 Lambda 的组合是 Kotlin 最强大的编程风格之一。</p><h4>这种风格让你可以用声明式的方式处理数据，减少了循环和临时变量的使用，代码更简洁、更少 bug。</p><h4></p><h4></p>","code":"fun main() {\n    println(\"=== 函数 ===\")\n    println(\"add(3, 5) = ${add(3, 5)}\")\n    println(\"greet() = ${greet()}\")\n    println(\"greet(Kotlin) = ${greet(\"Kotlin\")}\")\n    println(\"\\n=== Lambda ===\")\n    val nums = listOf(1, 2, 3, 4, 5, 6)\n    val evens = nums.filter { it % 2 == 0 }\n    val doubled = nums.map { it * it }\n    val sum = nums.reduce { a, b -> a + b }\n    println(\"Evens: $evens\")\n    println(\"Squares: $doubled\")\n    println(\"Sum: $sum\")\n    println(\"\\n=== 高阶函数 ===\")\n    println(\"operate(10, 5, +) = ${operate(10, 5) { a, b -> a + b }}\")\n    println(\"operate(10, 5, -) = ${operate(10, 5) { a, b -> a - b }}\")\n    println(\"operate(10, 5, *) = ${operate(10, 5) { a, b -> a * b }}\")\n}\nfun add(a: Int, b: Int) = a + b\nfun greet(name: String = \"World\") = \"Hello, $name\"\nfun operate(a: Int, b: Int, op: (Int, Int) -> Int): Int = op(a, b)",
+    "exercises":[
+      {
+          "id":"kt-f1","title":"过滤偶数","desc":"实现 filterEven(nums: List<Int>): List<Int>。","hint":"使用 filter { it % 2 == 0 }","starterCode":"fun filterEven(nums: List<Int>): List<Int> = nums.filter { it % 2 == 0 }","solution":"fun filterEven(nums: List<Int>): List<Int> = nums.filter { it % 2 == 0 }","fn":"filterEven","tests":[{args:[[1,2,3,4,5,6]],expect:[2,4,6]},{args:[[1,3,5]],expect:[]},{args:[[2,4,6]],expect:[2,4,6]},{args:[[]],expect:[]}]
+        },
+      {
+          "id":"kt-f2","title":"Lambda 映射","desc":"实现 squareAll(nums: List<Int>): List<Int>，返回平方。","hint":"使用 map { it * it }","starterCode":"fun squareAll(nums: List<Int>): List<Int> = nums.map { it * it }","solution":"fun squareAll(nums: List<Int>): List<Int> = nums.map { it * it }","fn":"squareAll","tests":[{args:[[1,2,3]],expect:[1,4,9]},{args:[[0,-1,-2]],expect:[0,1,4]},{args:[[5]],expect:[25]},{args:[[]],expect:[]}]
+        },
+      {
+          "id":"kt-f3","title":"字符串连接","desc":"实现 joinWords(words: List<String>, sep: String): String。","hint":"使用 reduce { acc, s -> acc + sep + s }","starterCode":"fun joinWords(words: List<String>, sep: String): String = words.reduce { acc, s -> acc + sep + s }","solution":"fun joinWords(words: List<String>, sep: String): String = words.reduce { acc, s -> acc + sep + s }","fn":"joinWords","tests":[{args:[["A","B","C"],"-"],expect:"A-B-C"},{args:[["Hello","World"]," "],expect:"Hello World"},{args:[["Kotlin"],","],expect:"Kotlin"},{args:[["a","b"],".."],expect:"a..b"}]
+        }
+    ]
+  },
+  {
+    "id":"class","icon":"🏗️","title":"类与对象","desc":"<p>Kotlin 的类设计追求<strong>简洁与表达力</strong>，将很多 Java 中的模板代码（getter/setter、构造函数、equals/hashCode）简化到了极致。</p><h4>类声明与主构造函数</h4><p>类可以有一个<strong>主构造函数</strong>，直接在类名后声明：<code>class Rectangle(val w: Int, val h: Int)</code>。<code>val</code> 表示同时声明属性和 getter，<code>var</code> 表示同时声明属性、getter 和 setter。使用 <code>init</code> 代码块执行初始化逻辑。</p><h4>数据类</h4><p><code>data class</code> 是 Kotlin 最受欢迎的特性之一。一行代码自动生成：<code>toString()</code>、<code>equals()</code> 和 <code>hashCode()</code>、<code>copy()</code>、<code>componentN()</code>（解构声明）。数据类必须至少有一个主构造函数参数。</p><h4>对象与伴生对象</h4><p><code>object</code> 关键字用于创建<strong>单例</strong>。类内部的 <code>companion object</code>（伴生对象）替代了 Java 的 static 成员，本质上是类内部的一个单例对象，可以有名字、实现接口、被继承。</p><h4>继承与接口</h4><p>Kotlin 的类默认是 <code>final</code> 的——必须使用 <code>open</code> 才能被继承。<code>override</code> 不能省略。接口可以包含<strong>默认实现</strong>。Kotlin 支持<strong>委托模式</strong>：通过 <code>by</code> 关键字将接口实现委托给类的属性。</p><h4>密封类</h4><p><code>sealed class</code> 的所有子类必须在同一文件中定义，when 处理时不需要 else 分支（编译器可以穷尽检查），非常适合表示有限状态。。Kotlin 的属性可以自定义 getter 和 setter，例如 <code>var name: String get() = field.uppercase() set(value) { field = value }</code>。<code>field</code> 是背景字段（backing field），用于在 getter/setter 中访问实际存储的值。这种设计既\b security又灵活。】Kotlin 的类系统既安全又灵活，是一个值得深入学习的重要特性。</p><h4></p><h4></p>","code":"fun main() {\n    val r = Rectangle(5.0, 3.0)\n    println(\"Rectangle: w=${r.w}, h=${r.h}, area=${r.area()}\")\n    val u1 = User(\"Alice\", 30)\n    val u2 = User(\"Bob\", 25)\n    println(\"\\nUser1: $u1\")\n    println(\"User2: $u2\")\n    println(\"Same?: ${u1 == u2}\")\n    val u3 = u1.copy(age = 31)\n    println(\"\\nCopied: $u3\")\n    println(\"\\nCounter: ${Counter.count()}\")\n    println(\"Counter: ${Counter.count()}\")\n}\nclass Rectangle(val w: Double, val h: Double) {\n    fun area() = w * h\n}\ndata class User(val name: String, val age: Int)\nobject Counter {\n    private var n = 0\n    fun count(): Int = ++n\n}",
+    "exercises":[
+      {
+          "id":"kt-cl1","title":"矩形面积","desc":"实现 compareByArea 返回面积更大的矩形。","hint":"class 主构造函数中使用 val 声明属性","starterCode":"data class Rectangle(val w: Int, val h: Int) {\n    fun area() = w * h\n}\nfun compareByArea(r1: Rectangle, r2: Rectangle): Rectangle = if (r1.area() > r2.area()) r1 else r2","solution":"data class Rectangle(val w: Int, val h: Int) {\n    fun area() = w * h\n}\nfun compareByArea(r1: Rectangle, r2: Rectangle): Rectangle = if (r1.area() > r2.area()) r1 else r2","fn":"compareByArea","tests":[{args:[{"w":3,"h":4},{"w":2,"h":6}],expect:{"w":3,"h":4}},{args:[{"w":1,"h":1},{"w":5,"h":5}],expect:{"w":5,"h":5}},{args:[{"w":10,"h":1},{"w":2,"h":4}],expect:{"w":10,"h":1}}]
+        },
+      {
+          "id":"kt-cl2","title":"数据类比较","desc":"实现 olderPerson 返回年龄较大的 Person。","hint":"比较 age 属性即可","starterCode":"data class Person(val name: String, val age: Int)\nfun olderPerson(p1: Person, p2: Person): Person = if (p1.age > p2.age) p1 else p2","solution":"data class Person(val name: String, val age: Int)\nfun olderPerson(p1: Person, p2: Person): Person = if (p1.age > p2.age) p1 else p2","fn":"olderPerson","tests":[{args:[{"name":"Alice","age":30},{"name":"Bob","age":25}],expect:{"name":"Alice","age":30}},{args:[{"name":"Eve","age":20},{"name":"Dave","age":35}],expect:{"name":"Dave","age":35}},{args:[{"name":"A","age":30},{"name":"B","age":30}],expect:{"name":"A","age":30}}]
+        },
+      {
+          "id":"kt-cl3","title":"伴生对象","desc":"创建 Circle 类，伴生对象中实现 fromDiameter 工厂方法。","hint":"companion object { fun fromDiameter(d: Double) = Circle(d / 2) }","starterCode":"class Circle(val radius: Double) {\n    companion object {\n        fun fromDiameter(d: Double) = Circle(d / 2)\n    }\n}","solution":"class Circle(val radius: Double) {\n    companion object {\n        fun fromDiameter(d: Double) = Circle(d / 2)\n    }\n}","fn":"","tests":[]
+        }
+    ]
+  },
+  {
+    "id":"nullsafe","icon":"🛡️","title":"空安全","desc":"<p>空指针异常（NullPointerException）是 Java 程序中最常见的运行时错误。Tony Hoare 曾称自己发明 null 引用是\"十亿美元的错误\"。Kotlin 在<strong>类型系统层面</strong>解决了这个问题——让 null 变得显式、可控。</p><svg viewBox=\"0 0 600 310\" style=\"max-width:100%;height:auto;margin:14px 0;border-radius:10px;background:#1a2332\"><defs><marker id=\"na\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0 0L10 5L0 10z\" fill=\"#58a6ff\"/></marker></defs><rect x=\"0\" y=\"0\" width=\"600\" height=\"310\" rx=\"8\" fill=\"#0f1419\"/><text x=\"300\" y=\"28\" text-anchor=\"middle\" fill=\"#e6edf3\" font-size=\"15\" font-weight=\"bold\">Kotlin 空安全体系</text><text x=\"300\" y=\"46\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">编译时消除空指针异常 (NPE)</text><line x1=\"300\" y1=\"54\" x2=\"300\" y2=\"64\" stroke=\"#8b949e\" stroke-width=\"1\"/><rect x=\"40\" y=\"66\" width=\"240\" height=\"42\" rx=\"6\" fill=\"#1a2332\" stroke=\"#3fb950\" stroke-width=\"1.5\"/><text x=\"160\" y=\"82\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"13\" font-weight=\"bold\">非空类型 String</text><text x=\"160\" y=\"99\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">var s: String = \"hello\"  ✅ 永远不为 null</text><rect x=\"320\" y=\"66\" width=\"240\" height=\"42\" rx=\"6\" fill=\"#1a2332\" stroke=\"#f85149\" stroke-width=\"1.5\"/><text x=\"440\" y=\"82\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"13\" font-weight=\"bold\">可空类型 String?</text><text x=\"440\" y=\"99\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">var s: String? = null  ⚠️ 可能为 null</text><line x1=\"160\" y1=\"108\" x2=\"160\" y2=\"130\" stroke=\"#3fb950\" stroke-width=\"1.5\" marker-end=\"url(#na)\"/><line x1=\"440\" y1=\"108\" x2=\"440\" y2=\"130\" stroke=\"#f85149\" stroke-width=\"1.5\" marker-end=\"url(#na)\"/><rect x=\"40\" y=\"132\" width=\"240\" height=\"52\" rx=\"6\" fill=\"#1a2332\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"160\" y=\"150\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"12\" font-weight=\"bold\">安全调用 ?.</text><text x=\"160\" y=\"167\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">s?.length</text><text x=\"160\" y=\"181\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">s 为 null 时返回 null，不抛异常</text><rect x=\"320\" y=\"132\" width=\"240\" height=\"52\" rx=\"6\" fill=\"#1a2332\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"440\" y=\"150\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"12\" font-weight=\"bold\">Elvis 操作符 ?:</text><text x=\"440\" y=\"167\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">s?.length ?: 0</text><text x=\"440\" y=\"181\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">null 时返回默认值 0</text><line x1=\"160\" y1=\"184\" x2=\"160\" y2=\"200\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><line x1=\"440\" y1=\"184\" x2=\"440\" y2=\"200\" stroke=\"#8b949e\" stroke-width=\"1.5\"/><rect x=\"40\" y=\"202\" width=\"520\" height=\"46\" rx=\"6\" fill=\"#1a2332\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><text x=\"300\" y=\"220\" text-anchor=\"middle\" fill=\"#79c0ff\" font-size=\"13\" font-weight=\"bold\">let 安全调用链</text><text x=\"300\" y=\"238\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">s?.let { println(it.length) }  → 仅在非 null 时执行</text><line x1=\"300\" y1=\"248\" x2=\"300\" y2=\"262\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#na)\"/><rect x=\"80\" y=\"264\" width=\"440\" height=\"38\" rx=\"8\" fill=\"#1a2332\" stroke=\"#f85149\" stroke-width=\"1\"/><text x=\"300\" y=\"280\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"11\">非空断言 s!!  →  如果 s 为 null 则抛 NPE（谨慎使用）</text><text x=\"300\" y=\"296\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">Kotlin 通过 ?.  ?:  !!  as?  let 构建完整的空安全体系</text></svg><h4>可空类型与不可空类型</h4><p><code>String</code> 和 <code>String?</code> 是<strong>两种完全不同的类型</strong>。前者永远不能为 null，后者可以。这种区分在编译时就完成，从根源上杜绝了 NPE。</p><h4>安全调用 ?.</h4><p><code>s?.length</code>——s 为 null 时返回 null，否则返回 s.length。可以<strong>链式使用</strong>：<code>user?.address?.city</code>，链中任何一个环节为 null，整个表达式返回 null。</p><h4>Elvis 操作符 ?:</h4><p><code>s?.length ?: 0</code>——左侧为 null 时返回右侧的默认值。Elvis 经常与安全调用配合使用，为 null 提供回退值。名称来源于 Elvis 的发型（? 看起来像他的头发）。</p><h4>非空断言 !!</h4><p><code>s!!</code>——强制认为 s 非 null，否则抛出 NPE。Kotlin 强烈建议避免使用 !! ，而是用更安全的方式。</p><h4>let 与安全调用配合</h4><p><code>s?.let { println(it) }</code>——仅当 s 非 null 时执行。<code>it</code> 在块内已经是<strong>非空类型</strong>，可以直接调用方法。这是 Kotlin 中最常用的 null 处理模式。</p><h4>智能类型转换</h4><p>在 null 检查之后，Kotlin 自动将可空类型转换为非空类型：<code>if (s != null) println(s.length)</code>——在分支内 s 自动变为 String 类型。</p>","code":"fun main() {\n    println(\"=== 空安全 ===\")\n    var s: String? = \"Hello\"\n    println(\"s = \\\"$s\\\", length = ${s?.length}\")\n    s = null\n    println(\"s = null, safe call = ${s?.length}\")\n    println(\"elvis = ${s?.length ?: -1}\")\n    val name: String? = \"Kotlin\"\n    name?.let {\n        println(\"\\nlet block: name = $it, length = ${it.length}\")\n    }\n    val maybe: String? = \"Smart Cast\"\n    if (maybe != null) {\n        println(\"\\nSmart cast: ${maybe.uppercase()}\")\n    }\n    data class Address(val city: String?)\n    data class Person(val addr: Address?)\n    val p = Person(Address(\"Beijing\"))\n    println(\"\\nCity: ${p.addr?.city ?: \"unknown\"}\")\n    println(\"\\nAll done without NPE!\")\n}",
+    "exercises":[
+      {
+          "id":"kt-n1","title":"Elvis 长度","desc":"实现 lenOrNeg(s: String?): Int，null 返回 -1。","hint":"使用 s?.length ?: -1","starterCode":"fun lenOrNeg(s: String?): Int = s?.length ?: -1","solution":"fun lenOrNeg(s: String?): Int = s?.length ?: -1","fn":"lenOrNeg","tests":[{args:["hello"],expect:5},{args:[""],expect:0},{args:[null],expect:-1},{args:["Kotlin"],expect:6}]
+        },
+      {
+          "id":"kt-n2","title":"安全提取邮箱域名","desc":"实现 extractDomain(email: String?): String。","hint":"使用 email?.let { ... } ?: \"invalid\"","starterCode":"fun extractDomain(email: String?): String = email?.let {\n    val idx = it.indexOf('@')\n    if (idx == -1) \"invalid\" else it.substring(idx + 1)\n} ?: \"invalid\"","solution":"fun extractDomain(email: String?): String = email?.let {\n    val idx = it.indexOf('@')\n    if (idx == -1) \"invalid\" else it.substring(idx + 1)\n} ?: \"invalid\"","fn":"extractDomain","tests":[{args:["user@gmail.com"],expect:"gmail.com"},{args:["admin@company.cn"],expect:"company.cn"},{args:[null],expect:"invalid"},{args:["no-at"],expect:"invalid"}]
+        },
+      {
+          "id":"kt-n3","title":"嵌套可空属性","desc":"实现 getStreet(city: City?): String。","hint":"链式安全调用 + getOrNull + Elvis","starterCode":"data class District(val name: String, val streets: List<String>?)\ndata class City(val name: String, val districts: List<District>?)\nfun getStreet(city: City?): String = city?.districts?.getOrNull(0)?.streets?.getOrNull(0) ?: \"未知\"","solution":"data class District(val name: String, val streets: List<String>?)\ndata class City(val name: String, val districts: List<District>?)\nfun getStreet(city: City?): String = city?.districts?.getOrNull(0)?.streets?.getOrNull(0) ?: \"未知\"","fn":"getStreet","tests":[{args:[null],expect:"未知"},{args:[{"name":"BJ","districts":null}],expect:"未知"},{args:[{"name":"SH","districts":[{"name":"PD","streets":["世纪大道"]}]}],expect:"世纪大道"},{args:[{"name":"GZ","districts":[{"name":"TH","streets":null}]}],expect:"未知"}]
+        }
+    ]
+  },
+  {
+    "id":"collection","icon":"📚","title":"集合操作","desc":"<p>Kotlin 的集合框架在 Java 基础上做了大量增强，提供了<strong>不可变集合</strong>（只读视图）和<strong>丰富的函数式操作符</strong>。</p><h4>集合类型</h4><ul><li><strong>List</strong>：有序、可重复。<code>listOf()</code> / <code>mutableListOf()</code></li><li><strong>Set</strong>：无序、唯一。<code>setOf()</code> / <code>mutableSetOf()</code></li><li><strong>Map</strong>：键值对。<code>mapOf(\"a\" to 1)</code> / <code>mutableMapOf()</code></li></ul><h4>不可变 vs 可变</h4><p>Kotlin 区分<strong>只读引用</strong> List 接口和<strong>可变集合</strong> MutableList。<code>listOf()</code> 返回只读视图，没有 add/remove。只读引用不意味着底层数据不可变——其他引用可能会修改它。</p><h4>常用操作符</h4><ul><li><strong>filter</strong>：按条件过滤</li><li><strong>map</strong>：转换每个元素</li><li><strong>sorted / sortedBy</strong>：排序</li><li><strong>groupBy</strong>：按 key 分组</li><li><strong>partition</strong>：拆分为两个列表</li><li><strong>reduce / fold</strong>：归约聚合</li><li><strong>flatMap</strong>：扁平化映射</li><li><strong>any / all / none</strong>：条件检查</li></ul><h4>Sequence 惰性求值</h4><p>对集合使用 filter、map 等会创建<strong>中间集合</strong>。对于大数据集，使用 <code>asSequence()</code> 将集合转为序列，操作变为惰性求值——每个元素经过完整链处理后再处理下一个，避免中间集合开销。。除了常见的 filter 和 map，Kotlin 还提供了 <code>zip</code>（合并两个集合）、<code>chunked</code>（拆分为定长子列表）、<code>windowed</code>（滑动窗口）、<code>associate</code>（转为 Map）等丰富的操作符。学习这些 API 可以大幅提高你的编程效率。。掌握这些操作符能让你用更少的代码完成更复杂的数据处理任务，这也是 Kotlin 相比 Java 的重大优势之一。熟练运用集合操作符是从 Kotlin 新手到高手的必由之路。</p><h4>举例来说，你可以用一行代码完成“取所有大于零的奇数，按降序排列，取前三个”的复杂操作：<code>list.filter { it > 0 && it % 2 != 0 }.sortedDescending().take(3)</code>。</p><h4></p><h4></p>","code":"fun main() {\n    println(\"=== 集合操作 ===\")\n    val nums = listOf(5, 2, 8, 1, 3, 7, 4, 6)\n    println(\"Original: $nums\")\n    println(\"Sorted: ${nums.sorted()}\")\n    println(\"Reversed: ${nums.reversed()}\")\n    println(\"Filter > 4: ${nums.filter { it > 4 }}\")\n    println(\"Map * 10: ${nums.map { it * 10 }}\")\n    println(\"Sum: ${nums.sum()}\")\n    println(\"Average: ${nums.average()}\")\n    println(\"\\n=== 分组与分区 ===\")\n    val words = listOf(\"apple\", \"banana\", \"avocado\", \"cherry\", \"blueberry\")\n    val grouped = words.groupBy { it.first() }\n    println(\"Grouped by first letter: $grouped\")\n    val (long, short) = words.partition { it.length > 5 }\n    println(\"Long words: $long\")\n    println(\"Short words: $short\")\n    println(\"\\n=== 惰性序列 ===\")\n    val seq = (1..100).asSequence()\n        .filter { it % 10 == 0 }\n        .map { it / 10 }\n        .take(3)\n        .toList()\n    println(\"Sequence result: $seq\")\n}",
+    "exercises":[
+      {
+          "id":"kt-co1","title":"集合排序","desc":"实现 sortList(nums: List<Int>): List<Int>，返回升序。","hint":"使用 sorted()","starterCode":"fun sortList(nums: List<Int>): List<Int> = nums.sorted()","solution":"fun sortList(nums: List<Int>): List<Int> = nums.sorted()","fn":"sortList","tests":[{args:[[3,1,2]],expect:[1,2,3]},{args:[[5,5,5]],expect:[5,5,5]},{args:[[1]],expect:[1]},{args:[[]],expect:[]}]
+        },
+      {
+          "id":"kt-co2","title":"按首字母分组","desc":"实现 groupByFirstLetter(words: List<String>): Map<Char, List<String>>。","hint":"groupBy { it.first() }","starterCode":"fun groupByFirstLetter(words: List<String>): Map<Char, List<String>> = words.filter { it.isNotEmpty() }.groupBy { it.first() }","solution":"fun groupByFirstLetter(words: List<String>): Map<Char, List<String>> = words.filter { it.isNotEmpty() }.groupBy { it.first() }","fn":"groupByFirstLetter","tests":[{args:[["apple","banana","avocado","cherry"]],expect:{"a":["apple","avocado"],"b":["banana"],"c":["cherry"]}},{args:[["dog","cat"]],expect:{"d":["dog"],"c":["cat"]}},{args:[[]],expect:{}}]
+        },
+      {
+          "id":"kt-co3","title":"统计词频","desc":"实现 wordCount(words: List<String>): Map<String, Int>。","hint":"groupingBy { it }.eachCount()","starterCode":"fun wordCount(words: List<String>): Map<String, Int> = words.groupingBy { it }.eachCount()","solution":"fun wordCount(words: List<String>): Map<String, Int> = words.groupingBy { it }.eachCount()","fn":"wordCount","tests":[{args:[["a","b","a","c","b","a"]],expect:{"a":3,"b":2,"c":1}},{args:[["x"]],expect:{"x":1}},{args:[[]],expect:{}}]
+        }
+    ]
+  },
+  {
+    "id":"coroutine","icon":"⚡","title":"协程基础","desc":"<p>协程（Coroutine）是 Kotlin 提供的<strong>轻量级并发框架</strong>，让你用<strong>同步的方式写异步代码</strong>，避免回调地狱。协程不是线程——它运行在线程之上，但更轻量、更高效。</p><svg viewBox=\"0 0 640 300\" style=\"max-width:100%;height:auto;margin:14px 0;border-radius:10px;background:#1a2332\"><rect x=\"0\" y=\"0\" width=\"640\" height=\"300\" rx=\"8\" fill=\"#0f1419\"/><text x=\"320\" y=\"28\" text-anchor=\"middle\" fill=\"#e6edf3\" font-size=\"15\" font-weight=\"bold\">线程 vs 协程对比</text><line x1=\"320\" y1=\"36\" x2=\"320\" y2=\"284\" stroke=\"#2d3b4f\" stroke-width=\"1\" stroke-dasharray=\"4,4\"/><text x=\"160\" y=\"54\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"14\" font-weight=\"bold\">线程 (Thread)</text><text x=\"480\" y=\"54\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"14\" font-weight=\"bold\">协程 (Coroutine)</text><rect x=\"40\" y=\"68\" width=\"240\" height=\"36\" rx=\"5\" fill=\"#1a2332\" stroke=\"#f85149\" stroke-width=\"1.2\"/><text x=\"160\" y=\"84\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"11\" font-weight=\"bold\">1:1 映射到 OS 线程</text><text x=\"160\" y=\"100\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">由操作系统调度</text><rect x=\"360\" y=\"68\" width=\"240\" height=\"36\" rx=\"5\" fill=\"#1a2332\" stroke=\"#3fb950\" stroke-width=\"1.2\"/><text x=\"480\" y=\"84\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"11\" font-weight=\"bold\">N:M 映射到少量线程</text><text x=\"480\" y=\"100\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">由 Kotlin 运行时调度</text><rect x=\"40\" y=\"112\" width=\"240\" height=\"36\" rx=\"5\" fill=\"#1a2332\" stroke=\"#f85149\" stroke-width=\"1.2\"/><text x=\"160\" y=\"128\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"11\" font-weight=\"bold\">阻塞操作 (blocking)</text><text x=\"160\" y=\"144\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">Thread.sleep() 阻塞整个线程</text><rect x=\"360\" y=\"112\" width=\"240\" height=\"36\" rx=\"5\" fill=\"#1a2332\" stroke=\"#3fb950\" stroke-width=\"1.2\"/><text x=\"480\" y=\"128\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"11\" font-weight=\"bold\">挂起操作 (suspend)</text><text x=\"480\" y=\"144\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">delay() 仅挂起协程，不阻塞线程</text><rect x=\"40\" y=\"156\" width=\"240\" height=\"36\" rx=\"5\" fill=\"#1a2332\" stroke=\"#f85149\" stroke-width=\"1.2\"/><text x=\"160\" y=\"172\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"11\" font-weight=\"bold\">上下文切换代价高</text><text x=\"160\" y=\"188\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">内核态切换，开销大</text><rect x=\"360\" y=\"156\" width=\"240\" height=\"36\" rx=\"5\" fill=\"#1a2332\" stroke=\"#3fb950\" stroke-width=\"1.2\"/><text x=\"480\" y=\"172\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"11\" font-weight=\"bold\">挂起切换代价极低</text><text x=\"480\" y=\"188\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">用户态切换，几乎无开销</text><rect x=\"40\" y=\"200\" width=\"240\" height=\"36\" rx=\"5\" fill=\"#1a2332\" stroke=\"#f85149\" stroke-width=\"1.2\"/><text x=\"160\" y=\"216\" text-anchor=\"middle\" fill=\"#f85149\" font-size=\"11\" font-weight=\"bold\">可创建数量有限</text><text x=\"160\" y=\"232\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">通常几千个</text><rect x=\"360\" y=\"200\" width=\"240\" height=\"36\" rx=\"5\" fill=\"#1a2332\" stroke=\"#3fb950\" stroke-width=\"1.2\"/><text x=\"480\" y=\"216\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"11\" font-weight=\"bold\">可创建数十万协程</text><text x=\"480\" y=\"232\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">内存占用仅几 KB</text><rect x=\"100\" y=\"250\" width=\"440\" height=\"40\" rx=\"10\" fill=\"#1a2332\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><text x=\"320\" y=\"267\" text-anchor=\"middle\" fill=\"#79c0ff\" font-size=\"12\" font-weight=\"bold\">协程 = 轻量级线程 · 结构化并发 · suspend/resume</text><text x=\"320\" y=\"283\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"11\">用同步的方式写异步代码，告别回调地狱</text></svg><h4>什么是协程</h4><p>协程是一种<strong>可挂起的计算</strong>。当遇到挂起点（如 <code>delay()</code>），它可以<strong>挂起</strong>自己而不阻塞线程，线程可以执行其他协程。条件满足后<strong>恢复</strong>执行。</p><h4>基础概念</h4><ul><li><strong>suspend</strong>：标记函数为可挂起函数</li><li><strong>runBlocking</strong>：在普通函数中启动协程的桥梁</li><li><strong>launch</strong>：启动不返回结果的协程</li><li><strong>async</strong>：启动可返回结果的协程，通过 <code>await()</code> 获取</li><li><strong>Job / Deferred</strong>：协程的句柄</li></ul><h4>结构化并发</h4><p>每个协程都在 CoroutineScope 中运行，当作用域被取消时，所有子协程自动取消，不会发生协程泄漏。</p><h4>调度器 (Dispatcher)</h4><p><code>Dispatchers.Default</code>：CPU 密集型。<code>Dispatchers.IO</code>：IO 型。<code>Dispatchers.Main</code>：UI 线程。不同调度器之间可以自由切换：<code>withContext(Dispatchers.IO) { ... }</code>。。协程的另一个重要特性是取消机制：通过 <code>job.cancel()</code> 取消一个协程，取消的协程会在下一个挂起点抛出 <code>CancellationException</code>。配合 <code>withTimeout</code> 可以实现超时控制，避免任务永远挂起。</p><h4></p>","code":"import kotlinx.coroutines.*\nsuspend fun fetchData(id: Int): String {\n    delay(200)\n    return \"data_$id\"\n}\nfun main() = runBlocking {\n    println(\"=== 协程基础 ===\\n\")\n    launch {\n        println(\"  launch started\")\n        delay(100)\n        println(\"  launch done\")\n    }\n    val result = async {\n        delay(150)\n        42\n    }\n    println(\"  async result: ${result.await()}\")\n    val jobs = List(3) { id -> async { fetchData(id) } }\n    val results = jobs.awaitAll()\n    println(\"\\n  All results: $results\")\n    println(\"\\n=== Done! ===\")\n}",
+    "exercises":[
+      {
+          "id":"kt-cr1","title":"异步加法","desc":"实现 suspend 函数 addAsync，延迟 10ms 后返回两数之和。","hint":"使用 delay(10)","starterCode":"import kotlinx.coroutines.*\nsuspend fun addAsync(a: Int, b: Int): Int {\n    delay(10)\n    return a + b\n}","solution":"import kotlinx.coroutines.*\nsuspend fun addAsync(a: Int, b: Int): Int {\n    delay(10)\n    return a + b\n}","fn":"","tests":[]
+        },
+      {
+          "id":"kt-cr2","title":"并发获取结果","desc":"实现 concurrentSum，使用 async 并发执行。","hint":"coroutineScope { async { ... } }","starterCode":"import kotlinx.coroutines.*\nsuspend fun addAsync(n: Int, offset: Int): Int {\n    delay(10)\n    return n + offset\n}\nsuspend fun concurrentSum(a: Int, b: Int): Int = coroutineScope {\n    val d1 = async { addAsync(a, 0) }\n    val d2 = async { addAsync(0, b) }\n    d1.await() + d2.await()\n}","solution":"import kotlinx.coroutines.*\nsuspend fun addAsync(n: Int, offset: Int): Int {\n    delay(10)\n    return n + offset\n}\nsuspend fun concurrentSum(a: Int, b: Int): Int = coroutineScope {\n    val d1 = async { addAsync(a, 0) }\n    val d2 = async { addAsync(0, b) }\n    d1.await() + d2.await()\n}","fn":"","tests":[]
+        },
+      {
+          "id":"kt-cr3","title":"超时处理","desc":"实现 fetchOrTimeout，超时返回 \"timeout\"。","hint":"使用 withTimeoutOrNull","starterCode":"import kotlinx.coroutines.*\nsuspend fun fetchOrTimeout(ms: Long): String = withTimeoutOrNull(ms) {\n    delay(ms + 100)\n    \"data\"\n} ?: \"timeout\"","solution":"import kotlinx.coroutines.*\nsuspend fun fetchOrTimeout(ms: Long): String = withTimeoutOrNull(ms) {\n    delay(ms + 100)\n    \"data\"\n} ?: \"timeout\"","fn":"","tests":[]
+        }
     ]
   }
 ];
@@ -428,8 +512,7 @@ function loadSection(id) {
 
   if (editor) {
     editor.setValue(section.code);
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -486,8 +569,7 @@ function switchToLearn(section) {
 
   if (editor) {
     editor.setValue(loadCachedCode(section.code));
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -515,8 +597,7 @@ function switchToExercise(section, index) {
 
   if (editor) {
     editor.setValue(loadCachedCode(ex.starterCode));
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -531,53 +612,94 @@ function toggleHint() {
   document.getElementById('hint-btn').textContent = hint.classList.contains('show') ? '隐藏提示' : '查看提示';
 }
 
-// ==================== Monaco Editor ====================
+
+async function runCode() {
+  if (isRunning || !editor) return;
+  const btn = document.getElementById('run-btn');
+  btn.classList.add('running');
+  isRunning = true;
+  const code = editor.getValue();
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">\u23f3 \u6b63\u5728\u6267\u884c ...</span>';
+  try {
+    const resp = await fetch('https://emkc.org/api/v2/piston/execute', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ language: 'kotlin', version: '*', files: [{ name: 'main.kt', content: code }] })
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.compile && data.compile.stderr) {
+      outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(data.compile.stderr) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">\u2717 \u7f16\u8bd1\u5931\u8d25</span>';
+    } else if (data.run && data.run.stdout) {
+      outputContent.innerHTML = escHtml(data.run.stdout).replace(/\n/g, '<br>');
+      statusEl.innerHTML = '<span class="badge success">\u2713 \u6267\u884c\u6210\u529f</span>';
+    } else if (data.run && data.run.stderr) {
+      outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(data.run.stderr) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">\u2717 \u8fd0\u884c\u65f6\u9519\u8bef</span>';
+    } else {
+      outputContent.innerHTML = '<span class="out-info">\u2713 \u4ee3\u7801\u5df2\u6267\u884c\uff08\u65e0\u8f93\u51fa\u5185\u5bb9\uff09</span>';
+      statusEl.innerHTML = '<span class="badge success">\u2713 \u6267\u884c\u6210\u529f</span>';
+    }
+  } catch (e) {
+    outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(e.message) + '</span>';
+    statusEl.innerHTML = '<span class="badge error">\u2717 \u8bf7\u6c42\u5931\u8d25</span>';
+  }
+  btn.classList.remove('running');
+  isRunning = false;
+}
+
+function submitExercise() {
+  if (isRunning || !editor) return;
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (!section || !section.exercises || currentExerciseIndex < 0) return;
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">\u23f3 \u8bf7\u70b9\u51fb\u201c\u8fd0\u884c\u4ee3\u7801\u201d\u6267\u884c\u540e\u67e5\u770b\u8f93\u51fa\uff0c\u81ea\u884c\u5bf9\u6bd4\u7ed3\u679c\u3002</span>';
+  statusEl.innerHTML = '';
+}
+
+// ==================== 代码编辑器 ====================
 function createEditor() {
   if (editorReady) return;
   editorReady = true;
 
-  require.config({
-    paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }
+  const container = document.getElementById('editor-container');
+  if (!container) return;
+  container.classList.remove('loading');
+  container.innerHTML = '<textarea id="editor" style="width:100%;height:100%;background:var(--bg);color:var(--text);border:none;outline:none;resize:none;font-family:\"SF Mono\",\"Fira Code\",\"Cascadia Code\",monospace;font-size:14px;padding:12px;tab-size:4;white-space:pre;overflow-wrap:normal;overflow-x:auto;line-height:1.5"></textarea>';
+
+  const ta = document.getElementById('editor');
+  editor = {
+    getValue: () => ta.value,
+    setValue: (v) => { ta.value = v; },
+  };
+  const savedTheme = localStorage.getItem('kotlin-theme') || 'light';
+  if (savedTheme === 'light') document.body.classList.add('light');
+
+  ta.value = loadCachedCode(SECTIONS[0].code);
+
+  ta.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const s = ta.selectionStart, en = ta.selectionEnd;
+      ta.value = ta.value.substring(0, s) + '  ' + ta.value.substring(en);
+      ta.selectionStart = ta.selectionEnd = s + 2;
+    }
   });
 
-  require(['vs/editor/editor.main'], () => {
-    const container = document.getElementById('editor-container');
-    if (!container) return;
-    container.classList.remove('loading');
-    container.innerHTML = '';
-    container.style.height = '380px';
-
-    const savedTheme = localStorage.getItem('kotlin-theme') || 'light';
-    const isLight = savedTheme === 'light';
-    if (isLight) document.body.classList.add('light');
-
-    editor = monaco.editor.create(container, {
-      value: SECTIONS[0].code,
-      language: 'kotlin',
-      theme: isLight ? 'vs' : 'vs-dark',
-      minimap: { enabled: false },
-      fontSize: 14,
-      lineNumbers: 'on',
-      scrollBeyondLastLine: false,
-      automaticLayout: true,
-      wordWrap: 'on',
-      tabSize: 4,
-      renderWhitespace: 'selection',
-      padding: { top: 12 },
-    });
-
-    loadSection(currentSectionId);
-
-    let saveTimer;
-    editor.onDidChangeModelContent(() => {
-      const lineCount = editor.getModel().getLineCount();
-      const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
-      container.style.height = newHeight + 'px';
-      editor.layout();
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveCode, 500);
-    });
+  let saveTimer;
+  ta.addEventListener('input', () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveCode, 500);
   });
+
+  loadSection(currentSectionId);
 }
 
 
@@ -596,9 +718,7 @@ function resetCode() {
 // ==================== 主题切换 ====================
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
-  const theme = isLight ? 'light' : 'dark';
-  localStorage.setItem('kotlin-theme', theme);
-  if (editor) monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark');
+  localStorage.setItem('kotlin-theme', isLight ? 'light' : 'dark');
 }
 
 // ==================== 字号控制 ====================
@@ -618,7 +738,7 @@ function setFontSize(level) {
   root.style.setProperty('--fs-small', s.small);
   root.style.setProperty('--fs-sidebar', s.sidebar);
   root.style.setProperty('--fs-tab', s.tab);
-  if (editor) editor.updateOptions({ fontSize: parseInt(s.mono) });
+  
 
   document.querySelectorAll('.font-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.size === level);
@@ -655,17 +775,11 @@ function setupMenuToggle() {
 
 // ==================== 启动 ====================
 function boot() {
-  if (typeof require === 'undefined') {
-    showError('加载 Monaco Editor 失败，请刷新页面重试');
-    return;
-  }
   init();
 }
 
 function showError(msg) {
   hideLoading();
-  const container = document.getElementById('editor-container');
-  if (container) container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">' + escHtml(msg) + '</div>';
 }
 
 if (document.readyState === 'complete') {
@@ -674,21 +788,6 @@ if (document.readyState === 'complete') {
   window.addEventListener('load', boot);
 }
 
-setTimeout(() => {
-  hideLoading();
-  if (!editor) {
-    const container = document.getElementById('editor-container');
-    if (container && container.classList.contains('loading')) {
-      container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">⛔ Monaco Editor 加载超时，请检查网络连接后刷新页面</div>';
-    }
-    loadPreferences();
-    renderSidebar();
-    setupButtons();
-    setupKeyboardShortcut();
-    setupMenuToggle();
-    loadSection(currentSectionId);
-  }
-}, 15000);
 </script>
 </body>
 </html>

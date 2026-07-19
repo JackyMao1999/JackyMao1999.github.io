@@ -216,26 +216,350 @@ const SECTIONS = [
     "id": "intro",
     "icon": "⚡",
     "title": "C++ 简介",
-    "desc": "<p>C++ 是 C 语言的超集，加入<strong>面向对象</strong>和<strong>泛型编程</strong>支持。</p><h4>第一个程序</h4><pre><code>#include <iostream>\\nint main() {\\n    std::cout << \"Hello, World!\" << std::endl;\\n    return 0;\\n}</code></pre>",
-    "code": "#include <iostream>\\nint main() {\\n    std::cout << \"Hello, World!\" << std::endl;\\n    std::string name = \"C++\";\\n    std::cout << \"你好, \" << name << \"!\" << std::endl;\\n    return 0;\\n}",
+    "desc": "<h4>C++ 是什么？</h4>\n<p>C++ 是由<strong>Bjarne Stroustrup</strong>于 1985 年在贝尔实验室开发的<strong>通用编程语言</strong>，作为 C 语言的扩展。它在 C 的基础上引入了<strong>面向对象</strong>、<strong>泛型编程</strong>和<strong>底层内存操作</strong>等特性，是目前工业界最强大的语言之一。</p>\n<h4>为什么学习 C++？</h4>\n<ul>\n<li><strong>系统编程</strong>：操作系统、数据库、浏览器等底层基础设施大多用 C++ 编写</li>\n<li><strong>高性能计算</strong>：游戏引擎、高频交易、科学计算领域的第一选择</li>\n<li><strong>零开销抽象</strong>：只为你使用的特性付出代价，不降低运行时性能</li>\n<li><strong>就业前景</strong>：腾讯、字节跳动、微软、Google 等大厂的核心岗位需求</li>\n</ul>\n<h4>编译流程</h4>\n<p>C++ 是<strong>编译型语言</strong>，源代码需要通过编译器转换为机器码才能执行。以下是完整的编译流程：</p>\n<svg viewBox=\"0 0 700 280\" style=\"max-width:100%;height:auto;margin:10px 0;background:#1a2332;border-radius:8px;padding:12px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <marker id=\"arrow-c\" viewBox=\"0 0 10 10\" refX=\"10\" refY=\"5\" markerWidth=\"8\" markerHeight=\"8\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#58a6ff\"/></marker>\n    <style>.box-c{fill:#0f1419;stroke:#58a6ff;stroke-width:1.5;rx:6}.txt-c{fill:#e6edf3;font-size:13px;font-family:sans-serif;text-anchor:middle;dominant-baseline:middle}</style>\n  </defs>\n  <rect x=\"10\" y=\"20\" width=\"120\" height=\"44\" class=\"box-c\"/><text x=\"70\" y=\"42\" class=\"txt-c\">源代码 .cpp</text>\n  <line x1=\"130\" y1=\"42\" x2=\"170\" y2=\"42\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#arrow-c)\"/>\n  <rect x=\"170\" y=\"20\" width=\"120\" height=\"44\" class=\"box-c\"/><text x=\"230\" y=\"42\" class=\"txt-c\">预处理</text>\n  <line x1=\"290\" y1=\"42\" x2=\"330\" y2=\"42\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#arrow-c)\"/>\n  <rect x=\"330\" y=\"20\" width=\"120\" height=\"44\" class=\"box-c\"/><text x=\"390\" y=\"42\" class=\"txt-c\">编译</text>\n  <line x1=\"450\" y1=\"42\" x2=\"490\" y2=\"42\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#arrow-c)\"/>\n  <rect x=\"490\" y=\"20\" width=\"120\" height=\"44\" class=\"box-c\"/><text x=\"550\" y=\"42\" class=\"txt-c\">汇编 .o</text>\n  <line x1=\"550\" y1=\"64\" x2=\"550\" y2=\"120\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#arrow-c)\"/>\n  <rect x=\"490\" y=\"120\" width=\"120\" height=\"44\" class=\"box-c\"/><text x=\"550\" y=\"142\" class=\"txt-c\">链接</text>\n  <line x1=\"490\" y1=\"142\" x2=\"430\" y2=\"142\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#arrow-c)\"/>\n  <rect x=\"310\" y=\"120\" width=\"120\" height=\"44\" class=\"box-c\" stroke=\"#3fb950\"/><text x=\"370\" y=\"142\" class=\"txt-c\" fill=\"#3fb950\">可执行文件</text>\n  <text x=\"370\" y=\"195\" fill=\"#8b949e\" font-size=\"11\" text-anchor=\"middle\">g++ main.cpp -o program &amp;&amp; ./program</text>\n</svg>\n<h4>第一个程序</h4>\n<p>每个 C++ 程序都从 <code>main()</code> 函数开始执行。<code>#include &lt;iostream&gt;</code> 引入输入输出库，<code>cout</code> 用于向屏幕输出内容。</p>\n<pre><code>#include &lt;iostream&gt;\nusing namespace std;\nint main() {\n    cout &lt;&lt; \"Hello, World!\" &lt;&lt; endl;\n    return 0;\n}</code></pre>\n<p>运行上面的程序，屏幕上会显示 <code>Hello, World!</code>。这是每位程序员的第一个程序，标志着你正式进入了 C++ 的世界！</p>",
+    "code": "#include <iostream>\nusing namespace std;\nint main() {\n    cout << \"Hello, World!\" << endl;\n    string name = \"C++\";\n    cout << \"Hi, \" << name << \"!\" << endl;\n    cout << \"欢迎学习 C++ 编程！\" << endl;\n    return 0;\n}",
     "exercises": [
       {
         "id": "cpp-i1",
-        "title": "加法函数",
-        "desc": "编写 <code>add</code> 接收 <code>int a, int b</code> 返回 <code>int</code> 和。",
-        "hint": "int add(int a, int b) { return a + b; }",
-        "starterCode": "// 编写 add 函数",
+        "title": "输出问候语",
+        "desc": "编写程序，读入用户输入的姓名，然后输出 \"你好, [姓名]！欢迎学习 C++！\"。",
+        "hint": "使用 <code>cin</code> 读取字符串，用 <code>cout</code> 输出拼接后的内容。",
+        "starterCode": "#include <iostream>\nusing namespace std;\nint main() {\n    string name;\n    cin >> name;\n    // 在此处输出问候语\n    return 0;\n}",
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    string name;\n    cin >> name;\n    cout << \"你好, \" << name << \"！欢迎学习 C++！\" << endl;\n    return 0;\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cpp-i2",
+        "title": "计算器输出",
+        "desc": "编写程序，输出两个整数 123 和 456 的和、差、积、商，每行一个结果。",
+        "hint": "直接用 <code>cout</code> 输出表达式结果，如 <code>cout << 123+456 << endl;</code>。",
+        "starterCode": "#include <iostream>\nusing namespace std;\nint main() {\n    // 输出 123 和 456 的运算结果\n    return 0;\n}",
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    cout << 123+456 << endl;\n    cout << 123-456 << endl;\n    cout << 123*456 << endl;\n    cout << 123/456 << endl;\n    return 0;\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cpp-i3",
+        "title": "int add(int, int)",
+        "desc": "实现一个 <code>add</code> 函数，接收两个整数，返回它们的和。",
+        "hint": "函数签名已经给出，只需在函数体内 <code>return a + b;</code>。",
+        "starterCode": "int add(int a, int b) {\n    // 返回 a 和 b 的和\n}",
         "solution": "int add(int a, int b) { return a + b; }",
         "fn": "add",
-        "tests": [
-          {
-            "args": [
-              3,
-              5
-            ],
-            "expect": 8
-          }
-        ]
+        "tests": [{"args":[3,5],"expect":8},{"args":[-1,1],"expect":0},{"args":[100,200],"expect":300}]
+      }
+    ]
+  },
+  {
+    "id": "types",
+    "icon": "🔤",
+    "title": "类型与 I/O",
+    "desc": "<h4>基本数据类型</h4>\n<p>在 C++ 中，每一个数据都有确定的<strong>类型</strong>，类型决定了数据占用的内存大小、取值范围以及可以执行的操作。C++ 提供了丰富的<strong>内置数据类型</strong>供开发者使用，涵盖了整数、浮点数、字符、布尔等常见需求。理解这些类型是编写正确程序的基础，也是进一步学习指针、引用、类等高级特性的必要前提。</p>\n<pre><code>int i = 42;              // 整型，4 字节，范围约 -21 亿 到 21 亿\ndouble d = 3.14159;      // 双精度浮点型，8 字节，精度约 15-17 位\nchar c = 'A';            // 字符型，1 字节，存储 ASCII 字符\nbool b = true;           // 布尔型，true/false，本质是整数\nstring s = \"Hello\";      // 字符串（需 #include &lt;string&gt;）\nauto x = 42;             // 类型自动推导为 int\nconst int MAX = 100;     // 常量，初始化后不可修改</code></pre>\n<h4>输入输出</h4>\n<p>C++ 标准库提供了便捷的<strong>控制台输入输出</strong>方式。<code>cout</code>（字符输出流）配合插入运算符 <code>&lt;&lt;</code> 将数据输出到屏幕，<code>cin</code>（字符输入流）配合提取运算符 <code>&gt;&gt;</code> 从键盘读取输入。它们定义在 <code>&lt;iostream&gt;</code> 头文件中，使用前需要 <code>#include</code>：</p>\n<pre><code>int age;\ncout &lt;&lt; \"请输入年龄：\";\ncin &gt;&gt; age;\ncout &lt;&lt; \"你的年龄是 \" &lt;&lt; age &lt;&lt; \" 岁\" &lt;&lt; endl;</code></pre>\n<p><code>endl</code> 表示换行并刷新输出缓冲区。你也可以用 <code>\"\\n\"</code> 换行，它不会刷新缓冲区，性能更好。</p>\n<h4>类型转换</h4>\n<p>在 C++ 中，不同类型的值可以相互转换。转换分为<strong>隐式转换</strong>（由编译器自动完成）和<strong>显式转换</strong>（由程序员手动进行）：</p>\n<ul>\n<li><strong>隐式转换</strong>：<code>double d = 3;</code> 将 int 自动提升为 double</li>\n<li><strong>C 风格强制转换</strong>：<code>int i = (int)3.14;</code> 结果为 3，截断小数</li>\n<li><strong>C++ 风格转换</strong>：<code>static_cast&lt;int&gt;(3.14)</code>，更安全，易于搜索</li>\n</ul>\n<h4>常量与字面量</h4>\n<p>用 <code>const</code> 关键字声明常量，一旦初始化就不能修改。字面量是直接写在代码中的值，如 <code>42</code>（整型）、<code>3.14f</code>（float）、<code>'A'</code>（字符）。给字面量加后缀可以指定类型，如 <code>100L</code> 表示 long 类型。</p>",
+    "code": "#include <iostream>\n#include <string>\nusing namespace std;\nint main() {\n    string name;\n    int age;\n    double score;\n    cout << \"请输入姓名、年龄、成绩：\";\n    cin >> name >> age >> score;\n    cout << name << \" \" << age << \"岁 \" << \"成绩：\" << score << endl;\n    auto x = 42;\n    const double PI = 3.14159;\n    cout << \"x=\" << x << \" PI=\" << PI << endl;\n    return 0;\n}",
+    "exercises": [
+      {
+        "id": "cpp-t1",
+        "title": "int doubleToInt(double)",
+        "desc": "实现 <code>doubleToInt</code> 函数，将 double 值转换为 int（直接截断小数部分）。",
+        "hint": "使用 <code>(int)d</code> 或 <code>static_cast&lt;int&gt;(d)</code>。",
+        "starterCode": "int doubleToInt(double d) {\n    // 将 double 转换为 int\n}",
+        "solution": "int doubleToInt(double d) { return (int)d; }",
+        "fn": "doubleToInt",
+        "tests": [{"args":[3.14],"expect":3},{"args":[9.999],"expect":9},{"args":[-2.7],"expect":-2},{"args":[0],"expect":0}]
+      },
+      {
+        "id": "cpp-t2",
+        "title": "double celsiusToFahrenheit(double)",
+        "desc": "实现摄氏度转华氏度的函数。公式：F = C × 9/5 + 32。",
+        "hint": "注意 9/5 在整数除法中结果是 1，要写成 <code>9.0/5</code> 或 <code>1.8</code>。",
+        "starterCode": "double celsiusToFahrenheit(double c) {\n    // 返回华氏度\n}",
+        "solution": "double celsiusToFahrenheit(double c) { return c * 9.0 / 5 + 32; }",
+        "fn": "celsiusToFahrenheit",
+        "tests": [{"args":[0],"expect":32},{"args":[100],"expect":212},{"args":[-40],"expect":-40},{"args":[37],"expect":98.6}]
+      },
+      {
+        "id": "cpp-t3",
+        "title": "bool isEven(int)",
+        "desc": "实现 <code>isEven</code> 函数，判断整数是否为偶数，偶数返回 true，奇数返回 false。",
+        "hint": "用 <code>%</code> 运算符求余数，<code>n % 2 == 0</code> 表示偶数。",
+        "starterCode": "bool isEven(int n) {\n    // 返回 true 如果 n 是偶数\n}",
+        "solution": "bool isEven(int n) { return n % 2 == 0; }",
+        "fn": "isEven",
+        "tests": [{"args":[4],"expect":true},{"args":[7],"expect":false},{"args":[0],"expect":true},{"args":[-3],"expect":false}]
+      }
+    ]
+  },
+  {
+    "id": "control",
+    "icon": "🔀",
+    "title": "控制流",
+    "desc": "<h4>条件分支</h4>\n<p>C++ 使用 <strong>if-else</strong> 和 <strong>switch</strong> 语句实现条件判断：</p>\n<pre><code>if (score &gt;= 60) {\n    cout &lt;&lt; \"及格\";\n} else if (score &gt;= 0) {\n    cout &lt;&lt; \"不及格\";\n} else {\n    cout &lt;&lt; \"无效分数\";\n}\n\nswitch (grade) {\n    case 'A': cout &lt;&lt; \"优秀\"; break;\n    case 'B': cout &lt;&lt; \"良好\"; break;\n    default:  cout &lt;&lt; \"继续努力\";\n}</code></pre>\n<h4>循环结构</h4>\n<p>C++ 有三种循环：<strong>for</strong>（已知次数）、<strong>while</strong>（条件前置）和 <strong>do-while</strong>（条件后置）：</p>\n<pre><code>for (int i = 0; i &lt; 5; i++) {\n    cout &lt;&lt; i &lt;&lt; \" \";\n}\n\nint n = 5;\nwhile (n &gt; 0) {\n    n--;\n}\n\ndo {\n    // 至少执行一次\n} while (条件);</code></pre>\n<svg viewBox=\"0 0 680 420\" style=\"max-width:100%;height:auto;margin:10px 0;background:#1a2332;border-radius:8px;padding:12px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <defs>\n    <marker id=\"arrow-f\" viewBox=\"0 0 10 10\" refX=\"10\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#58a6ff\"/></marker>\n    <style>.box-f{fill:#0f1419;stroke:#58a6ff;stroke-width:1.5;rx:6}.diamond{fill:#0f1419;stroke:#d29922;stroke-width:1.5}.txt-f{fill:#e6edf3;font-size:12px;font-family:sans-serif;text-anchor:middle;dominant-baseline:middle}.lbl{fill:#8b949e;font-size:10px;font-family:sans-serif;text-anchor:middle}</style>\n  </defs>\n  <text x=\"340\" y=\"16\" fill=\"#58a6ff\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"bold\">if-else 分支</text>\n  <rect x=\"270\" y=\"28\" width=\"100\" height=\"34\" class=\"box-f\"/><text x=\"320\" y=\"45\" class=\"txt-f\">条件</text>\n  <line x1=\"320\" y1=\"62\" x2=\"320\" y2=\"88\" stroke=\"#58a6ff\" stroke-width=\"1.5\" marker-end=\"url(#arrow-f)\"/>\n  <polygon points=\"320,88 280,108 320,128 360,108\" class=\"diamond\"/><text x=\"320\" y=\"108\" class=\"txt-f\" fill=\"#d29922\">x &gt; 0?</text>\n  <line x1=\"280\" y1=\"108\" x2=\"200\" y2=\"108\" stroke=\"#3fb950\" stroke-width=\"1.5\" marker-end=\"url(#arrow-f)\"/><text x=\"240\" y=\"100\" class=\"lbl\" fill=\"#3fb950\">是</text>\n  <rect x=\"120\" y=\"92\" width=\"80\" height=\"34\" class=\"box-f\" stroke=\"#3fb950\"/><text x=\"160\" y=\"109\" class=\"txt-f\" fill=\"#3fb950\">输出正数</text>\n  <line x1=\"360\" y1=\"108\" x2=\"440\" y2=\"108\" stroke=\"#f85149\" stroke-width=\"1.5\" marker-end=\"url(#arrow-f)\"/><text x=\"400\" y=\"100\" class=\"lbl\" fill=\"#f85149\">否</text>\n  <rect x=\"440\" y=\"92\" width=\"80\" height=\"34\" class=\"box-f\" stroke=\"#f85149\"/><text x=\"480\" y=\"109\" class=\"txt-f\" fill=\"#f85149\">输出负数</text>\n\n  <text x=\"340\" y=\"180\" fill=\"#58a6ff\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"bold\">for 循环</text>\n  <rect x=\"155\" y=\"195\" width=\"110\" height=\"34\" class=\"box-f\"/><text x=\"210\" y=\"212\" class=\"txt-f\">int i = 0</text>\n  <line x1=\"265\" y1=\"212\" x2=\"330\" y2=\"212\" stroke=\"#58a6ff\" stroke-width=\"1.5\" marker-end=\"url(#arrow-f)\"/>\n  <polygon points=\"330,195 380,212 330,230 280,212\" class=\"diamond\" transform=\"translate(30,0)\"/><text x=\"343\" y=\"212\" class=\"txt-f\" fill=\"#d29922\">i &lt; 5?</text>\n  <line x1=\"303\" y1=\"230\" x2=\"280\" y2=\"280\" stroke=\"#3fb950\" stroke-width=\"1.5\" marker-end=\"url(#arrow-f)\"/><text x=\"275\" y=\"252\" class=\"lbl\" fill=\"#3fb950\">是</text>\n  <rect x=\"200\" y=\"280\" width=\"100\" height=\"34\" class=\"box-f\" stroke=\"#3fb950\"/><text x=\"250\" y=\"297\" class=\"txt-f\" fill=\"#3fb950\">循环体</text>\n  <line x1=\"300\" y1=\"297\" x2=\"400\" y2=\"297\" stroke=\"#8b949e\" stroke-width=\"1\" marker-end=\"url(#arrow-f)\"/>\n  <rect x=\"400\" y=\"280\" width=\"100\" height=\"34\" class=\"box-f\"/><text x=\"450\" y=\"297\" class=\"txt-f\">i++</text>\n  <line x1=\"450\" y1=\"280\" x2=\"380\" y2=\"230\" stroke=\"#8b949e\" stroke-width=\"1\" marker-end=\"url(#arrow-f)\"/>\n  <line x1=\"383\" y1=\"230\" x2=\"440\" y2=\"240\" stroke=\"#f85149\" stroke-width=\"1.5\" marker-end=\"url(#arrow-f)\"/><text x=\"405\" y=\"252\" class=\"lbl\" fill=\"#f85149\">否</text>\n  <rect x=\"440\" y=\"240\" width=\"80\" height=\"34\" class=\"box-f\" stroke=\"#f85149\"/><text x=\"480\" y=\"257\" class=\"txt-f\" fill=\"#f85149\">结束</text>\n</svg>\n<h4>流程控制语句</h4>\n<ul>\n<li><strong>break</strong>：跳出当前循环</li>\n<li><strong>continue</strong>：跳过本次循环剩余语句，进入下一轮</li>\n<li><strong>return</strong>：结束当前函数</li>\n</ul>",
+    "code": "#include <iostream>\nusing namespace std;\nint main() {\n    for (int i = 1; i <= 10; i++) {\n        if (i % 3 == 0 && i % 5 == 0)\n            cout << \"FizzBuzz \"; \n        else if (i % 3 == 0)\n            cout << \"Fizz \"; \n        else if (i % 5 == 0)\n            cout << \"Buzz \"; \n        else\n            cout << i << \" \";\n    }\n    cout << endl;\n    return 0;\n}",
+    "exercises": [
+      {
+        "id": "cpp-c1",
+        "title": "int fact(int)",
+        "desc": "实现 <code>fact</code> 函数计算 n 的阶乘（n! = 1×2×3×...×n）。n 为非负整数，0! = 1。",
+        "hint": "用 <code>for</code> 循环累乘，注意结果可能很大，用 <code>int</code> 即可。",
+        "starterCode": "int fact(int n) {\n    int r = 1;\n    for (int i = 1; i <= n; i++)\n        r *= i;\n    return r;\n}",
+        "solution": "int fact(int n) { int r = 1; for (int i = 1; i <= n; i++) r *= i; return r; }",
+        "fn": "fact",
+        "tests": [{"args":[5],"expect":120},{"args":[0],"expect":1},{"args":[1],"expect":1},{"args":[7],"expect":5040}]
+      },
+      {
+        "id": "cpp-c2",
+        "title": "bool isPrime(int)",
+        "desc": "实现 <code>isPrime</code> 函数判断整数 n 是否为素数（质数）。素数大于 1 且只能被 1 和自身整除。",
+        "hint": "从 2 遍历到 sqrt(n)，检查是否有因子。用 <code>n % i == 0</code> 判断整除。",
+        "starterCode": "bool isPrime(int n) {\n    if (n <= 1) return false;\n    // 检查是否有因子\n    return true;\n}",
+        "solution": "bool isPrime(int n) { if (n <= 1) return false; for (int i = 2; i * i <= n; i++) { if (n % i == 0) return false; } return true; }",
+        "fn": "isPrime",
+        "tests": [{"args":[7],"expect":true},{"args":[1],"expect":false},{"args":[2],"expect":true},{"args":[9],"expect":false},{"args":[97],"expect":true}]
+      },
+      {
+        "id": "cpp-c3",
+        "title": "int sumOdd(int)",
+        "desc": "实现 <code>sumOdd</code> 函数，计算 1 到 n 之间所有奇数的和。例如 n=5 时，1+3+5=9。",
+        "hint": "用 <code>for</code> 循环，步长为 2；或用 <code>if (i % 2 == 1)</code> 判断。",
+        "starterCode": "int sumOdd(int n) {\n    int sum = 0;\n    // 累加 1 到 n 之间的奇数\n    return sum;\n}",
+        "solution": "int sumOdd(int n) { int s = 0; for (int i = 1; i <= n; i += 2) s += i; return s; }",
+        "fn": "sumOdd",
+        "tests": [{"args":[5],"expect":9},{"args":[1],"expect":1},{"args":[10],"expect":25},{"args":[100],"expect":2500}]
+      }
+    ]
+  },
+  {
+    "id": "function",
+    "icon": "🧩",
+    "title": "函数与重载",
+    "desc": "<h4>函数定义</h4>\n<p><strong>函数</strong>是组织代码的基本单位，它将一段完成特定功能的代码封装起来，可以重复调用。在 C++ 中，函数的通用格式为：<strong>返回类型 + 函数名 + 参数列表 + 函数体</strong>。每个 C++ 程序都从 <code>main</code> 函数开始执行。合理地使用函数可以显著提高代码的<strong>可读性</strong>、<strong>复用性</strong>和<strong>可维护性</strong>。函数可以调用其他函数，也可以递归调用自身，这种灵活性使得复杂算法的实现变得简洁清晰。</p>\n<pre><code>返回类型 函数名(参数列表) {\n    函数体\n    return 返回值;\n}</code></pre>\n<h4>函数重载</h4>\n<p>C++ 允许在<strong>同一个作用域</strong>中定义多个<strong>同名函数</strong>，只要它们具有不同的<strong>参数列表</strong>（参数个数、类型或顺序不同），这称为<strong>函数重载</strong>。编译器在编译期间根据传入实参的类型和个数自动匹配最合适的版本。重载大大提高了代码的表达力，让同一操作名称可以作用于不同类型的数据，这也是 C++ 多态性的一种体现：</p>\n<pre><code>int max(int a, int b) {\n    return a &gt; b ? a : b;\n}\ndouble max(double a, double b) {\n    return a &gt; b ? a : b;\n}\nstring max(string a, string b) {\n    return a &gt; b ? a : b;  // 按字典序比较\n}</code></pre>\n<h4>默认参数</h4>\n<p>函数参数可以设置<strong>默认值</strong>，调用时如果省略该参数则使用默认值。默认参数必须从右向左连续设置，即一旦某个参数有默认值，它右边所有参数都必须有默认值：</p>\n<pre><code>void greet(string name = \"World\") {\n    cout &lt;&lt; \"Hello, \" &lt;&lt; name &lt;&lt; endl;\n}\ngreet();           // Hello, World\ngreet(\"C++\");      // Hello, C++</code></pre>\n<h4>值传递与引用传递</h4>\n<ul>\n<li><strong>值传递</strong>：函数接收参数的<strong>副本</strong>，函数内对参数的修改不影响原变量</li>\n<li><strong>引用传递</strong>：使用 <code>&amp;</code> 符号声明，函数直接操作原变量，适合需要<strong>修改外部变量</strong>或<strong>避免大对象复制</strong>的场景</li>\n<li><strong>const 引用</strong>：<code>const string&amp; s</code>，既避免复制又防止修改，是传只读大对象的首选方式</li>\n</ul>",
+    "code": "#include <iostream>\n#include <string>\nusing namespace std;\nint max(int a, int b) { return a > b ? a : b; }\ndouble max(double a, double b) { return a > b ? a : b; }\nstring max(string a, string b) { return a > b ? a : b; }\nvoid greet(string name = \"World\") {\n    cout << \"Hello, \" << name << endl;\n}\nint main() {\n    cout << max(3, 7) << endl;\n    cout << max(3.14, 2.71) << endl;\n    cout << max(\"cat\", \"dog\") << endl;\n    greet();\n    greet(\"C++\");\n    return 0;\n}",
+    "exercises": [
+      {
+        "id": "cpp-f1",
+        "title": "int max(int,int) 与 double max(double,double)",
+        "desc": "实现两个重载的 <code>max</code> 函数，分别返回两个 int 和两个 double 中的较大值。",
+        "hint": "用三元运算符 <code>a > b ? a : b</code> 简洁实现。",
+        "starterCode": "int max(int a, int b) {\n    // 返回较大的整数\n}\ndouble max(double a, double b) {\n    // 返回较大的浮点数\n}",
+        "solution": "int max(int a, int b) { return a > b ? a : b; }\ndouble max(double a, double b) { return a > b ? a : b; }",
+        "fn": "max",
+        "tests": [{"args":[3,5],"expect":5},{"args":[10,10],"expect":10},{"args":[-1,-5],"expect":-1}]
+      },
+      {
+        "id": "cpp-f2",
+        "title": "int cube(int) 与 double cube(double)",
+        "desc": "实现重载的 <code>cube</code> 函数，计算 int 和 double 的立方值。",
+        "hint": "返回 <code>n * n * n</code>。",
+        "starterCode": "int cube(int n) {\n    // 返回整数的立方\n}\ndouble cube(double n) {\n    // 返回 double 的立方\n}",
+        "solution": "int cube(int n) { return n * n * n; }\ndouble cube(double n) { return n * n * n; }",
+        "fn": "cube",
+        "tests": [{"args":[3],"expect":27},{"args":[0],"expect":0},{"args":[-2],"expect":-8}]
+      },
+      {
+        "id": "cpp-f3",
+        "title": "void swap(int&, int&)",
+        "desc": "实现 <code>swap</code> 函数，使用引用传递交换两个整数的值。",
+        "hint": "用临时变量保存一个值：<code>int t = a; a = b; b = t;</code>。",
+        "starterCode": "void swap(int &a, int &b) {\n    // 交换 a 和 b 的值\n}",
+        "solution": "void swap(int &a, int &b) { int t = a; a = b; b = t; }",
+        "fn": "swap",
+        "tests": [{"args":[3,5],"expect":5},{"args":[10,10],"expect":10},{"args":[-1,1],"expect":1}]
+      }
+    ]
+  },
+  {
+    "id": "array",
+    "icon": "📊",
+    "title": "数组与字符串",
+    "desc": "<h4>数组</h4>\n<p>数组是 C++ 中最基本的数据结构之一，它在<strong>连续的内存空间</strong>中存储<strong>相同类型</strong>的多个元素。数组的大小在<strong>编译时期</strong>就已经确定，创建后不能改变。数组中的每个元素通过<strong>索引</strong>访问，索引从 <strong>0</strong> 开始。需要注意的是，C++ 的原始数组不提供越界检查，访问超出范围的元素会引发<strong>未定义行为</strong>，这是很多 bug 的根源，因此现代 C++ 更推荐使用 <code>vector</code> 或 <code>array</code>：</p>\n<pre><code>int arr[5] = {1, 2, 3, 4, 5};\nint first = arr[0];     // 索引从 0 开始\nint len = sizeof(arr) / sizeof(arr[0]);  // 计算长度\n\n// 遍历数组\nfor (int i = 0; i &lt; 5; i++) {\n    cout &lt;&lt; arr[i] &lt;&lt; \" \";\n}</code></pre>\n<h4>vector 动态数组</h4>\n<p><code>std::vector</code> 是 C++ 标准模板库提供的<strong>动态数组</strong>容器，它<strong>自动管理内存</strong>，大小可以根据需要动态增长。使用 vector 需要包含 <code>&lt;vector&gt;</code> 头文件。与原始数组不同，vector 提供了 <code>size()</code> 方法获取元素个数，还支持 <strong>范围 for 循环</strong> 遍历。它也是 STL 容器中最常用、最灵活的一个，广泛应用于各种编程场景：</p>\n<pre><code>#include &lt;vector&gt;\nvector&lt;int&gt; v = {1, 2, 3};\nv.push_back(4);          // 末尾添加元素\nv.pop_back();            // 删除末尾元素\nint s = v.size();        // 当前大小\nfor (int x : v) {        // 范围 for 循环\n    cout &lt;&lt; x &lt;&lt; \" \";\n}</code></pre>\n<h4>字符串</h4>\n<p><code>std::string</code> 是 C++ 中处理文本的得力工具，它提供了丰富的<strong>字符串操作</strong>方法。string 内部管理着动态分配的字符数组，可以自动调整大小。它支持拼接（<code>+</code>、<code>+=</code>）、按索引访问字符（<code>[]</code>）、截取子串（<code>substr</code>）、查找（<code>find</code>）等常用操作。string 也兼容 C 风格字符串函数，通过 <code>c_str()</code> 方法可以获取 <code>const char*</code> 指针：</p>\n<pre><code>string s = \"Hello\";\ns += \" World\";           // 拼接\nint len = s.length();    // 长度\nchar c = s[0];           // 访问字符\nstring sub = s.substr(0, 5);  // 子串\nsize_t pos = s.find(\"World\"); // 查找</code></pre>",
+    "code": "#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\nint main() {\n    vector<int> v = {10, 20, 30, 40, 50};\n    string s = \"C++ Tutorial\";\n    int sum = 0;\n    for (int x : v) sum += x;\n    cout << \"Sum=\" << sum << endl;\n    cout << \"Avg=\" << (double)sum / v.size() << endl;\n    cout << \"Len=\" << s.length() << \" First=\" << s[0] << endl;\n    return 0;\n}",
+    "exercises": [
+      {
+        "id": "cpp-a1",
+        "title": "int vecSum(vector<int>)",
+        "desc": "实现 <code>vecSum</code> 函数，计算 vector 中所有元素的和。",
+        "hint": "用 <code>for (int x : v) sum += x;</code> 遍历累加。",
+        "starterCode": "int vecSum(vector<int> v) {\n    int sum = 0;\n    // 计算所有元素之和\n    return sum;\n}",
+        "solution": "int vecSum(vector<int> v) { int s = 0; for (int x : v) s += x; return s; }",
+        "fn": "vecSum",
+        "tests": [{"args":[[1,2,3]],"expect":6},{"args":[[5]],"expect":5},{"args":[[-1,0,1]],"expect":0},{"args":[[10,20,30,40]],"expect":100}]
+      },
+      {
+        "id": "cpp-a2",
+        "title": "double vecAvg(vector<int>)",
+        "desc": "实现 <code>vecAvg</code> 函数，计算 vector 中元素的平均值（返回 double）。",
+        "hint": "先求和再除以 <code>v.size()</code>，注意转换为 double。",
+        "starterCode": "double vecAvg(vector<int> v) {\n    // 返回 double 类型的平均值\n}",
+        "solution": "double vecAvg(vector<int> v) { int s = 0; for (int x : v) s += x; return (double)s / v.size(); }",
+        "fn": "vecAvg",
+        "tests": [{"args":[[1,2,3,4]],"expect":2.5},{"args":[[10]],"expect":10},{"args":[[0,0,0]],"expect":0}]
+      },
+      {
+        "id": "cpp-a3",
+        "title": "int countChar(string, char)",
+        "desc": "实现 <code>countChar</code> 函数，统计字符串中某个字符出现的次数。",
+        "hint": "遍历字符串的每个字符，用 <code>s[i] == c</code> 判断。",
+        "starterCode": "int countChar(string s, char c) {\n    int count = 0;\n    // 统计字符出现次数\n    return count;\n}",
+        "solution": "int countChar(string s, char c) { int cnt = 0; for (char ch : s) if (ch == c) cnt++; return cnt; }",
+        "fn": "countChar",
+        "tests": [{"args":["hello","l"],"expect":2},{"args":["aaaa","a"],"expect":4},{"args":["test","x"],"expect":0},{"args":["C++","+"],"expect":2}]
+      }
+    ]
+  },
+  {
+    "id": "class",
+    "icon": "🏗️",
+    "title": "类与对象",
+    "desc": "<h4>面向对象编程</h4>\n<p>C++ 是<strong>面向对象</strong>语言，核心概念是<strong>类</strong>（class）和<strong>对象</strong>（object）。类是一种<strong>用户自定义类型</strong>，将数据和操作数据的方法封装在一起。</p>\n<h4>定义类</h4>\n<pre><code>class Rectangle {\npublic:\n    // 构造函数：初始化对象\n    Rectangle(int w, int h) : width(w), height(h) {}\n    \n    // 成员函数\n    int area() const { return width * height; }\n    int perimeter() const { return 2 * (width + height); }\n\nprivate:\n    int width, height;  // 成员变量\n};</code></pre>\n<svg viewBox=\"0 0 620 340\" style=\"max-width:100%;height:auto;margin:10px 0;background:#1a2332;border-radius:8px;padding:12px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <style>.cls-box{fill:#0f1419;stroke:#58a6ff;stroke-width:1.5;rx:6}.cls-title{fill:#58a6ff;font-size:14px;font-family:sans-serif;text-anchor:middle;font-weight:bold}.cls-field{fill:#8b949e;font-size:12px;font-family:monospace}.cls-method{fill:#3fb950;font-size:12px;font-family:monospace}.cls-line{stroke:#8b949e;stroke-width:1}.cls-lbl{fill:#8b949e;font-size:11px;font-family:sans-serif;text-anchor:middle}</style>\n  <rect x=\"30\" y=\"30\" width=\"240\" height=\"180\" class=\"cls-box\"/>\n  <text x=\"150\" y=\"54\" class=\"cls-title\">Rectangle</text>\n  <line x1=\"30\" y1=\"64\" x2=\"270\" y2=\"64\" class=\"cls-line\"/>\n  <text x=\"48\" y=\"82\" class=\"cls-field\">- width : int</text>\n  <text x=\"48\" y=\"100\" class=\"cls-field\">- height : int</text>\n  <text x=\"48\" y=\"118\" class=\"cls-field\">- color : string</text>\n  <line x1=\"30\" y1=\"128\" x2=\"270\" y2=\"128\" class=\"cls-line\"/>\n  <text x=\"48\" y=\"146\" class=\"cls-method\">+ Rectangle(w,h,c)</text>\n  <text x=\"48\" y=\"164\" class=\"cls-method\">+ area() : int</text>\n  <text x=\"48\" y=\"182\" class=\"cls-method\">+ perimeter() : int</text>\n  <text x=\"48\" y=\"200\" class=\"cls-method\">+ draw() : void</text>\n\n  <text x=\"330\" y=\"120\" class=\"cls-lbl\">实例化</text>\n  <line x1=\"270\" y1=\"120\" x2=\"350\" y2=\"120\" stroke=\"#58a6ff\" stroke-width=\"1.5\" stroke-dasharray=\"6,3\" marker-end=\"url(#arrow-f)\"/>\n  <rect x=\"350\" y=\"30\" width=\"240\" height=\"80\" class=\"cls-box\" stroke=\"#3fb950\"/>\n  <text x=\"470\" y=\"54\" class=\"cls-title\" fill=\"#3fb950\">main()</text>\n  <line x1=\"350\" y1=\"64\" x2=\"590\" y2=\"64\" class=\"cls-line\" stroke=\"#3fb950\"/>\n  <text x=\"368\" y=\"82\" class=\"cls-method\" fill=\"#3fb950\">Rectangle r(5, 3)</text>\n  <text x=\"368\" y=\"100\" class=\"cls-method\" fill=\"#3fb950\">r.area() → 15</text>\n\n  <defs>\n    <marker id=\"arrow-f\" viewBox=\"0 0 10 10\" refX=\"10\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#58a6ff\"/></marker>\n  </defs>\n</svg>\n<h4>访问控制</h4>\n<ul>\n<li><strong>public</strong>：任何地方都可以访问</li>\n<li><strong>private</strong>：只有类内部可以访问（默认）</li>\n<li><strong>protected</strong>：类内部和派生类可以访问</li>\n</ul>\n<h4>构造函数</h4>\n<p>构造函数在创建对象时自动调用，用于初始化成员变量。C++ 使用<strong>初始化列表</strong>语法高效初始化：</p>\n<pre><code>class Circle {\npublic:\n    Circle(double r) : radius(r) {}  // 初始化列表\n    double area() { return 3.14159 * radius * radius; }\nprivate:\n    double radius;\n};\nCircle c(5.0);  // 创建对象，自动调用构造函数</code></pre>",
+    "code": "#include <iostream>\nusing namespace std;\nclass Rectangle {\npublic:\n    Rectangle(int w, int h) : width(w), height(h) {}\n    int area() const { return width * height; }\n    int perimeter() const { return 2 * (width + height); }\n    void print() const {\n        cout << \"Rect \" << width << \"x\" << height\n             << \" area=\" << area()\n             << \" peri=\" << perimeter() << endl;\n    }\nprivate:\n    int width, height;\n};\nint main() {\n    Rectangle r(5, 3);\n    r.print();\n    Rectangle r2(10, 2);\n    r2.print();\n    return 0;\n}",
+    "exercises": [
+      {
+        "id": "cpp-cl1",
+        "title": "定义 Student 类",
+        "desc": "定义一个 <code>Student</code> 类，包含 private 成员 <code>name</code>(string) 和 <code>score</code>(int)，以及 public 构造函数和 <code>print()</code> 方法输出学生信息。",
+        "hint": "构造函数用初始化列表 <code>: name(n), score(s) {}</code>，<code>print()</code> 用 <code>cout</code> 输出。",
+        "starterCode": "class Student {\npublic:\n    Student(string n, int s) : name(n), score(s) {}\n    void print() {\n        // 输出姓名和成绩\n    }\nprivate:\n    string name;\n    int score;\n};",
+        "solution": "class Student { public: Student(string n, int s) : name(n), score(s) {} void print() { cout << name << \" \" << score << endl; } private: string name; int score; };",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cpp-cl2",
+        "title": "Counter 计数器类",
+        "desc": "实现 <code>Counter</code> 类，有 <code>inc()</code> 方法使计数加 1，<code>get()</code> 方法返回当前计数值，构造函数初始化为 0。",
+        "hint": "private 成员 <code>int count</code>，初始化列表 <code>: count(0) {}</code>。",
+        "starterCode": "class Counter {\npublic:\n    Counter() : count(0) {}\n    void inc() { /* 计数加 1 */ }\n    int get() { /* 返回当前计数 */ }\nprivate:\n    int count;\n};",
+        "solution": "class Counter { public: Counter() : count(0) {} void inc() { count++; } int get() { return count; } private: int count; };",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cpp-cl3",
+        "title": "double getArea()",
+        "desc": "补全 <code>Circle</code> 类，实现 <code>getArea()</code> 方法返回圆的面积。半径在构造函数中传入。",
+        "hint": "面积公式 <code>3.14159 * r * r</code>。使用 <code>const</code> 修饰不修改成员的函数。",
+        "starterCode": "class Circle {\npublic:\n    Circle(double r) : radius(r) {}\n    double getArea() const {\n        // 返回面积\n    }\nprivate:\n    double radius;\n};",
+        "solution": "class Circle { public: Circle(double r) : radius(r) {} double getArea() const { return 3.14159 * radius * radius; } private: double radius; };",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "inherit",
+    "icon": "🔗",
+    "title": "继承与多态",
+    "desc": "<h4>继承</h4>\n<p><strong>继承</strong>是面向对象三大特性之一，允许子类继承基类的成员，实现代码复用。继承使用 <code>: public 基类名</code> 语法：</p>\n<pre><code>class Shape {\npublic:\n    virtual double area() = 0;\n    virtual ~Shape() {}\n};\nclass Circle : public Shape {\n    double radius;\npublic:\n    Circle(double r) : radius(r) {}\n    double area() override { return 3.14 * radius * radius; }\n};</code></pre>\n<svg viewBox=\"0 0 640 300\" style=\"max-width:100%;height:auto;margin:10px 0;background:#1a2332;border-radius:8px;padding:12px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <style>.ih-box{fill:#0f1419;stroke:#58a6ff;stroke-width:1.5;rx:6}.ih-abstract{fill:#0f1419;stroke:#d29922;stroke-width:2;rx:6;stroke-dasharray:4,3}.ih-title{fill:#e6edf3;font-size:13px;font-family:sans-serif;text-anchor:middle;font-weight:bold}.ih-field{fill:#8b949e;font-size:11px;font-family:monospace;text-anchor:middle}.ih-method{fill:#3fb950;font-size:11px;font-family:monospace;text-anchor:middle}.ih-line{stroke:#8b949e;stroke-width:1}.ih-lbl{fill:#8b949e;font-size:10px;font-family:sans-serif;text-anchor:middle}.ih-arr{stroke:#58a6ff;stroke-width:2}</style>\n  <polygon points=\"320,25 300,60 340,60\" fill=\"none\" class=\"ih-arr\" marker-end=\"none\"/>\n  <text x=\"320\" y=\"48\" class=\"ih-lbl\">继承</text>\n\n  <rect x=\"190\" y=\"65\" width=\"260\" height=\"100\" class=\"ih-abstract\"/>\n  <text x=\"320\" y=\"88\" class=\"ih-title\" fill=\"#d29922\">&lt;&lt;abstract&gt;&gt;</text>\n  <text x=\"320\" y=\"104\" class=\"ih-title\" fill=\"#d29922\">Shape</text>\n  <line x1=\"190\" y1=\"112\" x2=\"450\" y2=\"112\" class=\"ih-line\"/>\n  <text x=\"320\" y=\"127\" class=\"ih-method\" fill=\"#d29922\">+ area() : double [纯虚]</text>\n  <text x=\"320\" y=\"143\" class=\"ih-method\" fill=\"#d29922\">+ getName() : string</text>\n  <text x=\"320\" y=\"159\" class=\"ih-field\"># name : string</text>\n\n  <line x1=\"260\" y1=\"165\" x2=\"260\" y2=\"200\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#arrow-i)\"/>\n  <line x1=\"380\" y1=\"165\" x2=\"380\" y2=\"200\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#arrow-i)\"/>\n\n  <rect x=\"130\" y=\"200\" width=\"210\" height=\"85\" class=\"ih-box\"/>\n  <text x=\"235\" y=\"222\" class=\"ih-title\">Circle</text>\n  <line x1=\"130\" y1=\"230\" x2=\"340\" y2=\"230\" class=\"ih-line\"/>\n  <text x=\"150\" y=\"246\" class=\"ih-field\">- radius : double</text>\n  <text x=\"150\" y=\"262\" class=\"ih-method\">+ area() : double [override]</text>\n  <text x=\"150\" y=\"278\" class=\"ih-method\">+ Circle(r : double)</text>\n\n  <rect x=\"340\" y=\"200\" width=\"210\" height=\"85\" class=\"ih-box\"/>\n  <text x=\"445\" y=\"222\" class=\"ih-title\">Rectangle</text>\n  <line x1=\"340\" y1=\"230\" x2=\"550\" y2=\"230\" class=\"ih-line\"/>\n  <text x=\"360\" y=\"246\" class=\"ih-field\">- width, height : double</text>\n  <text x=\"360\" y=\"262\" class=\"ih-method\">+ area() : double [override]</text>\n  <text x=\"360\" y=\"278\" class=\"ih-method\">+ Rectangle(w,h)</text>\n\n  <defs>\n    <marker id=\"arrow-i\" viewBox=\"0 0 10 10\" refX=\"10\" refY=\"5\" markerWidth=\"10\" markerHeight=\"10\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 Z\" fill=\"#58a6ff\"/></marker>\n  </defs>\n</svg>\n<h4>多态</h4>\n<p>多态允许通过<strong>基类指针</strong>调用派生类重写的方法。基类用 <code>virtual</code> 声明，派生类用 <code>override</code> 重写，程序根据实际类型决定调用哪个版本：</p>\n<pre><code>Shape* shapes[2];\nshapes[0] = new Circle(5);\nshapes[1] = new Rectangle(4, 6);\nfor (int i = 0; i &lt; 2; i++) {\n    cout &lt;&lt; shapes[i]-&gt;area() &lt;&lt; endl;\n    delete shapes[i];\n}</code></pre>\n<h4>纯虚函数与抽象类</h4>\n<p>包含纯虚函数（<code>= 0</code>）的类是<strong>抽象类</strong>，不能直接实例化，只能作为基类。派生类必须实现所有纯虚函数才能被实例化。</p>",
+    "code": "#include <iostream>\nusing namespace std;\nclass Shape {\npublic:\n    virtual double area() const = 0;\n    virtual void print() const = 0;\n    virtual ~Shape() {}\n};\nclass Circle : public Shape {\n    double r;\npublic:\n    Circle(double r) : r(r) {}\n    double area() const override { return 3.14159 * r * r; }\n    void print() const override { cout << \"Circle r=\" << r << \" area=\" << area() << endl; }\n};\nclass Rect : public Shape {\n    int w, h;\npublic:\n    Rect(int w, int h) : w(w), h(h) {}\n    double area() const override { return w * h; }\n    void print() const override { cout << \"Rect \" << w << \"x\" << h << \" area=\" << area() << endl; }\n};\nint main() {\n    Shape* shapes[2] = { new Circle(5), new Rect(4, 6) };\n    for (int i = 0; i < 2; i++) { shapes[i]->print(); delete shapes[i]; }\n    return 0;\n}",
+    "exercises": [
+      {
+        "id": "cpp-in1",
+        "title": "抽象 Animal 类",
+        "desc": "定义一个抽象类 <code>Animal</code>，包含纯虚函数 <code>void speak()</code>。",
+        "hint": "使用 <code>virtual void speak() = 0;</code>。",
+        "starterCode": "class Animal {\npublic:\n    virtual void speak() = 0;\n    virtual ~Animal() {}\n};",
+        "solution": "class Animal { public: virtual void speak() = 0; virtual ~Animal() {} };",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cpp-in2",
+        "title": "Dog 继承 Animal",
+        "desc": "创建 <code>Dog</code> 类继承 <code>Animal</code>，实现 <code>speak()</code> 输出 \"汪！汪！\"。",
+        "hint": "用 <code>class Dog : public Animal</code>，<code>speak()</code> 中 <code>cout</code> 输出。",
+        "starterCode": "class Dog : public Animal {\npublic:\n    void speak() override {\n        // 输出叫声\n    }\n};",
+        "solution": "class Dog : public Animal { public: void speak() override { cout << \"汪！汪！\" << endl; } };",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cpp-in3",
+        "title": "double totalArea(vector<Shape*>)",
+        "desc": "实现 <code>totalArea</code> 函数，接收 <code>vector&lt;Shape*&gt;</code>，通过多态计算所有形状的面积之和。",
+        "hint": "遍历 vector，对每个元素调用 <code>->area()</code> 累加。",
+        "starterCode": "double totalArea(vector<Shape*> shapes) {\n    double sum = 0;\n    for (Shape* s : shapes) {\n        // 累加面积\n    }\n    return sum;\n}",
+        "solution": "double totalArea(vector<Shape*> shapes) { double s = 0; for (Shape* p : shapes) s += p->area(); return s; }",
+        "fn": "totalArea",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "stl",
+    "icon": "📚",
+    "title": "STL 容器",
+    "desc": "<h4>什么是 STL？</h4>\n<p><strong>STL</strong>（Standard Template Library，标准模板库）是 C++ 标准库的核心部分，提供了<strong>容器</strong>、<strong>算法</strong>和<strong>迭代器</strong>三大组件。使用 STL 可以大幅提高开发效率。</p>\n<h4>常用容器</h4>\n<pre><code>// vector：动态数组\nvector&lt;int&gt; v = {3, 1, 4, 1, 5};\nv.push_back(9);\nsort(v.begin(), v.end());\n\n// map：键值对映射（红黑树）\nmap&lt;string, int&gt; scores;\nscores[\"Alice\"] = 95;\nscores[\"Bob\"] = 87;\n\n// set：有序集合（红黑树）\nset&lt;int&gt; s = {3, 1, 4, 1, 5};  // 自动去重排序\ns.insert(2);\n\n// unordered_map：哈希表 (C++11)\nunordered_map&lt;string, int&gt; um;\num[\"key\"] = 42;</code></pre>\n<h4>常用算法</h4>\n<p>STL 算法位于 <code>&lt;algorithm&gt;</code> 头文件中：</p>\n<pre><code>sort(v.begin(), v.end());          // 排序\nreverse(v.begin(), v.end());       // 反转\nbinary_search(v.begin(), v.end(), 5);  // 二分查找\nauto it = find(v.begin(), v.end(), 3); // 查找\nint c = count(v.begin(), v.end(), 1);  // 计数</code></pre>\n<h4>迭代器</h4>\n<p>迭代器是 STL 的\" glue\"，通过 <code>begin()</code> 和 <code>end()</code> 获取容器的起始和结束位置：</p>\n<pre><code>for (auto it = v.begin(); it != v.end(); ++it) {\n    cout &lt;&lt; *it &lt;&lt; \" \";\n}</code></pre>",
+    "code": "#include <iostream>\n#include <vector>\n#include <map>\n#include <set>\n#include <algorithm>\nusing namespace std;\nint main() {\n    vector<int> v = {3, 1, 4, 1, 5, 9, 2, 6};\n    sort(v.begin(), v.end());\n    cout << \"Sorted: \"; for (int x : v) cout << x << \" \"; cout << endl;\n    map<string, int> ages;\n    ages[\"Alice\"] = 25; ages[\"Bob\"] = 30; ages[\"Charlie\"] = 35;\n    for (auto& p : ages) cout << p.first << \": \" << p.second << endl;\n    return 0;\n}",
+    "exercises": [
+      {
+        "id": "cpp-stl1",
+        "title": "void sortVec(vector<int>&)",
+        "desc": "实现 <code>sortVec</code> 函数，对 vector 进行升序排序。",
+        "hint": "直接调用 <code>sort(v.begin(), v.end())</code>。",
+        "starterCode": "void sortVec(vector<int>& v) {\n    // 使用 STL 排序\n}",
+        "solution": "void sortVec(vector<int>& v) { sort(v.begin(), v.end()); }",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cpp-stl2",
+        "title": "vector<int> mergeVec(vector<int>, vector<int>)",
+        "desc": "实现 <code>mergeVec</code> 函数，将两个已排序的 vector 合并为一个有序的 vector。",
+        "hint": "合并并排序，或者用 <code>merge</code> 算法：<code>merge(a.begin(), a.end(), b.begin(), b.end(), back_inserter(r));</code>。",
+        "starterCode": "vector<int> mergeVec(vector<int> a, vector<int> b) {\n    vector<int> r;\n    // 合并两个有序数组\n    return r;\n}",
+        "solution": "vector<int> mergeVec(vector<int> a, vector<int> b) { sort(a.begin(),a.end()); sort(b.begin(),b.end()); vector<int> r; merge(a.begin(),a.end(),b.begin(),b.end(),back_inserter(r)); return r; }",
+        "fn": "mergeVec",
+        "tests": [{"args":[[1,3,5],[2,4,6]],"expect":[1,2,3,4,5,6]},{"args":[[],[1,2]],"expect":[1,2]}]
+      },
+      {
+        "id": "cpp-stl3",
+        "title": "int countOccurrences(vector<int>, int)",
+        "desc": "使用 STL 的 <code>count</code> 函数统计某个值在 vector 中出现的次数。",
+        "hint": "用 <code>count(v.begin(), v.end(), val)</code>。",
+        "starterCode": "int countOccurrences(vector<int> v, int val) {\n    // 使用 STL count 算法\n}",
+        "solution": "int countOccurrences(vector<int> v, int val) { return count(v.begin(), v.end(), val); }",
+        "fn": "countOccurrences",
+        "tests": [{"args":[[1,2,2,3,2,4],2],"expect":3},{"args":[[1,1,1],1],"expect":3},{"args":[[1,2,3],5],"expect":0}]
+      }
+    ]
+  },
+  {
+    "id": "exception",
+    "icon": "⚠️",
+    "title": "异常处理",
+    "desc": "<h4>为什么需要异常处理？</h4>\n<p>程序运行中会遇到各种<strong>错误</strong>：除零错误、数组越界、文件打开失败等。C++ 的<strong>异常机制</strong>提供了一种结构化的错误处理方式，将正常逻辑和错误处理代码分离。</p>\n<h4>基本语法</h4>\n<pre><code>try {\n    // 可能抛出异常的代码\n    int age;\n    cin &gt;&gt; age;\n    if (age &lt; 0 || age &gt; 150) {\n        throw invalid_argument(\"年龄不合法\");\n    }\n    cout &lt;&lt; \"年龄：\" &lt;&lt; age &lt;&lt; endl;\n} catch (const invalid_argument& e) {\n    cerr &lt;&lt; \"参数错误：\" &lt;&lt; e.what() &lt;&lt; endl;\n} catch (const exception& e) {\n    cerr &lt;&lt; \"其他异常：\" &lt;&lt; e.what() &lt;&lt; endl;\n} catch (...) {\n    cerr &lt;&lt; \"未知异常\" &lt;&lt; endl;\n}</code></pre>\n<h4>异常类型</h4>\n<p>C++ 标准库提供了丰富的异常类，都在 <code>&lt;stdexcept&gt;</code> 中：</p>\n<ul>\n<li><strong>runtime_error</strong>：运行时错误</li>\n<li><strong>logic_error</strong>：逻辑错误</li>\n<li><strong>invalid_argument</strong>：无效参数</li>\n<li><strong>out_of_range</strong>：越界访问</li>\n<li><strong>bad_alloc</strong>：内存分配失败</li>\n</ul>\n<h4>自定义异常</h4>\n<p>可以从 <code>std::exception</code> 派生自定义异常类：</p>\n<pre><code>class DivideByZero : public exception {\npublic:\n    const char* what() const noexcept override {\n        return \"除数不能为零！\";\n    }\n};</code></pre>\n<h4>最佳实践</h4>\n<ul>\n<li>通过<strong>常量引用</strong>捕获异常：<code>catch (const exception& e)</code></li>\n<li>使用 <code>what()</code> 方法获取错误描述</li>\n<li>不要用异常处理普通控制流</li>\n<li>RAII（资源获取即初始化）配合异常使用更安全</li>\n</ul>",
+    "code": "#include <iostream>\n#include <stdexcept>\nusing namespace std;\ndouble divide(double a, double b) {\n    if (b == 0) throw runtime_error(\"除数不能为 0\");\n    return a / b;\n}\nint main() {\n    try {\n        cout << divide(10, 2) << endl;\n        cout << divide(10, 0) << endl;\n    } catch (const exception& e) {\n        cerr << \"异常: \" << e.what() << endl;\n    }\n    cout << \"程序正常结束\" << endl;\n    return 0;\n}",
+    "exercises": [
+      {
+        "id": "cpp-e1",
+        "title": "double safeDivide(double, double)",
+        "desc": "实现 <code>safeDivide</code> 函数，除数为 0 时抛出 <code>runtime_error</code> 异常。",
+        "hint": "<code>if (b == 0) throw runtime_error(\"...\");</code>",
+        "starterCode": "double safeDivide(double a, double b) {\n    if (b == 0) throw runtime_error(\"除零错误\");\n    return a / b;\n}",
+        "solution": "double safeDivide(double a, double b) { if (b == 0) throw runtime_error(\"除零错误\"); return a / b; }",
+        "fn": "safeDivide",
+        "tests": [{"args":[10,2],"expect":5},{"args":[9,3],"expect":3},{"args":[1,3],"expect":0.3333333333333333}]
+      },
+      {
+        "id": "cpp-e2",
+        "title": "void checkAge(int)",
+        "desc": "实现 <code>checkAge</code> 函数，年龄小于 0 或大于 150 时抛出 <code>out_of_range</code> 异常。",
+        "hint": "用 <code>if (age < 0 || age > 150) throw out_of_range(\"年龄越界\");</code>。",
+        "starterCode": "void checkAge(int age) {\n    if (age < 0 || age > 150) {\n        throw out_of_range(\"年龄超出有效范围\");\n    }\n}",
+        "solution": "void checkAge(int age) { if (age < 0 || age > 150) throw out_of_range(\"年龄超出有效范围\"); }",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cpp-e3",
+        "title": "int atSafe(vector<int>, int)",
+        "desc": "实现 <code>atSafe</code> 函数，安全访问 vector 元素，索引越界时抛出 <code>out_of_range</code>。",
+        "hint": "用 <code>v.at(idx)</code> 自动检查越界，或手动 <code>if (idx < 0 || idx >= (int)v.size()) throw ...</code>。",
+        "starterCode": "int atSafe(vector<int> v, int idx) {\n    if (idx < 0 || idx >= (int)v.size()) {\n        throw out_of_range(\"索引越界\");\n    }\n    return v[idx];\n}",
+        "solution": "int atSafe(vector<int> v, int idx) { if (idx < 0 || idx >= (int)v.size()) throw out_of_range(\"索引越界\"); return v[idx]; }",
+        "fn": "atSafe",
+        "tests": [{"args":[[1,2,3],1],"expect":2},{"args":[[5,6,7,8],3],"expect":8}]
       }
     ]
   }

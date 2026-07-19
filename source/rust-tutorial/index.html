@@ -208,7 +208,6 @@ body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
   </main>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
 <script>
 // ==================== 教程章节数据 ====================
 const SECTIONS = [
@@ -216,53 +215,1014 @@ const SECTIONS = [
     "id": "intro",
     "icon": "🦀",
     "title": "Rust 简介",
-    "desc": "<p>Rust 是一门<strong>系统编程语言</strong>，以<strong>内存安全</strong>和<strong>零成本抽象</strong>著称。</p><h4>第一个程序</h4><pre><code>fn main() {\\n    println!(\"Hello, World!\");\\n}</code></pre>",
-    "code": "fn main() {\\n    println!(\"Hello, World!\");\\n    let name = \"Rust\";\\n    println!(\"你好, {}!\", name);\\n}",
+    "desc": "<p>Rust 是由 Mozilla 开发的<strong>系统级编程语言</strong>，2015 年发布 1.0 稳定版后迅速发展，连续多年被评为<strong>最受开发者喜爱的语言</strong>。它的核心设计目标是：<strong>内存安全</strong>、<strong>无数据竞争</strong>、<strong>零成本抽象</strong>——同时无需垃圾回收器(GC)。</p><h4>为什么选择 Rust？</h4><ul><li><strong>编译时内存安全</strong>：所有权系统和借用检查器在<em>编译期</em>就能发现悬垂指针、双重释放等内存错误，而 C/C++ 要在运行时才能暴露</li><li><strong>零成本抽象</strong>：高级语言特性（迭代器、闭包、泛型）编译后与手写底层代码性能一致，\"你不用到的东西不花钱\"</li><li><strong>无畏并发</strong>：Send 和 Sync trait 在编译时检查线程安全，消除数据竞争</li><li><strong>丰富的生态</strong>：cargo 包管理器、crates.io 上有超过 15 万个包</li></ul><h4>Rust vs C++ 内存安全对比</h4><div class=\"svg-compare\" style=\"display:flex;gap:16px;flex-wrap:wrap;margin:16px 0\">\n<svg viewBox=\"0 0 320 240\" style=\"flex:1;min-width:260px;background:var(--surface);border-radius:8px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <rect x=\"0\" y=\"0\" width=\"320\" height=\"240\" fill=\"var(--surface)\" rx=\"8\"/>\n  <text x=\"160\" y=\"30\" text-anchor=\"middle\" fill=\"var(--error)\" font-weight=\"bold\" font-size=\"15\">C/C++ 手动内存管理</text>\n  <rect x=\"20\" y=\"45\" width=\"280\" height=\"35\" rx=\"6\" fill=\"rgba(248,81,73,0.08)\" stroke=\"var(--error)\" stroke-width=\"1\"/>\n  <text x=\"30\" y=\"67\" fill=\"var(--text)\" font-size=\"12\">malloc() / free() 手动配对</text>\n  <rect x=\"20\" y=\"85\" width=\"280\" height=\"35\" rx=\"6\" fill=\"rgba(248,81,73,0.08)\" stroke=\"var(--error)\" stroke-width=\"1\"/>\n  <text x=\"30\" y=\"107\" fill=\"var(--text)\" font-size=\"12\">&#x2717; 悬垂指针: 释放后继续使用</text>\n  <rect x=\"20\" y=\"125\" width=\"280\" height=\"35\" rx=\"6\" fill=\"rgba(248,81,73,0.08)\" stroke=\"var(--error)\" stroke-width=\"1\"/>\n  <text x=\"30\" y=\"147\" fill=\"var(--text)\" font-size=\"12\">&#x2717; 内存泄漏: 忘记 free()</text>\n  <rect x=\"20\" y=\"165\" width=\"280\" height=\"35\" rx=\"6\" fill=\"rgba(248,81,73,0.08)\" stroke=\"var(--error)\" stroke-width=\"1\"/>\n  <text x=\"30\" y=\"187\" fill=\"var(--text)\" font-size=\"12\">&#x2717; 双重释放: free() 两次</text>\n  <rect x=\"20\" y=\"205\" width=\"280\" height=\"28\" rx=\"6\" fill=\"rgba(248,81,73,0.12)\" stroke=\"var(--error)\" stroke-width=\"1\" stroke-dasharray=\"4\"/>\n  <text x=\"30\" y=\"223\" fill=\"var(--error)\" font-size=\"11\">&#x26A0; 运行时才能发现错误</text>\n</svg>\n<svg viewBox=\"0 0 320 240\" style=\"flex:1;min-width:260px;background:var(--surface);border-radius:8px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <rect x=\"0\" y=\"0\" width=\"320\" height=\"240\" fill=\"var(--surface)\" rx=\"8\"/>\n  <text x=\"160\" y=\"30\" text-anchor=\"middle\" fill=\"var(--success)\" font-weight=\"bold\" font-size=\"15\">Rust 所有权系统</text>\n  <rect x=\"20\" y=\"45\" width=\"280\" height=\"35\" rx=\"6\" fill=\"rgba(63,185,80,0.08)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"30\" y=\"67\" fill=\"var(--text)\" font-size=\"12\">编译器自动插入 drop() 释放</text>\n  <rect x=\"20\" y=\"85\" width=\"280\" height=\"35\" rx=\"6\" fill=\"rgba(63,185,80,0.08)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"30\" y=\"107\" fill=\"var(--text)\" font-size=\"12\">&#x2713; 借用检查器防止悬垂指针</text>\n  <rect x=\"20\" y=\"125\" width=\"280\" height=\"35\" rx=\"6\" fill=\"rgba(63,185,80,0.08)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"30\" y=\"147\" fill=\"var(--text)\" font-size=\"12\">&#x2713; 所有权规则确保唯一释放</text>\n  <rect x=\"20\" y=\"165\" width=\"280\" height=\"35\" rx=\"6\" fill=\"rgba(63,185,80,0.08)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"30\" y=\"187\" fill=\"var(--text)\" font-size=\"12\">&#x2713; 编译时消除数据竞争</text>\n  <rect x=\"20\" y=\"205\" width=\"280\" height=\"28\" rx=\"6\" fill=\"rgba(63,185,80,0.12)\" stroke=\"var(--success)\" stroke-width=\"1\" stroke-dasharray=\"4\"/>\n  <text x=\"30\" y=\"223\" fill=\"var(--success)\" font-size=\"11\">&#x2714; 编译期保证内存安全</text>\n</svg>\n</div><h4>第一个 Rust 程序</h4><pre><code>fn main() {&#x000A;    println!(\"Hello, 世界!\");&#x000A;    let x: i32 = 42;&#x000A;    println!(\"x 的值是: {x}\");&#x000A;}</code></pre><p><code>fn main()</code> 是程序的入口点。<code>println!</code> 是宏（以 <code>!</code> 结尾），负责格式化输出。<code>let</code> 关键字用于<strong>绑定变量</strong>。Rust 默认变量不可变（immutable），可加 <code>mut</code> 使其可变。</p><p>运行这段代码：点击上方的 \"运行代码\" 按钮，代码会通过 Piston API 在远程服务器编译执行。你也可以修改代码并重新运行！</p><h4>Cargo 工具链</h4><p>Rust 拥有现代化的工具链：<code>cargo new</code> 创建新项目，<code>cargo build</code> 编译，<code>cargo run</code> 运行，<code>cargo test</code> 测试，<code>cargo fmt</code> 格式化代码。<code>crates.io</code> 是 Rust 的包注册中心，超过 15 万个包可复用。</p><p>Rust 的编译器错误信息极为友好，会精确指出问题位置、原因和修复建议。这是新手学习 Rust 的巨大助力——编译器实际上是你的\"代码导师\"。</p>",
+    "code": "fn main() {\n    println!(\"Hello, 世界!\");\n    let x: i32 = 42;\n    println!(\"x 的值是: {x}\");\n    let y = 3.14;\n    println!(\"y = {y}\");\n    let s = format!(\"{x} + {y} = {}\", x as f64 + y);\n    println!(\"{s}\");\n}",
     "exercises": [
       {
         "id": "rs-i1",
-        "title": "编写 greet",
-        "desc": "编写 <code>greet</code> 接收 <code>name: &str</code> 返回 <code>String</code>。用 <code>format!</code>。",
-        "hint": "fn greet(name: &str) -> String { format!(\"Hello, {}\", name) }",
-        "starterCode": "// 编写 greet 函数\\n// fn greet(name: &str) -> String",
-        "solution": "fn greet(name: &str) -> String { format!(\"Hello, {}\", name) }",
-        "fn": "greet",
+        "title": "实现加法函数",
+        "desc": "编写一个 add 函数，接收两个 i32 整数，返回它们的和。这是 Rust 函数的基本写法：<code>fn 函数名(参数: 类型) -> 返回值类型 { 表达式 }</code>。注意函数体最后一个表达式不加分号就是返回值。",
+        "hint": "Rust 中 <code>a + b</code> 就是一个表达式，直接放在最后一行（不加分号）就会作为返回值。",
+        "starterCode": "fn add(a: i32, b: i32) -> i32 {\n    a + b\n}",
+        "solution": "fn add(a: i32, b: i32) -> i32 {\n    a + b\n}",
+        "fn": "add",
         "tests": [
           {
             "args": [
-              "World"
+              1,
+              2
             ],
-            "expect": "Hello, World"
+            "expect": 3
           },
           {
             "args": [
-              "Rust"
+              10,
+              20
             ],
-            "expect": "Hello, Rust"
+            "expect": 30
+          },
+          {
+            "args": [
+              -5,
+              5
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              0,
+              0
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              100,
+              -30
+            ],
+            "expect": 70
           }
         ]
       },
       {
         "id": "rs-i2",
-        "title": "加法函数",
-        "desc": "编写 <code>add</code> 接收 <code>a: i32, b: i32</code> 返回 <code>i32</code>。",
-        "hint": "fn add(a: i32, b: i32) -> i32 { a + b }",
-        "starterCode": "// 编写 add 函数",
-        "solution": "fn add(a: i32, b: i32) -> i32 { a + b }",
-        "fn": "add",
+        "title": "最大值函数",
+        "desc": "实现 max 函数，接收两个 i32 整数，返回较大的那个。不能用标准库的 max 方法，请使用 if 表达式来实现。提示：Rust 中 if 可以作为表达式返回值。",
+        "hint": "使用 <code>if a &gt; b { a } else { b }</code>，注意 if 表达式没有括号包裹条件。",
+        "starterCode": "fn max(a: i32, b: i32) -> i32 {\n    if a > b { a } else { b }\n}",
+        "solution": "fn max(a: i32, b: i32) -> i32 {\n    if a > b { a } else { b }\n}",
+        "fn": "max",
         "tests": [
           {
             "args": [
               3,
               5
             ],
-            "expect": 8
+            "expect": 5
+          },
+          {
+            "args": [
+              10,
+              2
+            ],
+            "expect": 10
+          },
+          {
+            "args": [
+              -1,
+              -5
+            ],
+            "expect": -1
+          },
+          {
+            "args": [
+              7,
+              7
+            ],
+            "expect": 7
+          }
+        ]
+      },
+      {
+        "id": "rs-i3",
+        "title": "生成问候语",
+        "desc": "实现 greet 函数，接收一个名字字符串切片 &amp;str，返回一个 String 类型的问候语。使用 format! 宏来拼接字符串。示例：greet(\"World\") 应返回 \"Hello, World!\"。",
+        "hint": "<code>format!(\"Hello, {}!\", name)</code> 可以格式化字符串并返回 String。",
+        "starterCode": "fn greet(name: &str) -> String {\n    format!(\"Hello, {}!\", name)\n}",
+        "solution": "fn greet(name: &str) -> String {\n    format!(\"Hello, {}!\", name)\n}",
+        "fn": "greet",
+        "tests": [
+          {
+            "args": [
+              "World"
+            ],
+            "expect": "Hello, World!"
+          },
+          {
+            "args": [
+              "Rust"
+            ],
+            "expect": "Hello, Rust!"
+          },
+          {
+            "args": [
+              "中国"
+            ],
+            "expect": "Hello, 中国!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "types",
+    "icon": "🔤",
+    "title": "类型与变量",
+    "desc": "<h4>基本数据类型</h4><p>Rust 是<strong>静态强类型语言</strong>，所有变量的类型在编译期必须确定。但 Rust 也支持<strong>类型推导</strong>，在大部分情况下可以省略类型标注。</p><pre><code>let a: i32 = 42;         // 有符号 32 位整数\nlet b: u64 = 100;        // 无符号 64 位整数\nlet c: f64 = 3.14159;    // 双精度浮点\nlet d: f32 = 2.5;        // 单精度浮点\nlet e: bool = true;      // 布尔类型\nlet f: char = '中';      // Unicode 字符（4 字节）\nlet g: &str = \"Rust\";    // 字符串切片（不可变引用）\nlet h: String = String::from(\"Hello\"); // 堆分配字符串\nlet t: (i32, f64, char) = (42, 3.14, 'R'); // 元组\nlet arr: [i32; 3] = [1, 2, 3]; // 定长数组</code></pre><h4>类型推导与别名</h4><pre><code>let x = 42;              // 编译器推导为 i32\nlet y = 3.14;            // 推导为 f64\nlet z = true;            // 推导为 bool\n\ntype Age = u32;          // 类型别名\nlet age: Age = 25;</code></pre><h4>类型转换</h4><p>Rust 不会做<strong>隐式类型转换</strong>，必须用 <code>as</code> 关键字显式转换：</p><pre><code>let x: f64 = 42.0;\nlet y: i32 = x as i32;   // 显式转换\nlet z: f64 = 10.5;\nlet sum = x + z;         // 同类型可直接运算</code></pre><h4>常量和变量</h4><p><code>let</code> 绑定变量，默认不可变；加 <code>mut</code> 变为可变。<code>const</code> 定义编译时常量，必须标注类型：</p><pre><code>const MAX_POINTS: u32 = 100_000;\nlet mut counter = 0;\ncounter += 1;</code></pre>",
+    "code": "fn main() {\n    let a: i32 = 42;\n    let b: f64 = 3.14159;\n    let c: bool = true;\n    let d: char = '中';\n    let s: &str = \"Hello, Rust!\";\n    let mut x = 10;\n    x += 5;\n    println!(\"a={a} b={b:.2} c={c} d={d} s={s} x={x}\");\n    let sum = a as f64 + b;\n    println!(\"sum = {sum}\");\n    let t = (1, \"two\", 3.0);\n    println!(\"tuple: {} {} {}\", t.0, t.1, t.2);\n}",
+    "exercises": [
+      {
+        "id": "rs-t1",
+        "title": "摄氏转华氏",
+        "desc": "实现 celsius_to_fahrenheit 函数，将摄氏温度转为华氏温度。公式：华氏 = 摄氏 × 9/5 + 32。注意操作数和结果都是 f64 类型。",
+        "hint": "用 <code>c * 9.0 / 5.0 + 32.0</code> 计算。注意 Rust 中 9/5 是整数除法得 1，必须用 9.0/5.0。",
+        "starterCode": "fn celsius_to_fahrenheit(c: f64) -> f64 {\n    c * 9.0 / 5.0 + 32.0\n}",
+        "solution": "fn celsius_to_fahrenheit(c: f64) -> f64 {\n    c * 9.0 / 5.0 + 32.0\n}",
+        "fn": "celsius_to_fahrenheit",
+        "tests": [
+          {
+            "args": [
+              0
+            ],
+            "expect": 32
+          },
+          {
+            "args": [
+              100
+            ],
+            "expect": 212
+          },
+          {
+            "args": [
+              -40
+            ],
+            "expect": -40
+          },
+          {
+            "args": [
+              37
+            ],
+            "expect": 98.6
+          }
+        ]
+      },
+      {
+        "id": "rs-t2",
+        "title": "判断偶数",
+        "desc": "实现 is_even 函数，接收一个 i32 整数，返回 bool 值表示是否为偶数。使用 % 取模运算符。",
+        "hint": "用 <code>n % 2 == 0</code> 判断，返回布尔表达式本身即可。",
+        "starterCode": "fn is_even(n: i32) -> bool {\n    n % 2 == 0\n}",
+        "solution": "fn is_even(n: i32) -> bool {\n    n % 2 == 0\n}",
+        "fn": "is_even",
+        "tests": [
+          {
+            "args": [
+              2
+            ],
+            "expect": true
+          },
+          {
+            "args": [
+              3
+            ],
+            "expect": false
+          },
+          {
+            "args": [
+              0
+            ],
+            "expect": true
+          },
+          {
+            "args": [
+              -4
+            ],
+            "expect": true
+          },
+          {
+            "args": [
+              7
+            ],
+            "expect": false
+          }
+        ]
+      },
+      {
+        "id": "rs-t3",
+        "title": "字符串长度",
+        "desc": "实现 string_length 函数，接收一个字符串切片 &amp;str，返回它的字节长度（usize）。Rust 中 str 有 len() 方法返回字节数，注意中文字符占用多个字节。",
+        "hint": "直接用 <code>s.len()</code> 方法。注意返回类型是 <code>usize</code>。",
+        "starterCode": "fn string_length(s: &str) -> usize {\n    s.len()\n}",
+        "solution": "fn string_length(s: &str) -> usize {\n    s.len()\n}",
+        "fn": "string_length",
+        "tests": [
+          {
+            "args": [
+              "Hello"
+            ],
+            "expect": 5
+          },
+          {
+            "args": [
+              ""
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              "Rust"
+            ],
+            "expect": 4
+          },
+          {
+            "args": [
+              "中国"
+            ],
+            "expect": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "control",
+    "icon": "🔀",
+    "title": "控制流",
+    "desc": "<h4>条件分支</h4><p>Rust 的 <code>if</code> 是<strong>表达式</strong>（不是语句），可以返回值：</p><pre><code>let x = 5;\nif x > 0 {\n    println!(\"正数\");\n} else if x == 0 {\n    println!(\"零\");\n} else {\n    println!(\"负数\");\n}\n\n// if 表达式返回值\nlet y = if x > 0 { 1 } else { -1 };</code></pre><p>注意条件<strong>不需要括号</strong>包裹，但<strong>必须有布尔类型</strong>（不会自动把非零值视为 true）。</p><h4>循环</h4><p>Rust 有三种循环：</p><pre><code>// loop —— 无限循环，手动 break\nloop {\n    if cond { break; }\n}\n\n// while —— 条件循环\nwhile n > 0 {\n    println!(\"{n}\");\n    n -= 1;\n}\n\n// for —— 区间迭代（最常用）\nfor i in 0..5 { println!(\"{i}\"); }       // 0,1,2,3,4\nfor i in 0..=5 { println!(\"{i}\"); }      // 0,1,2,3,4,5\nfor item in &amp;collection { }               // 迭代集合</code></pre><p><code>loop</code> 也可以返回值：<code>let r = loop { break 42; };</code>。这个特性在需要无限循环直到满足某个条件并产生结果时非常有用。</p><p>三种循环各有适用场景：<code>loop</code> 适合需要无限循环或提前 <code>break</code> 的场合；<code>while</code> 适合条件驱动的循环；<code>for</code> 是迭代集合和区间的最安全、最惯用的方式。Rust 的 <code>for</code> 循环实际上是对迭代器的语法糖，与 <code>.into_iter()</code> 配合使用，确保集合在被迭代后的正确处理。</p>",
+    "code": "fn main() {\n    println!(\"FizzBuzz 1..=15:\");\n    for i in 1..=15 {\n        let s = if i % 15 == 0 { \"FizzBuzz\".into() }\n            else if i % 3 == 0 { \"Fizz\".into() }\n            else if i % 5 == 0 { \"Buzz\".into() }\n            else { i.to_string() };\n        println!(\"  {s}\");\n    }\n    let mut sum = 0;\n    for n in 1..=100 { sum += n; }\n    println!(\"1+2+...+100 = {sum}\");\n    let mut n = 1;\n    loop {\n        if n > 5 { break; }\n        print!(\"{n} \");\n        n += 1;\n    }\n    println!();\n}",
+    "exercises": [
+      {
+        "id": "rs-c1",
+        "title": "计算阶乘",
+        "desc": "实现 fact 函数，计算 n 的阶乘（n!）。n 是 u32 类型，返回值也是 u32。使用 for 循环和 mut 变量。注意：0! = 1。",
+        "hint": "用 <code>for i in 1..=n { r *= i; }</code>，初始化 <code>r = 1</code>。",
+        "starterCode": "fn fact(n: u32) -> u32 {\n    let mut r = 1;\n    for i in 1..=n { r *= i; }\n    r\n}",
+        "solution": "fn fact(n: u32) -> u32 {\n    let mut r = 1;\n    for i in 1..=n { r *= i; }\n    r\n}",
+        "fn": "fact",
+        "tests": [
+          {
+            "args": [
+              0
+            ],
+            "expect": 1
+          },
+          {
+            "args": [
+              1
+            ],
+            "expect": 1
+          },
+          {
+            "args": [
+              5
+            ],
+            "expect": 120
+          },
+          {
+            "args": [
+              10
+            ],
+            "expect": 3628800
+          }
+        ]
+      },
+      {
+        "id": "rs-c2",
+        "title": "FizzBuzz",
+        "desc": "实现 fizzbuzz 函数，给定一个整数 n，返回对应的 FizzBuzz 字符串：如果 n 能被 3 整除返回 \"Fizz\"；能被 5 整除返回 \"Buzz\"；能同时被 3 和 5 整除返回 \"FizzBuzz\"；否则返回 n.to_string()。",
+        "hint": "先判断整除 15（3*5），再判断 3 和 5。<code>n.to_string()</code> 可以把数字转成 String。",
+        "starterCode": "fn fizzbuzz(n: i32) -> String {\n    if n % 15 == 0 { \"FizzBuzz\".into() }\n    else if n % 3 == 0 { \"Fizz\".into() }\n    else if n % 5 == 0 { \"Buzz\".into() }\n    else { n.to_string() }\n}",
+        "solution": "fn fizzbuzz(n: i32) -> String {\n    if n % 15 == 0 { \"FizzBuzz\".into() }\n    else if n % 3 == 0 { \"Fizz\".into() }\n    else if n % 5 == 0 { \"Buzz\".into() }\n    else { n.to_string() }\n}",
+        "fn": "fizzbuzz",
+        "tests": [
+          {
+            "args": [
+              3
+            ],
+            "expect": "Fizz"
+          },
+          {
+            "args": [
+              5
+            ],
+            "expect": "Buzz"
+          },
+          {
+            "args": [
+              15
+            ],
+            "expect": "FizzBuzz"
+          },
+          {
+            "args": [
+              7
+            ],
+            "expect": "7"
+          },
+          {
+            "args": [
+              30
+            ],
+            "expect": "FizzBuzz"
+          }
+        ]
+      },
+      {
+        "id": "rs-c3",
+        "title": "区间求和",
+        "desc": "实现 sum_range 函数，接收 start 和 end 两个 i32，返回从 start 到 end（包含两端）所有整数的和。如果 start &gt; end，返回 0。使用 for 循环。",
+        "hint": "用 <code>for i in start..=end { sum += i; }</code>，注意要检查 start &gt; end 的情况。",
+        "starterCode": "fn sum_range(start: i32, end: i32) -> i32 {\n    if start > end { return 0; }\n    let mut sum = 0;\n    for i in start..=end { sum += i; }\n    sum\n}",
+        "solution": "fn sum_range(start: i32, end: i32) -> i32 {\n    if start > end { return 0; }\n    let mut sum = 0;\n    for i in start..=end { sum += i; }\n    sum\n}",
+        "fn": "sum_range",
+        "tests": [
+          {
+            "args": [
+              1,
+              5
+            ],
+            "expect": 15
+          },
+          {
+            "args": [
+              0,
+              0
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              5,
+              1
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              -3,
+              3
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              10,
+              15
+            ],
+            "expect": 75
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ownership",
+    "icon": "🔑",
+    "title": "所有权",
+    "desc": "<p>所有权（Ownership）是 Rust 最核心、最独特的特性。它让 Rust 在<strong>没有垃圾回收器（GC）</strong>的情况下保证内存安全。理解所有权是学习 Rust 的关键一步。</p><h4>所有权三规则</h4><ol><li>Rust 中的<strong>每个值</strong>都有且仅有一个<strong>所有者</strong>（owner）</li><li>当所有者<strong>离开作用域</strong>时，值会被自动释放（drop）</li><li>所有权可以<strong>转移</strong>（move）到另一个所有者</li></ol><div style=\"margin:16px 0;text-align:center\">\n<svg viewBox=\"0 0 580 200\" style=\"max-width:100%;background:var(--surface);border-radius:8px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <rect x=\"0\" y=\"0\" width=\"580\" height=\"200\" fill=\"var(--surface)\" rx=\"8\"/>\n  <rect x=\"15\" y=\"15\" width=\"170\" height=\"170\" rx=\"6\" fill=\"none\" stroke=\"var(--primary)\" stroke-width=\"1.5\" stroke-dasharray=\"4\"/>\n  <text x=\"100\" y=\"35\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\" font-weight=\"bold\">栈(Stack)</text>\n  <rect x=\"30\" y=\"50\" width=\"140\" height=\"30\" rx=\"4\" fill=\"rgba(63,185,80,0.08)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"40\" y=\"69\" fill=\"var(--text)\" font-size=\"11\">s: String 所有者</text>\n  <rect x=\"30\" y=\"85\" width=\"140\" height=\"20\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"40\" y=\"99\" fill=\"var(--text-dim)\" font-size=\"10\">ptr  &#x2192; 堆数据</text>\n  <rect x=\"30\" y=\"108\" width=\"140\" height=\"20\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"40\" y=\"122\" fill=\"var(--text-dim)\" font-size=\"10\">len: 5</text>\n  <rect x=\"30\" y=\"131\" width=\"140\" height=\"20\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"40\" y=\"145\" fill=\"var(--text-dim)\" font-size=\"10\">cap: 5</text>\n  <text x=\"100\" y=\"178\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">&#x2193; let t = s; 移动所有权</text>\n  <rect x=\"200\" y=\"48\" width=\"160\" height=\"145\" rx=\"6\" fill=\"none\" stroke=\"var(--success)\" stroke-width=\"1.5\"/>\n  <text x=\"280\" y=\"68\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\" font-weight=\"bold\">堆(Heap)</text>\n  <rect x=\"215\" y=\"78\" width=\"130\" height=\"40\" rx=\"4\" fill=\"rgba(88,166,255,0.08)\" stroke=\"var(--primary)\" stroke-width=\"1\"/>\n  <text x=\"280\" y=\"98\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\">\"Hello\"</text>\n  <text x=\"280\" y=\"113\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">5 字节 UTF-8 数据</text>\n  <text x=\"280\" y=\"148\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">&#x2191; s.ptr 指向这里</text>\n  <line x1=\"170\" y1=\"97\" x2=\"210\" y2=\"97\" stroke=\"var(--primary)\" stroke-width=\"1.2\" marker-end=\"url(#arrow)\"/>\n  <defs>\n    <marker id=\"arrow\" markerWidth=\"8\" markerHeight=\"6\" refX=\"8\" refY=\"3\" orient=\"auto\">\n      <path d=\"M0,0 L8,3 L0,6 Z\" fill=\"var(--primary)\"/>\n    </marker>\n    <marker id=\"arrow2\" markerWidth=\"8\" markerHeight=\"6\" refX=\"8\" refY=\"3\" orient=\"auto\">\n      <path d=\"M0,0 L8,3 L0,6 Z\" fill=\"var(--error)\"/>\n    </marker>\n  </defs>\n  <rect x=\"385\" y=\"15\" width=\"180\" height=\"170\" rx=\"6\" fill=\"rgba(248,81,73,0.05)\" stroke=\"var(--error)\" stroke-width=\"1.5\" stroke-dasharray=\"4\"/>\n  <text x=\"475\" y=\"35\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\" font-weight=\"bold\">移动后</text>\n  <rect x=\"400\" y=\"50\" width=\"150\" height=\"30\" rx=\"4\" fill=\"rgba(63,185,80,0.12)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"410\" y=\"69\" fill=\"var(--text)\" font-size=\"11\">t: 新所有者</text>\n  <rect x=\"400\" y=\"85\" width=\"150\" height=\"20\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"410\" y=\"99\" fill=\"var(--text-dim)\" font-size=\"10\">ptr  &#x2192; 堆数据（相同）</text>\n  <rect x=\"400\" y=\"108\" width=\"150\" height=\"20\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"410\" y=\"122\" fill=\"var(--text-dim)\" font-size=\"10\">len: 5</text>\n  <rect x=\"400\" y=\"131\" width=\"150\" height=\"20\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"410\" y=\"145\" fill=\"var(--text-dim)\" font-size=\"10\">cap: 5</text>\n  <rect x=\"400\" y=\"158\" width=\"150\" height=\"20\" rx=\"3\" fill=\"rgba(248,81,73,0.12)\" stroke=\"var(--error)\" stroke-width=\"1\"/>\n  <text x=\"410\" y=\"172\" fill=\"var(--error)\" font-size=\"10\">s: 已失效 &#x2717;</text>\n  <line x1=\"370\" y1=\"97\" x2=\"396\" y2=\"97\" stroke=\"var(--success)\" stroke-width=\"1.2\" marker-end=\"url(#arrow)\"/>\n  <text x=\"280\" y=\"188\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">数据未被复制，只是所有权转移了</text>\n</svg>\n</div><h4>转移（Move）</h4><pre><code>let s = String::from(\"Hello\");\nlet t = s;  // 所有权从 s 转移到 t\n// println!(\"{s}\"); // 编译错误：s 已失效</code></pre><p>像 <code>String</code> 这种在<strong>堆上分配</strong>内存的类型，赋值操作默认会<strong>移动</strong>所有权，而不是做深层拷贝。这避免了双重释放问题，同时保持了性能。而像 <code>i32</code>、<code>bool</code> 等<strong>栈上类型</strong>实现了 <code>Copy</code> trait，赋值会<strong>复制</strong>值，原变量仍然可用。</p><h4>借用（Borrowing）</h4><pre><code>fn len(s: &amp;String) -> usize { s.len() }\nlet s = String::from(\"hello\");\nlet l = len(&amp;s);  // 借用：s 的所有权未转移\nprintln!(\"{s}\");  // OK，s 仍然有效</code></pre><p>用 <code>&amp;</code> 创建<strong>引用</strong>（借用），不转移所有权。可以同时有多个不可变借用（<code>&amp;T</code>），或者在作用域内有一个可变借用（<code>&amp;mut T</code>）。借用检查器在编译时保证这些规则，防止数据竞争。</p><h4>生命周期与 NLL</h4><p>Rust 的借用检查器基于非词法生命周期（NLL, Non-Lexical Lifetimes）算法。编译器可以精确追踪引用的有效范围，即使引用在花括号作用域结束前就不再使用，也能提前释放借用。这大大减少了程序员的生命周期标注负担，使代码更自然。你只需要在无法自动推导生命周期的情况下（如函数返回引用时）显式标注生命周期参数。</p>",
+    "code": "fn main() {\n    let s = String::from(\"Hello, Rust!\");\n    let len = calculate_len(&s);\n    println!(\"'{s}' 的长度是 {len}\");\n    let x = 42;\n    let y = x;\n    println!(\"x={x} y={y}\");\n    let t = String::from(\"Move me\");\n    take_ownership(t);\n}\nfn calculate_len(s: &String) -> usize { s.len() }\nfn take_ownership(s: String) { println!(\"我拥有了: {s}\"); }",
+    "exercises": [
+      {
+        "id": "rs-o1",
+        "title": "计算字符串长度（所有权）",
+        "desc": "实现 string_len 函数，接收一个 String 参数，返回它的长度（字节数）。注意这个函数会获取所有权，调用后原字符串将不可用。用 len() 方法。",
+        "hint": "直接用 <code>s.len()</code>。因为参数是 String 不是 &amp;String，所以所有权会转移进来。",
+        "starterCode": "fn string_len(s: String) -> usize {\n    s.len()\n}",
+        "solution": "fn string_len(s: String) -> usize {\n    s.len()\n}",
+        "fn": "string_len",
+        "tests": [
+          {
+            "args": [
+              "Hello"
+            ],
+            "expect": 5
+          },
+          {
+            "args": [
+              "Rust"
+            ],
+            "expect": 4
+          },
+          {
+            "args": [
+              ""
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              "所有权"
+            ],
+            "expect": 9
+          }
+        ]
+      },
+      {
+        "id": "rs-o2",
+        "title": "首字符（借用）",
+        "desc": "实现 first_char 函数，接收一个 &amp;str 字符串切片（借用），返回它的第一个 char。如果字符串为空，返回 \\0 字符。使用 chars() 方法获取字符迭代器。",
+        "hint": "用 <code>s.chars().next()</code> 获取 Option&lt;char&gt;，然后用 <code>unwrap_or('\\0')</code> 处理空串。",
+        "starterCode": "fn first_char(s: &str) -> char {\n    s.chars().next().unwrap_or('\\0')\n}",
+        "solution": "fn first_char(s: &str) -> char {\n    s.chars().next().unwrap_or('\\0')\n}",
+        "fn": "first_char",
+        "tests": [
+          {
+            "args": [
+              "Hello"
+            ],
+            "expect": "H"
+          },
+          {
+            "args": [
+              "Rust"
+            ],
+            "expect": "R"
+          },
+          {
+            "args": [
+              ""
+            ],
+            "expect": "\u0000"
+          },
+          {
+            "args": [
+              "中国"
+            ],
+            "expect": "中"
+          }
+        ]
+      },
+      {
+        "id": "rs-o3",
+        "title": "克隆拼接字符串",
+        "desc": "实现 concat_clone 函数，接收两个 &amp;str 引用，返回将它们拼接在一起的新 String。要求从第一个字符串创建副本，然后使用 push_str() 拼接。",
+        "hint": "用 <code>let mut r = a.to_string(); r.push_str(b); r</code>。或者用 <code>format!(\"{}{}\", a, b)</code>。",
+        "starterCode": "fn concat_clone(a: &str, b: &str) -> String {\n    let mut r = a.to_string();\n    r.push_str(b);\n    r\n}",
+        "solution": "fn concat_clone(a: &str, b: &str) -> String {\n    let mut r = a.to_string();\n    r.push_str(b);\n    r\n}",
+        "fn": "concat_clone",
+        "tests": [
+          {
+            "args": [
+              "Hello",
+              "World"
+            ],
+            "expect": "HelloWorld"
+          },
+          {
+            "args": [
+              "Rust",
+              "语言"
+            ],
+            "expect": "Rust语言"
+          },
+          {
+            "args": [
+              "",
+              "test"
+            ],
+            "expect": "test"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "struct",
+    "icon": "🏗️",
+    "title": "结构体",
+    "desc": "<h4>定义结构体</h4><p>结构体（struct）是 Rust 中自定义数据类型的主要方式，用于将相关数据组合在一起：</p><pre><code>struct User {\n    username: String,\n    email: String,\n    sign_in_count: u64,\n    active: bool,\n}</code></pre><h4>创建和访问</h4><pre><code>let user = User {\n    username: String::from(\"alice\"),\n    email: String::from(\"alice@example.com\"),\n    sign_in_count: 1,\n    active: true,\n};\nprintln!(\"{}\", user.email);\nlet mut u = User { email: String::from(\"bob@e.com\"), ..user };</code></pre><p>用 <code>..</code> 语法可以快速填充剩余字段（struct update syntax）。字段可以是任意类型，包括引用（需标注生命周期）。</p><h4>方法（Method）</h4><pre><code>impl User {\n    fn full_name(&amp;self) -> String {\n        format!(\"{} <{}>\", self.username, self.email)\n    }\n    fn new(name: &amp;str, email: &amp;str) -> Self {\n        Self {\n            username: name.to_string(),\n            email: email.to_string(),\n            sign_in_count: 0,\n            active: true,\n        }\n    }\n}</code></pre><p><code>impl</code> 块是关联方法的定义区域。<code>&amp;self</code> 是 <code>self: &amp;Self</code> 的简写。<code>Self</code> 指代当前类型。关联函数（如 <code>new</code>）用 <code>::</code> 调用，不需要 <code>&amp;self</code> 参数。</p>",
+    "code": "struct Rectangle {\n    width: f64,\n    height: f64,\n}\nimpl Rectangle {\n    fn area(&self) -> f64 {\n        self.width * self.height\n    }\n    fn scale(&mut self, factor: f64) {\n        self.width *= factor;\n        self.height *= factor;\n    }\n    fn square(size: f64) -> Self {\n        Self { width: size, height: size }\n    }\n}\nfn main() {\n    let mut r = Rectangle { width: 10.0, height: 5.0 };\n    println!(\"area = {}\", r.area());\n    r.scale(2.0);\n    println!(\"after scale: {} x {}, area = {}\", r.width, r.height, r.area());\n    let s = Rectangle::square(4.0);\n    println!(\"square area = {}\", s.area());\n}",
+    "exercises": [
+      {
+        "id": "rs-st1",
+        "title": "矩形面积",
+        "desc": "定义 Rect 结构体，包含 w 和 h 两个 f64 字段，为其实现 area 方法返回面积。在 main 中创建矩形并打印面积。",
+        "hint": "<code>impl Rect { fn area(&amp;self) -> f64 { self.w * self.h } }</code>",
+        "starterCode": "struct Rect { w: f64, h: f64 }\nimpl Rect {\n    fn area(&self) -> f64 { self.w * self.h }\n}\nfn main() {\n    let r = Rect { w: 5.0, h: 3.0 };\n    println!(\"{}\", r.area());\n}",
+        "solution": "struct Rect { w: f64, h: f64 }\nimpl Rect {\n    fn area(&self) -> f64 { self.w * self.h }\n}\nfn main() {\n    let r = Rect { w: 5.0, h: 3.0 };\n    println!(\"{}\", r.area());\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "rs-st2",
+        "title": "圆的周长和面积",
+        "desc": "定义 Circle 结构体，含 radius: f64 字段。实现 circumference（周长=2πr）和 area（面积=πr²）。π 取 3.14159。",
+        "hint": "<code>fn circumference(&amp;self) -> f64 { 2.0 * 3.14159 * self.radius }</code>",
+        "starterCode": "struct Circle { radius: f64 }\nimpl Circle {\n    fn circumference(&self) -> f64 {\n        2.0 * 3.14159 * self.radius\n    }\n    fn area(&self) -> f64 {\n        3.14159 * self.radius * self.radius\n    }\n}\nfn main() {\n    let c = Circle { radius: 5.0 };\n    println!(\"周长={:.2} 面积={:.2}\", c.circumference(), c.area());\n}",
+        "solution": "struct Circle { radius: f64 }\nimpl Circle {\n    fn circumference(&self) -> f64 {\n        2.0 * 3.14159 * self.radius\n    }\n    fn area(&self) -> f64 {\n        3.14159 * self.radius * self.radius\n    }\n}\nfn main() {\n    let c = Circle { radius: 5.0 };\n    println!(\"周长={:.2} 面积={:.2}\", c.circumference(), c.area());\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "rs-st3",
+        "title": "书籍摘要",
+        "desc": "实现 Book 结构体（title, author, pages），实现 summary 方法返回格式如 \"《Rust编程》by John · 300页\" 的字符串。实现 new 关联函数。",
+        "hint": "<code>fn summary(&amp;self) -> String { format!(\"《{}》by {} · {}页\", self.title, self.author, self.pages) }</code>",
+        "starterCode": "struct Book { title: String, author: String, pages: u32 }\nimpl Book {\n    fn new(title: &str, author: &str, pages: u32) -> Self {\n        Self { title: title.to_string(), author: author.to_string(), pages }\n    }\n    fn summary(&self) -> String {\n        format!(\"《{}》by {} · {}页\", self.title, self.author, self.pages)\n    }\n}\nfn main() {\n    let b = Book::new(\"Rust编程\", \"张三\", 320);\n    println!(\"{}\", b.summary());\n}",
+        "solution": "struct Book { title: String, author: String, pages: u32 }\nimpl Book {\n    fn new(title: &str, author: &str, pages: u32) -> Self {\n        Self { title: title.to_string(), author: author.to_string(), pages }\n    }\n    fn summary(&self) -> String {\n        format!(\"《{}》by {} · {}页\", self.title, self.author, self.pages)\n    }\n}\nfn main() {\n    let b = Book::new(\"Rust编程\", \"张三\", 320);\n    println!(\"{}\", b.summary());\n}",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "enum",
+    "icon": "🔷",
+    "title": "枚举与匹配",
+    "desc": "<h4>枚举类型</h4><p>枚举（enum）允许你定义一个类型，其值可以是多个可能的<strong>变体</strong>（variant）之一。Rust 的枚举比 C/C++ 强大得多——每个变体可以携带<strong>不同类型和数量的数据</strong>：</p><pre><code>enum Message {\n    Quit,                           // 无数据\n    Move { x: i32, y: i32 },        // 匿名结构体\n    Write(String),                  // 单个字符串\n    ChangeColor(i32, i32, i32),      // 三元组\n}</code></pre><div style=\"margin:16px 0;text-align:center\">\n<svg viewBox=\"0 0 560 200\" style=\"max-width:100%;background:var(--surface);border-radius:8px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <rect x=\"0\" y=\"0\" width=\"560\" height=\"200\" fill=\"var(--surface)\" rx=\"8\"/>\n  <text x=\"280\" y=\"28\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"14\" font-weight=\"bold\">enum Option&lt;i32&gt; 内存布局</text>\n  <rect x=\"30\" y=\"42\" width=\"230\" height=\"145\" rx=\"6\" fill=\"rgba(63,185,80,0.06)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"145\" y=\"62\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\" font-weight=\"bold\">Some(42)</text>\n  <rect x=\"45\" y=\"72\" width=\"90\" height=\"50\" rx=\"4\" fill=\"var(--border)\" stroke=\"var(--primary)\" stroke-width=\"1\"/>\n  <text x=\"90\" y=\"93\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">Tag</text>\n  <text x=\"90\" y=\"112\" text-anchor=\"middle\" fill=\"var(--success)\" font-size=\"13\" font-weight=\"bold\">1</text>\n  <rect x=\"145\" y=\"72\" width=\"100\" height=\"50\" rx=\"4\" fill=\"var(--border)\" stroke=\"var(--primary)\" stroke-width=\"1\"/>\n  <text x=\"195\" y=\"93\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">Value</text>\n  <text x=\"195\" y=\"112\" text-anchor=\"middle\" fill=\"var(--primary)\" font-size=\"13\" font-weight=\"bold\">42</text>\n  <text x=\"145\" y=\"145\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">| Tag (1 byte) | i32 (4 bytes) |</text>\n  <text x=\"145\" y=\"160\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">Tag=1 表示 Some 变体</text>\n  <text x=\"145\" y=\"175\" text-anchor=\"middle\" fill=\"var(--success)\" font-size=\"10\">总大小: 8 bytes（含填充）</text>\n  <rect x=\"290\" y=\"42\" width=\"240\" height=\"145\" rx=\"6\" fill=\"rgba(248,81,73,0.06)\" stroke=\"var(--error)\" stroke-width=\"1\"/>\n  <text x=\"410\" y=\"62\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\" font-weight=\"bold\">None</text>\n  <rect x=\"305\" y=\"72\" width=\"90\" height=\"50\" rx=\"4\" fill=\"var(--border)\" stroke=\"var(--primary)\" stroke-width=\"1\"/>\n  <text x=\"350\" y=\"93\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">Tag</text>\n  <text x=\"350\" y=\"112\" text-anchor=\"middle\" fill=\"var(--error)\" font-size=\"13\" font-weight=\"bold\">0</text>\n  <rect x=\"405\" y=\"72\" width=\"100\" height=\"50\" rx=\"4\" fill=\"var(--border)\" stroke=\"var(--text-dim)\" stroke-width=\"1\" stroke-dasharray=\"4\"/>\n  <text x=\"455\" y=\"93\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">(未使用)</text>\n  <text x=\"455\" y=\"112\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">&#x2717;</text>\n  <text x=\"410\" y=\"145\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">| Tag (1 byte) | Padding |</text>\n  <text x=\"410\" y=\"160\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">Tag=0 表示 None 变体</text>\n  <text x=\"410\" y=\"175\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">Value 字段未初始化</text>\n</svg>\n</div><h4>Option 和 Result</h4><p>Rust 标准库中两个最重要的枚举：</p><pre><code>enum Option&lt;T&gt; {    // 可能有值或为空\n    Some(T),\n    None,\n}\n\nenum Result&lt;T, E&gt; {  // 可能成功或失败\n    Ok(T),\n    Err(E),\n}</code></pre><p>Rust 没有 <code>null</code>！<code>Option</code> 代替了空值，强迫程序显式处理空值情况。<code>Result</code> 用于可能失败的操作。</p><h4>模式匹配</h4><pre><code>match msg {\n    Message::Quit => println!(\"退出\"),\n    Message::Move { x, y } => println!(\"移动到 ({x}, {y})\"),\n    Message::Write(s) => println!(\"写入: {s}\"),\n    _ => println!(\"其他\"),\n}\n\nif let Some(v) = option_val {\n    println!(\"有值: {v}\");\n}\n\nwhile let Ok(val) = iter.next() { }</code></pre><p><code>match</code> 必须<strong>穷尽所有可能</strong>，<code>_</code> 通配符匹配剩余情况。<code>if let</code> 是简洁的单模式匹配语法。</p><p>Rust 的枚举设计是<strong>代数数据类型</strong>（ADT）的体现。结合 <code>match</code> 的模式匹配能力，Rust 可以优雅地表达\"要么成功要么失败\"、\"要么有值要么为空\"这类复合逻辑，而无需使用异常或 null 引用。编译器会检查所有分支是否被覆盖，确保不会遗漏任何情况，这是 Rust 安全哲学的核心体现。</p>",
+    "code": "enum Color {\n    Red,\n    Green,\n    Blue,\n    Custom(u8, u8, u8),\n}\nfn main() {\n    let colors = vec![\n        Color::Red,\n        Color::Green,\n        Color::Custom(128, 64, 255),\n    ];\n    for c in &colors {\n        match c {\n            Color::Red => println!(\"红色\"),\n            Color::Green => println!(\"绿色\"),\n            Color::Blue => println!(\"蓝色\"),\n            Color::Custom(r, g, b) => println!(\"自定义: RGB({r}, {g}, {b})\"),\n        }\n    }\n    let maybe = Some(42);\n    if let Some(v) = maybe {\n        println!(\"有值: {v}\");\n    }\n    let doubled = maybe.map(|x| x * 2);\n    println!(\"doubled: {:?}\", doubled);\n}",
+    "exercises": [
+      {
+        "id": "rs-e1",
+        "title": "加倍 Option",
+        "desc": "实现 double_option 函数，接收 Option&lt;i32&gt; 参数。如果是 Some(v) 返回 v*2，如果是 None 返回 0。使用 match 表达式。",
+        "hint": "<code>match x { Some(v) =&gt; v * 2, None =&gt; 0 }</code>",
+        "starterCode": "fn double_option(x: Option<i32>) -> i32 {\n    match x {\n        Some(v) => v * 2,\n        None => 0,\n    }\n}",
+        "solution": "fn double_option(x: Option<i32>) -> i32 {\n    match x {\n        Some(v) => v * 2,\n        None => 0,\n    }\n}",
+        "fn": "double_option",
+        "tests": [
+          {
+            "args": [
+              5
+            ],
+            "expect": 10
+          },
+          {
+            "args": [
+              null
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              100
+            ],
+            "expect": 200
+          },
+          {
+            "args": [
+              -3
+            ],
+            "expect": -6
+          }
+        ]
+      },
+      {
+        "id": "rs-e2",
+        "title": "数字分类",
+        "desc": "实现 describe_number 函数，接收 i32，返回 &amp;str。用 match：负数返回 \"negative\"；0 返回 \"zero\"；正数返回 \"positive\"。",
+        "hint": "<code>match n { 0 =&gt; \"zero\", 1.. =&gt; \"positive\", _ =&gt; \"negative\" }</code>",
+        "starterCode": "fn describe_number(n: i32) -> &'static str {\n    match n {\n        0 => \"zero\",\n        1.. => \"positive\",\n        _ => \"negative\",\n    }\n}",
+        "solution": "fn describe_number(n: i32) -> &'static str {\n    match n {\n        0 => \"zero\",\n        1.. => \"positive\",\n        _ => \"negative\",\n    }\n}",
+        "fn": "describe_number",
+        "tests": [
+          {
+            "args": [
+              0
+            ],
+            "expect": "zero"
+          },
+          {
+            "args": [
+              5
+            ],
+            "expect": "positive"
+          },
+          {
+            "args": [
+              -3
+            ],
+            "expect": "negative"
+          },
+          {
+            "args": [
+              100
+            ],
+            "expect": "positive"
+          }
+        ]
+      },
+      {
+        "id": "rs-e3",
+        "title": "颜色匹配",
+        "desc": "定义 Color 枚举（Red, Green, Blue, Custom(r,g,b)），实现 color_hex 函数返回十六进制颜色字符串。",
+        "hint": "<code>format!(\"#{:02X}{:02X}{:02X}\", r, g, b)</code>",
+        "starterCode": "enum Color { Red, Green, Blue, Custom(u8, u8, u8) }\nfn color_hex(c: &Color) -> String {\n    match c {\n        Color::Red => \"#FF0000\".into(),\n        Color::Green => \"#00FF00\".into(),\n        Color::Blue => \"#0000FF\".into(),\n        Color::Custom(r, g, b) => format!(\"#{:02X}{:02X}{:02X}\", r, g, b),\n    }\n}",
+        "solution": "enum Color { Red, Green, Blue, Custom(u8, u8, u8) }\nfn color_hex(c: &Color) -> String {\n    match c {\n        Color::Red => \"#FF0000\".into(),\n        Color::Green => \"#00FF00\".into(),\n        Color::Blue => \"#0000FF\".into(),\n        Color::Custom(r, g, b) => format!(\"#{:02X}{:02X}{:02X}\", r, g, b),\n    }\n}",
+        "fn": "color_hex",
+        "tests": [
+          {
+            "args": [
+              "Red"
+            ],
+            "expect": "#FF0000"
+          },
+          {
+            "args": [
+              "Green"
+            ],
+            "expect": "#00FF00"
+          },
+          {
+            "args": [
+              "Blue"
+            ],
+            "expect": "#0000FF"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "trait",
+    "icon": "🔌",
+    "title": "Trait 与泛型",
+    "desc": "<h4>Trait：共享行为</h4><p>Trait 告诉 Rust 编译器某种类型具有哪些可以与其他类型共享的功能。这个概念类似于其他语言中的<strong>接口（interface）</strong>，但更灵活：</p><pre><code>trait Summary {\n    fn summarize(&amp;self) -> String;\n    fn author(&amp;self) -> String;              // 必须实现\n    fn default_summary(&amp;self) -> String {    // 默认实现\n        format!(\"(来自 {})\", self.author())\n    }\n}</code></pre><h4>实现 Trait</h4><pre><code>struct Article {\n    title: String,\n    author: String,\n    content: String,\n}\nimpl Summary for Article {\n    fn summarize(&amp;self) -> String {\n        format!(\"《{}》by {}\", self.title, self.author)\n    }\n    fn author(&amp;self) -> String {\n        self.author.clone()\n    }\n}</code></pre><div style=\"margin:16px 0;text-align:center\">\n<svg viewBox=\"0 0 580 200\" style=\"max-width:100%;background:var(--surface);border-radius:8px\" xmlns=\"http://www.w3.org/2000/svg\">\n  <rect x=\"0\" y=\"0\" width=\"580\" height=\"200\" fill=\"var(--surface)\" rx=\"8\"/>\n  <text x=\"290\" y=\"28\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"14\" font-weight=\"bold\">Trait 对象 &amp;dyn Area 运行时结构</text>\n  <rect x=\"20\" y=\"42\" width=\"160\" height=\"145\" rx=\"6\" fill=\"rgba(88,166,255,0.06)\" stroke=\"var(--primary)\" stroke-width=\"1\"/>\n  <text x=\"100\" y=\"62\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\" font-weight=\"bold\">trait 对象</text>\n  <rect x=\"30\" y=\"72\" width=\"140\" height=\"35\" rx=\"4\" fill=\"var(--border)\" stroke=\"var(--primary)\" stroke-width=\"1\"/>\n  <text x=\"100\" y=\"93\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">data ptr  &#x2192;</text>\n  <rect x=\"30\" y=\"112\" width=\"140\" height=\"35\" rx=\"4\" fill=\"var(--border)\" stroke=\"var(--primary)\" stroke-width=\"1\"/>\n  <text x=\"100\" y=\"133\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">vtable ptr  &#x2192;</text>\n  <text x=\"100\" y=\"170\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">trait 对象 = 双指针胖指针</text>\n  <rect x=\"200\" y=\"42\" width=\"160\" height=\"145\" rx=\"6\" fill=\"rgba(63,185,80,0.06)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"280\" y=\"62\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\" font-weight=\"bold\">具体数据</text>\n  <rect x=\"210\" y=\"72\" width=\"140\" height=\"45\" rx=\"4\" fill=\"var(--border)\" stroke=\"var(--success)\" stroke-width=\"1\"/>\n  <text x=\"280\" y=\"93\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">Rect</text>\n  <text x=\"280\" y=\"108\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">w: 5.0, h: 3.0</text>\n  <rect x=\"210\" y=\"125\" width=\"140\" height=\"45\" rx=\"4\" fill=\"var(--border)\" stroke=\"var(--warning)\" stroke-width=\"1\"/>\n  <text x=\"280\" y=\"146\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">Circle</text>\n  <text x=\"280\" y=\"160\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"9\">r: 5.0</text>\n  <line x1=\"180\" y1=\"88\" x2=\"206\" y2=\"88\" stroke=\"var(--primary)\" stroke-width=\"1.2\" marker-end=\"url(#arrow3)\"/>\n  <rect x=\"390\" y=\"42\" width=\"170\" height=\"145\" rx=\"6\" fill=\"rgba(210,153,34,0.06)\" stroke=\"var(--warning)\" stroke-width=\"1\"/>\n  <text x=\"475\" y=\"62\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\" font-weight=\"bold\">虚函数表 (vtable)</text>\n  <rect x=\"400\" y=\"72\" width=\"150\" height=\"25\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"410\" y=\"89\" fill=\"var(--text)\" font-size=\"10\">drop 析构函数指针</text>\n  <rect x=\"400\" y=\"100\" width=\"150\" height=\"25\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"410\" y=\"117\" fill=\"var(--text)\" font-size=\"10\">area(&amp;self) 指针</text>\n  <rect x=\"400\" y=\"128\" width=\"150\" height=\"25\" rx=\"3\" fill=\"var(--border)\"/>\n  <text x=\"410\" y=\"145\" fill=\"var(--text)\" font-size=\"10\">size / align 信息</text>\n  <text x=\"475\" y=\"170\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"9\">编译时为每个 impl 生成</text>\n  <line x1=\"180\" y1=\"128\" x2=\"396\" y2=\"112\" stroke=\"var(--primary)\" stroke-width=\"1.2\" marker-end=\"url(#arrow3)\"/>\n  <defs>\n    <marker id=\"arrow3\" markerWidth=\"8\" markerHeight=\"6\" refX=\"8\" refY=\"3\" orient=\"auto\">\n      <path d=\"M0,0 L8,3 L0,6 Z\" fill=\"var(--primary)\"/>\n    </marker>\n  </defs>\n</svg>\n</div><h4>泛型与 Trait 约束</h4><pre><code>fn largest&lt;T: PartialOrd&gt;(list: &amp;[T]) -> &amp;T {\n    let mut largest = &amp;list[0];\n    for item in list {\n        if item > largest { largest = item; }\n    }\n    largest\n}</code></pre><p><code>&lt;T: PartialOrd&gt;</code> 表示 T 必须实现了 <code>PartialOrd</code> trait 的类型。也可以使用 <code>where</code> 子句：<code>fn largest&lt;T&gt;(list: &amp;[T]) -> &amp;T where T: PartialOrd</code>。</p><h4>Trait 对象</h4><p><code>dyn Trait</code> 创建 trait 对象，实现<strong>动态分发</strong>（通过 vtable 在运行时选择具体方法）。适用于需要存储不同类型但实现了相同 trait 的情况。</p><p>Rust 在泛型方面提供了<strong>静态分发</strong>和<strong>动态分发</strong>两种选择。使用泛型参数 <code>&lt;T: Trait&gt;</code> 时，编译器会为每个具体类型生成专用代码（单态化），这带来最佳性能但可能增加二进制体积。使用 <code>dyn Trait</code> trait 对象则通过虚函数表在运行时动态选择方法，二进制更紧凑但有微小运行时开销。程序员可以根据性能需求灵活选择。</p>",
+    "code": "trait Shape { fn area(&self) -> f64; }\nstruct Circle { r: f64 }\nstruct Rect { w: f64, h: f64 }\nimpl Shape for Circle {\n    fn area(&self) -> f64 { 3.14159 * self.r * self.r }\n}\nimpl Shape for Rect {\n    fn area(&self) -> f64 { self.w * self.h }\n}\nfn print_area<T: Shape>(s: &T) {\n    println!(\"area = {:.2}\", s.area());\n}\nfn main() {\n    let c = Circle { r: 5.0 };\n    let r = Rect { w: 3.0, h: 4.0 };\n    print_area(&c);\n    print_area(&r);\n    let shapes: Vec<&dyn Shape> = vec![&c, &r];\n    for s in shapes { println!(\"dyn area = {:.2}\", s.area()); }\n}",
+    "exercises": [
+      {
+        "id": "rs-tr1",
+        "title": "实现 Area Trait",
+        "desc": "定义 Area trait（含 area 方法），为 Rect 和 Circle 实现该 trait。Rect: w*h，Circle: π*r²。",
+        "hint": "<code>impl Area for Rect { fn area(&amp;self) -> f64 { self.w * self.h } }</code>",
+        "starterCode": "trait Area { fn area(&self) -> f64; }\nstruct Rect { w: f64, h: f64 }\nstruct Circle { r: f64 }\nimpl Area for Rect {\n    fn area(&self) -> f64 { self.w * self.h }\n}\nimpl Area for Circle {\n    fn area(&self) -> f64 { 3.14159 * self.r * self.r }\n}\nfn main() {\n    let r = Rect { w: 5.0, h: 3.0 };\n    let c = Circle { r: 2.0 };\n    println!(\"Rect = {:.1}, Circle = {:.1}\", r.area(), c.area());\n}",
+        "solution": "trait Area { fn area(&self) -> f64; }\nstruct Rect { w: f64, h: f64 }\nstruct Circle { r: f64 }\nimpl Area for Rect { fn area(&self) -> f64 { self.w * self.h } }\nimpl Area for Circle { fn area(&self) -> f64 { 3.14159 * self.r * self.r } }\nfn main() { let r = Rect{w:5.0,h:3.0}; let c = Circle{r:2.0}; println!(\"Rect={:.1}, Circle={:.1}\", r.area(), c.area()); }",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "rs-tr2",
+        "title": "泛型最大值",
+        "desc": "实现泛型函数 largest&lt;T: PartialOrd&gt;(list: &amp;[T]) -> &amp;T，返回切片中的最大值。",
+        "hint": "<code>let mut max = &amp;list[0]; for item in list { if item &gt; max { max = item; } } max</code>",
+        "starterCode": "fn largest<T: PartialOrd>(list: &[T]) -> &T {\n    let mut max = &list[0];\n    for item in list { if item > max { max = item; } }\n    max\n}",
+        "solution": "fn largest<T: PartialOrd>(list: &[T]) -> &T {\n    let mut max = &list[0];\n    for item in list { if item > max { max = item; } }\n    max\n}",
+        "fn": "largest",
+        "tests": [
+          {
+            "args": [
+              [
+                3,
+                7,
+                1,
+                9,
+                4
+              ]
+            ],
+            "expect": 9
+          },
+          {
+            "args": [
+              [
+                -5,
+                -2,
+                -10
+              ]
+            ],
+            "expect": -2
+          },
+          {
+            "args": [
+              [
+                42
+              ]
+            ],
+            "expect": 42
+          }
+        ]
+      },
+      {
+        "id": "rs-tr3",
+        "title": "Display 实现",
+        "desc": "为 Point 结构体实现 std::fmt::Display trait，格式为 \"Point(x, y)\"。",
+        "hint": "<code>write!(f, \"Point({}, {})\", self.x, self.y)</code>",
+        "starterCode": "use std::fmt;\nstruct Point { x: i32, y: i32 }\nimpl fmt::Display for Point {\n    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {\n        write!(f, \"Point({}, {})\", self.x, self.y)\n    }\n}\nfn main() {\n    let p = Point { x: 3, y: 7 };\n    println!(\"{p}\");\n}",
+        "solution": "use std::fmt;\nstruct Point { x: i32, y: i32 }\nimpl fmt::Display for Point {\n    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {\n        write!(f, \"Point({}, {})\", self.x, self.y)\n    }\n}\nfn main() { let p = Point { x: 3, y: 7 }; println!(\"{p}\"); }",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "error",
+    "icon": "⚠️",
+    "title": "错误处理",
+    "desc": "<h4>Rust 的错误处理哲学</h4><p>Rust 没有异常机制。它将错误分为两大类：<strong>可恢复错误</strong>用 <code>Result&lt;T, E&gt;</code> 处理，<strong>不可恢复错误</strong>用 <code>panic!</code> 处理。</p><h4>Result 枚举</h4><pre><code>enum Result&lt;T, E&gt; {\n    Ok(T),   // 成功时包含值\n    Err(E),  // 失败时包含错误信息\n}</code></pre><h4>处理 Result</h4><pre><code>// match 模式\nmatch result {\n    Ok(value) => println!(\"成功: {value}\"),\n    Err(e) => eprintln!(\"失败: {e}\"),\n}\n\n// unwrap / expect（适合原型开发）\nlet v = result.unwrap();           // 失败时 panic\nlet v = result.expect(\"失败了\");    // 自定义 panic 消息\n\n// ? 运算符（传播错误）\nfn read_file(path: &amp;str) -> Result&lt;String, io::Error&gt; {\n    let mut file = File::open(path)?;  // 错误自动传播\n    let mut s = String::new();\n    file.read_to_string(&amp;mut s)?;\n    Ok(s)\n}</code></pre><p><code>?</code> 运算符是 Rust 错误处理的精华：如果 <code>Result</code> 是 <code>Ok</code>，则提取值继续执行；如果是 <code>Err</code>，则<strong>提前返回</strong>错误。<code>?</code> 只能用在返回 <code>Result</code> 或 <code>Option</code> 的函数中。</p><h4>自定义错误类型</h4><pre><code>#[derive(Debug)]\nstruct MyError(String);\n\nimpl std::fmt::Display for MyError {\n    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter) -> std::fmt::Result {\n        write!(f, \"{}\", self.0)\n    }\n}\nimpl std::error::Error for MyError {}</code></pre>",
+    "code": "fn parse_int(s: &str) -> Result<i32, String> {\n    s.parse::<i32>().map_err(|e| format!(\"解析失败: {e}\"))\n}\nfn divide(a: i32, b: i32) -> Result<i32, String> {\n    if b == 0 { Err(\"除数不能为零\".into()) }\n    else { Ok(a / b) }\n}\nfn main() {\n    let inputs = vec![\"42\", \"abc\", \"100\", \"0\"];\n    for s in &inputs {\n        match parse_int(s) {\n            Ok(n) => match divide(n, 2) {\n                Ok(half) => println!(\"{s} -> {n} / 2 = {half}\"),\n                Err(e) => println!(\"{s} -> 除法失败: {e}\"),\n            },\n            Err(e) => println!(\"{s} -> {e}\"),\n        }\n    }\n}",
+    "exercises": [
+      {
+        "id": "rs-er1",
+        "title": "字符串解析",
+        "desc": "实现 parse_int 函数，接收 &amp;str，返回 Result&lt;i32, String&gt;。使用 s.parse::&lt;i32&gt;() 解析，用 map_err 转换错误类型。",
+        "hint": "<code>s.parse::&lt;i32&gt;().map_err(|e| e.to_string())</code>",
+        "starterCode": "fn parse_int(s: &str) -> Result<i32, String> {\n    s.parse::<i32>().map_err(|e| e.to_string())\n}",
+        "solution": "fn parse_int(s: &str) -> Result<i32, String> {\n    s.parse::<i32>().map_err(|e| e.to_string())\n}",
+        "fn": "parse_int",
+        "tests": [
+          {
+            "args": [
+              "42"
+            ],
+            "expect": {
+              "ok": 42
+            }
+          },
+          {
+            "args": [
+              "-10"
+            ],
+            "expect": {
+              "ok": -10
+            }
+          },
+          {
+            "args": [
+              "abc"
+            ],
+            "expect": {
+              "err": true
+            }
+          }
+        ]
+      },
+      {
+        "id": "rs-er2",
+        "title": "安全除法",
+        "desc": "实现 safe_div 函数，接收两个 i32，返回 Result&lt;i32, String&gt;。除数为 0 时返回 Err，否则返回 Ok(a/b)。",
+        "hint": "<code>if b == 0 { Err(\"division by zero\".into()) } else { Ok(a / b) }</code>",
+        "starterCode": "fn safe_div(a: i32, b: i32) -> Result<i32, String> {\n    if b == 0 { Err(\"division by zero\".into()) }\n    else { Ok(a / b) }\n}",
+        "solution": "fn safe_div(a: i32, b: i32) -> Result<i32, String> {\n    if b == 0 { Err(\"division by zero\".into()) }\n    else { Ok(a / b) }\n}",
+        "fn": "safe_div",
+        "tests": [
+          {
+            "args": [
+              10,
+              2
+            ],
+            "expect": {
+              "ok": 5
+            }
+          },
+          {
+            "args": [
+              9,
+              3
+            ],
+            "expect": {
+              "ok": 3
+            }
+          },
+          {
+            "args": [
+              5,
+              0
+            ],
+            "expect": {
+              "err": true
+            }
+          },
+          {
+            "args": [
+              0,
+              5
+            ],
+            "expect": {
+              "ok": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "rs-er3",
+        "title": "成绩转换",
+        "desc": "实现 grade_to_score 函数，将字母成绩转换为分数。A+=100, A=95, A-=90, B+=85, B=80, B-=75, C+=70, C=65, C-=60, D=55, F=0。其他返回 Err。",
+        "hint": "用 match 匹配字母，注意也要处理+和-。",
+        "starterCode": "fn grade_to_score(grade: &str) -> Result<i32, String> {\n    match grade {\n        \"A+\" => Ok(100), \"A\" => Ok(95), \"A-\" => Ok(90),\n        \"B+\" => Ok(85), \"B\" => Ok(80), \"B-\" => Ok(75),\n        \"C+\" => Ok(70), \"C\" => Ok(65), \"C-\" => Ok(60),\n        \"D\" => Ok(55), \"F\" => Ok(0),\n        _ => Err(format!(\"无效成绩: {grade}\")),\n    }\n}",
+        "solution": "fn grade_to_score(grade: &str) -> Result<i32, String> {\n    match grade {\n        \"A+\" => Ok(100), \"A\" => Ok(95), \"A-\" => Ok(90),\n        \"B+\" => Ok(85), \"B\" => Ok(80), \"B-\" => Ok(75),\n        \"C+\" => Ok(70), \"C\" => Ok(65), \"C-\" => Ok(60),\n        \"D\" => Ok(55), \"F\" => Ok(0),\n        _ => Err(format!(\"无效成绩: {grade}\")),\n    }\n}",
+        "fn": "grade_to_score",
+        "tests": [
+          {
+            "args": [
+              "A"
+            ],
+            "expect": {
+              "ok": 95
+            }
+          },
+          {
+            "args": [
+              "A+"
+            ],
+            "expect": {
+              "ok": 100
+            }
+          },
+          {
+            "args": [
+              "F"
+            ],
+            "expect": {
+              "ok": 0
+            }
+          },
+          {
+            "args": [
+              "X"
+            ],
+            "expect": {
+              "err": true
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "collection",
+    "icon": "📚",
+    "title": "集合与迭代器",
+    "desc": "<h4>常用集合</h4><pre><code>// Vector —— 动态数组\nlet mut v: Vec&lt;i32&gt; = vec![1, 2, 3];\nv.push(4);\nlet first = v[0];                // 索引访问\nlet maybe = v.get(10);           // 安全访问 -> Option\nfor item in &amp;v { println!(\"{item}\"); }\n\n// HashMap —— 键值对\nuse std::collections::HashMap;\nlet mut map = HashMap::new();\nmap.insert(\"key\", 42);\nlet val = map.get(\"key\");        // -> Option&lt;&amp;V&gt;\nfor (k, v) in &amp;map { }</code></pre><h4>迭代器模式</h4><p>迭代器是 Rust 函数式编程的核心。迭代器是<strong>惰性</strong>的，只有调用消费方法时才会执行：</p><pre><code>let v: Vec&lt;i32&gt; = vec![1, 2, 3, 4, 5];\n\n// 消费适配器\nlet sum: i32 = v.iter().sum();              // 求和\nlet count = v.iter().count();               // 计数\nlet collected: Vec&lt;&amp;i32&gt; = v.iter().collect(); // 收集\n\n// 迭代器适配器（惰性）\nlet doubled: Vec&lt;i32&gt; = v.iter().map(|x| x * 2).collect();\nlet evens: Vec&lt;&amp;i32&gt; = v.iter().filter(|x| *x % 2 == 0).collect();\nlet found = v.iter().find(|x| *x > 3);       // Option\nlet all_big = v.iter().all(|x| *x > 0);      // bool</code></pre><p><code>iter()</code> 返回不可变引用迭代器；<code>iter_mut()</code> 可变引用；<code>into_iter()</code> 获取所有权。</p>",
+    "code": "fn main() {\n    let nums = vec![3, 1, 4, 1, 5, 9, 2, 6];\n    let sum: i32 = nums.iter().sum();\n    let avg = sum as f64 / nums.len() as f64;\n    let max = nums.iter().max().unwrap();\n    let evens: Vec<i32> = nums.iter().filter(|x| **x % 2 == 0).cloned().collect();\n    let squares: Vec<i32> = nums.iter().map(|x| x * x).collect();\n    println!(\"nums: {:?}\", nums);\n    println!(\"sum={sum} avg={avg:.1} max={max}\");\n    println!(\"evens: {:?}\", evens);\n    println!(\"squares: {:?}\", squares);\n    use std::collections::HashMap;\n    let mut freq = HashMap::new();\n    for n in &nums { *freq.entry(n).or_insert(0) += 1; }\n    println!(\"freq: {:?}\", freq);\n}",
+    "exercises": [
+      {
+        "id": "rs-co1",
+        "title": "过滤偶数",
+        "desc": "实现 filter_even 函数，接收 Vec&lt;i32&gt;，返回只包含偶数的 Vec&lt;i32&gt;。使用 into_iter().filter().collect()。",
+        "hint": "<code>nums.into_iter().filter(|x| x % 2 == 0).collect()</code>",
+        "starterCode": "fn filter_even(nums: Vec<i32>) -> Vec<i32> {\n    nums.into_iter().filter(|x| x % 2 == 0).collect()\n}",
+        "solution": "fn filter_even(nums: Vec<i32>) -> Vec<i32> {\n    nums.into_iter().filter(|x| x % 2 == 0).collect()\n}",
+        "fn": "filter_even",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            ],
+            "expect": [
+              2,
+              4
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                3,
+                5
+              ]
+            ],
+            "expect": []
+          },
+          {
+            "args": [
+              [
+                2,
+                4,
+                6
+              ]
+            ],
+            "expect": [
+              2,
+              4,
+              6
+            ]
+          },
+          {
+            "args": [
+              []
+            ],
+            "expect": []
+          }
+        ]
+      },
+      {
+        "id": "rs-co2",
+        "title": "平方映射",
+        "desc": "实现 square_all 函数，接收 Vec&lt;i32&gt;，返回每个元素平方后的 Vec&lt;i32&gt;。使用 iter().map().collect()。",
+        "hint": "<code>nums.iter().map(|x| x * x).collect()</code>",
+        "starterCode": "fn square_all(nums: &[i32]) -> Vec<i32> {\n    nums.iter().map(|x| x * x).collect()\n}",
+        "solution": "fn square_all(nums: &[i32]) -> Vec<i32> {\n    nums.iter().map(|x| x * x).collect()\n}",
+        "fn": "square_all",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                2,
+                3
+              ]
+            ],
+            "expect": [
+              1,
+              4,
+              9
+            ]
+          },
+          {
+            "args": [
+              [
+                0,
+                5,
+                10
+              ]
+            ],
+            "expect": [
+              0,
+              25,
+              100
+            ]
+          },
+          {
+            "args": [
+              []
+            ],
+            "expect": []
+          }
+        ]
+      },
+      {
+        "id": "rs-co3",
+        "title": "正数求和",
+        "desc": "实现 sum_positive 函数，接收 &amp;[i32] 切片，返回所有正数（&gt;0）的和，使用迭代器链式调用。",
+        "hint": "<code>nums.iter().filter(|x| **x &gt; 0).sum()</code>",
+        "starterCode": "fn sum_positive(nums: &[i32]) -> i32 {\n    nums.iter().filter(|x| **x > 0).sum()\n}",
+        "solution": "fn sum_positive(nums: &[i32]) -> i32 {\n    nums.iter().filter(|x| **x > 0).sum()\n}",
+        "fn": "sum_positive",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                -2,
+                3,
+                -4,
+                5
+              ]
+            ],
+            "expect": 9
+          },
+          {
+            "args": [
+              [
+                -1,
+                -2,
+                -3
+              ]
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              [
+                10,
+                20,
+                30
+              ]
+            ],
+            "expect": 60
           }
         ]
       }
     ]
   }
 ];
+
+
+
+
+
+
+
+
+
+
+
+;
 
 
 // ==================== 全局变量 ====================
@@ -451,8 +1411,7 @@ function loadSection(id) {
 
   if (editor) {
     editor.setValue(section.code);
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -509,8 +1468,7 @@ function switchToLearn(section) {
 
   if (editor) {
     editor.setValue(loadCachedCode(section.code));
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -538,8 +1496,7 @@ function switchToExercise(section, index) {
 
   if (editor) {
     editor.setValue(loadCachedCode(ex.starterCode));
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -554,53 +1511,94 @@ function toggleHint() {
   document.getElementById('hint-btn').textContent = hint.classList.contains('show') ? '隐藏提示' : '查看提示';
 }
 
-// ==================== Monaco Editor ====================
+
+async function runCode() {
+  if (isRunning || !editor) return;
+  const btn = document.getElementById('run-btn');
+  btn.classList.add('running');
+  isRunning = true;
+  const code = editor.getValue();
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">\u23f3 \u6b63\u5728\u6267\u884c ...</span>';
+  try {
+    const resp = await fetch('https://emkc.org/api/v2/piston/execute', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ language: 'rust', version: '*', files: [{ name: 'main.rs', content: code }] })
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.compile && data.compile.stderr) {
+      outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(data.compile.stderr) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">\u2717 \u7f16\u8bd1\u5931\u8d25</span>';
+    } else if (data.run && data.run.stdout) {
+      outputContent.innerHTML = escHtml(data.run.stdout).replace(/\n/g, '<br>');
+      statusEl.innerHTML = '<span class="badge success">\u2713 \u6267\u884c\u6210\u529f</span>';
+    } else if (data.run && data.run.stderr) {
+      outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(data.run.stderr) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">\u2717 \u8fd0\u884c\u65f6\u9519\u8bef</span>';
+    } else {
+      outputContent.innerHTML = '<span class="out-info">\u2713 \u4ee3\u7801\u5df2\u6267\u884c\uff08\u65e0\u8f93\u51fa\u5185\u5bb9\uff09</span>';
+      statusEl.innerHTML = '<span class="badge success">\u2713 \u6267\u884c\u6210\u529f</span>';
+    }
+  } catch (e) {
+    outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(e.message) + '</span>';
+    statusEl.innerHTML = '<span class="badge error">\u2717 \u8bf7\u6c42\u5931\u8d25</span>';
+  }
+  btn.classList.remove('running');
+  isRunning = false;
+}
+
+function submitExercise() {
+  if (isRunning || !editor) return;
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (!section || !section.exercises || currentExerciseIndex < 0) return;
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">\u23f3 \u8bf7\u70b9\u51fb\u201c\u8fd0\u884c\u4ee3\u7801\u201d\u6267\u884c\u540e\u67e5\u770b\u8f93\u51fa\uff0c\u81ea\u884c\u5bf9\u6bd4\u7ed3\u679c\u3002</span>';
+  statusEl.innerHTML = '';
+}
+
+// ==================== 代码编辑器 ====================
 function createEditor() {
   if (editorReady) return;
   editorReady = true;
 
-  require.config({
-    paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }
+  const container = document.getElementById('editor-container');
+  if (!container) return;
+  container.classList.remove('loading');
+  container.innerHTML = '<textarea id="editor" style="width:100%;height:100%;background:var(--bg);color:var(--text);border:none;outline:none;resize:none;font-family:\"SF Mono\",\"Fira Code\",\"Cascadia Code\",monospace;font-size:14px;padding:12px;tab-size:4;white-space:pre;overflow-wrap:normal;overflow-x:auto;line-height:1.5"></textarea>';
+
+  const ta = document.getElementById('editor');
+  editor = {
+    getValue: () => ta.value,
+    setValue: (v) => { ta.value = v; },
+  };
+  const savedTheme = localStorage.getItem('rust-theme') || 'light';
+  if (savedTheme === 'light') document.body.classList.add('light');
+
+  ta.value = loadCachedCode(SECTIONS[0].code);
+
+  ta.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const s = ta.selectionStart, en = ta.selectionEnd;
+      ta.value = ta.value.substring(0, s) + '  ' + ta.value.substring(en);
+      ta.selectionStart = ta.selectionEnd = s + 2;
+    }
   });
 
-  require(['vs/editor/editor.main'], () => {
-    const container = document.getElementById('editor-container');
-    if (!container) return;
-    container.classList.remove('loading');
-    container.innerHTML = '';
-    container.style.height = '380px';
-
-    const savedTheme = localStorage.getItem('rust-theme') || 'light';
-    const isLight = savedTheme === 'light';
-    if (isLight) document.body.classList.add('light');
-
-    editor = monaco.editor.create(container, {
-      value: SECTIONS[0].code,
-      language: 'rust',
-      theme: isLight ? 'vs' : 'vs-dark',
-      minimap: { enabled: false },
-      fontSize: 14,
-      lineNumbers: 'on',
-      scrollBeyondLastLine: false,
-      automaticLayout: true,
-      wordWrap: 'on',
-      tabSize: 4,
-      renderWhitespace: 'selection',
-      padding: { top: 12 },
-    });
-
-    loadSection(currentSectionId);
-
-    let saveTimer;
-    editor.onDidChangeModelContent(() => {
-      const lineCount = editor.getModel().getLineCount();
-      const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
-      container.style.height = newHeight + 'px';
-      editor.layout();
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveCode, 500);
-    });
+  let saveTimer;
+  ta.addEventListener('input', () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveCode, 500);
   });
+
+  loadSection(currentSectionId);
 }
 
 
@@ -619,9 +1617,7 @@ function resetCode() {
 // ==================== 主题切换 ====================
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
-  const theme = isLight ? 'light' : 'dark';
-  localStorage.setItem('rust-theme', theme);
-  if (editor) monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark');
+  localStorage.setItem('rust-theme', isLight ? 'light' : 'dark');
 }
 
 // ==================== 字号控制 ====================
@@ -641,7 +1637,7 @@ function setFontSize(level) {
   root.style.setProperty('--fs-small', s.small);
   root.style.setProperty('--fs-sidebar', s.sidebar);
   root.style.setProperty('--fs-tab', s.tab);
-  if (editor) editor.updateOptions({ fontSize: parseInt(s.mono) });
+  
 
   document.querySelectorAll('.font-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.size === level);
@@ -678,17 +1674,11 @@ function setupMenuToggle() {
 
 // ==================== 启动 ====================
 function boot() {
-  if (typeof require === 'undefined') {
-    showError('加载 Monaco Editor 失败，请刷新页面重试');
-    return;
-  }
   init();
 }
 
 function showError(msg) {
   hideLoading();
-  const container = document.getElementById('editor-container');
-  if (container) container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">' + escHtml(msg) + '</div>';
 }
 
 if (document.readyState === 'complete') {
@@ -697,21 +1687,6 @@ if (document.readyState === 'complete') {
   window.addEventListener('load', boot);
 }
 
-setTimeout(() => {
-  hideLoading();
-  if (!editor) {
-    const container = document.getElementById('editor-container');
-    if (container && container.classList.contains('loading')) {
-      container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">⛔ Monaco Editor 加载超时，请检查网络连接后刷新页面</div>';
-    }
-    loadPreferences();
-    renderSidebar();
-    setupButtons();
-    setupKeyboardShortcut();
-    setupMenuToggle();
-    loadSection(currentSectionId);
-  }
-}, 15000);
 </script>
 </body>
 </html>

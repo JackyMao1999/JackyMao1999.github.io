@@ -212,34 +212,1051 @@ body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
 <script>
 // ==================== 教程章节数据 ====================
 const SECTIONS = [
-  {
-    "id": "intro",
-    "icon": "🔧",
-    "title": "C 语言简介",
-    "desc": "<p>C 语言是<strong>过程式编程语言</strong>，对操作系统和嵌入式系统影响深远。</p><h4>第一个程序</h4><pre><code>#include <stdio.h>\\nint main() {\\n    printf(\"Hello, World!\\n\");\\n    return 0;\\n}</code></pre>",
-    "code": "#include <stdio.h>\\nint main() {\\n    printf(\"Hello, World!\\n\");\\n    char name[] = \"C\";\\n    printf(\"你好, %s!\\n\", name);\\n    return 0;\\n}",
-    "exercises": [
-      {
-        "id": "c-i1",
-        "title": "加法函数",
-        "desc": "编写 <code>add</code> 接收 <code>int a, int b</code> 返回 <code>int</code> 和。",
-        "hint": "int add(int a, int b) { return a + b; }",
-        "starterCode": "// 编写 add 函数\\n// int add(int a, int b)",
-        "solution": "int add(int a, int b) { return a + b; }",
-        "fn": "add",
-        "tests": [
-          {
-            "args": [
+{
+  "id": "intro",
+  "icon": "🔧",
+  "title": "C 语言简介",
+  "desc": "<svg viewBox=\"0 0 500 100\" style=\"max-width:100%;height:auto;margin:12px 0\"><rect x=\"20\" y=\"20\" width=\"100\" height=\"40\" rx=\"6\" fill=\"#58a6ff\" opacity=\".85\"/><text x=\"70\" y=\"46\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\" font-weight=\"bold\">.c</text><line x1=\"120\" y1=\"40\" x2=\"160\" y2=\"40\" stroke=\"#58a6ff\" stroke-width=\"2\"/><rect x=\"160\" y=\"20\" width=\"100\" height=\"40\" rx=\"6\" fill=\"#3fb950\" opacity=\".85\"/><text x=\"210\" y=\"46\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\">gcc</text><line x1=\"260\" y1=\"40\" x2=\"300\" y2=\"40\" stroke=\"#3fb950\" stroke-width=\"2\"/><rect x=\"300\" y=\"20\" width=\"100\" height=\"40\" rx=\"6\" fill=\"#d29922\" opacity=\".85\"/><text x=\"350\" y=\"46\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\">bin</text><line x1=\"400\" y1=\"40\" x2=\"440\" y2=\"40\" stroke=\"#d29922\" stroke-width=\"2\"/><rect x=\"440\" y=\"20\" width=\"50\" height=\"40\" rx=\"6\" fill=\"#f85149\" opacity=\".85\"/><text x=\"465\" y=\"46\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\">run</text></svg><p>C 语言由 <strong>Dennis Ritchie</strong> 在 1972 年于贝尔实验室开发，是迄今为止最具影响力的编程语言之一。它是一门<strong>过程式编程语言</strong>，以其高效、灵活和底层硬件控制能力著称。从操作系统内核到嵌入式设备，从数据库引擎到编译器，C 语言无处不在。</p><h4>为什么学习 C？</h4><ul><li><strong>系统编程语言</strong>：Linux、Windows 内核及驱动主要用 C 编写</li><li><strong>嵌入式开发</strong>：微控制器、IoT 设备、实时系统首选</li><li><strong>性能关键场景</strong>：游戏引擎、数据库、编译器底层实现</li><li><strong>理解计算机原理</strong>：内存模型、指针操作、数据存储方式</li></ul><h4>你的第一个 C 程序</h4><pre><code>#include &lt;stdio.h&gt;\\nint main() {\\n    printf(\"Hello, World!\\\\n\");\\n    return 0;\\n}</code></pre>",
+  "code": "<svg viewBox=\"0 0 500 100\" style=\"max-width:100%\"><rect x=\"20\" y=\"20\" width=\"100\" height=\"40\" rx=\"6\" fill=\"#58a6ff\" opacity=\".85\"/><text x=\"70\" y=\"46\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\" font-weight=\"bold\">.c</text><line x1=\"120\" y1=\"40\" x2=\"160\" y2=\"40\" stroke=\"#58a6ff\" stroke-width=\"2\"/><rect x=\"160\" y=\"20\" width=\"100\" height=\"40\" rx=\"6\" fill=\"#3fb950\" opacity=\".85\"/><text x=\"210\" y=\"46\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\">gcc</text><line x1=\"260\" y1=\"40\" x2=\"300\" y2=\"40\" stroke=\"#3fb950\" stroke-width=\"2\"/><rect x=\"300\" y=\"20\" width=\"100\" height=\"40\" rx=\"6\" fill=\"#d29922\" opacity=\".85\"/><text x=\"350\" y=\"46\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\">bin</text><line x1=\"400\" y1=\"40\" x2=\"440\" y2=\"40\" stroke=\"#d29922\" stroke-width=\"2\"/><rect x=\"440\" y=\"20\" width=\"50\" height=\"40\" rx=\"6\" fill=\"#f85149\" opacity=\".85\"/><text x=\"465\" y=\"46\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\">run</text></svg>#include <stdio.h>\\nint main() {\\n    printf(\"Hello, World!\\\\n\");\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-i1",
+      "title": "加法函数",
+      "desc": "编写 add 接收两个 int 返回和。",
+      "hint": "int add(int a, int b) { return a + b; }",
+      "starterCode": "int add(int a, int b) {\n    return a + b;\n}",
+      "solution": "int add(int a, int b) {\n    return a + b;\n}",
+      "fn": "add",
+      "tests": [
+        {
+          "args": [
+            3,
+            5
+          ],
+          "expect": 8
+        },
+        {
+          "args": [
+            -2,
+            7
+          ],
+          "expect": 5
+        }
+      ]
+    },
+    {
+      "id": "c-i2",
+      "title": "平方计算",
+      "desc": "编写 square 接收整数返回平方。",
+      "hint": "return n * n;",
+      "starterCode": "int square(int n) {\n    return n * n;\n}",
+      "solution": "int square(int n) {\n    return n * n;\n}",
+      "fn": "square",
+      "tests": [
+        {
+          "args": [
+            5
+          ],
+          "expect": 25
+        },
+        {
+          "args": [
+            -3
+          ],
+          "expect": 9
+        }
+      ]
+    },
+    {
+      "id": "c-i3",
+      "title": "三数求和",
+      "desc": "编写 sumThree 接收三个整数返回总和。",
+      "hint": "return a + b + c;",
+      "starterCode": "int sumThree(int a, int b, int c) {\n    return a + b + c;\n}",
+      "solution": "int sumThree(int a, int b, int c) {\n    return a + b + c;\n}",
+      "fn": "sumThree",
+      "tests": [
+        {
+          "args": [
+            1,
+            2,
+            3
+          ],
+          "expect": 6
+        },
+        {
+          "args": [
+            10,
+            20,
+            30
+          ],
+          "expect": 60
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "types",
+  "icon": "🔤",
+  "title": "类型与变量",
+  "desc": "<svg viewBox=\"0 0 420 70\" style=\"max-width:100%;height:auto;margin:12px 0\"><rect x=\"20\" y=\"15\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#58a6ff\" opacity=\".8\"/><text x=\"50\" y=\"34\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\">char(1B)</text><rect x=\"100\" y=\"15\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#3fb950\" opacity=\".8\"/><text x=\"130\" y=\"34\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\">short(2B)</text><rect x=\"180\" y=\"15\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#d29922\" opacity=\".8\"/><text x=\"210\" y=\"34\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\">int(4B)</text><rect x=\"260\" y=\"15\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#f85149\" opacity=\".8\"/><text x=\"290\" y=\"34\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\">long(8B)</text><rect x=\"340\" y=\"15\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#bc8cff\" opacity=\".8\"/><text x=\"370\" y=\"34\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\">ptr(8B)</text></svg><p>C 语言是一种<strong>静态类型语言</strong>，每个变量在使用前必须声明其类型。类型决定了变量占用内存的大小、取值范围以及可执行的操作。理解类型系统是掌握 C 的关键一步。</p><h4>基本数据类型</h4><pre><code>char   c = 'A';        // 1 字节\\nshort  s = 100;        // 2 字节\\nint    i = 42;         // 4 字节\\nlong   l = 100000L;    // 4 或 8 字节\\nfloat  f = 3.14f;      // 4 字节\\ndouble d = 2.71828;    // 8 字节</code></pre><h4>变量声明规则</h4><p>C 变量必须先声明后使用。声明格式为 <code>类型 变量名 = 初始值;</code>。变量名由字母、数字和下划线组成，不能以数字开头。</p>",
+  "code": "<svg viewBox=\"0 0 420 90\" style=\"max-width:100%\"><rect x=\"20\" y=\"10\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#58a6ff\" opacity=\".8\"/><text x=\"50\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">char(1B)</text><rect x=\"100\" y=\"10\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#3fb950\" opacity=\".8\"/><text x=\"130\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">short(2B)</text><rect x=\"180\" y=\"10\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#d29922\" opacity=\".8\"/><text x=\"210\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">int(4B)</text><rect x=\"260\" y=\"10\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#f85149\" opacity=\".8\"/><text x=\"290\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">long(8B)</text><rect x=\"340\" y=\"10\" width=\"60\" height=\"30\" rx=\"4\" fill=\"#bc8cff\" opacity=\".8\"/><text x=\"370\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">ptr(8B)</text></svg>#include <stdio.h>\\nint main() {\\n    int a = 42;\\n    float b = 3.14f;\\n    double c = 2.718;\\n    printf(\"int:%d float:%.2f double:%.3f\\\\n\", a, b, c);\\n    printf(\"sizeof int=%zu float=%zu double=%zu\\\\n\",\\n           sizeof(int), sizeof(float), sizeof(double));\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-t1",
+      "title": "类型转换",
+      "desc": "编写 toFloat 将 int 转为 float。",
+      "hint": "return (float)n;",
+      "starterCode": "float toFloat(int n) {\n    return (float)n;\n}",
+      "solution": "float toFloat(int n) {\n    return (float)n;\n}",
+      "fn": "toFloat",
+      "tests": [
+        {
+          "args": [
+            42
+          ],
+          "expect": 42
+        },
+        {
+          "args": [
+            0
+          ],
+          "expect": 0
+        }
+      ]
+    },
+    {
+      "id": "c-t2",
+      "title": "摄氏转华氏",
+      "desc": "F = C x 9/5 + 32。注意整数除法！",
+      "hint": "return c * 9 / 5 + 32;",
+      "starterCode": "int celsiusToFahrenheit(int c) {\n    return c * 9 / 5 + 32;\n}",
+      "solution": "int celsiusToFahrenheit(int c) {\n    return c * 9 / 5 + 32;\n}",
+      "fn": "celsiusToFahrenheit",
+      "tests": [
+        {
+          "args": [
+            0
+          ],
+          "expect": 32
+        },
+        {
+          "args": [
+            100
+          ],
+          "expect": 212
+        },
+        {
+          "args": [
+            -40
+          ],
+          "expect": -40
+        }
+      ]
+    },
+    {
+      "id": "c-t3",
+      "title": "判断大数",
+      "desc": "n > 100 返回 1 否则 0。",
+      "hint": "return n > 100 ? 1 : 0;",
+      "starterCode": "int isLarge(int n) {\n    return n > 100 ? 1 : 0;\n}",
+      "solution": "int isLarge(int n) {\n    return n > 100 ? 1 : 0;\n}",
+      "fn": "isLarge",
+      "tests": [
+        {
+          "args": [
+            150
+          ],
+          "expect": 1
+        },
+        {
+          "args": [
+            50
+          ],
+          "expect": 0
+        },
+        {
+          "args": [
+            100
+          ],
+          "expect": 0
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "operators",
+  "icon": "➕",
+  "title": "运算符",
+  "desc": "<p>C 语言提供了丰富的运算符，涵盖算术、比较、逻辑、位运算等。不同运算符有严格的<strong>优先级</strong>，建议用括号明确计算顺序。</p><h4>算术运算符</h4><pre><code>+  -  *  /  %   (加 减 乘 除 取余)\\nint a = 10, b = 3;\\na / b   // 结果为 3（整数除法）\\na % b   // 结果为 1（取余数）</code></pre><h4>比较与逻辑运算符</h4><p><code>==</code>（等于）、<code>!=</code>（不等于）、<code>&gt;</code>（大于）比较后返回 1 或 0。<code>&&</code>（与）、<code>||</code>（或）、<code>!</code>（非）组合条件。</p><h4>位运算符</h4><p><code>&amp;</code>（按位与）、<code>|</code>（按位或）、<code>^</code>（异或）、<code>~</code>（取反）、<code>&lt;&lt;</code>（左移）、<code>&gt;&gt;</code>（右移）。</p><h4>三目运算符</h4><p><code>条件 ? 表达式1 : 表达式2</code> 根据条件真假返回不同值。</p>",
+  "code": "#include <stdio.h>\\nint main() {\\n    int a = 10, b = 3;\\n    printf(\"a+b=%d a-b=%d a*b=%d a/b=%d a%%b=%d\\\\n\", a+b, a-b, a*b, a/b, a%b);\\n    printf(\"a&b=%d a|b=%d a^b=%d a<<1=%d a>>1=%d\\\\n\", a&b, a|b, a^b, a<<1, a>>1);\\n    printf(\"max=%d\\\\n\", a>b?a:b);\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-o1",
+      "title": "判断奇偶",
+      "desc": "编写 isEven，偶数返回 1，奇数返回 0。",
+      "hint": "return n % 2 == 0;",
+      "starterCode": "int isEven(int n) {\n    return n % 2 == 0;\n}",
+      "solution": "int isEven(int n) {\n    return n % 2 == 0;\n}",
+      "fn": "isEven",
+      "tests": [
+        {
+          "args": [
+            4
+          ],
+          "expect": 1
+        },
+        {
+          "args": [
+            7
+          ],
+          "expect": 0
+        },
+        {
+          "args": [
+            0
+          ],
+          "expect": 1
+        }
+      ]
+    },
+    {
+      "id": "c-o2",
+      "title": "三个数的最大值",
+      "desc": "返回三个整数的最大值。嵌套三目运算符。",
+      "hint": "return a>b?(a>c?a:c):(b>c?b:c);",
+      "starterCode": "int maxOfThree(int a, int b, int c) {\n    return a>b?(a>c?a:c):(b>c?b:c);\n}",
+      "solution": "int maxOfThree(int a, int b, int c) {\n    return a>b?(a>c?a:c):(b>c?b:c);\n}",
+      "fn": "maxOfThree",
+      "tests": [
+        {
+          "args": [
+            3,
+            7,
+            5
+          ],
+          "expect": 7
+        },
+        {
+          "args": [
+            10,
+            10,
+            10
+          ],
+          "expect": 10
+        },
+        {
+          "args": [
+            -1,
+            -5,
+            -3
+          ],
+          "expect": -1
+        }
+      ]
+    },
+    {
+      "id": "c-o3",
+      "title": "判断闰年",
+      "desc": "能被 400 整除或能被 4 整除但不能被 100 整除。",
+      "hint": "return (y%400==0) || (y%4==0 && y%100!=0);",
+      "starterCode": "int isLeapYear(int y) {\n    return (y%400==0) || (y%4==0 && y%100!=0);\n}",
+      "solution": "int isLeapYear(int y) {\n    return (y%400==0) || (y%4==0 && y%100!=0);\n}",
+      "fn": "isLeapYear",
+      "tests": [
+        {
+          "args": [
+            2000
+          ],
+          "expect": 1
+        },
+        {
+          "args": [
+            2024
+          ],
+          "expect": 1
+        },
+        {
+          "args": [
+            1900
+          ],
+          "expect": 0
+        },
+        {
+          "args": [
+            2023
+          ],
+          "expect": 0
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "control",
+  "icon": "🔀",
+  "title": "控制流",
+  "desc": "<p>控制流语句决定程序路径。C 提供 <code>if</code>/<code>else</code> 分支、<code>switch</code> 多路选择、<code>for</code>/<code>while</code>/<code>do-while</code> 循环。</p><h4>分支语句</h4><pre><code>if (score >= 60) {\\n    printf(\"及格\");\\n} else {\\n    printf(\"不及格\");\\n}\\n\\nswitch (grade) {\\n    case 'A': printf(\"<svg viewBox=\"0 0 240 160\" style=\"max-width:100%\"><ellipse cx=\"120\" cy=\"15\" rx=\"40\" ry=\"12\" fill=\"none\" stroke=\"#58a6ff\" stroke-width=\"2\"/><text x=\"120\" y=\"20\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"11\">开始</text><line x1=\"120\" y1=\"27\" x2=\"120\" y2=\"45\" stroke=\"#58a6ff\" stroke-width=\"2\"/><polygon points=\"120,45 155,63 120,81 85,63\" fill=\"none\" stroke=\"#d29922\" stroke-width=\"2\"/><text x=\"120\" y=\"68\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"10\">if?</text><line x1=\"85\" y1=\"63\" x2=\"40\" y2=\"100\" stroke=\"#f85149\" stroke-width=\"1.5\"/><text x=\"30\" y=\"95\" text-anchor=\"end\" fill=\"#f85149\" font-size=\"10\">否</text><rect x=\"10\" y=\"100\" width=\"50\" height=\"28\" rx=\"4\" fill=\"#f85149\" opacity=\".7\"/><text x=\"35\" y=\"118\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"10\">else</text><line x1=\"155\" y1=\"63\" x2=\"200\" y2=\"100\" stroke=\"#3fb950\" stroke-width=\"1.5\"/><text x=\"210\" y=\"95\" text-anchor=\"start\" fill=\"#3fb950\" font-size=\"10\">是</text><rect x=\"180\" y=\"100\" width=\"50\" height=\"28\" rx=\"4\" fill=\"#3fb950\" opacity=\".7\"/><text x=\"205\" y=\"118\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"10\">if</text></svg>优秀\"); break;\\n    case 'B': printf(\"良好\"); break;\\n    default: printf(\"未知\"); break;\\n}</code></pre><h4>循环语句</h4><p><code>for</code> 适合已知次数，<code>while</code> 适合条件控制，<code>do-while</code> 至少执行一次。<code>break</code> 提前退出，<code>continue</code> 跳过当前迭代。</p>",
+  "code": "#include <stdio.h>\\nint main() {\\n    for (int i = 1; i <= 5; i++) {\\n        if (i % 2 == 0) printf(\"%d 偶数\\\\n\", i);\\n        else printf(\"%d 奇数\\\\n\", i);\\n    }\\n    int sum = 0, i = 1;\\n    while (i <= 5) { sum += i; i++; }\\n    printf(\"1到5的和=%d\\\\n\", sum);\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-c1",
+      "title": "阶乘计算",
+      "desc": "计算 n 的阶乘 n!。使用 for 循环。",
+      "hint": "for(int i=1;i<=n;i++) r*=i;",
+      "starterCode": "int factorial(int n) {\n    int r = 1;\n    for(int i=1; i<=n; i++) r *= i;\n    return r;\n}",
+      "solution": "int factorial(int n) {\n    int r = 1;\n    for(int i=1; i<=n; i++) r *= i;\n    return r;\n}",
+      "fn": "factorial",
+      "tests": [
+        {
+          "args": [
+            5
+          ],
+          "expect": 120
+        },
+        {
+          "args": [
+            3
+          ],
+          "expect": 6
+        },
+        {
+          "args": [
+            0
+          ],
+          "expect": 1
+        }
+      ]
+    },
+    {
+      "id": "c-c2",
+      "title": "1 到 n 求和",
+      "desc": "计算从 1 加到 n 的总和。",
+      "hint": "for(int i=1;i<=n;i++) s+=i;",
+      "starterCode": "int sumToN(int n) {\n    int s = 0;\n    for(int i=1; i<=n; i++) s += i;\n    return s;\n}",
+      "solution": "int sumToN(int n) {\n    int s = 0;\n    for(int i=1; i<=n; i++) s += i;\n    return s;\n}",
+      "fn": "sumToN",
+      "tests": [
+        {
+          "args": [
+            5
+          ],
+          "expect": 15
+        },
+        {
+          "args": [
+            10
+          ],
+          "expect": 55
+        },
+        {
+          "args": [
+            1
+          ],
+          "expect": 1
+        }
+      ]
+    },
+    {
+      "id": "c-c3",
+      "title": "数字位数",
+      "desc": "返回整数 n 的十进制位数。注意负数。",
+      "hint": "if(n<0) n=-n; do{c++;n/=10;}while(n>0);",
+      "starterCode": "int countDigits(int n) {\n    if(n<0) n=-n;\n    int c=0;\n    do{c++;n/=10;}while(n>0);\n    return c;\n}",
+      "solution": "int countDigits(int n) {\n    if(n<0) n=-n;\n    int c=0;\n    do{c++;n/=10;}while(n>0);\n    return c;\n}",
+      "fn": "countDigits",
+      "tests": [
+        {
+          "args": [
+            12345
+          ],
+          "expect": 5
+        },
+        {
+          "args": [
+            -987
+          ],
+          "expect": 3
+        },
+        {
+          "args": [
+            0
+          ],
+          "expect": 1
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "array",
+  "icon": "📊",
+  "title": "数组",
+  "desc": "<svg viewBox=\"0 0 320 70\" style=\"max-width:100%;height:auto;margin:12px 0\"><rect x=\"20\" y=\"15\" width=\"40\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".85\"/><text x=\"40\" y=\"37\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">10</text><text x=\"40\" y=\"63\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[0]</text><rect x=\"60\" y=\"15\" width=\"40\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".75\"/><text x=\"80\" y=\"37\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">20</text><text x=\"80\" y=\"63\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[1]</text><rect x=\"100\" y=\"15\" width=\"40\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".65\"/><text x=\"120\" y=\"37\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">30</text><text x=\"120\" y=\"63\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[2]</text><rect x=\"140\" y=\"15\" width=\"40\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".55\"/><text x=\"160\" y=\"37\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">40</text><text x=\"160\" y=\"63\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[3]</text><rect x=\"180\" y=\"15\" width=\"40\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".45\"/><text x=\"200\" y=\"37\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">50</text><text x=\"200\" y=\"63\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[4]</text></svg><p>数组将相同类型元素按顺序存储在<strong>连续内存</strong>中。数组名是指向首元素的指针。下标从 0 开始。</p><p><code>sizeof(arr)/sizeof(arr[0])</code> 可计算数组长度。</p>",
+  "code": "<svg viewBox=\"0 0 340 80\" style=\"max-width:100%\"><rect x=\"20\" y=\"15\" width=\"45\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".85\"/><text x=\"42\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">10</text><text x=\"42\" y=\"68\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[0]</text><rect x=\"65\" y=\"15\" width=\"45\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".75\"/><text x=\"87\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">20</text><text x=\"87\" y=\"68\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[1]</text><rect x=\"110\" y=\"15\" width=\"45\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".65\"/><text x=\"132\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">30</text><text x=\"132\" y=\"68\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[2]</text><rect x=\"155\" y=\"15\" width=\"45\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".55\"/><text x=\"177\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">40</text><text x=\"177\" y=\"68\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[3]</text><rect x=\"200\" y=\"15\" width=\"45\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".45\"/><text x=\"222\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">50</text><text x=\"222\" y=\"68\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">[4]</text><text x=\"280\" y=\"35\" fill=\"#8b949e\" font-size=\"11\">连续内存</text></svg>#include <stdio.h>\\nint main() {\\n    int arr[] = {10, 20, 30, 40, 50};\\n    int len = sizeof(arr) / sizeof(arr[0]);\\n    int sum = 0;\\n    for(int i=0; i<len; i++) {\\n        sum += arr[i];\\n        printf(\"arr[%d]=%d\\\\n\", i, arr[i]);\\n    }\\n    printf(\"sum=%d avg=%.1f\\\\n\", sum, (float)sum/len);\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-a1",
+      "title": "数组最大值",
+      "desc": "在整数数组中查找最大值。",
+      "hint": "if(arr[i]>max) max=arr[i];",
+      "starterCode": "int maxInArray(int arr[], int len) {\n    int max = arr[0];\n    for(int i=1; i<len; i++)\n        if(arr[i] > max) max = arr[i];\n    return max;\n}",
+      "solution": "int maxInArray(int arr[], int len) {\n    int max = arr[0];\n    for(int i=1; i<len; i++)\n        if(arr[i] > max) max = arr[i];\n    return max;\n}",
+      "fn": "maxInArray",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              5,
+              3,
+              9,
+              2
+            ],
+            5
+          ],
+          "expect": 9
+        },
+        {
+          "args": [
+            [
+              -1,
+              -5,
+              -3
+            ],
+            3
+          ],
+          "expect": -1
+        }
+      ]
+    },
+    {
+      "id": "c-a2",
+      "title": "数组求和",
+      "desc": "计算整数数组所有元素的和。",
+      "hint": "for(int i=0;i<len;i++) s+=arr[i];",
+      "starterCode": "int arraySum(int arr[], int len) {\n    int s = 0;\n    for(int i=0; i<len; i++) s += arr[i];\n    return s;\n}",
+      "solution": "int arraySum(int arr[], int len) {\n    int s = 0;\n    for(int i=0; i<len; i++) s += arr[i];\n    return s;\n}",
+      "fn": "arraySum",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            5
+          ],
+          "expect": 15
+        },
+        {
+          "args": [
+            [
+              10,
+              20
+            ],
+            2
+          ],
+          "expect": 30
+        }
+      ]
+    },
+    {
+      "id": "c-a3",
+      "title": "统计偶数",
+      "desc": "统计数组中偶数的个数。",
+      "hint": "if(arr[i]%2==0) c++;",
+      "starterCode": "int countEven(int arr[], int len) {\n    int c = 0;\n    for(int i=0; i<len; i++)\n        if(arr[i] % 2 == 0) c++;\n    return c;\n}",
+      "solution": "int countEven(int arr[], int len) {\n    int c = 0;\n    for(int i=0; i<len; i++)\n        if(arr[i] % 2 == 0) c++;\n    return c;\n}",
+      "fn": "countEven",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            6
+          ],
+          "expect": 3
+        },
+        {
+          "args": [
+            [
+              1,
               3,
               5
             ],
-            "expect": 8
-          }
-        ]
-      }
-    ]
-  }
+            3
+          ],
+          "expect": 0
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "function",
+  "icon": "🧩",
+  "title": "函数",
+  "desc": "<p>函数是 C 程序的基本组织单元。C 程序至少包含 <code>main()</code> 作为入口。</p><h4>函数定义</h4><pre><code>返回类型 函数名(参数) {\\n    return 值;\\n}\\n\\nint add(int a, int b) {\\n    return a + b;\\n}</code></pre><h4>参数传递</h4><p>C 使用<strong>值传递</strong>，把变量的复制品传给函数。要修改原始变量需传递指针。</p><h4>作用域</h4><p>函数内定义的变量是<strong>局部变量</strong>，函数外的是<strong>全局变量</strong>。</p>",
+  "code": "#include <stdio.h>\\nint add(int a, int b) { return a + b; }\\nint max(int a, int b) { return a > b ? a : b; }\\nint main() {\\n    printf(\"add(3,5)=%d\\\\n\", add(3, 5));\\n    printf(\"max(10,20)=%d\\\\n\", max(10, 20));\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-f1",
+      "title": "绝对值",
+      "desc": "返回整数 n 的绝对值。",
+      "hint": "return n<0 ? -n : n;",
+      "starterCode": "int abs(int n) { return n<0 ? -n : n; }",
+      "solution": "int abs(int n) { return n<0 ? -n : n; }",
+      "fn": "abs",
+      "tests": [
+        {
+          "args": [
+            -5
+          ],
+          "expect": 5
+        },
+        {
+          "args": [
+            3
+          ],
+          "expect": 3
+        },
+        {
+          "args": [
+            0
+          ],
+          "expect": 0
+        }
+      ]
+    },
+    {
+      "id": "c-f2",
+      "title": "最大公约数",
+      "desc": "辗转相除法（欧几里得算法）。",
+      "hint": "while(b){int t=a%b;a=b;b=t;}return a;",
+      "starterCode": "int gcd(int a, int b) {\n    while(b) { int t=a%b; a=b; b=t; }\n    return a;\n}",
+      "solution": "int gcd(int a, int b) {\n    while(b) { int t=a%b; a=b; b=t; }\n    return a;\n}",
+      "fn": "gcd",
+      "tests": [
+        {
+          "args": [
+            12,
+            8
+          ],
+          "expect": 4
+        },
+        {
+          "args": [
+            100,
+            45
+          ],
+          "expect": 5
+        },
+        {
+          "args": [
+            7,
+            13
+          ],
+          "expect": 1
+        }
+      ]
+    },
+    {
+      "id": "c-f3",
+      "title": "立方计算",
+      "desc": "返回 n x n x n。",
+      "hint": "return n * n * n;",
+      "starterCode": "int cube(int n) { return n * n * n; }",
+      "solution": "int cube(int n) { return n * n * n; }",
+      "fn": "cube",
+      "tests": [
+        {
+          "args": [
+            3
+          ],
+          "expect": 27
+        },
+        {
+          "args": [
+            -2
+          ],
+          "expect": -8
+        },
+        {
+          "args": [
+            0
+          ],
+          "expect": 0
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "pointer",
+  "icon": "🎯",
+  "title": "指针基础",
+  "desc": "<svg viewBox=\"0 0 360 80\" style=\"max-width:100%;height:auto;margin:12px 0\"><rect x=\"20\" y=\"15\" width=\"70\" height=\"40\" rx=\"4\" fill=\"#58a6ff\" opacity=\".85\"/><text x=\"55\" y=\"33\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">p</text><text x=\"55\" y=\"48\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">0x100</text><line x1=\"90\" y1=\"35\" x2=\"170\" y2=\"35\" stroke=\"#58a6ff\" stroke-width=\"3\"/><polygon points=\"170,30 185,35 170,40\" fill=\"#58a6ff\"/><rect x=\"185\" y=\"15\" width=\"70\" height=\"40\" rx=\"4\" fill=\"#3fb950\" opacity=\".85\"/><text x=\"220\" y=\"33\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">x</text><text x=\"220\" y=\"48\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"bold\">42</text><text x=\"55\" y=\"72\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">int *p = &amp;x;</text></svg><p>指针是 C 最强大也最具特色的特性，直接操作内存地址。</p><h4>指针语法</h4><pre><code>int x = 42;\\nint *p = &x;   // p 指向 x\\n*p = 100;      // 通过指针修改 x\\n\\nint *ptr = NULL;  // 空指针</code></pre><h4>指针作为参数</h4><p>通过传递指针，函数可以修改外部变量。这称为\"地址传递\"。</p>",
+  "code": "<svg viewBox=\"0 0 380 100\" style=\"max-width:100%\"><rect x=\"30\" y=\"20\" width=\"80\" height=\"45\" rx=\"4\" fill=\"#58a6ff\" opacity=\".85\"/><text x=\"70\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">p</text><text x=\"70\" y=\"55\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\">0x100</text><text x=\"70\" y=\"78\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">0x200</text><line x1=\"110\" y1=\"42\" x2=\"200\" y2=\"42\" stroke=\"#58a6ff\" stroke-width=\"3\"/><polygon points=\"200,37 215,42 200,47\" fill=\"#58a6ff\"/><text x=\"160\" y=\"65\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">int *p=&amp;x;</text><rect x=\"215\" y=\"20\" width=\"80\" height=\"45\" rx=\"4\" fill=\"#3fb950\" opacity=\".85\"/><text x=\"255\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\" font-weight=\"bold\">x</text><text x=\"255\" y=\"55\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"16\" font-weight=\"bold\">42</text><text x=\"255\" y=\"78\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">0x100</text></svg>#include <stdio.h>\\nvoid swap(int *a, int *b) {\\n    int t = *a; *a = *b; *b = t;\\n}\\nint main() {\\n    int x = 10, y = 20;\\n    int *p = &x;\\n    printf(\"x=%d *p=%d\\\\n\", x, *p);\\n    *p = 30;\\n    printf(\"after *p=30: x=%d\\\\n\", x);\\n    swap(&x, &y);\\n    printf(\"after swap: x=%d y=%d\\\\n\", x, y);\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-p1",
+      "title": "指针交换",
+      "desc": "编写 swap 交换两个整数的值。",
+      "hint": "int t=*a; *a=*b; *b=t;",
+      "starterCode": "void swap(int *a, int *b) {\n    int t = *a; *a = *b; *b = t;\n}",
+      "solution": "void swap(int *a, int *b) {\n    int t = *a; *a = *b; *b = t;\n}",
+      "fn": "swap",
+      "tests": [
+        {
+          "args": [
+            [
+              10,
+              20
+            ]
+          ],
+          "expect": "20 10"
+        }
+      ]
+    },
+    {
+      "id": "c-p2",
+      "title": "指针递增",
+      "desc": "通过指针将变量的值加 1。",
+      "hint": "*p = *p + 1;",
+      "starterCode": "void increment(int *p) {\n    *p = *p + 1;\n}",
+      "solution": "void increment(int *p) {\n    *p = *p + 1;\n}",
+      "fn": "increment",
+      "tests": [
+        {
+          "args": [
+            [
+              5
+            ]
+          ],
+          "expect": "6"
+        },
+        {
+          "args": [
+            [
+              0
+            ]
+          ],
+          "expect": "1"
+        }
+      ]
+    },
+    {
+      "id": "c-p3",
+      "title": "指针求数组和",
+      "desc": "使用指针遍历数组并求和。",
+      "hint": "for(int i=0;i<len;i++) s+=*(arr+i);",
+      "starterCode": "int sumArrayPtr(int *arr, int len) {\n    int s = 0;\n    for(int i=0; i<len; i++) s += *(arr+i);\n    return s;\n}",
+      "solution": "int sumArrayPtr(int *arr, int len) {\n    int s = 0;\n    for(int i=0; i<len; i++) s += *(arr+i);\n    return s;\n}",
+      "fn": "sumArrayPtr",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            5
+          ],
+          "expect": 15
+        },
+        {
+          "args": [
+            [
+              10,
+              20,
+              30
+            ],
+            3
+          ],
+          "expect": 60
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "string",
+  "icon": "📝",
+  "title": "字符串",
+  "desc": "<p>C 中字符串是以 <code>\\0</code> 结尾的字符数组。</p><h4>声明方式</h4><pre><code>char s[] = \"Hello\";     // 可修改\\nchar *p = \"World\";      // 不可修改</code></pre><h4>常用函数</h4><ul><li><code>strlen(s)</code> - 长度</li><li><code>strcmp(a, b)</code> - 比较</li><li><code>strcpy(d, s)</code> - 复制</li><li><code>strcat(s, t)</code> - 拼接</li></ul>",
+  "code": "#include <stdio.h>\\n#include <string.h>\\nint main() {\\n    char s1[] = \"Hello\";\\n    char *s2 = \"World\";\\n    char buf[50];\\n    strcpy(buf, s1);\\n    strcat(buf, \", \");\\n    strcat(buf, s2);\\n    printf(\"%s\\\\n\", buf);\\n    printf(\"len=%lu\\\\n\", strlen(buf));\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-s1",
+      "title": "字符串长度",
+      "desc": "手动计算字符串长度（不使用 strlen）。",
+      "hint": "while(s[c]) c++; return c;",
+      "starterCode": "int myStrlen(char s[]) {\n    int c = 0;\n    while(s[c]) c++;\n    return c;\n}",
+      "solution": "int myStrlen(char s[]) {\n    int c = 0;\n    while(s[c]) c++;\n    return c;\n}",
+      "fn": "myStrlen",
+      "tests": [
+        {
+          "args": [
+            [
+              "h",
+              "e",
+              "l",
+              "l",
+              "o"
+            ]
+          ],
+          "expect": 5
+        },
+        {
+          "args": [
+            [
+              ""
+            ]
+          ],
+          "expect": 0
+        }
+      ]
+    },
+    {
+      "id": "c-s2",
+      "title": "统计字符",
+      "desc": "统计字符串中特定字符出现的次数。",
+      "hint": "for(i=0;s[i];i++) if(s[i]==ch) c++;",
+      "starterCode": "int countChar(char s[], char ch) {\n    int c = 0;\n    for(int i=0; s[i]; i++)\n        if(s[i] == ch) c++;\n    return c;\n}",
+      "solution": "int countChar(char s[], char ch) {\n    int c = 0;\n    for(int i=0; s[i]; i++)\n        if(s[i] == ch) c++;\n    return c;\n}",
+      "fn": "countChar",
+      "tests": [
+        {
+          "args": [
+            [
+              "h",
+              "e",
+              "l",
+              "l",
+              "o"
+            ],
+            "l"
+          ],
+          "expect": 2
+        },
+        {
+          "args": [
+            [
+              "h",
+              "e",
+              "l",
+              "l",
+              "o"
+            ],
+            "x"
+          ],
+          "expect": 0
+        }
+      ]
+    },
+    {
+      "id": "c-s3",
+      "title": "转大写",
+      "desc": "将字符串中小写字母转为大写。",
+      "hint": "if(s[i]>=a&&s[i]<=z) s[i]-=32;",
+      "starterCode": "void toUpperCase(char s[]) {\n    for(int i=0; s[i]; i++)\n        if(s[i]>='a' && s[i]<='z') s[i] -= 32;\n}",
+      "solution": "void toUpperCase(char s[]) {\n    for(int i=0; s[i]; i++)\n        if(s[i]>='a' && s[i]<='z') s[i] -= 32;\n}",
+      "fn": "toUpperCase",
+      "tests": [
+        {
+          "args": [
+            [
+              "h",
+              "e",
+              "l",
+              "l",
+              "o"
+            ]
+          ],
+          "expect": "HELLO"
+        },
+        {
+          "args": [
+            [
+              "a",
+              "B",
+              "c"
+            ]
+          ],
+          "expect": "ABC"
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "struct",
+  "icon": "🏗️",
+  "title": "结构体",
+  "desc": "<svg viewBox=\"0 0 280 70\" style=\"max-width:100%;height:auto;margin:12px 0\"><rect x=\"20\" y=\"15\" width=\"70\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".8\"/><text x=\"55\" y=\"37\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\" font-weight=\"bold\">w=5</text><text x=\"55\" y=\"63\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">offset 0</text><rect x=\"90\" y=\"15\" width=\"70\" height=\"35\" rx=\"0\" fill=\"#3fb950\" opacity=\".8\"/><text x=\"125\" y=\"37\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\" font-weight=\"bold\">h=3</text><text x=\"125\" y=\"63\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">offset 4</text><rect x=\"160\" y=\"15\" width=\"70\" height=\"35\" rx=\"6\" fill=\"#d29922\" opacity=\".25\" stroke=\"#d29922\" stroke-width=\"1.5\" stroke-dasharray=\"4\"/><text x=\"195\" y=\"37\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"13\">area=15</text></svg><p>结构体（struct）将不同类型的数据组合成自定义类型。</p><h4>定义与使用</h4><pre><code>struct Point { int x; int y; };\\nstruct Point p1;\\np1.x = 10;\\np1.y = 20;</code></pre><h4>typedef 简化</h4><p><code>typedef struct { int x; int y; } Point;</code> 省去写 struct。</p>",
+  "code": "<svg viewBox=\"0 0 300 80\" style=\"max-width:100%\"><rect x=\"20\" y=\"15\" width=\"80\" height=\"35\" rx=\"0\" fill=\"#58a6ff\" opacity=\".8\"/><text x=\"60\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\" font-weight=\"bold\">w=5</text><text x=\"60\" y=\"68\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">offset 0</text><rect x=\"100\" y=\"15\" width=\"80\" height=\"35\" rx=\"0\" fill=\"#3fb950\" opacity=\".8\"/><text x=\"140\" y=\"38\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\" font-weight=\"bold\">h=3</text><text x=\"140\" y=\"68\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">offset 4</text><rect x=\"180\" y=\"15\" width=\"80\" height=\"35\" rx=\"6\" fill=\"#d29922\" opacity=\".3\" stroke=\"#d29922\" stroke-width=\"1.5\" stroke-dasharray=\"4\"/><text x=\"220\" y=\"38\" text-anchor=\"middle\" fill=\"#d29922\" font-size=\"13\">area=15</text></svg>#include <stdio.h>\\ntypedef struct { int x; int y; } Point;\\ntypedef struct { int w; int h; } Rect;\\nint area(Rect r) { return r.w * r.h; }\\nint main() {\\n    Point p = {3, 4};\\n    Rect r = {5, 3};\\n    printf(\"Point(%d,%d) Rect(%dx%d) area=%d\\\\n\", p.x, p.y, r.w, r.h, area(r));\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-st1",
+      "title": "矩形面积",
+      "desc": "计算矩形面积 = w x h。",
+      "hint": "return r.w * r.h;",
+      "starterCode": "typedef struct { int w; int h; } Rect;\nint area(Rect r) { return r.w * r.h; }",
+      "solution": "typedef struct { int w; int h; } Rect;\nint area(Rect r) { return r.w * r.h; }",
+      "fn": "area",
+      "tests": [
+        {
+          "args": [
+            {
+              "w": 5,
+              "h": 3
+            }
+          ],
+          "expect": 15
+        },
+        {
+          "args": [
+            {
+              "w": 10,
+              "h": 10
+            }
+          ],
+          "expect": 100
+        }
+      ]
+    },
+    {
+      "id": "c-st2",
+      "title": "矩形周长",
+      "desc": "计算周长 = 2 x (w + h)。",
+      "hint": "return 2 * (r.w + r.h);",
+      "starterCode": "int perimeter(Rect r) { return 2 * (r.w + r.h); }",
+      "solution": "int perimeter(Rect r) { return 2 * (r.w + r.h); }",
+      "fn": "perimeter",
+      "tests": [
+        {
+          "args": [
+            {
+              "w": 5,
+              "h": 3
+            }
+          ],
+          "expect": 16
+        },
+        {
+          "args": [
+            {
+              "w": 1,
+              "h": 1
+            }
+          ],
+          "expect": 4
+        }
+      ]
+    },
+    {
+      "id": "c-st3",
+      "title": "判断正方形",
+      "desc": "判断矩形是否为正方形。",
+      "hint": "return r.w == r.h ? 1 : 0;",
+      "starterCode": "int isSquare(Rect r) { return r.w == r.h ? 1 : 0; }",
+      "solution": "int isSquare(Rect r) { return r.w == r.h ? 1 : 0; }",
+      "fn": "isSquare",
+      "tests": [
+        {
+          "args": [
+            {
+              "w": 5,
+              "h": 5
+            }
+          ],
+          "expect": 1
+        },
+        {
+          "args": [
+            {
+              "w": 5,
+              "h": 3
+            }
+          ],
+          "expect": 0
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "malloc",
+  "icon": "💾",
+  "title": "动态内存",
+  "desc": "<svg viewBox=\"0 0 360 80\" style=\"max-width:100%;height:auto;margin:12px 0\"><rect x=\"20\" y=\"10\" width=\"100\" height=\"60\" rx=\"6\" fill=\"none\" stroke=\"#58a6ff\" stroke-width=\"1.5\" stroke-dasharray=\"4\"/><text x=\"70\" y=\"28\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"11\" font-weight=\"bold\">栈(Stack)</text><rect x=\"30\" y=\"35\" width=\"80\" height=\"20\" rx=\"3\" fill=\"#58a6ff\" opacity=\".15\"/><text x=\"70\" y=\"49\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"10\">arr指针</text><line x1=\"120\" y1=\"40\" x2=\"200\" y2=\"40\" stroke=\"#58a6ff\" stroke-width=\"2\"/><polygon points=\"200,35 215,40 200,45\" fill=\"#58a6ff\"/><rect x=\"215\" y=\"10\" width=\"120\" height=\"60\" rx=\"6\" fill=\"none\" stroke=\"#3fb950\" stroke-width=\"1.5\" stroke-dasharray=\"4\"/><text x=\"275\" y=\"28\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"11\" font-weight=\"bold\">堆(Heap)</text><rect x=\"225\" y=\"35\" width=\"100\" height=\"20\" rx=\"3\" fill=\"#3fb950\" opacity=\".15\"/><text x=\"275\" y=\"49\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"10\">malloc分配</text></svg><p>动态内存分配让程序运行时申请内存。<code>malloc</code> 从<strong>堆</strong>（heap）分配内存，需手工释放。</p><h4>相关函数</h4><ul><li><code>malloc(size)</code> - 分配</li><li><code>calloc(n, size)</code> - 分配并置零</li><li><code>realloc(ptr, new_size)</code> - 重新分配</li><li><code>free(ptr)</code> - 释放</li></ul>",
+  "code": "<svg viewBox=\"0 0 380 100\" style=\"max-width:100%\"><rect x=\"20\" y=\"15\" width=\"110\" height=\"75\" rx=\"6\" fill=\"none\" stroke=\"#58a6ff\" stroke-width=\"1.5\" stroke-dasharray=\"4\"/><text x=\"75\" y=\"35\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"12\" font-weight=\"bold\">栈 Stack</text><rect x=\"30\" y=\"45\" width=\"90\" height=\"22\" rx=\"3\" fill=\"#58a6ff\" opacity=\".2\"/><text x=\"75\" y=\"60\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"11\">arr 指针</text><text x=\"75\" y=\"80\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">自动管理</text><line x1=\"130\" y1=\"56\" x2=\"220\" y2=\"56\" stroke=\"#58a6ff\" stroke-width=\"2\"/><polygon points=\"220,51 235,56 220,61\" fill=\"#58a6ff\"/><rect x=\"235\" y=\"15\" width=\"125\" height=\"75\" rx=\"6\" fill=\"none\" stroke=\"#3fb950\" stroke-width=\"1.5\" stroke-dasharray=\"4\"/><text x=\"297\" y=\"35\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"12\" font-weight=\"bold\">堆 Heap</text><rect x=\"245\" y=\"45\" width=\"105\" height=\"22\" rx=\"3\" fill=\"#3fb950\" opacity=\".2\"/><text x=\"297\" y=\"60\" text-anchor=\"middle\" fill=\"#3fb950\" font-size=\"11\">malloc 分配</text><text x=\"297\" y=\"80\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">手工 free</text></svg>#include <stdio.h>\\n#include <stdlib.h>\\nint main() {\\n    int n = 5;\\n    int *arr = (int*)malloc(n * sizeof(int));\\n    if (arr == NULL) { printf(\"malloc failed\\\\n\"); return 1; }\\n    for(int i=0; i<n; i++) arr[i] = i * 10;\\n    for(int i=0; i<n; i++) printf(\"%d \", arr[i]);\\n    printf(\"\\\\n\");\\n    free(arr);\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-m1",
+      "title": "动态数组求和",
+      "desc": "对动态数组求和。",
+      "hint": "for(int i=0;i<len;i++) s+=arr[i];",
+      "starterCode": "int dynSum(int *arr, int len) {\n    int s = 0;\n    for(int i=0; i<len; i++) s += arr[i];\n    return s;\n}",
+      "solution": "int dynSum(int *arr, int len) {\n    int s = 0;\n    for(int i=0; i<len; i++) s += arr[i];\n    return s;\n}",
+      "fn": "dynSum",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ],
+            3
+          ],
+          "expect": 6
+        },
+        {
+          "args": [
+            [
+              5,
+              10,
+              15,
+              20
+            ],
+            4
+          ],
+          "expect": 50
+        }
+      ]
+    },
+    {
+      "id": "c-m2",
+      "title": "动态数组最大值",
+      "desc": "查找动态数组中的最大值。",
+      "hint": "if(arr[i]>max) max=arr[i];",
+      "starterCode": "int dynMax(int *arr, int len) {\n    int max = arr[0];\n    for(int i=1; i<len; i++)\n        if(arr[i] > max) max = arr[i];\n    return max;\n}",
+      "solution": "int dynMax(int *arr, int len) {\n    int max = arr[0];\n    for(int i=1; i<len; i++)\n        if(arr[i] > max) max = arr[i];\n    return max;\n}",
+      "fn": "dynMax",
+      "tests": [
+        {
+          "args": [
+            [
+              3,
+              7,
+              2,
+              9,
+              1
+            ],
+            5
+          ],
+          "expect": 9
+        },
+        {
+          "args": [
+            [
+              -5,
+              -2,
+              -8
+            ],
+            3
+          ],
+          "expect": -2
+        }
+      ]
+    },
+    {
+      "id": "c-m3",
+      "title": "动态数组统计",
+      "desc": "统计数组中等于特定值的元素个数。",
+      "hint": "if(arr[i]==val) c++;",
+      "starterCode": "int dynCount(int *arr, int len, int val) {\n    int c = 0;\n    for(int i=0; i<len; i++)\n        if(arr[i] == val) c++;\n    return c;\n}",
+      "solution": "int dynCount(int *arr, int len, int val) {\n    int c = 0;\n    for(int i=0; i<len; i++)\n        if(arr[i] == val) c++;\n    return c;\n}",
+      "fn": "dynCount",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              1,
+              3,
+              1
+            ],
+            5,
+            1
+          ],
+          "expect": 3
+        },
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ],
+            3,
+            4
+          ],
+          "expect": 0
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "preproc",
+  "icon": "⚙️",
+  "title": "预处理",
+  "desc": "<p>预处理器在编译前处理以 <code>#</code> 开头的指令。</p><h4>常见指令</h4><pre><code>#define PI 3.14159\\n#define MAX(a,b) ((a)>(b)?(a):(b))\\n\\n#ifdef DEBUG\\n    printf(\"debug\");\\n#endif</code></pre><h4>宏与函数</h4><p>宏在编译前替换，无调用开销。宏不检查类型，参数必须加括号。</p>",
+  "code": "#include <stdio.h>\\n#define PI 3.14159\\n#define AREA(r) (PI * (r) * (r))\\n#define MAX(a,b) ((a)>(b)?(a):(b))\\nint main() {\\n    printf(\"PI=%.5f\\\\n\", PI);\\n    printf(\"AREA(5)=%.2f\\\\n\", AREA(5));\\n    printf(\"MAX(10,20)=%d\\\\n\", MAX(10, 20));\\n    return 0;\\n}",
+  "exercises": [
+    {
+      "id": "c-pr1",
+      "title": "宏定义 SQUARE",
+      "desc": "定义 SQUARE(x) 宏计算平方。",
+      "hint": "#define SQUARE(x) ((x)*(x))",
+      "starterCode": "#define SQUARE(x) ((x)*(x))",
+      "solution": "#define SQUARE(x) ((x)*(x))",
+      "fn": "",
+      "tests": []
+    },
+    {
+      "id": "c-pr2",
+      "title": "宏 MAX3",
+      "desc": "定义 MAX3(a,b,c) 返回最大值。",
+      "hint": "#define MAX3(a,b,c) MAX(MAX(a,b),c)",
+      "starterCode": "#define MAX3(a,b,c) MAX(MAX(a,b),c)",
+      "solution": "#define MAX3(a,b,c) MAX(MAX(a,b),c)",
+      "fn": "",
+      "tests": []
+    },
+    {
+      "id": "c-pr3",
+      "title": "宏 IS_EVEN",
+      "desc": "定义 IS_EVEN(n) 判断偶数。",
+      "hint": "#define IS_EVEN(n) ((n)%2==0)",
+      "starterCode": "#define IS_EVEN(n) ((n)%2==0)",
+      "solution": "#define IS_EVEN(n) ((n)%2==0)",
+      "fn": "",
+      "tests": []
+    }
+  ]
+}
 ];
+
+
 
 
 // ==================== 全局变量 ====================

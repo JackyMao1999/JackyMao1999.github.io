@@ -208,24 +208,33 @@ body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
   </main>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
 <script>
 // ==================== 教程章节数据 ====================
 const SECTIONS = [
   {
     "id": "intro",
-    "icon": "☕",
+    "icon": "🔷",
     "title": "C# 简介",
-    "desc": "<p>C# 是微软开发的<strong>面向对象</strong>编程语言，运行在 .NET 平台上。</p><h4>第一个程序</h4><pre><code>using System;\\nclass Program {\\n    static void Main() {\\n        Console.WriteLine(\"Hello, World!\");\\n    }\\n}</code></pre>",
-    "code": "using System;\\nclass Program {\\n    static void Main() {\\n        Console.WriteLine(\"Hello, World!\");\\n        string name = \"C#\";\\n        Console.WriteLine($\"你好, {name}!\");\\n    }\\n}",
+    "desc": "<p>C#（读作 C Sharp）是微软推出的<strong>面向对象编程语言</strong>，运行于 .NET 平台之上。它结合了 C++ 的高效与 Java 的简洁，是构建 Windows 应用、Web 服务、Unity 游戏的首选语言。C# 具备<strong>自动垃圾回收</strong>、<strong>类型安全</strong>、<strong>异常处理</strong>等现代语言特性，让开发者更专注于业务逻辑而非内存管理。</p><div class=\"svg-wrap\"><svg viewBox=\"0 0 520 290\" style=\"width:100%;max-width:520px;margin:12px auto;display:block;border-radius:8px;background:var(--bg);padding:10px;font-family:sans-serif\"><rect x=\"60\" y=\"10\" width=\"400\" height=\"50\" rx=\"6\" fill=\"var(--primary)\" opacity=\".15\" stroke=\"var(--primary)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"42\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"14\" font-weight=\"bold\">C# 源代码 (编译为 IL 中间语言)</text><rect x=\"60\" y=\"75\" width=\"400\" height=\"50\" rx=\"6\" fill=\"var(--success)\" opacity=\".15\" stroke=\"var(--success)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"107\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"14\" font-weight=\"bold\">CLR 公共语言运行时 (JIT / GC / 异常处理)</text><rect x=\"60\" y=\"140\" width=\"400\" height=\"50\" rx=\"6\" fill=\"var(--warning)\" opacity=\".15\" stroke=\"var(--warning)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"172\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"14\" font-weight=\"bold\">.NET 基类库 BCL (IO · Net · Linq · 集合)</text><rect x=\"60\" y=\"205\" width=\"400\" height=\"50\" rx=\"6\" fill=\"var(--error)\" opacity=\".15\" stroke=\"var(--error)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"237\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"14\" font-weight=\"bold\">操作系统层 (Windows / Linux / macOS)</text><line x1=\"260\" y1=\"60\" x2=\"260\" y2=\"73\" stroke=\"var(--border)\" stroke-width=\"2\"/><polygon points=\"256,73 260,80 264,73\" fill=\"var(--border)\"/><line x1=\"260\" y1=\"125\" x2=\"260\" y2=\"138\" stroke=\"var(--border)\" stroke-width=\"2\"/><polygon points=\"256,138 260,145 264,138\" fill=\"var(--border)\"/><line x1=\"260\" y1=\"190\" x2=\"260\" y2=\"203\" stroke=\"var(--border)\" stroke-width=\"2\"/><polygon points=\"256,203 260,210 264,203\" fill=\"var(--border)\"/></svg></div><h4>.NET 平台架构</h4><p>C# 源码首先编译为 IL（中间语言），运行时由 CLR 通过 JIT 编译为机器码。CLR 提供垃圾回收、类型安全检测和异常处理等服务。BCL（基类库）提供了文件 IO、网络通信、LINQ、集合等丰富功能。.NET 6/7/8 跨平台支持 Windows、Linux、macOS，真正做到一套代码到处运行。</p><h4>为什么学 C#</h4><ul><li><strong>全栈覆盖</strong>：ASP.NET Core 做后端，Blazor 做 Web 前端，MAUI 做桌面/移动端，Unity 做游戏</li><li><strong>语言现代化</strong>：LINQ 统一数据查询、async/await 简化异步编程、record 类型、模式匹配等</li><li><strong>强类型系统</strong>：编译时发现类型错误，配合 IDE 智能提示大幅提升开发效率</li><li><strong>社区活跃</strong>：微软官方维护，NuGet 超过 30 万包，Stack Overflow 开发者调查常年位居前十</li></ul><h4>第一个程序</h4><pre><code>using System;\nclass Program {\n    static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}</code></pre><p>每个 C# 程序必须有 <code>class</code> 定义和 <code>Main</code> 入口方法。<code>Console.WriteLine</code> 向控制台输出一行文本。<code>using System</code> 导入命名空间，让你能直接使用 <code>Console</code> 类。C# 中文件名不必与类名一致，但约定一个文件一个 public 类。</p>",
+    "code": "using System;\nclass Program {\n    static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n        string name = \"C# 学习者\";\n        Console.WriteLine($\"欢迎你, {name}!\");\n    }\n}",
     "exercises": [
       {
         "id": "cs-i1",
-        "title": "加法函数",
-        "desc": "编写 <code>Add</code> 接收 <code>int a, int b</code> 返回 <code>int</code> 和。",
-        "hint": "static int Add(int a, int b) { return a + b; }",
-        "starterCode": "// 编写 Add 函数\\n// static int Add(int a, int b)",
-        "solution": "static int Add(int a, int b) { return a + b; }",
+        "title": "控制台输入输出",
+        "desc": "输入你的名字并输出问候语。要求：从控制台读取一行输入，然后输出 \"你好, [名字]!\"。",
+        "hint": "用 Console.ReadLine() 读取输入，Console.WriteLine() 输出。字符串插值用 $ 前缀，如 $\"{变量}\"。",
+        "starterCode": "using System;\nclass Program {\n    static void Main() {\n        string name = Console.ReadLine();\n        Console.WriteLine($\"你好, {name}!\");\n    }\n}",
+        "solution": "using System;\nclass Program {\n    static void Main() {\n        string name = Console.ReadLine();\n        Console.WriteLine($\"你好, {name}!\");\n    }\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cs-i2",
+        "title": "两数相加",
+        "desc": "实现一个函数 Add(a, b)，返回两个整数的和。",
+        "hint": "return a + b;",
+        "starterCode": "int Add(int a, int b) {\n    return a + b;\n}",
+        "solution": "int Add(int a, int b) {\n    return a + b;\n}",
         "fn": "Add",
         "tests": [
           {
@@ -234,12 +243,724 @@ const SECTIONS = [
               5
             ],
             "expect": 8
+          },
+          {
+            "args": [
+              -2,
+              7
+            ],
+            "expect": 5
+          },
+          {
+            "args": [
+              0,
+              0
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              100,
+              200
+            ],
+            "expect": 300
+          }
+        ]
+      },
+      {
+        "id": "cs-i3",
+        "title": "字符串拼接",
+        "desc": "实现函数 Greet(name, age)，返回 \"我叫 [name]，今年 [age] 岁。\"（年龄自动转字符串）。",
+        "hint": "用 $ 字符串插值拼接。",
+        "starterCode": "string Greet(string name, int age) {\n    return $\"我叫 {name}，今年 {age} 岁。\";\n}",
+        "solution": "string Greet(string name, int age) {\n    return $\"我叫 {name}，今年 {age} 岁。\";\n}",
+        "fn": "Greet",
+        "tests": [
+          {
+            "args": [
+              "小明",
+              18
+            ],
+            "expect": "我叫 小明，今年 18 岁。"
+          },
+          {
+            "args": [
+              "小红",
+              25
+            ],
+            "expect": "我叫 小红，今年 25 岁。"
+          },
+          {
+            "args": [
+              "张三",
+              30
+            ],
+            "expect": "我叫 张三，今年 30 岁。"
           }
         ]
       }
     ]
+  },
+  {
+    "id": "types",
+    "icon": "🔤",
+    "title": "类型与变量",
+    "desc": "<p>C# 是<strong>强类型语言</strong>，每个变量都有确定的类型，编译器会检查类型是否匹配。这能帮助你在开发早期发现错误，也让代码更易维护。C# 类型系统分为<strong>值类型</strong>（直接存储数据）和<strong>引用类型</strong>（存储对象的引用）两大类。</p><h4>基本数据类型</h4><pre><code>int age = 25;              // 32位整数\nlong big = 10000000000L;    // 64位整数\ndouble pi = 3.1415926;     // 64位浮点数（双精度）\nfloat f = 3.14f;           // 32位浮点数（单精度）\nchar grade = 'A';          // 单个字符\nbool isReady = true;        // 布尔值\nstring name = \"C#\";         // 字符串（引用类型）</code></pre><h4>类型推断与常量</h4><p><code>var</code> 关键字让编译器根据右侧值推断类型。它只用于局部变量，不影响类型安全性。使用 <code>const</code> 定义编译时常量：<code>const double PI = 3.14159;</code>。使用 <code>readonly</code> 定义运行时只读字段。</p><h4>可空类型</h4><p>值类型默认不能为 null，但加上 <code>?</code> 后可以：<code>int? count = null;</code>。使用 <code>??</code> 运算符提供默认值：<code>int len = count ?? 0;</code>。空条件运算符 <code>?.</code> 安全访问成员：<code>name?.Length</code> 当 name 为 null 时返回 null 而非异常。</p><h4>类型转换</h4><p><strong>隐式转换</strong>：从范围小的类型到范围大的类型自动转换（int → double）。<strong>显式转换</strong>（强制类型转换）：<code>(int)3.14</code> 得到 3。<strong>Convert 类</strong>：<code>Convert.ToInt32(\"42\")</code>。推荐用 <code>int.TryParse</code> 安全转换：</p><pre><code>if (int.TryParse(input, out int num)) {\n    Console.WriteLine($\"解析成功: {num}\");\n}</code></pre>",
+    "code": "using System;\nclass Program {\n    static void Main() {\n        int a = 42;\n        double pi = 3.14159;\n        string msg = \"C# 类型系统\";\n        bool ok = true;\n        var inferred = 100L;\n        int? maybe = null;\n        Console.WriteLine($\"{a} {pi:F2} {msg} {ok} {inferred} {maybe ?? -1}\");\n    }\n}",
+    "exercises": [
+      {
+        "id": "cs-t1",
+        "title": "整数转浮点数",
+        "desc": "实现函数 ToDouble(n)，将输入的 int 转换为 double 类型并返回。",
+        "hint": "直接 return (double)n; 因为 int 到 double 是隐式转换，也可以用 Convert.ToDouble(n)。",
+        "starterCode": "double ToDouble(int n) {\n    return (double)n;\n}",
+        "solution": "double ToDouble(int n) {\n    return (double)n;\n}",
+        "fn": "ToDouble",
+        "tests": [
+          {
+            "args": [
+              42
+            ],
+            "expect": 42
+          },
+          {
+            "args": [
+              0
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              -7
+            ],
+            "expect": -7
+          },
+          {
+            "args": [
+              999
+            ],
+            "expect": 999
+          }
+        ]
+      },
+      {
+        "id": "cs-t2",
+        "title": "字符串解析",
+        "desc": "实现函数 ParseInt(s)，将字符串 s 解析为 int。如果解析失败返回 -1。",
+        "hint": "int.TryParse(s, out int result) 返回 bool，解析成功用 result 否则返回 -1。",
+        "starterCode": "int ParseInt(string s) {\n    if (int.TryParse(s, out int r)) return r;\n    return -1;\n}",
+        "solution": "int ParseInt(string s) {\n    if (int.TryParse(s, out int r)) return r;\n    return -1;\n}",
+        "fn": "ParseInt",
+        "tests": [
+          {
+            "args": [
+              "123"
+            ],
+            "expect": 123
+          },
+          {
+            "args": [
+              "0"
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              "-5"
+            ],
+            "expect": -5
+          },
+          {
+            "args": [
+              "abc"
+            ],
+            "expect": -1
+          }
+        ]
+      },
+      {
+        "id": "cs-t3",
+        "title": "布尔值取反",
+        "desc": "实现函数 Negate(b)，接受 bool 参数并返回其相反值。",
+        "hint": "return !b;",
+        "starterCode": "bool Negate(bool b) {\n    return !b;\n}",
+        "solution": "bool Negate(bool b) {\n    return !b;\n}",
+        "fn": "Negate",
+        "tests": [
+          {
+            "args": [
+              true
+            ],
+            "expect": false
+          },
+          {
+            "args": [
+              false
+            ],
+            "expect": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "control",
+    "icon": "🔀",
+    "title": "控制流",
+    "desc": "<p>控制流语句决定程序的执行路径。C# 提供了丰富的分支和循环结构，让你能够灵活地控制逻辑走向。掌握控制流是写出可处理复杂逻辑程序的基础。</p><div class=\"svg-wrap\"><svg viewBox=\"0 0 520 380\" style=\"width:100%;max-width:520px;margin:12px auto;display:block;border-radius:8px;background:var(--bg);padding:10px;font-family:sans-serif\"><ellipse cx=\"260\" cy=\"20\" rx=\"90\" ry=\"20\" fill=\"var(--surface)\" stroke=\"var(--text)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"25\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"13\">程序开始</text><line x1=\"260\" y1=\"40\" x2=\"260\" y2=\"60\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><polygon points=\"256,60 260,68 264,60\" fill=\"var(--border)\"/><rect x=\"160\" y=\"68\" width=\"200\" height=\"40\" rx=\"4\" fill=\"var(--surface)\" stroke=\"var(--primary)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"93\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\">int x = Console.ReadLine()</text><line x1=\"260\" y1=\"108\" x2=\"260\" y2=\"128\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><polygon points=\"256,128 260,136 264,128\" fill=\"var(--border)\"/><polygon points=\"180,136 340,136 360,170 340,204 180,204 160,170\" fill=\"var(--surface)\" stroke=\"var(--warning)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"160\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\">x > 0 ?</text><text x=\"260\" y=\"176\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">条件判断</text><line x1=\"160\" y1=\"170\" x2=\"60\" y2=\"170\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><polygon points=\"60,166 52,170 60,174\" fill=\"var(--border)\"/><line x1=\"340\" y1=\"170\" x2=\"440\" y2=\"170\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><polygon points=\"440,166 448,170 440,174\" fill=\"var(--border)\"/><text x=\"100\" y=\"163\" text-anchor=\"middle\" fill=\"var(--error)\" font-size=\"11\">是 (true)</text><text x=\"400\" y=\"163\" text-anchor=\"middle\" fill=\"var(--success)\" font-size=\"11\">否 (false)</text><rect x=\"10\" y=\"190\" width=\"100\" height=\"36\" rx=\"4\" fill=\"var(--surface)\" stroke=\"var(--error)\" stroke-width=\"1.5\"/><text x=\"60\" y=\"212\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">输出 \"正数\"</text><rect x=\"390\" y=\"190\" width=\"100\" height=\"36\" rx=\"4\" fill=\"var(--surface)\" stroke=\"var(--success)\" stroke-width=\"1.5\"/><text x=\"440\" y=\"212\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"11\">输出 \"非正数\"</text><line x1=\"60\" y1=\"226\" x2=\"60\" y2=\"260\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><line x1=\"440\" y1=\"226\" x2=\"440\" y2=\"260\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><line x1=\"60\" y1=\"260\" x2=\"440\" y2=\"260\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><line x1=\"260\" y1=\"260\" x2=\"260\" y2=\"275\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><polygon points=\"256,275 260,283 264,275\" fill=\"var(--border)\"/><rect x=\"160\" y=\"283\" width=\"200\" height=\"36\" rx=\"4\" fill=\"var(--surface)\" stroke=\"var(--primary)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"305\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\">for (int i=0; i&lt;3; i++)</text><line x1=\"260\" y1=\"319\" x2=\"260\" y2=\"339\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><polygon points=\"256,339 260,347 264,339\" fill=\"var(--border)\"/><ellipse cx=\"260\" cy=\"360\" rx=\"90\" ry=\"20\" fill=\"var(--surface)\" stroke=\"var(--text)\" stroke-width=\"1.5\"/><text x=\"260\" y=\"365\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"13\">程序结束</text></svg></div><h4>条件分支</h4><pre><code>if (score >= 90) {\n    Console.WriteLine(\"优秀\");\n} else if (score >= 60) {\n    Console.WriteLine(\"及格\");\n} else {\n    Console.WriteLine(\"不及格\");\n}\n\n// switch 表达式（C# 8+）\nstring grade = score switch {\n    >= 90 => \"A\",\n    >= 80 => \"B\",\n    >= 70 => \"C\",\n    _ => \"D\"\n};</code></pre><h4>循环结构</h4><pre><code>// for 循环：已知次数\nfor (int i = 0; i < 10; i++) {\n    Console.WriteLine(i);\n}\n\n// foreach：遍历集合\nforeach (var item in collection) {\n    Console.WriteLine(item);\n}\n\n// while：条件前置\nwhile (condition) { }\n\n// do-while：至少执行一次\ndo { } while (condition);</code></pre><p>循环中可用 <code>break</code> 立即退出循环，<code>continue</code> 跳过本次循环剩余语句进入下一次迭代。<code>foreach</code> 循环最适合遍历数组和集合，内部使用迭代器模式。</p><h4>跳转语句</h4><p><code>return</code> 退出方法并返回值（如果方法有返回值）。<code>break</code> 跳出最近层循环或 switch。<code>goto</code> 不推荐使用，会破坏结构化编程原则。</p>",
+    "code": "using System;\nclass Program {\n    static void Main() {\n        for (int i = 1; i <= 10; i++) {\n            if (i % 3 == 0 && i % 5 == 0)\n                Console.WriteLine(\"FizzBuzz\");\n            else if (i % 3 == 0)\n                Console.WriteLine(\"Fizz\");\n            else if (i % 5 == 0)\n                Console.WriteLine(\"Buzz\");\n            else\n                Console.WriteLine(i);\n        }\n    }\n}",
+    "exercises": [
+      {
+        "id": "cs-c1",
+        "title": "阶乘计算",
+        "desc": "实现函数 Fact(n)，计算 n 的阶乘（n! = 1 × 2 × ... × n）。n 为非负整数，0! = 1。",
+        "hint": "用 for 循环从 1 累乘到 n。注意 int 溢出，n 最大到 12 即可。",
+        "starterCode": "int Fact(int n) {\n    int r = 1;\n    for (int i = 1; i <= n; i++) r *= i;\n    return r;\n}",
+        "solution": "int Fact(int n) {\n    int r = 1;\n    for (int i = 1; i <= n; i++) r *= i;\n    return r;\n}",
+        "fn": "Fact",
+        "tests": [
+          {
+            "args": [
+              0
+            ],
+            "expect": 1
+          },
+          {
+            "args": [
+              1
+            ],
+            "expect": 1
+          },
+          {
+            "args": [
+              5
+            ],
+            "expect": 120
+          },
+          {
+            "args": [
+              10
+            ],
+            "expect": 3628800
+          }
+        ]
+      },
+      {
+        "id": "cs-c2",
+        "title": "斐波那契数列",
+        "desc": "实现函数 Fib(n)，返回第 n 项斐波那契数。F(0)=0, F(1)=1, F(n)=F(n-1)+F(n-2)。",
+        "hint": "用 for 循环和两个临时变量迭代计算。",
+        "starterCode": "int Fib(int n) {\n    if (n <= 1) return n;\n    int a = 0, b = 1;\n    for (int i = 2; i <= n; i++) {\n        int t = a + b;\n        a = b;\n        b = t;\n    }\n    return b;\n}",
+        "solution": "int Fib(int n) {\n    if (n <= 1) return n;\n    int a = 0, b = 1;\n    for (int i = 2; i <= n; i++) {\n        int t = a + b;\n        a = b;\n        b = t;\n    }\n    return b;\n}",
+        "fn": "Fib",
+        "tests": [
+          {
+            "args": [
+              0
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              1
+            ],
+            "expect": 1
+          },
+          {
+            "args": [
+              10
+            ],
+            "expect": 55
+          },
+          {
+            "args": [
+              15
+            ],
+            "expect": 610
+          }
+        ]
+      },
+      {
+        "id": "cs-c3",
+        "title": "判断质数",
+        "desc": "实现函数 IsPrime(n)，判断 n 是否为质数。n ≥ 2。质数是指大于 1 且只能被 1 和自身整除的自然数。",
+        "hint": "检查 2 到 sqrt(n) 之间是否有整除 n 的数。用 Math.Sqrt(n) 求平方根。",
+        "starterCode": "bool IsPrime(int n) {\n    if (n < 2) return false;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return false;\n    }\n    return true;\n}",
+        "solution": "bool IsPrime(int n) {\n    if (n < 2) return false;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return false;\n    }\n    return true;\n}",
+        "fn": "IsPrime",
+        "tests": [
+          {
+            "args": [
+              2
+            ],
+            "expect": true
+          },
+          {
+            "args": [
+              3
+            ],
+            "expect": true
+          },
+          {
+            "args": [
+              4
+            ],
+            "expect": false
+          },
+          {
+            "args": [
+              17
+            ],
+            "expect": true
+          },
+          {
+            "args": [
+              25
+            ],
+            "expect": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "array",
+    "icon": "📊",
+    "title": "数组与集合",
+    "desc": "<p>数组和集合用于存储多个数据。C# 提供了固定大小的数组和功能丰富的泛型集合，如 <code>List&lt;T&gt;</code>、<code>Dictionary&lt;TKey,TValue&gt;</code>。泛型集合可确保类型安全，无需装箱拆箱，性能优于非泛型集合。</p><h4>数组</h4><pre><code>// 声明与初始化\nint[] arr1 = new int[5];          // 所有元素默认 0\nint[] arr2 = { 1, 2, 3, 4, 5 };  // 集合初始化器\nint[] arr3 = new int[] { 1, 2 };\n\n// 常用操作\narr2[0] = 10;                      // 索引访问\nint len = arr2.Length;             // 长度\nArray.Sort(arr2);                  // 排序\nArray.Reverse(arr2);               // 反转</code></pre><h4>List&lt;T&gt; 动态数组</h4><p>List 在内部使用数组实现，自动扩容。<code>Count</code> 获取元素个数，<code>Add</code> 追加。<code>Insert</code> 插入指定位置。<code>Remove</code> 按值删除。<code>Contains</code> 判断是否存在。</p><pre><code>List&lt;int&gt; list = new List&lt;int&gt; { 10, 20, 30 };\nlist.Add(40);\nlist.RemoveAt(1);                    // 按索引删除</code></pre><h4>Dictionary&lt;TKey,TValue&gt; 字典</h4><p>字典存储键值对，键唯一。内部使用哈希表，查找复杂度 O(1)。常用方法：<code>Add(key, value)</code>、<code>ContainsKey</code>、<code>TryGetValue</code>。</p><pre><code>Dictionary&lt;string,int&gt; scores = new();\nscores[\"Alice\"] = 95;\nif (scores.TryGetValue(\"Bob\", out int s)) {\n    Console.WriteLine(s);\n}</code></pre>",
+    "code": "using System;\nusing System.Collections.Generic;\nclass Program {\n    static void Main() {\n        List<int> nums = new List<int> { 3, 7, 1, 9, 4 };\n        nums.Sort();\n        nums.Add(100);\n        int sum = 0;\n        foreach (int x in nums) sum += x;\n        Console.WriteLine($\"Sum={sum} Count={nums.Count}\");\n\n        Dictionary<string,int> map = new() {\n            {\"one\",1},{\"two\",2},{\"three\",3}\n        };\n        Console.WriteLine($\"two={map[\"two\"]}\");\n    }\n}",
+    "exercises": [
+      {
+        "id": "cs-a1",
+        "title": "List 求和",
+        "desc": "实现函数 SumList(list)，计算 List&lt;int&gt; 中所有元素的和。",
+        "hint": "用 foreach 遍历累加，或用 LINQ 的 .Sum()。",
+        "starterCode": "int SumList(List<int> list) {\n    int s = 0;\n    foreach (int x in list) s += x;\n    return s;\n}",
+        "solution": "int SumList(List<int> list) {\n    int s = 0;\n    foreach (int x in list) s += x;\n    return s;\n}",
+        "fn": "SumList",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            ],
+            "expect": 15
+          },
+          {
+            "args": [
+              [
+                10,
+                -10,
+                20
+              ]
+            ],
+            "expect": 20
+          },
+          {
+            "args": [
+              []
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              [
+                100
+              ]
+            ],
+            "expect": 100
+          }
+        ]
+      },
+      {
+        "id": "cs-a2",
+        "title": "查找最大值",
+        "desc": "实现函数 FindMax(arr)，返回 int 数组中的最大值。假设数组非空。",
+        "hint": "初始化 max 为 arr[0]，然后遍历比较。",
+        "starterCode": "int FindMax(int[] arr) {\n    int max = arr[0];\n    foreach (int x in arr)\n        if (x > max) max = x;\n    return max;\n}",
+        "solution": "int FindMax(int[] arr) {\n    int max = arr[0];\n    foreach (int x in arr)\n        if (x > max) max = x;\n    return max;\n}",
+        "fn": "FindMax",
+        "tests": [
+          {
+            "args": [
+              [
+                3,
+                7,
+                2,
+                9,
+                5
+              ]
+            ],
+            "expect": 9
+          },
+          {
+            "args": [
+              [
+                -5,
+                -2,
+                -10
+              ]
+            ],
+            "expect": -2
+          },
+          {
+            "args": [
+              [
+                100
+              ]
+            ],
+            "expect": 100
+          },
+          {
+            "args": [
+              [
+                1,
+                1,
+                1
+              ]
+            ],
+            "expect": 1
+          }
+        ]
+      },
+      {
+        "id": "cs-a3",
+        "title": "字符计数",
+        "desc": "实现函数 CharCount(s, c)，统计字符串 s 中字符 c 出现的次数。区分大小写。",
+        "hint": "foreach 遍历字符串，比较每个字符。",
+        "starterCode": "int CharCount(string s, char c) {\n    int count = 0;\n    foreach (char ch in s)\n        if (ch == c) count++;\n    return count;\n}",
+        "solution": "int CharCount(string s, char c) {\n    int count = 0;\n    foreach (char ch in s)\n        if (ch == c) count++;\n    return count;\n}",
+        "fn": "CharCount",
+        "tests": [
+          {
+            "args": [
+              "hello world",
+              "l"
+            ],
+            "expect": 3
+          },
+          {
+            "args": [
+              "aaaa",
+              "a"
+            ],
+            "expect": 4
+          },
+          {
+            "args": [
+              "test",
+              "x"
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              "C# Programming",
+              "P"
+            ],
+            "expect": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "class",
+    "icon": "🏗️",
+    "title": "类与对象",
+    "desc": "<p>类（class）是 C# 面向对象编程的核心概念。类定义了对象的<strong>数据</strong>（字段/属性）和<strong>行为</strong>（方法/事件）。对象则是类的具体实例。C# 支持封装、继承、多态三大面向对象特性。</p><div class=\"svg-wrap\"><svg viewBox=\"0 0 520 380\" style=\"width:100%;max-width:520px;margin:12px auto;display:block;border-radius:8px;background:var(--bg);padding:10px;font-family:sans-serif\"><rect x=\"30\" y=\"10\" width=\"200\" height=\"140\" rx=\"6\" fill=\"var(--surface)\" stroke=\"var(--primary)\" stroke-width=\"1.5\"/><rect x=\"30\" y=\"10\" width=\"200\" height=\"30\" rx=\"6\" fill=\"var(--primary)\" opacity=\".2\"/><text x=\"130\" y=\"30\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"13\" font-weight=\"bold\">&lt;&lt;抽象&gt;&gt; Shape</text><line x1=\"30\" y1=\"40\" x2=\"230\" y2=\"40\" stroke=\"var(--border)\" stroke-width=\"1\"/><text x=\"40\" y=\"56\" fill=\"var(--text-dim)\" font-size=\"11\">+ GetArea(): double</text><text x=\"40\" y=\"72\" fill=\"var(--text-dim)\" font-size=\"11\">+ GetName(): string</text><text x=\"40\" y=\"88\" fill=\"var(--text-dim)\" font-size=\"11\">+ Color: string</text><line x1=\"30\" y1=\"100\" x2=\"230\" y2=\"100\" stroke=\"var(--border)\" stroke-width=\"1\"/><text x=\"40\" y=\"116\" fill=\"var(--text-dim)\" font-size=\"11\" font-style=\"italic\">Area(): 子类实现</text><text x=\"40\" y=\"132\" fill=\"var(--text-dim)\" font-size=\"11\" font-style=\"italic\">多态调用基类方法</text><rect x=\"290\" y=\"30\" width=\"200\" height=\"80\" rx=\"6\" fill=\"var(--surface)\" stroke=\"var(--success)\" stroke-width=\"1.5\"/><rect x=\"290\" y=\"30\" width=\"200\" height=\"26\" rx=\"6\" fill=\"var(--success)\" opacity=\".2\"/><text x=\"390\" y=\"48\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"13\" font-weight=\"bold\">Circle : Shape</text><line x1=\"290\" y1=\"56\" x2=\"490\" y2=\"56\" stroke=\"var(--border)\" stroke-width=\"1\"/><text x=\"300\" y=\"72\" fill=\"var(--text-dim)\" font-size=\"11\">- _radius: double</text><text x=\"300\" y=\"88\" fill=\"var(--text-dim)\" font-size=\"11\">+ GetArea(): override</text><rect x=\"290\" y=\"130\" width=\"200\" height=\"80\" rx=\"6\" fill=\"var(--surface)\" stroke=\"var(--warning)\" stroke-width=\"1.5\"/><rect x=\"290\" y=\"130\" width=\"200\" height=\"26\" rx=\"6\" fill=\"var(--warning)\" opacity=\".2\"/><text x=\"390\" y=\"148\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"13\" font-weight=\"bold\">Rect : Shape</text><line x1=\"290\" y1=\"156\" x2=\"490\" y2=\"156\" stroke=\"var(--border)\" stroke-width=\"1\"/><text x=\"300\" y=\"172\" fill=\"var(--text-dim)\" font-size=\"11\">+ Width, Height: int</text><text x=\"300\" y=\"188\" fill=\"var(--text-dim)\" font-size=\"11\">+ GetArea(): override</text><line x1=\"230\" y1=\"70\" x2=\"290\" y2=\"65\" stroke=\"var(--border)\" stroke-width=\"1.5\" stroke-dasharray=\"6,3\"/><line x1=\"230\" y1=\"90\" x2=\"290\" y2=\"165\" stroke=\"var(--border)\" stroke-width=\"1.5\" stroke-dasharray=\"6,3\"/><rect x=\"30\" y=\"180\" width=\"200\" height=\"90\" rx=\"6\" fill=\"var(--surface)\" stroke=\"var(--error)\" stroke-width=\"1.5\"/><rect x=\"30\" y=\"180\" width=\"200\" height=\"26\" rx=\"6\" fill=\"var(--error)\" opacity=\".2\"/><text x=\"130\" y=\"198\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"13\" font-weight=\"bold\">IMovable (接口)</text><line x1=\"30\" y1=\"206\" x2=\"230\" y2=\"206\" stroke=\"var(--border)\" stroke-width=\"1\"/><text x=\"40\" y=\"222\" fill=\"var(--text-dim)\" font-size=\"11\">+ Move(dx, dy): void</text><line x1=\"30\" y1=\"234\" x2=\"230\" y2=\"234\" stroke=\"var(--border)\" stroke-width=\"1\"/><text x=\"40\" y=\"250\" fill=\"var(--text-dim)\" font-size=\"11\" font-style=\"italic\">接口定义行为契约</text><text x=\"40\" y=\"266\" fill=\"var(--text-dim)\" font-size=\"11\" font-style=\"italic\">类可实现多个接口</text><line x1=\"230\" y1=\"230\" x2=\"290\" y2=\"185\" stroke=\"var(--border)\" stroke-width=\"1.5\" stroke-dasharray=\"6,3\"/><text x=\"260\" y=\"310\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">继承（实线三角）实现接口（虚线三角）</text><text x=\"260\" y=\"330\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">子类通过 override 实现多态</text></svg></div><h4>定义类</h4><pre><code>public class Student {\n    // 字段（私有）\n    private string _name;\n\n    // 属性（公有）\n    public string Name {\n        get { return _name; }\n        set { _name = value; }\n    }\n\n    // 自动属性（编译器生成字段）\n    public int Age { get; set; }\n\n    // 构造函数\n    public Student(string name, int age) {\n        _name = name;\n        Age = age;\n    }\n\n    // 方法\n    public void SayHello() {\n        Console.WriteLine($\"大家好，我是{Name}\");\n    }\n}</code></pre><h4>属性详解</h4><p>属性是字段的封装，用 getter/setter 控制访问。自动属性 <code>public int Age { get; set; }</code> 最简洁。只读属性省略 set：<code>public int Id { get; }</code>。表达式主体属性：<code>public bool IsAdult => Age >= 18;</code>。</p><h4>构造函数与初始化</h4><p><code>this</code> 关键字引用当前实例。构造函数可重载。对象初始化器语法很方便：<code>var s = new Student { Name=\"小明\", Age=18 };</code>。</p><h4>静态成员</h4><p>静态成员属于类本身而非实例。<code>static</code> 字段、方法、属性通过类名访问。<code>Console.WriteLine</code> 就是静态方法。静态构造函数在类首次访问时执行一次。</p>",
+    "code": "using System;\nclass Circle {\n    public double Radius { get; set; }\n    public Circle() { }\n    public Circle(double r) { Radius = r; }\n    public double Area() => Math.PI * Radius * Radius;\n    public override string ToString() => $\"Circle(R={Radius:F2})\";\n}\nclass Program {\n    static void Main() {\n        var c = new Circle(5);\n        Console.WriteLine($\"{c} Area={c.Area():F2}\");\n    }\n}",
+    "exercises": [
+      {
+        "id": "cs-cl1",
+        "title": "矩形类练习",
+        "desc": "定义一个 Rectangle 类，包含 Width、Height 公有自动属性和 Area() 计算面积方法。然后创建对象并输出面积。",
+        "hint": "class Rectangle { public int Width { get; set; } public int Height { get; set; } public int Area() => Width * Height; }",
+        "starterCode": "using System;\nclass Rectangle {\n    public int Width { get; set; }\n    public int Height { get; set; }\n    public int Area() => Width * Height;\n}\nclass Program {\n    static void Main() {\n        var r = new Rectangle { Width = 5, Height = 3 };\n        Console.WriteLine(r.Area());\n    }\n}",
+        "solution": "using System;\nclass Rectangle {\n    public int Width { get; set; }\n    public int Height { get; set; }\n    public int Area() => Width * Height;\n}\nclass Program {\n    static void Main() {\n        var r = new Rectangle { Width = 5, Height = 3 };\n        Console.WriteLine(r.Area());\n    }\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cs-cl2",
+        "title": "银行账户",
+        "desc": "实现 BankAccount 类，含 Balance 属性和 Deposit(double amount)、Withdraw(double amount) 方法。取款不能透支。",
+        "hint": "Deposit 余额增加；Withdraw 先检查余额是否足够。用 double 表示金额。",
+        "starterCode": "class BankAccount {\n    public double Balance { get; private set; }\n    public void Deposit(double amount) { Balance += amount; }\n    public bool Withdraw(double amount) {\n        if (amount > Balance) return false;\n        Balance -= amount;\n        return true;\n    }\n}",
+        "solution": "class BankAccount {\n    public double Balance { get; private set; }\n    public void Deposit(double amount) { Balance += amount; }\n    public bool Withdraw(double amount) {\n        if (amount > Balance) return false;\n        Balance -= amount;\n        return true;\n    }\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cs-cl3",
+        "title": "重写 ToString",
+        "desc": "为 Person 类重写 ToString() 方法，返回 \"Person: Name=张三, Age=25\" 格式。",
+        "hint": "override string ToString() { return $\"...\"; }",
+        "starterCode": "class Person {\n    public string Name { get; set; }\n    public int Age { get; set; }\n    public override string ToString() => $\"Person: Name={Name}, Age={Age}\";\n}",
+        "solution": "class Person {\n    public string Name { get; set; }\n    public int Age { get; set; }\n    public override string ToString() => $\"Person: Name={Name}, Age={Age}\";\n}",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "inherit",
+    "icon": "🔗",
+    "title": "继承与多态",
+    "desc": "<p>继承是面向对象编程的重要特性，允许一个类（子类/派生类）基于另一个类（父类/基类）进行扩展。C# 只支持<strong>单继承</strong>（一个类只能有一个直接基类），但支持<strong>多接口实现</strong>。子类继承父类的所有非私有成员。</p><h4>继承语法</h4><pre><code>// 基类\npublic class Animal {\n    public string Name { get; set; }\n    public void Eat() => Console.WriteLine($\"{Name} 正在吃\");\n}\n\n// 派生类\npublic class Dog : Animal {\n    public void Bark() => Console.WriteLine($\"{Name} 汪汪叫\");\n}\n\nDog dog = new Dog { Name = \"旺财\" };\ndog.Eat();   // 继承自 Animal\ndog.Bark();  // 自己的方法</code></pre><h4>抽象类与抽象方法</h4><p>抽象类用 <code>abstract</code> 关键字声明，不能实例化。抽象方法没有实现体，子类必须用 <code>override</code> 重写。抽象类可以包含普通方法、字段、构造函数。它是\"模板方法\"设计模式的基础。</p><pre><code>abstract class Shape {\n    public abstract double GetArea();\n    public void Display() => Console.WriteLine($\"面积: {GetArea():F2}\");\n}</code></pre><h4>接口</h4><p>接口（<code>interface</code>）定义行为契约。接口成员默认都是 <code>public abstract</code>。一个类可以实现多个接口。接口可以包含方法、属性、事件和默认实现（C# 8+）。</p><pre><code>interface IMovable { void Move(int dx, int dy); }\ninterface IDrawable { void Draw(); }\nclass Car : IMovable, IDrawable { ... }</code></pre><h4>多态（virtual / override）</h4><p>用 <code>virtual</code> 关键字声明可重写的方法，子类用 <code>override</code> 提供新实现。运行时根据实际对象类型调用对应方法。这就是<strong>运行时多态</strong>。<code>sealed</code> 关键字阻止进一步重写。<code>base</code> 关键字访问父类成员。</p>",
+    "code": "using System;\nabstract class Animal {\n    public string Name { get; set; }\n    public abstract void MakeSound();\n}\nclass Dog : Animal {\n    public override void MakeSound() => Console.WriteLine(\"汪汪！\");\n    public void Fetch() => Console.WriteLine(\"叼球...\");\n}\nclass Cat : Animal {\n    public override void MakeSound() => Console.WriteLine(\"喵喵~\");\n}\nclass Program {\n    static void Main() {\n        Animal[] pets = { new Dog{Name=\"旺财\"}, new Cat{Name=\"咪咪\"} };\n        foreach (var p in pets) {\n            Console.Write($\"{p.Name}: \"); p.MakeSound();\n        }\n    }\n}",
+    "exercises": [
+      {
+        "id": "cs-in1",
+        "title": "抽象形状类",
+        "desc": "定义抽象类 Shape，包含抽象方法 GetArea()。然后定义 Circle（半径属性）和 Rect（宽高属性）继承 Shape 并实现 GetArea。",
+        "hint": "abstract class Shape { public abstract double GetArea(); }。Circle 和 Rect 用 override 实现。",
+        "starterCode": "abstract class Shape {\n    public abstract double GetArea();\n}\nclass Circle : Shape {\n    public double Radius { get; set; }\n    public override double GetArea() => Math.PI * Radius * Radius;\n}\nclass Rect : Shape {\n    public double W { get; set; }\n    public double H { get; set; }\n    public override double GetArea() => W * H;\n}",
+        "solution": "abstract class Shape {\n    public abstract double GetArea();\n}\nclass Circle : Shape {\n    public double Radius { get; set; }\n    public override double GetArea() => Math.PI * Radius * Radius;\n}\nclass Rect : Shape {\n    public double W { get; set; }\n    public double H { get; set; }\n    public override double GetArea() => W * H;\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cs-in2",
+        "title": "实现接口",
+        "desc": "定义 IPlayable 接口含 Play() 方法。实现 MusicPlayer 和 VideoPlayer 两个类，各自实现 Play()。",
+        "hint": "interface IPlayable { void Play(); }。class MusicPlayer : IPlayable { public void Play() => Console.WriteLine(\"播放音乐\"); }",
+        "starterCode": "interface IPlayable {\n    void Play();\n}\nclass MusicPlayer : IPlayable {\n    public void Play() => Console.WriteLine(\"正在播放音乐...\");\n}\nclass VideoPlayer : IPlayable {\n    public void Play() => Console.WriteLine(\"正在播放视频...\");\n}",
+        "solution": "interface IPlayable {\n    void Play();\n}\nclass MusicPlayer : IPlayable {\n    public void Play() => Console.WriteLine(\"正在播放音乐...\");\n}\nclass VideoPlayer : IPlayable {\n    public void Play() => Console.WriteLine(\"正在播放视频...\");\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cs-in3",
+        "title": "多态展示",
+        "desc": "编写代码展示多态：声明基类数组，包含不同子类对象，遍历调用虚方法。",
+        "hint": "基类声明 virtual 方法，子类 override。用基类数组存储子类对象。",
+        "starterCode": "class Base {\n    public virtual string GetInfo() => \"Base\";\n}\nclass DerivedA : Base {\n    public override string GetInfo() => \"DerivedA\";\n}\nclass DerivedB : Base {\n    public override string GetInfo() => \"DerivedB\";\n}\n// 使用:\n// Base[] arr = { new Base(), new DerivedA(), new DerivedB() };\n// foreach (var x in arr) Console.WriteLine(x.GetInfo());",
+        "solution": "class Base {\n    public virtual string GetInfo() => \"Base\";\n}\nclass DerivedA : Base {\n    public override string GetInfo() => \"DerivedA\";\n}\nclass DerivedB : Base {\n    public override string GetInfo() => \"DerivedB\";\n}\nclass Program {\n    static void Main() {\n        Base[] arr = { new Base(), new DerivedA(), new DerivedB() };\n        foreach (var x in arr) Console.WriteLine(x.GetInfo());\n    }\n}",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "linq",
+    "icon": "🔗",
+    "title": "LINQ 查询",
+    "desc": "<p>LINQ (Language Integrated Query) 是 C# 最具革命性的特性之一。它将<strong>数据查询</strong>能力集成到语言本身，让你能用统一的语法查询数组、集合、XML、数据库等各种数据源。LINQ 有<strong>查询语法</strong>（类似 SQL）和<strong>方法语法</strong>（链式调用）两种形式。</p><div class=\"svg-wrap\"><svg viewBox=\"0 0 520 280\" style=\"width:100%;max-width:520px;margin:12px auto;display:block;border-radius:8px;background:var(--bg);padding:10px;font-family:sans-serif\"><rect x=\"20\" y=\"80\" width=\"120\" height=\"90\" rx=\"8\" fill=\"var(--surface)\" stroke=\"var(--primary)\" stroke-width=\"1.5\"/><text x=\"80\" y=\"115\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"13\" font-weight=\"bold\">数据源</text><text x=\"80\" y=\"135\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">int[] nums</text><text x=\"80\" y=\"152\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">List&lt;string&gt;</text><text x=\"80\" y=\"169\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">数据库 / XML</text><line x1=\"140\" y1=\"110\" x2=\"175\" y2=\"110\" stroke=\"var(--border)\" stroke-width=\"2\"/><polygon points=\"175,106 185,110 175,114\" fill=\"var(--border)\"/><rect x=\"185\" y=\"30\" width=\"130\" height=\"56\" rx=\"6\" fill=\"var(--surface)\" stroke=\"var(--success)\" stroke-width=\"1.5\"/><text x=\"250\" y=\"55\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\">Where(x=&gt;x%2==0)</text><text x=\"250\" y=\"72\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">筛选偶数</text><line x1=\"250\" y1=\"86\" x2=\"250\" y2=\"100\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><polygon points=\"246,100 250,108 254,100\" fill=\"var(--border)\"/><rect x=\"185\" y=\"108\" width=\"130\" height=\"56\" rx=\"6\" fill=\"var(--surface)\" stroke=\"var(--warning)\" stroke-width=\"1.5\"/><text x=\"250\" y=\"133\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\">OrderBy(x=&gt;x)</text><text x=\"250\" y=\"150\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">升序排序</text><line x1=\"250\" y1=\"164\" x2=\"250\" y2=\"178\" stroke=\"var(--border)\" stroke-width=\"1.5\"/><polygon points=\"246,178 250,186 254,178\" fill=\"var(--border)\"/><rect x=\"185\" y=\"186\" width=\"130\" height=\"56\" rx=\"6\" fill=\"var(--surface)\" stroke=\"var(--error)\" stroke-width=\"1.5\"/><text x=\"250\" y=\"211\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"12\">Select(x=&gt;x*x)</text><text x=\"250\" y=\"228\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"10\">投影平方</text><line x1=\"315\" y1=\"214\" x2=\"350\" y2=\"214\" stroke=\"var(--border)\" stroke-width=\"2\"/><polygon points=\"350,210 360,214 350,218\" fill=\"var(--border)\"/><rect x=\"360\" y=\"170\" width=\"130\" height=\"90\" rx=\"8\" fill=\"var(--surface)\" stroke=\"var(--primary)\" stroke-width=\"1.5\"/><text x=\"425\" y=\"205\" text-anchor=\"middle\" fill=\"var(--text)\" font-size=\"13\" font-weight=\"bold\">结果</text><text x=\"425\" y=\"225\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">IEnumerable&lt;int&gt;</text><text x=\"425\" y=\"242\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">延迟执行</text><text x=\"425\" y=\"259\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">foreach 时求值</text><text x=\"250\" y=\"272\" text-anchor=\"middle\" fill=\"var(--text-dim)\" font-size=\"11\">查询管道：数据流经多个操作符，延迟执行直到遍历</text></svg></div><h4>方法语法（Lambda 表达式）</h4><pre><code>int[] nums = { 5, 2, 8, 1, 9, 3 };\n\n// 筛选偶数并排序\nvar result = nums\n    .Where(n => n % 2 == 0)      // 筛选\n    .OrderBy(n => n)              // 排序\n    .Select(n => n * 100)         // 投影\n    .ToList();                    // 立即执行</code></pre><h4>查询语法</h4><pre><code>var query = from n in nums\n            where n > 3\n            orderby n descending\n            select n;\n\n// 延迟执行，foreach 时才计算\nforeach (var x in query) { ... }</code></pre><h4>常用 LINQ 方法</h4><ul><li><strong>筛选</strong>：Where, OfType, Distinct</li><li><strong>投影</strong>：Select, SelectMany</li><li><strong>排序</strong>：OrderBy, OrderByDescending, ThenBy</li><li><strong>分组&连接</strong>：GroupBy, Join, GroupJoin</li><li><strong>聚合</strong>：Count, Sum, Average, Min, Max, Aggregate</li><li><strong>量词</strong>：Any, All, Contains</li><li><strong>分页</strong>：Skip, Take, SkipWhile, TakeWhile</li></ul><h4>延迟执行 vs 立即执行</h4><p>LINQ 查询默认<strong>延迟执行</strong>（deferred execution）：查询定义时并不执行，直到遍历结果时才执行。<code>ToList()</code>、<code>ToArray()</code>、<code>Count()</code>、<code>First()</code> 等方法会触发立即执行。理解这一点对性能优化很重要。</p>",
+    "code": "using System;\nusing System.Linq;\nclass Program {\n    static void Main() {\n        int[] nums = { 8, 3, 12, 5, 7, 2, 10, 1 };\n        var result = nums\n            .Where(n => n > 5)\n            .OrderByDescending(n => n)\n            .Select(n => new { Original = n, Squared = n * n });\n        foreach (var x in result)\n            Console.WriteLine($\"{x.Original} -> {x.Squared}\");\n    }\n}",
+    "exercises": [
+      {
+        "id": "cs-l1",
+        "title": "筛选偶数",
+        "desc": "实现函数 FilterEven(arr)，使用 LINQ 筛选出 int 数组中的所有偶数并返回 int[]。",
+        "hint": "return arr.Where(x => x % 2 == 0).ToArray();",
+        "starterCode": "int[] FilterEven(int[] arr) {\n    return arr.Where(x => x % 2 == 0).ToArray();\n}",
+        "solution": "int[] FilterEven(int[] arr) {\n    return arr.Where(x => x % 2 == 0).ToArray();\n}",
+        "fn": "FilterEven",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "expect": [
+              2,
+              4,
+              6
+            ]
+          },
+          {
+            "args": [
+              [
+                7,
+                9,
+                11
+              ]
+            ],
+            "expect": []
+          },
+          {
+            "args": [
+              [
+                2,
+                4,
+                6,
+                8
+              ]
+            ],
+            "expect": [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            "args": [
+              []
+            ],
+            "expect": []
+          }
+        ]
+      },
+      {
+        "id": "cs-l2",
+        "title": "排序取前 N",
+        "desc": "实现函数 TopN(arr, n)，对数组降序排序后返回前 n 个元素。n 不超过数组长度。",
+        "hint": "arr.OrderByDescending(x => x).Take(n).ToArray()",
+        "starterCode": "int[] TopN(int[] arr, int n) {\n    return arr.OrderByDescending(x => x).Take(n).ToArray();\n}",
+        "solution": "int[] TopN(int[] arr, int n) {\n    return arr.OrderByDescending(x => x).Take(n).ToArray();\n}",
+        "fn": "TopN",
+        "tests": [
+          {
+            "args": [
+              [
+                5,
+                2,
+                8,
+                1,
+                9
+              ],
+              3
+            ],
+            "expect": [
+              9,
+              8,
+              5
+            ]
+          },
+          {
+            "args": [
+              [
+                1,
+                2,
+                3
+              ],
+              2
+            ],
+            "expect": [
+              3,
+              2
+            ]
+          },
+          {
+            "args": [
+              [
+                10
+              ],
+              1
+            ],
+            "expect": [
+              10
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cs-l3",
+        "title": "分组统计",
+        "desc": "实现函数 GroupCount(words)，接收字符串数组，按首字母分组统计每个分组的单词数量。返回 Dictionary&lt;char,int&gt;。",
+        "hint": "words.GroupBy(w => w[0]).ToDictionary(g => g.Key, g => g.Count())",
+        "starterCode": "Dictionary<char,int> GroupCount(string[] words) {\n    return words.GroupBy(w => w[0]).ToDictionary(g => g.Key, g => g.Count());\n}",
+        "solution": "Dictionary<char,int> GroupCount(string[] words) {\n    return words.GroupBy(w => w[0]).ToDictionary(g => g.Key, g => g.Count());\n}",
+        "fn": "GroupCount",
+        "tests": [
+          {
+            "args": [
+              [
+                "apple",
+                "banana",
+                "avocado",
+                "blue",
+                "cherry"
+              ]
+            ],
+            "expect": {
+              "a": 2,
+              "b": 2,
+              "c": 1
+            }
+          },
+          {
+            "args": [
+              [
+                "cat",
+                "dog"
+              ]
+            ],
+            "expect": {
+              "c": 1,
+              "d": 1
+            }
+          },
+          {
+            "args": [
+              [
+                "x"
+              ]
+            ],
+            "expect": {
+              "x": 1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "async",
+    "icon": "⚡",
+    "title": "异步编程",
+    "desc": "<p>异步编程让程序在等待耗时操作（如网络请求、文件读写、数据库查询）时<strong>不阻塞当前线程</strong>。C# 的 <code>async</code> 和 <code>await</code> 关键字让异步代码写起来几乎和同步代码一样简洁。在 UI 应用和 Web 服务中，异步编程对<strong>响应性</strong>和<strong>可伸缩性</strong>至关重要。</p><h4>Task 和 Task&lt;T&gt;</h4><p><code>Task</code> 表示一个异步操作。无返回值用 <code>Task</code>，有返回值用 <code>Task&lt;T&gt;</code>。<code>Task.Run</code> 在线程池上执行委托。<code>Task.Delay</code> 创建延迟任务（类似 Thread.Sleep 但非阻塞）。<code>WhenAll</code> 等待多个任务全部完成，<code>WhenAny</code> 等待任意一个完成。</p><pre><code>async Task&lt;string&gt; FetchDataAsync() {\n    using var client = new HttpClient();\n    string result = await client.GetStringAsync(url);\n    return result;\n}</code></pre><h4>async / await 规则</h4><ul><li>方法签名用 <code>async</code> 关键字标记，返回类型为 <code>Task</code> / <code>Task&lt;T&gt;</code> / <code>void</code>（仅事件处理）</li><li><code>await</code> 等待一个异步操作完成，<strong>不阻塞</strong>当前线程</li><li>await 之后的代码会回到原始上下文（SynchronizationContext 或 TaskScheduler）</li><li>C# 7.1+ 支持 <code>async Task Main()</code> 入口方法</li></ul><h4>异常处理</h4><p>异步方法中的异常会被捕获并存放在返回的 Task 中。await 时会重新抛出异常。用 try-catch 包围 await 表达式即可捕获。当多个任务并行时用 <code>Task.WhenAll</code>，抛出的异常聚合在 <code>AggregateException</code> 中。</p><p><strong>最佳实践</strong>：避免 async void（除事件处理外），避免用 .Result 或 .Wait() 同步阻塞（会导致死锁），命名约定用 Async 后缀。</p>",
+    "code": "using System;\nusing System.Threading.Tasks;\nclass Program {\n    static async Task Main() {\n        Console.WriteLine(\"开始下载...\");\n        int len = await DownloadAsync(\"https://example.com\");\n        Console.WriteLine($\"下载完成，长度: {len}\");\n    }\n    static async Task<int> DownloadAsync(string url) {\n        await Task.Delay(500); // 模拟延迟\n        return url.Length * 10;\n    }\n}",
+    "exercises": [
+      {
+        "id": "cs-as1",
+        "title": "异步计算",
+        "desc": "编写异步方法 ComputeAsync()，等待 100 毫秒后返回整数 42。Main 中调用并输出结果。",
+        "hint": "await Task.Delay(100); return 42;。Main 用 async Task 标记。",
+        "starterCode": "using System;\nusing System.Threading.Tasks;\nclass Program {\n    static async Task Main() {\n        int r = await ComputeAsync();\n        Console.WriteLine(r);\n    }\n    static async Task<int> ComputeAsync() {\n        await Task.Delay(100);\n        return 42;\n    }\n}",
+        "solution": "using System;\nusing System.Threading.Tasks;\nclass Program {\n    static async Task Main() {\n        int r = await ComputeAsync();\n        Console.WriteLine(r);\n    }\n    static async Task<int> ComputeAsync() {\n        await Task.Delay(100);\n        return 42;\n    }\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cs-as2",
+        "title": "并行下载模拟",
+        "desc": "编写程序同时模拟两个下载任务：Task1 延迟 200ms 返回 \"数据A\"，Task2 延迟 300ms 返回 \"数据B\"。使用 Task.WhenAll 等待两者完成。",
+        "hint": "用 Task.Run 或 async lambda 创建任务，Task.WhenAll(t1, t2) 等待全部完成。",
+        "starterCode": "using System;\nusing System.Threading.Tasks;\nclass Program {\n    static async Task Main() {\n        var t1 = DownloadAsync(\"数据A\", 200);\n        var t2 = DownloadAsync(\"数据B\", 300);\n        string[] results = await Task.WhenAll(t1, t2);\n        Console.WriteLine(string.Join(\", \", results));\n    }\n    static async Task<string> DownloadAsync(string name, int delay) {\n        await Task.Delay(delay);\n        return name;\n    }\n}",
+        "solution": "using System;\nusing System.Threading.Tasks;\nclass Program {\n    static async Task Main() {\n        var t1 = DownloadAsync(\"数据A\", 200);\n        var t2 = DownloadAsync(\"数据B\", 300);\n        string[] results = await Task.WhenAll(t1, t2);\n        Console.WriteLine(string.Join(\", \", results));\n    }\n    static async Task<string> DownloadAsync(string name, int delay) {\n        await Task.Delay(delay);\n        return name;\n    }\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "cs-as3",
+        "title": "异步异常处理",
+        "desc": "编写异步方法 ThrowAsync()，延迟 50ms 后抛出 InvalidOperationException。在 Main 中使用 try-catch 捕获并输出错误信息。",
+        "hint": "await Task.Delay(50); throw new InvalidOperationException(\"出错了！\");。try-catch 包围 await。",
+        "starterCode": "using System;\nusing System.Threading.Tasks;\nclass Program {\n    static async Task Main() {\n        try {\n            await ThrowAsync();\n        } catch (Exception ex) {\n            Console.WriteLine($\"捕获异常: {ex.Message}\");\n        }\n    }\n    static async Task ThrowAsync() {\n        await Task.Delay(50);\n        throw new InvalidOperationException(\"出错了！\");\n    }\n}",
+        "solution": "using System;\nusing System.Threading.Tasks;\nclass Program {\n    static async Task Main() {\n        try {\n            await ThrowAsync();\n        } catch (Exception ex) {\n            Console.WriteLine($\"捕获异常: {ex.Message}\");\n        }\n    }\n    static async Task ThrowAsync() {\n        await Task.Delay(50);\n        throw new InvalidOperationException(\"出错了！\");\n    }\n}",
+        "fn": "",
+        "tests": []
+      }
+    ]
   }
 ];
+
+
+;
 
 
 // ==================== 全局变量 ====================
@@ -428,8 +1149,7 @@ function loadSection(id) {
 
   if (editor) {
     editor.setValue(section.code);
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -486,8 +1206,7 @@ function switchToLearn(section) {
 
   if (editor) {
     editor.setValue(loadCachedCode(section.code));
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -515,8 +1234,7 @@ function switchToExercise(section, index) {
 
   if (editor) {
     editor.setValue(loadCachedCode(ex.starterCode));
-    const model = editor.getModel();
-    if (model) model.undo();
+    
   }
 }
 
@@ -531,53 +1249,94 @@ function toggleHint() {
   document.getElementById('hint-btn').textContent = hint.classList.contains('show') ? '隐藏提示' : '查看提示';
 }
 
-// ==================== Monaco Editor ====================
+
+async function runCode() {
+  if (isRunning || !editor) return;
+  const btn = document.getElementById('run-btn');
+  btn.classList.add('running');
+  isRunning = true;
+  const code = editor.getValue();
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">\u23f3 \u6b63\u5728\u6267\u884c ...</span>';
+  try {
+    const resp = await fetch('https://emkc.org/api/v2/piston/execute', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ language: 'csharp', version: '*', files: [{ name: 'main.cs', content: code }] })
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.compile && data.compile.stderr) {
+      outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(data.compile.stderr) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">\u2717 \u7f16\u8bd1\u5931\u8d25</span>';
+    } else if (data.run && data.run.stdout) {
+      outputContent.innerHTML = escHtml(data.run.stdout).replace(/\n/g, '<br>');
+      statusEl.innerHTML = '<span class="badge success">\u2713 \u6267\u884c\u6210\u529f</span>';
+    } else if (data.run && data.run.stderr) {
+      outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(data.run.stderr) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">\u2717 \u8fd0\u884c\u65f6\u9519\u8bef</span>';
+    } else {
+      outputContent.innerHTML = '<span class="out-info">\u2713 \u4ee3\u7801\u5df2\u6267\u884c\uff08\u65e0\u8f93\u51fa\u5185\u5bb9\uff09</span>';
+      statusEl.innerHTML = '<span class="badge success">\u2713 \u6267\u884c\u6210\u529f</span>';
+    }
+  } catch (e) {
+    outputContent.innerHTML = '<span class="out-err">\u26d4 ' + escHtml(e.message) + '</span>';
+    statusEl.innerHTML = '<span class="badge error">\u2717 \u8bf7\u6c42\u5931\u8d25</span>';
+  }
+  btn.classList.remove('running');
+  isRunning = false;
+}
+
+function submitExercise() {
+  if (isRunning || !editor) return;
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (!section || !section.exercises || currentExerciseIndex < 0) return;
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">\u23f3 \u8bf7\u70b9\u51fb\u201c\u8fd0\u884c\u4ee3\u7801\u201d\u6267\u884c\u540e\u67e5\u770b\u8f93\u51fa\uff0c\u81ea\u884c\u5bf9\u6bd4\u7ed3\u679c\u3002</span>';
+  statusEl.innerHTML = '';
+}
+
+// ==================== 代码编辑器 ====================
 function createEditor() {
   if (editorReady) return;
   editorReady = true;
 
-  require.config({
-    paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }
+  const container = document.getElementById('editor-container');
+  if (!container) return;
+  container.classList.remove('loading');
+  container.innerHTML = '<textarea id="editor" style="width:100%;height:100%;background:var(--bg);color:var(--text);border:none;outline:none;resize:none;font-family:\"SF Mono\",\"Fira Code\",\"Cascadia Code\",monospace;font-size:14px;padding:12px;tab-size:4;white-space:pre;overflow-wrap:normal;overflow-x:auto;line-height:1.5"></textarea>';
+
+  const ta = document.getElementById('editor');
+  editor = {
+    getValue: () => ta.value,
+    setValue: (v) => { ta.value = v; },
+  };
+  const savedTheme = localStorage.getItem('csharp-theme') || 'light';
+  if (savedTheme === 'light') document.body.classList.add('light');
+
+  ta.value = loadCachedCode(SECTIONS[0].code);
+
+  ta.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const s = ta.selectionStart, en = ta.selectionEnd;
+      ta.value = ta.value.substring(0, s) + '  ' + ta.value.substring(en);
+      ta.selectionStart = ta.selectionEnd = s + 2;
+    }
   });
 
-  require(['vs/editor/editor.main'], () => {
-    const container = document.getElementById('editor-container');
-    if (!container) return;
-    container.classList.remove('loading');
-    container.innerHTML = '';
-    container.style.height = '380px';
-
-    const savedTheme = localStorage.getItem('csharp-theme') || 'light';
-    const isLight = savedTheme === 'light';
-    if (isLight) document.body.classList.add('light');
-
-    editor = monaco.editor.create(container, {
-      value: SECTIONS[0].code,
-      language: 'csharp',
-      theme: isLight ? 'vs' : 'vs-dark',
-      minimap: { enabled: false },
-      fontSize: 14,
-      lineNumbers: 'on',
-      scrollBeyondLastLine: false,
-      automaticLayout: true,
-      wordWrap: 'on',
-      tabSize: 4,
-      renderWhitespace: 'selection',
-      padding: { top: 12 },
-    });
-
-    loadSection(currentSectionId);
-
-    let saveTimer;
-    editor.onDidChangeModelContent(() => {
-      const lineCount = editor.getModel().getLineCount();
-      const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
-      container.style.height = newHeight + 'px';
-      editor.layout();
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveCode, 500);
-    });
+  let saveTimer;
+  ta.addEventListener('input', () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveCode, 500);
   });
+
+  loadSection(currentSectionId);
 }
 
 
@@ -596,9 +1355,7 @@ function resetCode() {
 // ==================== 主题切换 ====================
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
-  const theme = isLight ? 'light' : 'dark';
-  localStorage.setItem('csharp-theme', theme);
-  if (editor) monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark');
+  localStorage.setItem('csharp-theme', isLight ? 'light' : 'dark');
 }
 
 // ==================== 字号控制 ====================
@@ -618,7 +1375,7 @@ function setFontSize(level) {
   root.style.setProperty('--fs-small', s.small);
   root.style.setProperty('--fs-sidebar', s.sidebar);
   root.style.setProperty('--fs-tab', s.tab);
-  if (editor) editor.updateOptions({ fontSize: parseInt(s.mono) });
+  
 
   document.querySelectorAll('.font-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.size === level);
@@ -655,17 +1412,11 @@ function setupMenuToggle() {
 
 // ==================== 启动 ====================
 function boot() {
-  if (typeof require === 'undefined') {
-    showError('加载 Monaco Editor 失败，请刷新页面重试');
-    return;
-  }
   init();
 }
 
 function showError(msg) {
   hideLoading();
-  const container = document.getElementById('editor-container');
-  if (container) container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">' + escHtml(msg) + '</div>';
 }
 
 if (document.readyState === 'complete') {
@@ -674,21 +1425,6 @@ if (document.readyState === 'complete') {
   window.addEventListener('load', boot);
 }
 
-setTimeout(() => {
-  hideLoading();
-  if (!editor) {
-    const container = document.getElementById('editor-container');
-    if (container && container.classList.contains('loading')) {
-      container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">⛔ Monaco Editor 加载超时，请检查网络连接后刷新页面</div>';
-    }
-    loadPreferences();
-    renderSidebar();
-    setupButtons();
-    setupKeyboardShortcut();
-    setupMenuToggle();
-    loadSection(currentSectionId);
-  }
-}, 15000);
 </script>
 </body>
 </html>

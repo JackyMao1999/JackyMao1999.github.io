@@ -215,16 +215,16 @@ const SECTIONS = [
   {
     "id": "intro",
     "icon": "🔷",
-    "title": "Go 简介",
-    "desc": "<p>Go（Golang）是 Google 开发的<strong>静态类型、编译型</strong>语言，以简洁和并发闻名。</p><h4>为什么选择 Go</h4><p><strong>语法简洁</strong> — 没有类和继承，学习曲线平缓。</p><p><strong>编译迅速</strong> — 极快的编译速度。</p><p><strong>内置并发</strong> — goroutine 和 channel 让并发编程更简单。</p><h4>第一个程序</h4><pre><code>package main\\nimport \"fmt\"\\nfunc main() {\\n    fmt.Println(\"Hello, World!\")\\n}</code></pre>",
-    "code": "package main\\nimport \"fmt\"\\nfunc main() {\\n    fmt.Println(\"Hello, World!\")\\n    name := \"Go\"\\n    fmt.Printf(\"你好, %s!\\n\", name)\\n}",
+    "title": "Go 简介 — 快速了解 Go",
+    "desc": "<p>Go（Golang）是 Google 于 2009 年发布的开源编程语言，由传奇程序员 Ken Thompson（Unix 之父）、Rob Pike 和 Robert Griesemer 共同设计。</p>\n<h4>Go 的设计目标</h4>\n<ul><li><strong>编译快</strong> — 秒级编译大型项目</li><li><strong>运行快</strong> — 编译到原生机器码，无虚拟机开销</li><li><strong>开发快</strong> — 简洁的语法，无需学习复杂的 OOP 概念</li></ul>\n<svg viewBox=\"0 0 620 180\" style=\"width:100%;max-width:620px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">为什么选择 Go？对比其他语言</text><line x1=\"20\" y1=\"30\" x2=\"600\" y2=\"30\" class=\"tl\"/>\n<rect x=\"20\" y=\"40\" width=\"180\" height=\"24\" rx=\"4\" fill=\"#58a6ff\" opacity=\"0.15\" stroke=\"#58a6ff\" stroke-width=\"1\"/><text x=\"110\" y=\"57\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">编译速度</text>\n<text x=\"30\" y=\"77\" class=\"t\">Go: 秒级</text><text x=\"180\" y=\"77\" class=\"t\" fill=\"#8b949e\">C++: 分钟级  Java: 分钟级</text>\n<rect x=\"20\" y=\"90\" width=\"180\" height=\"24\" rx=\"4\" fill=\"#3fb950\" opacity=\"0.15\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"110\" y=\"107\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">并发模型</text>\n<text x=\"30\" y=\"127\" class=\"t\">Go: goroutine(4KB)</text><text x=\"180\" y=\"127\" class=\"t\" fill=\"#8b949e\">Java: 线程(2MB)  Python: GIL</text>\n<rect x=\"20\" y=\"140\" width=\"180\" height=\"24\" rx=\"4\" fill=\"#d29922\" opacity=\"0.15\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"110\" y=\"157\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">语法复杂度</text>\n<text x=\"30\" y=\"177\" class=\"t\">Go: 25 关键字</text><text x=\"180\" y=\"177\" class=\"t\" fill=\"#8b949e\">C++: 84 关键字  Java: 50+</text></svg>\n<h4>第一个 Go 程序</h4>\n<pre><code>package main    // 包声明：可执行程序 = package main\n\nimport \"fmt\"   // 导入标准库 fmt\n\nfunc main() {  // 程序入口\n    fmt.Println(\"Hello, World!\")\n}</code></pre>\n<h4>Go 工作区结构</h4><p>从 Go 1.16 起推荐使用 Module：</p>\n<pre><code>myproject/\n├── go.mod          # 模块定义\n├── main.go         # 入口\n├── handler/        # 子包\n│   └── user.go\n└── go.sum          # 依赖校验</code></pre>",
+    "code": "package main\nimport \"fmt\"\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n    name := \"Go\"\n    fmt.Printf(\"你好, %s!\\n\", name)\n}",
     "exercises": [
       {
         "id": "go-i1",
         "title": "编写 greet 函数",
-        "desc": "编写 <code>greet</code> 函数，接收 <code>name string</code>，返回 <code>\"Hello, \" + name</code>。",
-        "hint": "func greet(name string) string { return \"Hello, \" + name }",
-        "starterCode": "// 编写 greet 函数\\n// 参数: name string\\n// 返回值: string",
+        "desc": "编写 greet(name string) string，返回 \"Hello, \" + name。",
+        "hint": "func greet(n string) string { return \"Hello, \"+n }",
+        "starterCode": "func greet(name string) string {\n    return \"Hello, \" + name\n}",
         "solution": "func greet(name string) string { return \"Hello, \" + name }",
         "fn": "greet",
         "tests": [
@@ -245,9 +245,9 @@ const SECTIONS = [
       {
         "id": "go-i2",
         "title": "温度转换",
-        "desc": "编写 <code>fToC</code> 接收 <code>f float64</code> 返回摄氏温度。公式: C = (F-32)*5/9",
-        "hint": "func fToC(f float64) float64 { return (f-32)*5/9 }",
-        "starterCode": "// 编写 fToC 函数",
+        "desc": "编写 fToC(f float64) float64，华氏转摄氏。公式: C = (F-32)*5/9。",
+        "hint": "return (f-32)*5/9",
+        "starterCode": "func fToC(f float64) float64 { return (f-32)*5/9 }",
         "solution": "func fToC(f float64) float64 { return (f-32)*5/9 }",
         "fn": "fToC",
         "tests": [
@@ -270,36 +270,95 @@ const SECTIONS = [
   {
     "id": "basic",
     "icon": "🔤",
-    "title": "基础类型",
-    "desc": "<p>Go 是<strong>强类型</strong>语言。</p><h4>基本类型</h4><p><strong>int</strong> — 整数</p><p><strong>float64</strong> — 浮点数</p><p><strong>bool</strong> — 布尔值</p><p><strong>string</strong> — 字符串</p><h4>变量声明</h4><pre><code>var x int = 42\\ny := 3.14  // 短声明（最常用）</code></pre>",
-    "code": "package main\\nimport \"fmt\"\\nfunc main() {\\n    var age int = 25\\n    name := \"Go\"\\n    pi := 3.14159\\n    fmt.Println(age, name, pi)\\n}",
+    "title": "基础类型与变量",
+    "desc": "<h4>Go 的基本数据类型</h4>\n<p>和大多数语言一样，Go 提供了整数、浮点数、布尔和字符串类型。但 Go 的特色是<strong>每种类型的大小明确</strong>：</p>\n<svg viewBox=\"0 0 560 160\" style=\"width:100%;max-width:560px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">Go 基本类型及占用空间（64位系统）</text><line x1=\"20\" y1=\"30\" x2=\"540\" y2=\"30\" class=\"tl\"/>\n<rect x=\"20\" y=\"40\" width=\"100\" height=\"24\" rx=\"3\" fill=\"#3fb950\" opacity=\"0.2\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"70\" y=\"57\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">bool = 1B</text>\n<rect x=\"130\" y=\"40\" width=\"100\" height=\"24\" rx=\"3\" fill=\"#58a6ff\" opacity=\"0.2\" stroke=\"#58a6ff\" stroke-width=\"1\"/><text x=\"180\" y=\"57\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">int = 8B</text>\n<rect x=\"240\" y=\"40\" width=\"100\" height=\"24\" rx=\"3\" fill=\"#d29922\" opacity=\"0.2\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"290\" y=\"57\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">float64 = 8B</text>\n<rect x=\"350\" y=\"40\" width=\"100\" height=\"24\" rx=\"3\" fill=\"#f85149\" opacity=\"0.2\" stroke=\"#f85149\" stroke-width=\"1\"/><text x=\"400\" y=\"57\" class=\"t\" fill=\"#f85149\" text-anchor=\"middle\">string = 16B</text>\n<text x=\"20\" y=\"85\" class=\"t\" fill=\"#8b949e\">int 在 64 位系统 = int64，32 位系统 = int32</text>\n<text x=\"20\" y=\"105\" class=\"t\" fill=\"#8b949e\">string 内部 = 指针(8B) + 长度(8B)</text>\n<text x=\"20\" y=\"125\" class=\"t\" fill=\"#8b949e\">零值：int=0, string=\"\"(空), bool=false, float=0.0</text>\n<text x=\"20\" y=\"145\" class=\"t\" fill=\"#8b949e\">:= 只能在函数内使用，var 可用在包级别</text></svg>\n<pre><code>// 四种声明方式\nvar x int = 42            // 1. 完整声明\nvar y = 3.14              // 2. 类型推导\nz := \"hello\"              // 3. 短声明（最常用）\nconst Pi = 3.14159        // 4. 常量（不可修改）\n\n// 多变量\nvar a, b int = 1, 2\nwidth, height := 10, 5</code></pre>\n<h4>类型转换</h4><p>Go 没有隐式类型转换！必须显式转换：</p>\n<pre><code>var n int = 42\nvar f float64 = float64(n)  // 显式转换\nvar u uint = uint(f)        // 可能丢失精度</code></pre>",
+    "code": "package main\nimport \"fmt\"\nfunc main() {\n    var name string = \"Go\"\n    version := 1.21\n    isFun := true\n    fmt.Printf(\"语言: %s, 版本: %.2f, 有趣: %v\\n\", name, version, isFun)\n    const pi = 3.14159\n    r := 5.0\n    fmt.Printf(\"圆面积: %.2f\\n\", pi*r*r)\n}",
     "exercises": [
       {
-        "id": "go-t1",
-        "title": "变量声明",
-        "desc": "用 <code>:=</code> 声明 <code>productName</code>(string) 和 <code>price</code>(float64) 并打印。",
-        "hint": "productName := \"笔记本电脑\"",
-        "starterCode": "// 用短声明声明变量并打印",
-        "solution": "productName := \"笔记本电脑\"\\nprice := 4999.99\\nfmt.Println(productName, price)",
-        "fn": "",
-        "tests": []
+        "id": "go-b1",
+        "title": "类型转换",
+        "desc": "编写 intToFloat(n int) float64 将整数转为浮点数。",
+        "hint": "return float64(n)",
+        "starterCode": "func intToFloat(n int) float64 { return float64(n) }",
+        "solution": "func intToFloat(n int) float64 { return float64(n) }",
+        "fn": "intToFloat",
+        "tests": [
+          {
+            "args": [
+              42
+            ],
+            "expect": 42
+          }
+        ]
+      },
+      {
+        "id": "go-b2",
+        "title": "字符串转数字",
+        "desc": "编写 stringToInt(s string) int，用 strconv.Atoi，失败返回 0。",
+        "hint": "n, err := strconv.Atoi(s); if err != nil { return 0 }",
+        "starterCode": "import \"strconv\"\nfunc stringToInt(s string) int {\n    n, err := strconv.Atoi(s)\n    if err != nil { return 0 }\n    return n\n}",
+        "solution": "func stringToInt(s string) int {\n    n, err := strconv.Atoi(s)\n    if err != nil { return 0 }\n    return n\n}",
+        "fn": "stringToInt",
+        "tests": [
+          {
+            "args": [
+              "42"
+            ],
+            "expect": 42
+          },
+          {
+            "args": [
+              "abc"
+            ],
+            "expect": 0
+          }
+        ]
+      },
+      {
+        "id": "go-b3",
+        "title": "类型判断",
+        "desc": "编写 describeType(v interface{}) string 用类型 switch 返回类型描述。",
+        "hint": "switch v.(type)",
+        "starterCode": "func describeType(v interface{}) string {\n    switch v.(type) {\n    case int: return \"整数\"\n    case string: return \"字符串\"\n    case bool: return \"布尔\"\n    default: return \"未知\"\n    }\n}",
+        "solution": "func describeType(v interface{}) string {\n    switch v.(type) {\n    case int: return \"整数\"\n    case string: return \"字符串\"\n    case bool: return \"布尔\"\n    default: return \"未知\"\n    }\n}",
+        "fn": "describeType",
+        "tests": [
+          {
+            "args": [
+              42
+            ],
+            "expect": "整数"
+          },
+          {
+            "args": [
+              "hi"
+            ],
+            "expect": "字符串"
+          },
+          {
+            "args": [
+              true
+            ],
+            "expect": "布尔"
+          }
+        ]
       }
     ]
   },
   {
     "id": "control",
     "icon": "🔀",
-    "title": "控制流",
-    "desc": "<h4>if/else</h4><pre><code>if score >= 90 {\\n    fmt.Println(\"优秀\")\\n} else if score >= 60 {\\n    fmt.Println(\"及格\")\\n} else {\\n    fmt.Println(\"不及格\")\\n}</code></pre><h4>for 循环</h4><p>Go 只有 <code>for</code>：</p><pre><code>for i := 0; i < 5; i++ { ... }\\nfor i < 5 { ... }  // 类似 while</code></pre>",
-    "code": "package main\\nimport \"fmt\"\\nfunc main() {\\n    score := 85\\n    if score >= 90 { fmt.Println(\"优秀\") } else if score >= 60 { fmt.Println(\"及格\") } else { fmt.Println(\"不及格\") }\\n    for i := 1; i <= 5; i++ { fmt.Print(i, \" \") }\\n}",
+    "title": "控制流 — if/for/switch",
+    "desc": "<h4>if-else</h4><p>Go 的 if 没有圆括号，但必须有大括号。这防止了 C 中常见的悬吊 else 问题。</p>\n<pre><code>if score >= 90 {\n    fmt.Println(\"优秀\")\n} else if score >= 60 {\n    fmt.Println(\"及格\")\n} else {\n    fmt.Println(\"不及格\")\n}\n\n// if 中可以声明临时变量，作用域仅限于 if-else 块\nif x := compute(); x > 0 {\n    fmt.Println(\"正数:\", x)\n} else {\n    fmt.Println(\"非正数:\", x)  // 这里仍然可以访问 x\n}\n// 这里 x 已失效</code></pre>\n<h4>for 循环 — Go 只有这一个循环关键字</h4>\n<svg viewBox=\"0 0 460 200\" style=\"width:100%;max-width:460px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">for 循环执行流程</text><line x1=\"20\" y1=\"30\" x2=\"440\" y2=\"30\" class=\"tl\"/>\n<rect x=\"170\" y=\"40\" width=\"80\" height=\"24\" rx=\"12\" fill=\"#58a6ff\" opacity=\"0.2\" stroke=\"#58a6ff\" stroke-width=\"1\"/><text x=\"210\" y=\"57\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">i := 0</text>\n<line x1=\"210\" y1=\"64\" x2=\"210\" y2=\"74\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><polygon points=\"207,72 210,78 213,72\" fill=\"#58a6ff\"/>\n<rect x=\"170\" y=\"78\" width=\"80\" height=\"24\" rx=\"12\" fill=\"#d29922\" opacity=\"0.2\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"210\" y=\"95\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">i < 5 ?</text>\n<line x1=\"250\" y1=\"90\" x2=\"300\" y2=\"50\" stroke=\"#f85149\" stroke-width=\"1\"/><polygon points=\"298,52 303,48 300,56\" fill=\"#f85149\"/><text x=\"305\" y=\"50\" class=\"t\" fill=\"#f85149\">结束</text>\n<line x1=\"210\" y1=\"102\" x2=\"210\" y2=\"112\" stroke=\"#d29922\" stroke-width=\"1.5\"/><polygon points=\"207,110 210,116 213,110\" fill=\"#d29922\"/>\n<rect x=\"160\" y=\"116\" width=\"100\" height=\"24\" rx=\"12\" fill=\"#3fb950\" opacity=\"0.2\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"210\" y=\"133\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">执行循环体</text>\n<line x1=\"210\" y1=\"140\" x2=\"210\" y2=\"150\" stroke=\"#3fb950\" stroke-width=\"1.5\"/><polygon points=\"207,148 210,154 213,148\" fill=\"#3fb950\"/>\n<rect x=\"170\" y=\"154\" width=\"80\" height=\"24\" rx=\"12\" fill=\"#58a6ff\" opacity=\"0.2\" stroke=\"#58a6ff\" stroke-width=\"1\"/><text x=\"210\" y=\"171\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">i++</text>\n<line x1=\"210\" y1=\"178\" x2=\"210\" y2=\"188\" stroke=\"#58a6ff\" stroke-width=\"1\" stroke-dasharray=\"4\"/><polygon points=\"207,186 210,192 213,186\" fill=\"#58a6ff\"/>\n<text x=\"190\" y=\"200\" class=\"t\" fill=\"#8b949e\" text-anchor=\"end\">回到 i < 5 ?</text></svg>\n<pre><code>// 三种形式\nfor i := 0; i < 5; i++ { fmt.Println(i) }   // 标准\n\nsum := 1\nfor sum < 100 { sum += sum }                // 类似 while\n\nfor { /* 无限循环，用 break 退出 */ }\n\n// range 遍历\nfor i, v := range []int{10,20,30} { fmt.Println(i,v) }\nfor k, v := range map[string]int{\"a\":1} { fmt.Println(k,v) }</code></pre>\n<h4>switch</h4><p>Go 的 switch 每个 case 默认 break（不会自动穿透）。</p>\n<pre><code>switch os := runtime.GOOS; os {\ncase \"darwin\":  fmt.Println(\"macOS\")\ncase \"linux\":   fmt.Println(\"Linux\")\ncase \"windows\": fmt.Println(\"Windows\")\ndefault:        fmt.Println(\"其他:\", os)\n}\n\n// 无表达式的 switch（相当于 if-else 链）\nswitch {\ncase score >= 90: grade = \"A\"\ncase score >= 80: grade = \"B\"\ndefault:          grade = \"C\"\n}</code></pre>",
+    "code": "package main\nimport \"fmt\"\nfunc main() {\n    score := 85\n    if score >= 90 { fmt.Println(\"优秀\") } else if score >= 60 { fmt.Println(\"及格\") } else { fmt.Println(\"不及格\") }\n    sum := 0\n    for i := 1; i <= 100; i++ { sum += i }\n    fmt.Println(\"1+...+100 =\", sum)\n    switch os := \"linux\"; os {\n    case \"linux\": fmt.Println(\"Linux\")\n    case \"darwin\": fmt.Println(\"macOS\")\n    }\n}",
     "exercises": [
       {
         "id": "go-c1",
         "title": "等级判断",
-        "desc": "编写 <code>getGrade</code> 接收 <code>score int</code> 返回 <code>string</code>。>=90 \"优秀\", >=60 \"及格\", else \"不及格\"。",
-        "hint": "if score >= 90 { return \"优秀\" }",
-        "starterCode": "// 编写 getGrade 函数",
-        "solution": "func getGrade(score int) string { if score >= 90 { return \"优秀\" } else if score >= 60 { return \"及格\" } else { return \"不及格\" } }",
+        "desc": "编写 getGrade(score int) string。>=90 \"优秀\"，>=60 \"及格\"，else \"不及格\"。",
+        "hint": "if score>=90 { return \"优秀\" }",
+        "starterCode": "func getGrade(score int) string {\n    if score>=90 { return \"优秀\" }\n    if score>=60 { return \"及格\" }\n    return \"不及格\"\n}",
+        "solution": "func getGrade(score int) string {\n    if score>=90 { return \"优秀\" }\n    if score>=60 { return \"及格\" }\n    return \"不及格\"\n}",
         "fn": "getGrade",
         "tests": [
           {
@@ -313,12 +372,575 @@ const SECTIONS = [
               70
             ],
             "expect": "及格"
+          },
+          {
+            "args": [
+              45
+            ],
+            "expect": "不及格"
+          }
+        ]
+      },
+      {
+        "id": "go-c2",
+        "title": "累加求和",
+        "desc": "编写 sumTo(n int) int，计算 1+2+...+n。",
+        "hint": "for i:=1; i<=n; i++ { sum+=i }",
+        "starterCode": "func sumTo(n int) int {\n    sum := 0\n    for i:=1; i<=n; i++ { sum += i }\n    return sum\n}",
+        "solution": "func sumTo(n int) int {\n    sum := 0\n    for i:=1; i<=n; i++ { sum += i }\n    return sum\n}",
+        "fn": "sumTo",
+        "tests": [
+          {
+            "args": [
+              5
+            ],
+            "expect": 15
+          },
+          {
+            "args": [
+              100
+            ],
+            "expect": 5050
+          }
+        ]
+      },
+      {
+        "id": "go-c3",
+        "title": "switch 成绩等级",
+        "desc": "编写 gradeSwitch(score int) string 用 switch 实现：>=90\"A\" >=80\"B\" >=70\"C\" >=60\"D\" else\"F\"。",
+        "hint": "switch { case score>=90: return \"A\" }",
+        "starterCode": "func gradeSwitch(score int) string {\n    switch {\n    case score>=90: return \"A\"\n    case score>=80: return \"B\"\n    case score>=70: return \"C\"\n    case score>=60: return \"D\"\n    default: return \"F\"\n    }\n}",
+        "solution": "func gradeSwitch(score int) string {\n    switch {\n    case score>=90: return \"A\"\n    case score>=80: return \"B\"\n    case score>=70: return \"C\"\n    case score>=60: return \"D\"\n    default: return \"F\"\n    }\n}",
+        "fn": "gradeSwitch",
+        "tests": [
+          {
+            "args": [
+              95
+            ],
+            "expect": "A"
+          },
+          {
+            "args": [
+              85
+            ],
+            "expect": "B"
+          },
+          {
+            "args": [
+              55
+            ],
+            "expect": "F"
           }
         ]
       }
     ]
+  },
+  {
+    "id": "func",
+    "icon": "🧩",
+    "title": "函数 — 代码的积木块",
+    "desc": "<p>函数是<strong>可重复使用的代码单元</strong>。Go 的函数用 <code>func</code> 关键字声明，支持<strong>多返回值</strong>和<strong>闭包</strong>。</p>\n<h4>为什么需要函数？</h4><p>假设你要计算圆面积 10 次。不写函数的话要复制粘贴 10 遍 <code>3.14159 * r * r</code>。改需求（比如精确到更多位数）就要改 10 处！用函数只用改 1 处。</p>\n<h4>基本函数</h4>\n<pre><code>func add(a int, b int) int { return a + b }\nfunc add(a, b int) int { return a + b }  // 同类型可合并\n\nresult := add(3, 5)  // 调用 → 8</code></pre>\n<svg viewBox=\"0 0 520 160\" style=\"width:100%;max-width:520px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">函数调用栈 — 先进后出</text><line x1=\"20\" y1=\"30\" x2=\"500\" y2=\"30\" class=\"tl\"/>\n<rect x=\"40\" y=\"40\" width=\"200\" height=\"28\" rx=\"4\" fill=\"#3fb950\" opacity=\"0.15\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"60\" y=\"59\" class=\"t\" fill=\"#3fb950\">main()</text>\n<line x1=\"60\" y1=\"68\" x2=\"60\" y2=\"78\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><polygon points=\"57,76 60,83 63,76\" fill=\"#58a6ff\"/>\n<rect x=\"40\" y=\"82\" width=\"200\" height=\"28\" rx=\"4\" fill=\"#d29922\" opacity=\"0.15\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"60\" y=\"101\" class=\"t\" fill=\"#d29922\">add(3,5) 执行中</text>\n<line x1=\"240\" y1=\"96\" x2=\"300\" y2=\"96\" stroke=\"#d29922\" stroke-width=\"1\" stroke-dasharray=\"3\"/><polygon points=\"298,92 308,96 298,100\" fill=\"#d29922\"/>\n<text x=\"310\" y=\"100\" class=\"t\" fill=\"#8b949e\">返回 8 给 main()</text>\n<text x=\"40\" y=\"140\" class=\"t\" fill=\"#8b949e\">每个函数调用在栈上分配栈帧：参数 + 局部变量 + 返回地址</text>\n<text x=\"40\" y=\"158\" class=\"t\" fill=\"#8b949e\">函数返回后栈帧自动释放</text></svg>\n<h4>多返回值</h4><p>这是 Go 的一个标志性特性。常用于返回结果+错误。</p>\n<pre><code>func div(a, b int) (int, error) {\n    if b == 0 {\n        return 0, errors.New(\"除数不能为 0\")\n    }\n    return a / b, nil\n}\n\nresult, err := div(10, 2)\nif err != nil { fmt.Println(err); return }\nfmt.Println(result)  // 5</code></pre>\n<h4>命名返回值</h4><p>返回值可以提前命名，就像声明变量一样。</p>\n<pre><code>func split(sum int) (x, y int) {\n    x = sum * 4 / 9\n    y = sum - x\n    return  // 裸返回，自动返回 x 和 y 的当前值\n}</code></pre>\n<h4>defer — 延迟执行</h4><p>defer 在函数<strong>返回前</strong>执行。常用于关闭文件、释放锁、记录耗时。</p>\n<pre><code>func readFile() {\n    f, _ := os.Open(\"data.txt\")\n    defer f.Close()  // 函数结束时自动执行\n    // ... 处理数据\n}\n\n// 多 defer 后进先出\nfunc example() {\n    defer fmt.Println(\"1\")  // 最后执行\n    defer fmt.Println(\"2\")  // 第二个执行\n    fmt.Println(\"3\")        // 最先执行\n}  // 输出: 3 2 1</code></pre>",
+    "code": "package main\nimport \"fmt\"\nfunc add(a,b int) int { return a+b }\nfunc div(a,b int) (int,error) {\n    if b==0 { return 0, fmt.Errorf(\"zero\") }\n    return a/b, nil\n}\nfunc main() {\n    fmt.Println(add(3,5))\n    r,err := div(10,2)\n    if err!=nil { fmt.Println(err) } else { fmt.Println(r) }\n}",
+    "exercises": [
+      {
+        "id": "go-f1",
+        "title": "斐波那契",
+        "desc": "编写 fib(n int) int 返回第 n 个斐波那契数。F(0)=0, F(1)=1。",
+        "hint": "a,b:=0,1; for i:=2;i<=n;i++{a,b=b,a+b}",
+        "starterCode": "func fib(n int) int {\n    if n<=1 { return n }\n    a,b := 0,1\n    for i:=2; i<=n; i++ { a,b = b,a+b }\n    return b\n}",
+        "solution": "func fib(n int) int {\n    if n<=1 { return n }\n    a,b := 0,1\n    for i:=2; i<=n; i++ { a,b = b,a+b }\n    return b\n}",
+        "fn": "fib",
+        "tests": [
+          {
+            "args": [
+              0
+            ],
+            "expect": 0
+          },
+          {
+            "args": [
+              10
+            ],
+            "expect": 55
+          }
+        ]
+      },
+      {
+        "id": "go-f2",
+        "title": "多返回值",
+        "desc": "编写 swap(a,b int)(int,int) 返回交换后的值。",
+        "hint": "return b,a",
+        "starterCode": "func swap(a,b int)(int,int){ return b,a }",
+        "solution": "func swap(a,b int)(int,int){ return b,a }",
+        "fn": "swap",
+        "tests": [
+          {
+            "args": [
+              1,
+              2
+            ],
+            "expect": "2 1"
+          }
+        ]
+      },
+      {
+        "id": "go-f3",
+        "title": "闭包计数器",
+        "desc": "编写 counter() func() int，返回一个闭包，每次调用值+1 从 0 开始。",
+        "hint": "func counter() func() int { n:=0; return func() int { n++; return n } }",
+        "starterCode": "func counter() func() int {\n    n := 0\n    return func() int {\n        n++\n        return n\n    }\n}",
+        "solution": "func counter() func() int {\n    n := 0\n    return func() int { n++; return n }\n}",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "slice",
+    "icon": "📦",
+    "title": "数组与切片 — 动态数组",
+    "desc": "<h4>数组 — 固定长度的序列</h4><p>数组是<strong>固定长度</strong>的元素序列。长度写在类型中：<code>[5]int</code> 和 <code>[3]int</code> 是不同</p>\n<p>的类型。</p>\n<svg viewBox=\"0 0 560 130\" style=\"width:100%;max-width:560px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">数组内存 — arr := [5]int{10,20,30,40,50}</text><line x1=\"20\" y1=\"30\" x2=\"540\" y2=\"30\" class=\"tl\"/>\n<rect x=\"30\" y=\"38\" width=\"80\" height=\"32\" rx=\"3\" fill=\"#3fb950\" opacity=\"0.3\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"70\" y=\"58\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">10</text>\n<rect x=\"110\" y=\"38\" width=\"80\" height=\"32\" rx=\"3\" fill=\"#58a6ff\" opacity=\"0.3\" stroke=\"#58a6ff\" stroke-width=\"1\"/><text x=\"150\" y=\"58\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">20</text>\n<rect x=\"190\" y=\"38\" width=\"80\" height=\"32\" rx=\"3\" fill=\"#d29922\" opacity=\"0.3\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"230\" y=\"58\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">30</text>\n<rect x=\"270\" y=\"38\" width=\"80\" height=\"32\" rx=\"3\" fill=\"#f85149\" opacity=\"0.3\" stroke=\"#f85149\" stroke-width=\"1\"/><text x=\"310\" y=\"58\" class=\"t\" fill=\"#f85149\" text-anchor=\"middle\">40</text>\n<rect x=\"350\" y=\"38\" width=\"80\" height=\"32\" rx=\"3\" fill=\"#8b949e\" opacity=\"0.3\" stroke=\"#8b949e\" stroke-width=\"1\"/><text x=\"390\" y=\"58\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">50</text>\n<text x=\"30\" y=\"85\" class=\"t\" fill=\"#8b949e\">arr[0]  |  arr[1]  |  arr[2]  |  arr[3]  |  arr[4]</text>\n<text x=\"30\" y=\"105\" class=\"t\" fill=\"#8b949e\">连续内存，每个元素 8 字节（64位int），总 40 字节</text>\n<line x1=\"30\" y1=\"115\" x2=\"430\" y2=\"115\" stroke=\"#f85149\" stroke-width=\"1.5\"/>\n<text x=\"440\" y=\"118\" class=\"t\" fill=\"#f85149\">← 40 字节 →</text></svg>\n<pre><code>var arr [5]int               // [0 0 0 0 0]\narr2 := [3]int{10, 20, 30}  // 初始化\narr3 := [...]int{1,2,3,4}   // 自动推断长度\nfmt.Println(len(arr3))      // 4\n\n// 数组是值类型！赋值会复制整个数组\narr4 := arr2  // 复制一份，修改 arr4 不影响 arr2</code></pre>\n\n<h4>切片 — 动态长度的数组视图</h4>\n<p>数组长度固定是最大的限制。切片解决了这个问题——它像数组一样工作，但<strong>长度可以动态增长</strong>。</p>\n<svg viewBox=\"0 0 620 180\" style=\"width:100%;max-width:620px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">切片内部 = 指针 + 长度 + 容量</text><line x1=\"20\" y1=\"30\" x2=\"600\" y2=\"30\" class=\"tl\"/>\n<rect x=\"30\" y=\"38\" width=\"140\" height=\"50\" rx=\"4\" fill=\"#58a6ff\" opacity=\"0.15\" stroke=\"#58a6ff\" stroke-width=\"1\"/>\n<text x=\"100\" y=\"55\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">切片头 (24B)</text><line x1=\"45\" y1=\"60\" x2=\"155\" y2=\"60\" stroke=\"#2d3b4f\" stroke-width=\"0.5\"/>\n<text x=\"45\" y=\"75\" class=\"t\" fill=\"#58a6ff\">ptr ──→</text><text x=\"100\" y=\"88\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">len=5 cap=8</text>\n<line x1=\"170\" y1=\"63\" x2=\"210\" y2=\"63\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><polygon points=\"208,59 218,63 208,67\" fill=\"#58a6ff\"/>\n<rect x=\"220\" y=\"38\" width=\"50\" height=\"50\" rx=\"2\" fill=\"#3fb950\" opacity=\"0.3\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"245\" y=\"63\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">10</text>\n<rect x=\"270\" y=\"38\" width=\"50\" height=\"50\" rx=\"2\" fill=\"#3fb950\" opacity=\"0.3\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"295\" y=\"63\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">20</text>\n<rect x=\"320\" y=\"38\" width=\"50\" height=\"50\" rx=\"2\" fill=\"#3fb950\" opacity=\"0.3\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"345\" y=\"63\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">30</text>\n<rect x=\"370\" y=\"38\" width=\"50\" height=\"50\" rx=\"2\" fill=\"#3fb950\" opacity=\"0.3\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"395\" y=\"63\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">40</text>\n<rect x=\"420\" y=\"38\" width=\"50\" height=\"50\" rx=\"2\" fill=\"#3fb950\" opacity=\"0.3\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"445\" y=\"63\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">50</text>\n<rect x=\"470\" y=\"38\" width=\"50\" height=\"50\" rx=\"2\" fill=\"#2d3b4f\" stroke=\"#2d3b4f\" stroke-width=\"1\"/><text x=\"495\" y=\"63\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">-</text>\n<rect x=\"520\" y=\"38\" width=\"50\" height=\"50\" rx=\"2\" fill=\"#2d3b4f\" stroke=\"#2d3b4f\" stroke-width=\"1\"/><text x=\"545\" y=\"63\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">-</text>\n<rect x=\"570\" y=\"38\" width=\"50\" height=\"50\" rx=\"2\" fill=\"#2d3b4f\" stroke=\"#2d3b4f\" stroke-width=\"1\"/><text x=\"595\" y=\"63\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">-</text>\n<text x=\"240\" y=\"105\" class=\"t\" fill=\"#d29922\">len = 5（可访问 5 个元素）</text><line x1=\"220\" y1=\"110\" x2=\"470\" y2=\"110\" stroke=\"#d29922\" stroke-width=\"1.5\" stroke-dasharray=\"3\"/>\n<text x=\"240\" y=\"128\" class=\"t\" fill=\"#f85149\">cap = 8（底层数组总容量）</text><line x1=\"220\" y1=\"133\" x2=\"620\" y2=\"133\" stroke=\"#f85149\" stroke-width=\"1.5\" stroke-dasharray=\"3\"/>\n<text x=\"30\" y=\"155\" class=\"t\" fill=\"#3fb950\">📌 切片不存数据，它\"指向\"底层数组的某一段</text>\n<text x=\"30\" y=\"172\" class=\"t\" fill=\"#3fb950\">📌 append 超出 cap → 分配新数组（cap 加倍）</text></svg>\n<pre><code>// 创建切片\ns := []int{1,2,3}            // 字面量\ns := make([]int, 5)          // len=5, cap=5\ns := make([]int, 3, 5)       // len=3, cap=5 预分配\ns := arr[1:4]                // 从数组切出 [20 30 40]\n\n// 操作\ns = append(s, 4, 5)          // 追加\ncopy(dst, src)               // 复制\nfmt.Println(len(s), cap(s))  // 长度和容量\n\n// 遍历\nfor i, v := range s { fmt.Printf(\"s[%d]=%d\\n\", i, v) }</code></pre>",
+    "code": "package main\nimport \"fmt\"\nfunc main() {\n    s := []int{2,3,5,7,11}\n    fmt.Println(\"原始:\", s, \"len:\", len(s), \"cap:\", cap(s))\n    s = append(s, 13, 17)\n    fmt.Println(\"追加后:\", s, \"len:\", len(s), \"cap:\", cap(s))\n    sub := s[1:4]\n    fmt.Println(\"sub[1:4]:\", sub)\n    for i,v := range s { fmt.Printf(\"s[%d]=%d\\n\",i,v) }\n}",
+    "exercises": [
+      {
+        "id": "go-s1",
+        "title": "切片过滤",
+        "desc": "编写 filterEven(nums []int) []int 返回偶数切片。",
+        "hint": "if n%2==0 { r=append(r,n) }",
+        "starterCode": "func filterEven(nums []int) []int {\n    var r []int\n    for _,n:=range nums { if n%2==0 { r=append(r,n) } }\n    return r\n}",
+        "solution": "func filterEven(nums []int) []int {\n    var r []int\n    for _,n:=range nums { if n%2==0 { r=append(r,n) } }\n    return r\n}",
+        "fn": "filterEven",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "expect": [
+              2,
+              4,
+              6
+            ]
+          }
+        ]
+      },
+      {
+        "id": "go-s2",
+        "title": "反转切片",
+        "desc": "原地反转切片。",
+        "hint": "for i,j:=0,len(n)-1; i<j; i,j=i+1,j-1 { n[i],n[j]=n[j],n[i] }",
+        "starterCode": "func reverse(n []int) []int {\n    for i,j:=0,len(n)-1; i<j; i,j=i+1,j-1 { n[i],n[j]=n[j],n[i] }\n    return n\n}",
+        "solution": "func reverse(n []int) []int {\n    for i,j:=0,len(n)-1; i<j; i,j=i+1,j-1 { n[i],n[j]=n[j],n[i] }\n    return n\n}",
+        "fn": "reverse",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            ],
+            "expect": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "id": "go-s3",
+        "title": "切片合并",
+        "desc": "编写 merge(a,b []int) []int 将两个切片合并返回。",
+        "hint": "return append(a, b...)",
+        "starterCode": "func merge(a,b []int) []int {\n    return append(a, b...)\n}",
+        "solution": "func merge(a,b []int) []int { return append(a, b...) }",
+        "fn": "merge",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                2
+              ],
+              [
+                3,
+                4
+              ]
+            ],
+            "expect": [
+              1,
+              2,
+              3,
+              4
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "map",
+    "icon": "🗺️",
+    "title": "Map — 键值对快速查找",
+    "desc": "<p>Map（映射、字典）存储<strong>键值对</strong>。键必须是<strong>可比较类型</strong>（如 string、int），值可以是任意类型。</p>\n<h4>为什么用 Map 不用切片？</h4><p>想象你有一个班级名单：要找\"张三\"的年龄。用两个切片需要遍历匹配。用 Map：一秒定位。</p>\n<h4>Map 的基本操作</h4>\n<pre><code>// 创建\nm := make(map[string]int)\nm = map[string]int{\"张三\": 20, \"李四\": 22}\n\n// CRUD\nm[\"王五\"] = 21               // 增 / 改\ndelete(m, \"李四\")            // 删\n\n// 查 — 带存在判断\nage, ok := m[\"张三\"]\nif ok {\n    fmt.Println(\"张三的年龄:\", age)\n} else {\n    fmt.Println(\"查无此人\")\n}\n\n// 遍历\nfor name, age := range m {\n    fmt.Printf(\"%s: %d岁\\n\", name, age)\n}</code></pre>\n<svg viewBox=\"0 0 560 170\" style=\"width:100%;max-width:560px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">哈希表原理</text><line x1=\"20\" y1=\"30\" x2=\"540\" y2=\"30\" class=\"tl\"/>\n<rect x=\"30\" y=\"38\" width=\"70\" height=\"24\" rx=\"3\" fill=\"#2d3b4f\" stroke=\"#8b949e\" stroke-width=\"1\"/><text x=\"65\" y=\"55\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">B0</text>\n<rect x=\"30\" y=\"66\" width=\"70\" height=\"24\" rx=\"3\" fill=\"#58a6ff\" opacity=\"0.2\" stroke=\"#58a6ff\" stroke-width=\"1\"/><text x=\"65\" y=\"83\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">B1 ←</text>\n<rect x=\"30\" y=\"94\" width=\"70\" height=\"24\" rx=\"3\" fill=\"#2d3b4f\" stroke=\"#8b949e\" stroke-width=\"1\"/><text x=\"65\" y=\"111\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">B2</text>\n<rect x=\"30\" y=\"122\" width=\"70\" height=\"24\" rx=\"3\" fill=\"#3fb950\" opacity=\"0.2\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"65\" y=\"139\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">B3</text>\n<line x1=\"100\" y1=\"78\" x2=\"140\" y2=\"78\" stroke=\"#58a6ff\" stroke-width=\"1\"/><polygon points=\"138,74 148,78 138,82\" fill=\"#58a6ff\"/>\n<rect x=\"150\" y=\"62\" width=\"140\" height=\"32\" rx=\"3\" fill=\"#1a2332\" stroke=\"#58a6ff\" stroke-width=\"0.5\"/><text x=\"165\" y=\"82\" class=\"t\" fill=\"#58a6ff\">\"张三\" → 20</text>\n<rect x=\"150\" y=\"98\" width=\"140\" height=\"32\" rx=\"3\" fill=\"#1a2332\" stroke=\"#58a6ff\" stroke-width=\"0.5\"/><text x=\"165\" y=\"118\" class=\"t\" fill=\"#58a6ff\">\"王五\" → 21</text>\n<text x=\"30\" y=\"160\" class=\"t\" fill=\"#d29922\">⚠️ 遍历顺序随机！</text><text x=\"160\" y=\"160\" class=\"t\" fill=\"#d29922\">⚠️ nil map 写入会 panic</text></svg>\n<h4>常见陷阱</h4>\n<ul>\n<li><strong>nil map 不能写入：</strong> <code>var m map[string]int</code> 是 nil，必须用 <code>make</code> 或字面量创建</li>\n<li><strong>遍历顺序随机：</strong> 每次运行结果可能不同！不要依赖顺序</li>\n<li><strong>Map 是引用类型：</strong> 函数内修改会影响原 Map</li>\n<li><strong>读不存在的键返回零值：</strong> 用 <code>val, ok := m[key]</code> 判断是否存在</li>\n</ul>",
+    "code": "package main\nimport \"fmt\"\nfunc main() {\n    ages := map[string]int{\"Alice\":30,\"Bob\":25}\n    ages[\"Charlie\"]=35\n    delete(ages,\"Bob\")\n    if v,ok:=ages[\"Alice\"]; ok { fmt.Println(\"Alice:\",v) }\n    for n,a := range ages { fmt.Printf(\"%s:%d\\n\",n,a) }\n}",
+    "exercises": [
+      {
+        "id": "go-m1",
+        "title": "单词计数",
+        "desc": "统计每个单词出现次数。",
+        "hint": "m[word]++",
+        "starterCode": "func wordCount(words []string) map[string]int {\n    m:=make(map[string]int)\n    for _,w:=range words { m[w]++ }\n    return m\n}",
+        "solution": "func wordCount(words []string) map[string]int {\n    m:=make(map[string]int)\n    for _,w:=range words { m[w]++ }\n    return m\n}",
+        "fn": "wordCount",
+        "tests": [
+          {
+            "args": [
+              [
+                "a",
+                "b",
+                "a"
+              ]
+            ],
+            "expect": {
+              "a": 2,
+              "b": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "go-m2",
+        "title": "最大值键",
+        "desc": "找出 map 中值最大的键。",
+        "hint": "if v>mv { mk,mv=k,v }",
+        "starterCode": "func maxKey(m map[string]int) string {\n    var mk string; var mv int\n    for k,v:=range m { if v>mv { mk,mv=k,v } }\n    return mk\n}",
+        "solution": "func maxKey(m map[string]int) string {\n    var mk string; var mv int\n    for k,v:=range m { if v>mv { mk,mv=k,v } }\n    return mk\n}",
+        "fn": "maxKey",
+        "tests": [
+          {
+            "args": [
+              {
+                "a": 10,
+                "b": 30,
+                "c": 20
+              }
+            ],
+            "expect": "b"
+          }
+        ]
+      },
+      {
+        "id": "go-m3",
+        "title": "键值交换",
+        "desc": "交换 map 的键和值（假设值也是唯一的）。",
+        "hint": "for k,v:=range m { result[v]=k }",
+        "starterCode": "func swapKV(m map[string]int) map[int]string {\n    r:=make(map[int]string)\n    for k,v:=range m { r[v]=k }\n    return r\n}",
+        "solution": "func swapKV(m map[string]int) map[int]string {\n    r:=make(map[int]string)\n    for k,v:=range m { r[v]=k }\n    return r\n}",
+        "fn": "swapKV",
+        "tests": [
+          {
+            "args": [
+              {
+                "a": 1,
+                "b": 2
+              }
+            ],
+            "expect": {
+              "1": "a",
+              "2": "b"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "struct",
+    "icon": "🏗️",
+    "title": "结构体 — 自定义类型",
+    "desc": "<p>结构体把<strong>多个相关字段打包成一个新类型</strong>，就像一张登记表。它是 Go 面向对象编程的基础。如果你熟悉 C 语言的 struct 或 Java 的 class，可以类比理解。</p>\n<h4>为什么需要结构体？</h4><p>假设你要处理学生信息。没有结构体时必须维护多个平行切片：</p>\n<pre><code>names := []string{\"Alice\", \"Bob\"}\nages  := []int{30, 25}\n// 找 Bob 的年龄：先找到 name 的索引，再去 ages 取\n// 容易出错，而且添加新字段（如城市）要改所有代码</code></pre>\n<p>用结构体把相关信息打包在一起：</p>\n<pre><code>type Person struct {\n    Name string\n    Age  int\n    City string\n}\n\nalice := Person{Name:\"Alice\", Age:30, City:\"Beijing\"}\nbob := Person{Name:\"Bob\", Age:25}\nfmt.Println(alice.Name, bob.Age)</code></pre>\n<h4>创建方式</h4>\n<pre><code>p1 := Person{Name:\"Alice\", Age:30}   // 指定字段名（推荐，清晰）\np2 := Person{\"Bob\", 25, \"Shanghai\"}  // 按顺序（不推荐，字段顺序变了会出错）\np3 := &Person{Name:\"Charlie\"}        // 指针（Age=\"\", City=\"\"）\np4 := new(Person)                    // &Person{} 的简写</code></pre>\n<h4>方法 — 带接收者的函数</h4>\n<pre><code>// 值接收者：方法操作的是结构体副本，不影响原对象\nfunc (p Person) Greet() string {\n    return \"Hi, I'm \" + p.Name + \" (\" + strconv.Itoa(p.Age) + \")\"\n}\n\n// 指针接收者：方法操作的是原对象，可以修改字段\nfunc (p *Person) Birthday() {\n    p.Age++\n}\n\nalice := Person{Name:\"Alice\", Age:30}\nfmt.Println(alice.Greet())  // Hi, I'm Alice (30)\nalice.Birthday()\nfmt.Println(alice.Age)      // 31（被方法修改了）</code></pre>\n<h4>值接收者 vs 指针接收者</h4>\n<table border=\"1\" cellpadding=\"4\" style=\"border-collapse:collapse;border-color:#2d3b4f;margin:8px 0\">\n<tr style=\"background:#1a2332\"><th style=\"padding:6px 12px\">对比</th><th style=\"padding:6px 12px\">值接收者 func(p Person)</th><th style=\"padding:6px 12px\">指针接收者 func(p *Person)</th></tr>\n<tr><td>能否修改原字段</td><td>❌ 操作的是副本</td><td>✅ 操作的是原对象</td></tr>\n<tr><td>性能（大结构体）</td><td>复制整个结构体（慢）</td><td>复制指针 8 字节（快）</td></tr>\n<tr><td>nil 安全</td><td>安全（不会 nil）</td><td>需在方法内判断 nil</td></tr></table>\n<p><strong>经验法则</strong>：不确定时用指针接收者。只有小型不可变值类型（如 <code>time.Time</code>、<code>Color</code>）用值接收者。</p>",
+    "code": "package main\nimport \"fmt\"\ntype Rect struct { W,H float64 }\nfunc (r Rect) Area() float64 { return r.W*r.H }\nfunc (r *Rect) Scale(f float64) { r.W*=f; r.H*=f }\nfunc main() {\n    r:=Rect{10,5}\n    fmt.Println(\"Area:\",r.Area())\n    r.Scale(2)\n    fmt.Println(\"After:\",r)\n}",
+    "exercises": [
+      {
+        "id": "go-st1",
+        "title": "Circle 面积",
+        "desc": "定义 Circle 含 Radius，实现 Area() 方法。",
+        "hint": "return 3.14159*c.Radius*c.Radius",
+        "starterCode": "type Circle struct { Radius float64 }\nfunc (c Circle) Area() float64 { return 3.14159*c.Radius*c.Radius }",
+        "solution": "func (c Circle) Area() float64 { return 3.14159*c.Radius*c.Radius }",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "go-st2",
+        "title": "嵌套结构体",
+        "desc": "定义 Address 和 Person，Person 内嵌 Address 字段。初始化并打印城市。",
+        "hint": "type Person struct { Name string; Addr Address }",
+        "starterCode": "type Address struct { City string; Street string }\ntype Person struct {\n    Name string\n    Addr Address\n}\nfunc main() {\n    p:=Person{Name:\"Alice\",Addr:Address{City:\"Beijing\",Street:\"Main St\"}}\n    // TODO: 打印城市\n}",
+        "solution": "//",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "interface",
+    "icon": "🔌",
+    "title": "接口 — 约定优于继承",
+    "desc": "<p>接口定义<strong>行为契约</strong>——一组方法签名。Go 的接口是<strong>隐式实现</strong>的：一个类型只要实现了接口里所有的方法，它就自动满足该接口，不需要显式声明 implements。</p>\n<h4>为什么叫\"鸭子类型\"？</h4><p>\"如果它走起来像鸭子、叫起来像鸭子，那它就是鸭子。\"——类型不需要说\"我实现了 Shape\"，Go 编译器自动检查：如果你有 Area() 方法，那你就实现了 Shape 接口。</p>\n<h4>解决什么问题？</h4><p>没有接口时：</p>\n<pre><code>func printCircleArea(c Circle) { fmt.Println(c.Area()) }\nfunc printSquareArea(s Square) { fmt.Println(s.Area()) }\n// 每新增一种形状就要写一个新函数</code></pre>\n<p>用接口后：</p>\n<pre><code>type Shape interface { Area() float64 }\nfunc printArea(s Shape) {\n    fmt.Printf(\"面积: %.2f\\n\", s.Area())\n}\n// 任何有 Area() 方法的类型都能传入！</code></pre>\n<h4>接口值内部结构</h4><p>接口变量底层存储 (type, value) 对。当 <code>var s Shape = Circle{5}</code> 时，s 内部存的是 (<strong>*Circle</strong>, <strong>&{R:5}</strong>)。</p>\n<p><strong>重要陷阱：</strong> 接口为 nil 仅当 type 和 value 都是 nil。</p>\n<pre><code>var c *Circle = nil  // c 是 nil 指针\nvar s Shape = c      // s 的 type = *Circle, value = nil\nfmt.Println(s == nil)  // false！因为 type 部分不是 nil</code></pre>\n<h4>空接口 interface{}</h4><p>空接口没有方法，所以任何类型都满足空接口——类似 Java 的 Object。</p>\n<pre><code>var v interface{} = 42\nv = \"hello\"\nv = []int{1,2,3}\n\n// 安全类型断言\ns, ok := v.(string)\nif ok { fmt.Println(\"字符串:\", s) }\n\n// 类型 switch\nswitch vv := v.(type) {\ncase int:    fmt.Println(\"整数:\", vv)\ncase string: fmt.Println(\"字符串:\", vv)\ndefault:     fmt.Printf(\"其他: %T\\n\", vv)\n}</code></pre>",
+    "code": "package main\nimport (\"fmt\";\"math\")\ntype Shape interface { Area() float64 }\ntype Circle struct { R float64 }\nfunc (c Circle) Area() float64 { return math.Pi*c.R*c.R }\ntype Rect struct { W,H float64 }\nfunc (r Rect) Area() float64 { return r.W*r.H }\nfunc main() {\n    for _,s := range []Shape{Circle{5},Rect{3,4}} {\n        fmt.Printf(\"%T: %.2f\\n\",s,s.Area())\n    }\n}",
+    "exercises": [
+      {
+        "id": "go-if1",
+        "title": "类型断言",
+        "desc": "编写 describe(v interface{}) string 返回 \"int:xx\"/\"string:xx\"/\"unknown\"。",
+        "hint": "switch v.(type)",
+        "starterCode": "func describe(v interface{}) string {\n    switch x:=v.(type) {\n    case int: return fmt.Sprintf(\"int:%d\",x)\n    case string: return fmt.Sprintf(\"string:%s\",x)\n    default: return \"unknown\"\n    }\n}",
+        "solution": "func describe(v interface{}) string {\n    switch x:=v.(type) {\n    case int: return fmt.Sprintf(\"int:%d\",x)\n    case string: return fmt.Sprintf(\"string:%s\",x)\n    default: return \"unknown\"\n    }\n}",
+        "fn": "describe",
+        "tests": [
+          {
+            "args": [
+              42
+            ],
+            "expect": "int:42"
+          },
+          {
+            "args": [
+              "hi"
+            ],
+            "expect": "string:hi"
+          },
+          {
+            "args": [
+              3.14
+            ],
+            "expect": "unknown"
+          }
+        ]
+      },
+      {
+        "id": "go-if2",
+        "title": "多接口实现",
+        "desc": "定义两个接口 Writer(Write(string)) 和 Reader(Read()string)，实现一个类型同时满足两个接口。",
+        "hint": "type Device struct{}; func (d Device) Write(s string){}; func (d Device) Read()string{return \"\"}",
+        "starterCode": "// 定义接口和实现",
+        "solution": "//",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "error",
+    "icon": "⚠️",
+    "title": "错误处理 — 优雅面对失败",
+    "desc": "<p>Go 没有 try/catch、没有 throw。错误就是一个<strong>实现了 error 接口的普通值</strong>，通过函数返回值显式返回。你必须自己检查每个错误——这迫使你写出更健壮的代码。</p>\n<h4>error 接口定义</h4>\n<pre><code>type error interface {\n    Error() string\n}\n\n// 创建错误\nerrors.New(\"出错了\")\nfmt.Errorf(\"第 %d 行出错\", 42)</code></pre>\n<h4>基本模式：始终检查错误</h4>\n<pre><code>// 返回错误的函数\nfunc parseInt(s string) (int, error) {\n    n, err := strconv.Atoi(s)\n    if err != nil {\n        return 0, fmt.Errorf(\"解析 '%s' 失败: %w\", s, err)\n    }\n    return n, nil\n}\n\n// 调用方必须检查\nn, err := parseInt(\"123\")\nif err != nil {\n    fmt.Println(\"错误:\", err)\n    return\n}\nfmt.Println(\"数字:\", n)</code></pre>\n<h4>自定义错误</h4>\n<pre><code>type ValidationError struct {\n    Field string\n    Value interface{}\n}\n\nfunc (e *ValidationError) Error() string {\n    return fmt.Sprintf(\"字段 '%s' 值 %v 无效\", e.Field, e.Value)\n}\n\n// 判断具体错误类型\nvar ve *ValidationError\nif errors.As(err, &ve) {\n    fmt.Printf(\"字段 %s 无效，收到值: %v\\n\", ve.Field, ve.Value)\n}</code></pre>\n<h4>错误包装（Go 1.13+）</h4>\n<pre><code>// %w 创建错误链\nif err != nil {\n    return fmt.Errorf(\"操作失败: %w\", err)\n}\n\n// errors.Is 遍历链查找特定错误\nif errors.Is(err, os.ErrNotExist) {\n    fmt.Println(\"文件不存在\")\n}\n\n// errors.As 遍历链查找特定类型\nvar pe *os.PathError\nif errors.As(err, &pe) {\n    fmt.Printf(\"路径 %s 操作失败: %v\\n\", pe.Path, pe.Err)\n}</code></pre>\n<h4>最佳实践</h4>\n<ul><li>✅ 总是检查 <code>err != nil</code></li><li>✅ 用 <code>fmt.Errorf(\"上下文: %w\", err)</code> 包装错误</li><li>✅ 用 <code>errors.Is</code> 和 <code>errors.As</code> 判断错误</li><li>❌ 不要忽略错误：<code>result, _ := someFunc()</code></li><li>❌ 不要在常规逻辑中使用 <code>panic</code></li></ul>",
+    "code": "package main\nimport (\"errors\";\"fmt\")\nfunc safeDiv(a,b int)(int,error){\n    if b==0 { return 0, errors.New(\"zero\") }\n    return a/b, nil\n}\nfunc main() {\n    r,err:=safeDiv(10,0)\n    if err!=nil{ fmt.Println(\"Err:\",err) }else{ fmt.Println(r) }\n    r,err=safeDiv(10,2)\n    if err==nil{ fmt.Println(\"Result:\",r) }\n}",
+    "exercises": [
+      {
+        "id": "go-e1",
+        "title": "正数解析",
+        "desc": "编写 parsePositive(s string)(int,error) 将字符串转 int，负数返回 \"must be positive\"。",
+        "hint": "if n<0 { return 0, errors.New(\"neg\") }",
+        "starterCode": "func parsePositive(s string)(int,error){\n    n,err:=strconv.Atoi(s)\n    if err!=nil{ return 0,err }\n    if n<0{ return 0,errors.New(\"must be positive\") }\n    return n,nil\n}",
+        "solution": "func parsePositive(s string)(int,error){\n    n,err:=strconv.Atoi(s)\n    if err!=nil{ return 0,err }\n    if n<0{ return 0,errors.New(\"must be positive\") }\n    return n,nil\n}",
+        "fn": "parsePositive",
+        "tests": [
+          {
+            "args": [
+              "42"
+            ],
+            "expect": 42
+          },
+          {
+            "args": [
+              "-1"
+            ],
+            "expect": "must be positive"
+          }
+        ]
+      },
+      {
+        "id": "go-e2",
+        "title": "错误包装链",
+        "desc": "编写 readConfig 读取文件并返回内容，使用 %w 包装 os.Open 的错误。",
+        "hint": "return \"\", fmt.Errorf(\"read config: %w\", err)",
+        "starterCode": "func readConfig(path string)(string,error){\n    data,err:=os.ReadFile(path)\n    if err!=nil{ return \"\", fmt.Errorf(\"read config: %w\", err) }\n    return string(data),nil\n}",
+        "solution": "func readConfig(path string)(string,error){\n    data,err:=os.ReadFile(path)\n    if err!=nil{ return \"\", fmt.Errorf(\"read config: %w\", err) }\n    return string(data),nil\n}",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "goroutine",
+    "icon": "⚡",
+    "title": "Goroutine — 轻量级并发",
+    "desc": "<p>Goroutine 是 Go 最强大的特性之一。它是一个<strong>轻量级的执行线程</strong>，由 Go 运行时管理，而不是操作系统。创建一个 goroutine 只需要 ~4KB 的栈空间（相比 OS 线程的 ~2MB），所以你可以轻松创建上百万个。</p>\n<svg viewBox=\"0 0 580 180\" style=\"width:100%;max-width:580px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">Go 调度器 — GMP 模型</text><line x1=\"20\" y1=\"30\" x2=\"560\" y2=\"30\" class=\"tl\"/>\n<rect x=\"30\" y=\"38\" width=\"60\" height=\"22\" rx=\"3\" fill=\"#3fb950\" opacity=\"0.2\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"60\" y=\"53\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">G1</text>\n<rect x=\"30\" y=\"64\" width=\"60\" height=\"22\" rx=\"3\" fill=\"#58a6ff\" opacity=\"0.2\" stroke=\"#58a6ff\" stroke-width=\"1\"/><text x=\"60\" y=\"79\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">G2</text>\n<rect x=\"30\" y=\"90\" width=\"60\" height=\"22\" rx=\"3\" fill=\"#d29922\" opacity=\"0.2\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"60\" y=\"105\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">G3</text>\n<rect x=\"30\" y=\"116\" width=\"60\" height=\"22\" rx=\"3\" fill=\"#f85149\" opacity=\"0.2\" stroke=\"#f85149\" stroke-width=\"1\"/><text x=\"60\" y=\"131\" class=\"t\" fill=\"#f85149\" text-anchor=\"middle\">G4</text>\n<text x=\"60\" y=\"156\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">Goroutine 队列</text>\n<line x1=\"90\" y1=\"70\" x2=\"150\" y2=\"70\" stroke=\"#58a6ff\" stroke-width=\"0.5\"/><line x1=\"90\" y1=\"101\" x2=\"150\" y2=\"101\" stroke=\"#d29922\" stroke-width=\"0.5\"/>\n<rect x=\"160\" y=\"55\" width=\"60\" height=\"28\" rx=\"4\" fill=\"#d29922\" stroke=\"#d29922\" stroke-width=\"1.5\"/><text x=\"190\" y=\"73\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">P0</text>\n<rect x=\"160\" y=\"95\" width=\"60\" height=\"28\" rx=\"4\" fill=\"#d29922\" stroke=\"#d29922\" stroke-width=\"1.5\"/><text x=\"190\" y=\"113\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">P1</text>\n<text x=\"190\" y=\"156\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">Processor</text>\n<line x1=\"220\" y1=\"69\" x2=\"290\" y2=\"69\" stroke=\"#d29922\" stroke-width=\"0.5\"/><line x1=\"220\" y1=\"109\" x2=\"290\" y2=\"109\" stroke=\"#d29922\" stroke-width=\"0.5\"/>\n<rect x=\"300\" y=\"55\" width=\"60\" height=\"28\" rx=\"4\" fill=\"#f85149\" stroke=\"#f85149\" stroke-width=\"1.5\"/><text x=\"330\" y=\"73\" class=\"t\" fill=\"#f85149\" text-anchor=\"middle\">M0</text>\n<rect x=\"300\" y=\"95\" width=\"60\" height=\"28\" rx=\"4\" fill=\"#f85149\" stroke=\"#f85149\" stroke-width=\"1.5\"/><text x=\"330\" y=\"113\" class=\"t\" fill=\"#f85149\" text-anchor=\"middle\">M1</text>\n<text x=\"330\" y=\"156\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">OS Thread</text>\n<line x1=\"360\" y1=\"69\" x2=\"420\" y2=\"69\" stroke=\"#f85149\" stroke-width=\"0.5\"/><line x1=\"360\" y1=\"109\" x2=\"420\" y2=\"109\" stroke=\"#f85149\" stroke-width=\"0.5\"/>\n<rect x=\"430\" y=\"55\" width=\"80\" height=\"28\" rx=\"4\" fill=\"#1a2332\" stroke=\"#8b949e\" stroke-width=\"1\"/><text x=\"470\" y=\"73\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">CPU0</text>\n<rect x=\"430\" y=\"95\" width=\"80\" height=\"28\" rx=\"4\" fill=\"#1a2332\" stroke=\"#8b949e\" stroke-width=\"1\"/><text x=\"470\" y=\"113\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">CPU1</text><text x=\"470\" y=\"156\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">CPU</text>\n<text x=\"30\" y=\"178\" class=\"t\" fill=\"#8b949e\">G(4KB) → P(逻辑核) → M(OS线程) → CPU(硬件)</text></svg>\n<h4>基本使用</h4>\n<pre><code>func say(s string) {\n    for i:=0; i<3; i++ {\n        time.Sleep(100*time.Millisecond)\n        fmt.Println(s)\n    }\n}\n\nfunc main() {\n    go say(\"🌍 世界\")  // 新 goroutine\n    say(\"👋 你好\")     // main goroutine 同时执行\n}\n// 输出交替出现（顺序可能不同）</code></pre>\n\n<h4>等待 goroutine — sync.WaitGroup</h4>\n<pre><code>func worker(id int, wg *sync.WaitGroup) {\n    defer wg.Done()  // 必须调用 Done()\n    fmt.Printf(\"Worker %d 开始\\n\", id)\n    time.Sleep(time.Second)\n}\n\nfunc main() {\n    var wg sync.WaitGroup\n    for i:=1; i<=3; i++ {\n        wg.Add(1)            // 计数器 +1\n        go worker(i, &wg)     // 启动 goroutine\n    }\n    wg.Wait()  // 阻塞直到计数器归零\n    fmt.Println(\"全部完成\")\n}</code></pre>\n\n<h4>常见陷阱</h4>\n<ul>\n<li><strong>循环变量捕获：</strong> 在 for 循环中启动 goroutine 必须传参 <code>go func(id int) { ... }(i)</code></li>\n<li><strong>goroutine 泄漏：</strong> goroutine 读 channel 但没人写 → 永远阻塞 → 内存泄漏</li>\n</ul>",
+    "code": "package main\nimport (\"fmt\";\"sync\";\"time\")\nfunc worker(id int,wg *sync.WaitGroup) {\n    defer wg.Done()\n    fmt.Printf(\"W%d start\\n\",id)\n    time.Sleep(time.Second)\n    fmt.Printf(\"W%d done\\n\",id)\n}\nfunc main() {\n    var wg sync.WaitGroup\n    for i:=1;i<=3;i++{ wg.Add(1); go worker(i,&wg) }\n    wg.Wait()\n    fmt.Println(\"All done\")\n}",
+    "exercises": [
+      {
+        "id": "go-g1",
+        "title": "并发求和",
+        "desc": "用 2 个 goroutine 求数组前后半和。",
+        "hint": "wg.Add(2)",
+        "starterCode": "func concurrentSum(nums []int) int {\n    mid:=len(nums)/2; var s1,s2 int; var wg sync.WaitGroup\n    wg.Add(2)\n    go func(){ defer wg.Done(); for _,v:=range nums[:mid]{s1+=v} }()\n    go func(){ defer wg.Done(); for _,v:=range nums[mid:]{s2+=v} }()\n    wg.Wait()\n    return s1+s2\n}",
+        "solution": "func concurrentSum(nums []int) int {\n    mid:=len(nums)/2; var s1,s2 int; var wg sync.WaitGroup\n    wg.Add(2)\n    go func(){ defer wg.Done(); for _,v:=range nums[:mid]{s1+=v} }()\n    go func(){ defer wg.Done(); for _,v:=range nums[mid:]{s2+=v} }()\n    wg.Wait()\n    return s1+s2\n}",
+        "fn": "concurrentSum",
+        "tests": [
+          {
+            "args": [
+              [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "expect": 21
+          }
+        ]
+      },
+      {
+        "id": "go-g2",
+        "title": "扇出模式",
+        "desc": "启动 5 个 goroutine 各自计算数字平方，通过 channel 返回结果。",
+        "hint": "for i:=0;i<5;i++{ wg.Add(1); go func(n int){...}(i) }",
+        "starterCode": "func fanOutSquares(nums []int) []int {\n    ch:=make(chan int, len(nums))\n    var wg sync.WaitGroup\n    for _,n:=range nums{\n        wg.Add(1)\n        go func(x int){ defer wg.Done(); ch<-x*x }(n)\n    }\n    wg.Wait()\n    close(ch)\n    var r []int\n    for v:=range ch{ r=append(r,v) }\n    return r\n}",
+        "solution": "//",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "channel",
+    "icon": "🔗",
+    "title": "Channel — 协程通信",
+    "desc": "<p>Channel 是 goroutine 之间的<strong>通信管道</strong>。Go 的核心理念：<strong>不要通过共享内存来通信，而要通过通信来共享内存</strong>。</p>\n<h4>为什么需要 Channel？</h4><p>Goroutine A 计算了一个结果，Goroutine B 需要这个结果。没有 channel 的话，你得用共享变量 + 锁。channel 让数据在 goroutine 之间安全地流动。</p>\n<h4>两种 Channel</h4>\n<svg viewBox=\"0 0 580 180\" style=\"width:100%;max-width:580px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">无缓冲 Channel vs 有缓冲 Channel</text><line x1=\"20\" y1=\"30\" x2=\"560\" y2=\"30\" class=\"tl\"/>\n<text x=\"30\" y=\"52\" class=\"t\" fill=\"#58a6ff\" font-weight=\"bold\">无缓冲（同步）</text>\n<rect x=\"30\" y=\"60\" width=\"90\" height=\"28\" rx=\"4\" fill=\"#3fb950\" opacity=\"0.2\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"75\" y=\"79\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">发送方</text>\n<line x1=\"120\" y1=\"74\" x2=\"200\" y2=\"74\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><polygon points=\"198,70 208,74 198,78\" fill=\"#58a6ff\"/>\n<text x=\"220\" y=\"78\" class=\"t\" fill=\"#f85149\">双方必须同时准备好</text>\n<rect x=\"360\" y=\"60\" width=\"90\" height=\"28\" rx=\"4\" fill=\"#d29922\" opacity=\"0.2\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"405\" y=\"79\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">接收方</text>\n<line x1=\"360\" y1=\"74\" x2=\"280\" y2=\"74\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><polygon points=\"282,70 272,74 282,78\" fill=\"#58a6ff\"/>\n<text x=\"30\" y=\"110\" class=\"t\" fill=\"#58a6ff\" font-weight=\"bold\">有缓冲（异步）</text>\n<rect x=\"30\" y=\"118\" width=\"90\" height=\"28\" rx=\"4\" fill=\"#3fb950\" opacity=\"0.2\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"75\" y=\"137\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">发送方</text>\n<line x1=\"120\" y1=\"132\" x2=\"180\" y2=\"132\" stroke=\"#58a6ff\" stroke-width=\"1\"/><polygon points=\"178,128 188,132 178,136\" fill=\"#58a6ff\"/>\n<rect x=\"190\" y=\"115\" width=\"120\" height=\"34\" rx=\"17\" fill=\"#58a6ff\" opacity=\"0.1\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><text x=\"250\" y=\"133\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">缓冲区 [3/10]</text>\n<line x1=\"310\" y1=\"132\" x2=\"370\" y2=\"132\" stroke=\"#58a6ff\" stroke-width=\"1\"/><polygon points=\"368,128 378,132 368,136\" fill=\"#58a6ff\"/>\n<rect x=\"380\" y=\"118\" width=\"90\" height=\"28\" rx=\"4\" fill=\"#d29922\" opacity=\"0.2\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"425\" y=\"137\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">接收方</text>\n<text x=\"30\" y=\"170\" class=\"t\" fill=\"#8b949e\">缓冲未满时发送不阻塞，未空时接收不阻塞</text></svg>\n<h4>完整用法</h4>\n<pre><code>// 创建\nch := make(chan int)             // 无缓冲\nch := make(chan int, 100)         // 有缓冲\n\n// 发送与接收\nch <- 42          // 发送\nval := <-ch       // 接收\nclose(ch)         // 关闭\n\n// 只读/只写限制（函数参数）\nfunc producer(out chan<- int) { out <- 42 }  // 只写\nfunc consumer(in <-chan int) { x := <-in }   // 只读\n\n// 遍历\nfor v := range ch {  // 自动在 close 时退出\n    fmt.Println(v)\n}\n\n// 判断是否关闭\nv, ok := <-ch\nif !ok { fmt.Println(\"channel 已关闭\") }</code></pre>\n<h4>常见陷阱</h4>\n<ul>\n<li>向已关闭的 channel 发送 → panic</li>\n<li>从已关闭的 channel 接收 → 返回零值（不阻塞）</li>\n<li>nil channel 发送/接收 → 永久阻塞</li>\n<li>不关闭 channel → goroutine 泄漏（for range 无法退出）</li>\n</ul>",
+    "code": "package main\nimport \"fmt\"\nfunc sum(s []int,ch chan int) {\n    sum:=0; for _,v:=range s{sum+=v}\n    ch<-sum\n}\nfunc main() {\n    s:=[]int{1,2,3,4,5,6}\n    ch:=make(chan int)\n    go sum(s[:3],ch); go sum(s[3:],ch)\n    x,y:=<-ch,<-ch\n    fmt.Println(x,y,x+y)\n}",
+    "exercises": [
+      {
+        "id": "go-cn1",
+        "title": "斐波那契 Channel",
+        "desc": "发前 n 个斐波那契数到 ch 后 close。",
+        "hint": "for i:=0;i<n;i++{ch<-a; a,b=b,a+b}",
+        "starterCode": "func fibChan(n int,ch chan int) {\n    a,b:=0,1\n    for i:=0;i<n;i++{ ch<-a; a,b=b,a+b }\n    close(ch)\n}",
+        "solution": "func fibChan(n int,ch chan int) {\n    a,b:=0,1\n    for i:=0;i<n;i++{ ch<-a; a,b=b,a+b }\n    close(ch)\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "go-cn2",
+        "title": "Worker 池",
+        "desc": "启动 3 个 worker goroutine，从 jobs channel 接收任务，结果发到 results channel。",
+        "hint": "for j:=range jobs { results<-j*2 }",
+        "starterCode": "func workerPool(jobs <-chan int, results chan<- int) {\n    var wg sync.WaitGroup\n    for i:=0;i<3;i++{\n        wg.Add(1)\n        go func(){\n            defer wg.Done()\n            for j:=range jobs{ results<-j*2 }\n        }()\n    }\n    wg.Wait()\n    close(results)\n}",
+        "solution": "//",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "select",
+    "icon": "🔀",
+    "title": "Select — 多路复用",
+    "desc": "<p><code>select</code> 让一个 goroutine 同时等待<strong>多个 channel 操作</strong>。哪个 case 的数据先准备好就执行哪个——类似于 Unix 的 <code>select()</code> 系统调用。</p>\n<h4>基本语法</h4>\n<pre><code>select {\ncase v := <-ch1:\n    fmt.Println(\"从 ch1 收到:\", v)\ncase v := <-ch2:\n    fmt.Println(\"从 ch2 收到:\", v)\ncase <-time.After(2 * time.Second):\n    fmt.Println(\"超时！\")\ndefault:\n    fmt.Println(\"所有 channel 都阻塞\")\n}</code></pre>\n<svg viewBox=\"0 0 540 160\" style=\"width:100%;max-width:540px;margin:12px 0;border-radius:6px;background:#1a2332;padding:10px\"><style>.t{fill:#e6edf3;font-size:12px;font-family:monospace}.tb{fill:#58a6ff;font-weight:bold;font-size:13px}.tl{stroke:#2d3b4f;stroke-width:1}.th{fill:#3fb950}.tr{fill:#f85149}.ty{fill:#d29922}</style>\n<text x=\"20\" y=\"22\" class=\"tb\">Select 多路复用</text><line x1=\"20\" y1=\"30\" x2=\"520\" y2=\"30\" class=\"tl\"/>\n<rect x=\"30\" y=\"40\" width=\"80\" height=\"26\" rx=\"3\" fill=\"#3fb950\" opacity=\"0.2\" stroke=\"#3fb950\" stroke-width=\"1\"/><text x=\"70\" y=\"58\" class=\"t\" fill=\"#3fb950\" text-anchor=\"middle\">ch1</text>\n<rect x=\"30\" y=\"74\" width=\"80\" height=\"26\" rx=\"3\" fill=\"#d29922\" opacity=\"0.2\" stroke=\"#d29922\" stroke-width=\"1\"/><text x=\"70\" y=\"92\" class=\"t\" fill=\"#d29922\" text-anchor=\"middle\">ch2</text>\n<rect x=\"30\" y=\"108\" width=\"80\" height=\"26\" rx=\"3\" fill=\"#f85149\" opacity=\"0.2\" stroke=\"#f85149\" stroke-width=\"1\"/><text x=\"70\" y=\"126\" class=\"t\" fill=\"#f85149\" text-anchor=\"middle\">timeout</text>\n<line x1=\"110\" y1=\"53\" x2=\"170\" y2=\"53\" stroke=\"#3fb950\" stroke-width=\"1\"/><line x1=\"110\" y1=\"87\" x2=\"170\" y2=\"87\" stroke=\"#d29922\" stroke-width=\"1\"/><line x1=\"110\" y1=\"121\" x2=\"170\" y2=\"121\" stroke=\"#f85149\" stroke-width=\"1\"/>\n<rect x=\"180\" y=\"40\" width=\"100\" height=\"94\" rx=\"6\" fill=\"#58a6ff\" opacity=\"0.12\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/>\n<text x=\"230\" y=\"70\" class=\"t\" fill=\"#58a6ff\" text-anchor=\"middle\">select</text>\n<text x=\"230\" y=\"90\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">哪个先就绪？</text>\n<text x=\"230\" y=\"110\" class=\"t\" fill=\"#8b949e\" text-anchor=\"middle\">随机选择</text>\n<line x1=\"280\" y1=\"70\" x2=\"340\" y2=\"70\" stroke=\"#58a6ff\" stroke-width=\"1.5\"/><polygon points=\"338,66 348,70 338,74\" fill=\"#58a6ff\"/>\n<rect x=\"350\" y=\"55\" width=\"130\" height=\"30\" rx=\"4\" fill=\"#f85149\" opacity=\"0.2\" stroke=\"#f85149\" stroke-width=\"1\"/><text x=\"415\" y=\"75\" class=\"t\" fill=\"#f85149\" text-anchor=\"middle\">执行对应 case</text>\n<text x=\"30\" y=\"150\" class=\"t\" fill=\"#8b949e\">📌 多个 case 同时就绪 → 随机选择</text><text x=\"30\" y=\"165\" class=\"t\" fill=\"#8b949e\">📌 default → 所有 case 阻塞时立即执行</text></svg>\n<h4>常用模式</h4>\n<pre><code>// 1. 超时控制\nselect {\ncase v := <-ch:\n    fmt.Println(v)\ncase <-time.After(1 * time.Second):\n    return  // 超时退出\n}\n\n// 2. 非阻塞读取\nselect {\ncase v := <-ch:\n    fmt.Println(v)\ndefault:\n    fmt.Println(\"没有数据\")  // 不阻塞\n}\n\n// 3. 动态 case（nil channel 在 select 中被忽略）\nvar ch chan int  // nil\nselect {\ncase v := <-ch:   // 这个 case 不会被选中\n    fmt.Println(v)\ndefault:\n    fmt.Println(\"nil channel 被忽略\")\n}</code></pre>",
+    "code": "package main\nimport (\"fmt\";\"time\")\nfunc main() {\n    ch1:=make(chan int)\n    ch2:=make(chan int)\n    go func(){ time.Sleep(100*time.Millisecond); ch1<-1 }()\n    go func(){ time.Sleep(200*time.Millisecond); ch2<-2 }()\n    select {\n    case v:=<-ch1: fmt.Println(\"ch1 won:\",v)\n    case v:=<-ch2: fmt.Println(\"ch2 won:\",v)\n    case <-time.After(300*time.Millisecond): fmt.Println(\"timeout\")\n    }\n}",
+    "exercises": [
+      {
+        "id": "go-sl1",
+        "title": "超时控制",
+        "desc": "从 ch 收值，超时返回 0。",
+        "hint": "select { case v:=<-ch: return v; case <-time.After(timeout): return 0 }",
+        "starterCode": "func fetchWithTimeout(ch chan int, timeout time.Duration) int {\n    select {\n    case v:=<-ch: return v\n    case <-time.After(timeout): return 0\n    }\n}",
+        "solution": "func fetchWithTimeout(ch chan int,timeout time.Duration) int {\n    select{\n    case v:=<-ch: return v\n    case <-time.After(timeout): return 0\n    }\n}",
+        "fn": "",
+        "tests": []
+      },
+      {
+        "id": "go-sl2",
+        "title": "心跳模式",
+        "desc": "使用 select 实现每隔 500ms 打印 \"heartbeat\"，同时监听 quit 信号。",
+        "hint": "select { case <-tick.C: fmt.Println(\"beat\"); case <-quit: return }",
+        "starterCode": "func heartbeat(quit chan bool) {\n    tick:=time.NewTicker(500*time.Millisecond)\n    for {\n        select {\n        case <-tick.C: fmt.Println(\"heartbeat\")\n        case <-quit: fmt.Println(\"stopped\"); return\n        }\n    }\n}",
+        "solution": "//",
+        "fn": "",
+        "tests": []
+      }
+    ]
+  },
+  {
+    "id": "module",
+    "icon": "📦",
+    "title": "包与模块 — 代码组织",
+    "desc": "<p>当项目变大，把所有代码写在 main.go 里会变得难以维护。Go 用<strong>包 (Package)</strong> 组织代码，用<strong>模块 (Module)</strong> 管理依赖。</p>\n<h4>包 — 代码的文件夹</h4><p>每个 Go 文件第一行是 <code>package xxx</code>。同一目录下的所有 .go 文件必须属于同一个包。</p>\n<pre><code>myapp/\n├── main.go          // package main（可执行程序入口）\n├── handler/\n│   ├── user.go     // package handler\n│   └── order.go\n└── model/\n    └── user.go     // package model\n\n// main.go 中导入\nimport (\n    \"fmt\"\n    \"myapp/handler\"\n    \"myapp/model\"\n)</code></pre>\n<h4>可见性规则（重要！）</h4>\n<ul><li><strong>大写字母开头</strong> → 可被其他包访问（类似 Java 的 public）</li><li><strong>小写字母开头</strong> → 只能在本包内使用（类似 Java 的 private）</li></ul>\n<p>这条规则适用于<strong>变量名、函数名、类型名、结构体字段</strong>等一切命名。</p>\n<h4>模块 — Go 的依赖管理</h4>\n<pre><code># 创建新模块\ngo mod init github.com/yourname/myapp\n\n# 添加依赖\ngo get github.com/gin-gonic/gin\n\n# go.mod 文件\nmodule github.com/yourname/myapp\ngo 1.21\nrequire (\n    github.com/gin-gonic/gin v1.9.0\n)\n\n# 常用命令\ngo mod tidy      // 清理未使用的依赖\ngo mod vendor    // 下载依赖到 vendor 目录\ngo mod download  // 下载所有依赖</code></pre>\n<h4>常用标准库</h4>\n<pre><code>fmt           格式化 I/O（Printf, Sprintf, Fprintf）\nstrings       字符串操作（Contains, Split, Join, Trim）\nstrconv       类型转换（Atoi, Itoa, ParseInt）\ntime          时间处理（Now, Sleep, Parse, Format）\nos            操作系统（Open, ReadFile, WriteFile, Getenv）\nenc/json      JSON 编解码（Marshal, Unmarshal）\nnet/http      HTTP 客户端与服务端\nsync          并发（WaitGroup, Mutex, Once）\nlog           日志（Printf, Fatal, Panic）</code></pre>\n<h4>HTTP 服务示例</h4>\n<pre><code>func main() {\n    http.HandleFunc(\"/\", func(w http.ResponseWriter, r *http.Request) {\n        fmt.Fprintf(w, \"Hello, %s!\", r.URL.Path[1:])\n    })\n    log.Fatal(http.ListenAndServe(\":8080\", nil))\n}</code></pre>",
+    "code": "package main\nimport \"fmt\"\nfunc main() {\n    fmt.Println(strings.ToUpper(\"hello module\"))\n    fmt.Println(strconv.Atoi(\"42\"))\n}",
+    "exercises": [
+      {
+        "id": "go-mo1",
+        "title": "JSON 序列化",
+        "desc": "编写 toJSON 返回 JSON 字符串。",
+        "hint": "json.Marshal(v)",
+        "starterCode": "import \"encoding/json\"\nfunc toJSON(v interface{})(string,error){\n    b,err:=json.Marshal(v)\n    if err!=nil{ return \"\",err }\n    return string(b),nil\n}",
+        "solution": "func toJSON(v interface{})(string,error){\n    b,err:=json.Marshal(v)\n    if err!=nil{ return \"\",err }\n    return string(b),nil\n}",
+        "fn": "toJSON",
+        "tests": [
+          {
+            "args": [
+              {
+                "Name": "Alice"
+              }
+            ],
+            "expect": "{\"Name\":\"Alice\"}"
+          }
+        ]
+      },
+      {
+        "id": "go-mo2",
+        "title": "HTTP GET",
+        "desc": "使用 net/http 包发送 GET 请求返回状态码。",
+        "hint": "resp, err:=http.Get(url)",
+        "starterCode": "func fetchStatus(url string) int {\n    resp,err:=http.Get(url)\n    if err!=nil{ return 0 }\n    defer resp.Body.Close()\n    return resp.StatusCode\n}",
+        "solution": "//",
+        "fn": "",
+        "tests": []
+      }
+    ]
   }
 ];
+
+
+;
+
+
+;
+
+
+;
+
+
+;
+
+
+;
 
 
 // ==================== 全局变量 ====================
