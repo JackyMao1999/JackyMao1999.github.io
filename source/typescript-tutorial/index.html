@@ -290,6 +290,36 @@ console.log("今年是 " + year + " 年");`,
 <p><strong>any（任意类型）</strong> — 关闭类型检查，尽量少用</p>
 <p><strong>void（无返回值）</strong> — 函数没有返回值时使用</p>
 <p><strong>null / undefined</strong> — 空值类型</p>
+<svg viewBox="0 0 580 170" style="width:100%;max-width:580px;margin:16px auto;display:block">
+  <rect x="0" y="0" width="580" height="170" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1"/>
+  <text x="290" y="18" text-anchor="middle" font-size="11" fill="var(--text-dim)">TypeScript 基础类型一览</text>
+  <g transform="translate(30,28)">
+    <rect x="0" y="0" width="120" height="48" rx="6" fill="var(--bg)" stroke="var(--primary)" stroke-width="1.5"/>
+    <text x="60" y="18" text-anchor="middle" font-size="12" fill="var(--primary)" font-weight="bold">string</text>
+    <text x="60" y="38" text-anchor="middle" font-size="13" fill="var(--text)">"hello"</text>
+    <rect x="130" y="0" width="120" height="48" rx="6" fill="var(--bg)" stroke="var(--success)" stroke-width="1.5"/>
+    <text x="190" y="18" text-anchor="middle" font-size="12" fill="var(--success)" font-weight="bold">number</text>
+    <text x="190" y="38" text-anchor="middle" font-size="13" fill="var(--text)">42 / 3.14</text>
+    <rect x="260" y="0" width="120" height="48" rx="6" fill="var(--bg)" stroke="var(--warning)" stroke-width="1.5"/>
+    <text x="320" y="18" text-anchor="middle" font-size="12" fill="var(--warning)" font-weight="bold">boolean</text>
+    <text x="320" y="38" text-anchor="middle" font-size="13" fill="var(--text)">true / false</text>
+    <rect x="390" y="0" width="120" height="48" rx="6" fill="var(--bg)" stroke="var(--error)" stroke-width="1.5"/>
+    <text x="450" y="18" text-anchor="middle" font-size="12" fill="var(--error)" font-weight="bold">array</text>
+    <text x="450" y="38" text-anchor="middle" font-size="13" fill="var(--text)">number[]</text>
+    <rect x="0" y="60" width="120" height="48" rx="6" fill="var(--bg)" stroke="#bc8cff" stroke-width="1.5"/>
+    <text x="60" y="78" text-anchor="middle" font-size="12" fill="#bc8cff" font-weight="bold">tuple</text>
+    <text x="60" y="98" text-anchor="middle" font-size="13" fill="var(--text)">[string, number]</text>
+    <rect x="130" y="60" width="120" height="48" rx="6" fill="var(--bg)" stroke="var(--primary)" stroke-width="1.5"/>
+    <text x="190" y="78" text-anchor="middle" font-size="12" fill="var(--primary)" font-weight="bold">enum</text>
+    <text x="190" y="98" text-anchor="middle" font-size="13" fill="var(--text)">Color.Red</text>
+    <rect x="260" y="60" width="120" height="48" rx="6" fill="var(--bg)" stroke="var(--text-dim)" stroke-width="1.5"/>
+    <text x="320" y="78" text-anchor="middle" font-size="12" fill="var(--text-dim)" font-weight="bold">any</text>
+    <text x="320" y="98" text-anchor="middle" font-size="13" fill="var(--text)">任意类型</text>
+    <rect x="390" y="60" width="120" height="48" rx="6" fill="var(--bg)" stroke="var(--border)" stroke-width="1.5"/>
+    <text x="450" y="78" text-anchor="middle" font-size="12" fill="var(--text-dim)" font-weight="bold">void</text>
+    <text x="450" y="98" text-anchor="middle" font-size="13" fill="var(--text)">无返回值</text>
+  </g>
+</svg>
 <h4>类型推断</h4>
 <p>TypeScript 很聪明，很多时候你不写类型，它也能自动推断出来：</p>
 <pre><code>let x = 10;      // TypeScript 推断 x 是 number
@@ -344,6 +374,22 @@ logMsg("void 函数不返回值");`,
 <h4>Type Alias（类型别名）</h4>
 <p>类型别名更加灵活，可以表示任何类型：</p>
 <pre><code>type Point = { x: number; y: number };\ntype ID = string | number;  // 联合类型\ntype Status = "active" | "inactive";</code></pre>
+<svg viewBox="0 0 560 140" style="width:100%;max-width:560px;margin:16px auto;display:block">
+  <rect x="0" y="0" width="560" height="140" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1"/>
+  <text x="140" y="18" text-anchor="middle" font-size="11" fill="var(--text-dim)">interface（接口）</text>
+  <text x="420" y="18" text-anchor="middle" font-size="11" fill="var(--text-dim)">type（类型别名）</text>
+  <line x1="280" y1="8" x2="280" y2="132" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="20" y="30" width="240" height="90" rx="6" fill="var(--bg)" stroke="var(--primary)" stroke-width="1.2"/>
+  <text x="140" y="50" text-anchor="middle" font-size="13" fill="var(--primary)" font-weight="bold">定义对象结构</text>
+  <text x="30" y="72" font-size="11" fill="var(--text-dim)">extends 继承</text>
+  <text x="30" y="90" font-size="11" fill="var(--text-dim)">声明合并（同名自动合并）</text>
+  <text x="30" y="108" font-size="11" fill="var(--text-dim)">只描述对象形状</text>
+  <rect x="300" y="30" width="240" height="90" rx="6" fill="var(--bg)" stroke="var(--success)" stroke-width="1.2"/>
+  <text x="420" y="50" text-anchor="middle" font-size="13" fill="var(--success)" font-weight="bold">灵活表达任意类型</text>
+  <text x="310" y="72" font-size="11" fill="var(--text-dim)">联合类型 A | B</text>
+  <text x="310" y="90" font-size="11" fill="var(--text-dim)">交叉类型 A &amp; B</text>
+  <text x="310" y="108" font-size="11" fill="var(--text-dim)">原始类型别名 type ID = string</text>
+</svg>
 <h4>如何选择</h4>
 <ul><li><strong>优先用 interface</strong> — 定义对象结构时更直观，继承和合并更强大</li>
 <li><strong>需要联合/交叉类型</strong> — 用 type</li>
@@ -390,6 +436,25 @@ console.log("Tom:", tom);`,
 <h4>参数类型与返回值类型</h4>
 <pre><code>function add(a: number, b: number): number {\n  return a + b;\n}</code></pre>
 <p><code>a: number, b: number</code> 声明了两个数字参数，<code>): number {</code> 声明了返回值是数字。</p>
+<svg viewBox="0 0 560 90" style="width:100%;max-width:560px;margin:16px auto;display:block">
+  <rect x="0" y="0" width="560" height="90" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1"/>
+  <text x="280" y="16" text-anchor="middle" font-size="11" fill="var(--text-dim)">函数签名解析</text>
+  <text x="40" y="40" text-anchor="middle" font-size="10" fill="var(--text-dim)">关键字</text>
+  <text x="40" y="62" text-anchor="middle" font-size="14" fill="var(--error)" font-weight="bold">function</text>
+  <text x="130" y="40" text-anchor="middle" font-size="10" fill="var(--text-dim)">函数名</text>
+  <text x="130" y="62" text-anchor="middle" font-size="14" fill="var(--text)" font-weight="bold">add</text>
+  <text x="200" y="30" text-anchor="middle" font-size="9" fill="var(--text-dim)">参数: 类型</text>
+  <text x="200" y="50" text-anchor="middle" font-size="14" fill="var(--primary)" font-weight="bold">a: number</text>
+  <text x="200" y="66" text-anchor="middle" font-size="13" fill="var(--primary)">b: number</text>
+  <text x="340" y="40" text-anchor="middle" font-size="10" fill="var(--text-dim)">返回值类型</text>
+  <text x="340" y="62" text-anchor="middle" font-size="14" fill="var(--success)" font-weight="bold">number</text>
+  <path d="M365 52 L395 52" stroke="var(--success)" stroke-width="1.5" fill="none"/>
+  <polygon points="391,48 401,52 391,56" fill="var(--success)"/>
+  <rect x="400" y="38" width="80" height="28" rx="6" fill="var(--success)" opacity="0.10" stroke="var(--success)" stroke-width="1.2"/>
+  <text x="440" y="57" text-anchor="middle" font-size="12" fill="var(--success)" font-weight="bold">返回结果</text>
+  <line x1="288" y1="36" x2="315" y2="52" stroke="var(--text-dim)" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="300" y="46" text-anchor="middle" font-size="9" fill="var(--text-dim)">→</text>
+</svg>
 <h4>可选参数</h4>
 <p>用 <code>?</code> 标记参数是可选的：<code>function greet(name: string, greeting?: string)</code>。可选参数必须放在必选参数的<strong>后面</strong>。</p>
 <h4>默认参数</h4>
@@ -441,6 +506,28 @@ console.log("sumAll(1,2,3,4,5) =", sumAll(1, 2, 3, 4, 5));`,
 <h4>参数属性</h4>
 <p>TypeScript 提供了一种简写方式，在构造函数参数前加修饰符，自动声明并赋值同名属性：</p>
 <pre><code>class Person {\n  constructor(\n    public name: string,\n    private age: number\n  ) {}\n}\n// 等价于：\nclass Person {\n  public name: string;\n  private age: number;\n  constructor(name: string, age: number) {\n    this.name = name;\n    this.age = age;\n  }\n}</code></pre>
+<svg viewBox="0 0 480 190" style="width:100%;max-width:480px;margin:16px auto;display:block">
+  <rect x="0" y="0" width="480" height="190" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1"/>
+  <text x="240" y="18" text-anchor="middle" font-size="11" fill="var(--text-dim)">类继承关系与访问修饰符</text>
+  <rect x="140" y="28" width="200" height="52" rx="8" fill="var(--primary)" opacity="0.10" stroke="var(--primary)" stroke-width="1.5"/>
+  <text x="240" y="46" text-anchor="middle" font-size="13" fill="var(--primary)" font-weight="bold">Animal（父类）</text>
+  <text x="240" y="66" text-anchor="middle" font-size="11" fill="var(--text-dim)"># species: string (protected)</text>
+  <line x1="240" y1="80" x2="240" y2="98" stroke="var(--text-dim)" stroke-width="1.5"/>
+  <polygon points="236,94 240,104 244,94" fill="var(--text-dim)"/>
+  <polygon points="200,104 240,94 280,104 240,114" fill="var(--border)" stroke="var(--border)" stroke-width="1"/>
+  <text x="240" y="112" text-anchor="middle" font-size="9" fill="var(--text-dim)">继承</text>
+  <rect x="50" y="120" width="170" height="52" rx="8" fill="var(--success)" opacity="0.10" stroke="var(--success)" stroke-width="1.5"/>
+  <text x="135" y="138" text-anchor="middle" font-size="13" fill="var(--success)" font-weight="bold">Dog（子类）</text>
+  <text x="135" y="158" text-anchor="middle" font-size="11" fill="var(--text-dim)">+ breed: string (public)</text>
+  <rect x="260" y="120" width="170" height="52" rx="8" fill="var(--warning)" opacity="0.10" stroke="var(--warning)" stroke-width="1.5"/>
+  <text x="345" y="138" text-anchor="middle" font-size="13" fill="var(--warning)" font-weight="bold">Cat（子类）</text>
+  <text x="345" y="158" text-anchor="middle" font-size="11" fill="var(--text-dim)">- age: number (private)</text>
+  <line x1="200" y1="104" x2="135" y2="120" stroke="var(--text-dim)" stroke-width="1.2"/>
+  <polygon points="139,116 135,124 131,116" fill="var(--text-dim)"/>
+  <line x1="280" y1="104" x2="345" y2="120" stroke="var(--text-dim)" stroke-width="1.2"/>
+  <polygon points="341,116 345,124 349,116" fill="var(--text-dim)"/>
+  <text x="240" y="182" text-anchor="middle" font-size="9" fill="var(--text-dim)">public(+)  protected(#)  private(-)</text>
+</svg>
 <h4>抽象类</h4>
 <p>用 <code>abstract</code> 标记的类不能直接实例化，只能被继承。抽象方法子类必须实现。</p>`,
     code:`// 参数属性简写
@@ -492,6 +579,35 @@ console.log(c.describe());`,
 <p>但这样丢失了类型信息。用泛型：</p>
 <pre><code>function identity&lt;T&gt;(arg: T): T { return arg; }\nconst x = identity("hello"); // x 是 string 类型\nconst y = identity(42);      // y 是 number 类型</code></pre>
 <p><code>T</code> 是一个<strong>类型参数</strong>，调用时才确定具体类型。</p>
+<svg viewBox="0 0 520 130" style="width:100%;max-width:520px;margin:16px auto;display:block">
+  <rect x="0" y="0" width="520" height="130" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1"/>
+  <text x="260" y="18" text-anchor="middle" font-size="11" fill="var(--text-dim)">泛型</text>
+  <text x="260" y="18" text-anchor="middle" font-size="11" fill="var(--text-dim)">泛型：输入什么类型，就输出什么类型</text>
+  <rect x="20" y="36" width="80" height="32" rx="6" fill="var(--error)" opacity="0.12" stroke="var(--error)" stroke-width="1.2"/>
+  <text x="60" y="56" text-anchor="middle" font-size="12" fill="var(--error)" font-weight="bold">"hello"</text>
+  <rect x="115" y="32" width="120" height="40" rx="8" fill="var(--bg)" stroke="var(--primary)" stroke-width="1.5"/>
+  <text x="175" y="50" text-anchor="middle" font-size="12" fill="var(--primary)" font-weight="bold">identity</text>
+  <text x="175" y="64" text-anchor="middle" font-size="10" fill="var(--text-dim)">&lt;T&gt;(arg: T): T</text>
+  <rect x="250" y="36" width="80" height="32" rx="6" fill="var(--error)" opacity="0.12" stroke="var(--error)" stroke-width="1.2"/>
+  <text x="290" y="56" text-anchor="middle" font-size="12" fill="var(--error)" font-weight="bold">"hello"</text>
+  <path d="M100 52 L113 52" stroke="var(--text-dim)" stroke-width="1.5" fill="none"/>
+  <polygon points="109,48 119,52 109,56" fill="var(--text-dim)"/>
+  <path d="M235 52 L248 52" stroke="var(--text-dim)" stroke-width="1.5" fill="none"/>
+  <polygon points="244,48 254,52 244,56" fill="var(--text-dim)"/>
+  <rect x="20" y="82" width="80" height="32" rx="6" fill="var(--primary)" opacity="0.12" stroke="var(--primary)" stroke-width="1.2"/>
+  <text x="60" y="102" text-anchor="middle" font-size="12" fill="var(--primary)" font-weight="bold">42</text>
+  <rect x="115" y="78" width="120" height="40" rx="8" fill="var(--bg)" stroke="var(--primary)" stroke-width="1.5"/>
+  <text x="175" y="96" text-anchor="middle" font-size="12" fill="var(--primary)" font-weight="bold">identity</text>
+  <text x="175" y="110" text-anchor="middle" font-size="10" fill="var(--text-dim)">&lt;T&gt;(arg: T): T</text>
+  <rect x="250" y="82" width="80" height="32" rx="6" fill="var(--primary)" opacity="0.12" stroke="var(--primary)" stroke-width="1.2"/>
+  <text x="290" y="102" text-anchor="middle" font-size="12" fill="var(--primary)" font-weight="bold">42</text>
+  <path d="M100 98 L113 98" stroke="var(--text-dim)" stroke-width="1.5" fill="none"/>
+  <polygon points="109,94 119,98 109,102" fill="var(--text-dim)"/>
+  <path d="M235 98 L248 98" stroke="var(--text-dim)" stroke-width="1.5" fill="none"/>
+  <polygon points="244,94 254,98 244,102" fill="var(--text-dim)"/>
+  <text x="420" y="56" text-anchor="middle" font-size="10" fill="var(--success)" font-weight="bold">T = string</text>
+  <text x="420" y="102" text-anchor="middle" font-size="10" fill="var(--success)" font-weight="bold">T = number</text>
+</svg>
 <h4>泛型约束</h4>
 <p>用 <code>extends</code> 限制类型参数的范围：</p>
 <pre><code>function logLength&lt;T extends { length: number }&gt;(arg: T): T {\n  console.log(arg.length);\n  return arg;\n}</code></pre>
@@ -533,6 +649,29 @@ logLength([1, 2, 3]);`,
     desc:`<p>TypeScript 提供了一系列高级类型工具，让你可以更精确地组合和操作类型。</p>
 <h4>联合类型（Union Types）</h4>
 <p>用 <code>|</code> 表示"或"：<code>string | number</code> 表示可以是字符串或数字。联合类型配合<strong>类型守卫</strong>（Type Guards）可以缩窄类型范围。</p>
+<svg viewBox="0 0 580 140" style="width:100%;max-width:580px;margin:16px auto;display:block">
+  <rect x="0" y="0" width="580" height="140" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1"/>
+  <text x="145" y="20" text-anchor="middle" font-size="11" fill="var(--text-dim)">联合类型 string | number</text>
+  <text x="435" y="20" text-anchor="middle" font-size="11" fill="var(--text-dim)">交叉类型 A &amp; B</text>
+  <line x1="290" y1="8" x2="290" y2="132" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
+  <circle cx="120" cy="65" r="42" fill="var(--error)" opacity="0.10" stroke="var(--error)" stroke-width="1.5"/>
+  <circle cx="180" cy="65" r="42" fill="var(--primary)" opacity="0.10" stroke="var(--primary)" stroke-width="1.5"/>
+  <text x="100" y="55" text-anchor="middle" font-size="12" fill="var(--error)" font-weight="bold">string</text>
+  <text x="100" y="70" text-anchor="middle" font-size="10" fill="var(--text-dim)">"hello"</text>
+  <text x="200" y="55" text-anchor="middle" font-size="12" fill="var(--primary)" font-weight="bold">number</text>
+  <text x="200" y="70" text-anchor="middle" font-size="10" fill="var(--text-dim)">42</text>
+  <text x="150" y="120" text-anchor="middle" font-size="10" fill="var(--text-dim)">两者皆可</text>
+  <rect x="310" y="30" width="100" height="80" rx="6" fill="var(--error)" opacity="0.08" stroke="var(--error)" stroke-width="1.5"/>
+  <text x="360" y="52" text-anchor="middle" font-size="12" fill="var(--error)" font-weight="bold">A</text>
+  <text x="360" y="72" text-anchor="middle" font-size="10" fill="var(--text-dim)">name: string</text>
+  <text x="360" y="90" text-anchor="middle" font-size="10" fill="var(--text-dim)">age: number</text>
+  <rect x="420" y="48" width="100" height="80" rx="6" fill="var(--primary)" opacity="0.08" stroke="var(--primary)" stroke-width="1.5"/>
+  <text x="470" y="70" text-anchor="middle" font-size="12" fill="var(--primary)" font-weight="bold">B</text>
+  <text x="470" y="90" text-anchor="middle" font-size="10" fill="var(--text-dim)">email: string</text>
+  <rect x="380" y="68" width="70" height="24" rx="4" fill="var(--success)" opacity="0.15" stroke="var(--success)" stroke-width="1.2"/>
+  <text x="415" y="85" text-anchor="middle" font-size="10" fill="var(--success)" font-weight="bold">A &amp; B</text>
+  <text x="415" y="105" text-anchor="middle" font-size="9" fill="var(--text-dim)">合并所有属性</text>
+</svg>
 <h4>类型守卫</h4>
 <p>类型守卫是在运行时检查类型的表达式。TypeScript 会根据守卫条件自动缩窄类型：</p>
 <pre><code>function process(value: string | number) {\n  if (typeof value === "string") {\n    // 这里 value 被缩窄为 string\n    console.log(value.toUpperCase());\n  } else {\n    // 这里 value 被缩窄为 number\n    console.log(value.toFixed(2));\n  }\n}</code></pre>
@@ -1098,7 +1237,7 @@ function switchToExercise(section, index) {
   document.getElementById('output').classList.remove('show');
 
   if (editor) {
-    editor.setValue(ex.starterCode);
+    editor.setValue(loadCachedCode(ex.starterCode));
     const model = editor.getModel();
     if (model) model.undo();
   }
@@ -1161,11 +1300,14 @@ function createEditor() {
 
     loadSection(currentSectionId);
 
+    let saveTimer;
     editor.onDidChangeModelContent(() => {
       const lineCount = editor.getModel().getLineCount();
       const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
       container.style.height = newHeight + 'px';
       editor.layout();
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveCode, 500);
     });
   });
 }
@@ -1229,6 +1371,7 @@ function runCode() {
 
 function resetCode() {
   if (!editor) return;
+  clearCachedCode();
   const section = SECTIONS.find(s => s.id === currentSectionId);
   if (currentTab === 'learn' || currentExerciseIndex === -1) {
     editor.setValue(section.code);
@@ -1372,6 +1515,28 @@ function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+// ==================== 代码缓存 ====================
+function cacheKey() {
+  if (currentTab === 'learn' || currentExerciseIndex === -1) return 'ts-' + currentSectionId;
+  return 'ts-' + currentSectionId + '-' + currentExerciseIndex;
+}
+
+function saveCode() {
+  if (!editor) return;
+  try { localStorage.setItem(cacheKey(), editor.getValue()); } catch(e) {}
+}
+
+function loadCachedCode(fallback) {
+  try {
+    const cached = localStorage.getItem(cacheKey());
+    return cached !== null ? cached : fallback;
+  } catch(e) { return fallback; }
+}
+
+function clearCachedCode() {
+  try { localStorage.removeItem(cacheKey()); } catch(e) {}
 }
 
 // ==================== 主题切换 ====================

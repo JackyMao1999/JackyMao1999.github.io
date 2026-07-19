@@ -14,7 +14,7 @@ layout: docs
 
   <a href="/typescript-tutorial/" class="tutorial-card">
     <div class="card-icon">
-      <i class="fa-brands fa-typescript"></i>
+      <svg viewBox="0 0 50 50" width="50" height="50"><rect width="50" height="50" rx="8" fill="#3178C6"/><text x="25" y="36" text-anchor="middle" font-size="26" fill="#fff" font-weight="bold" font-family="Arial,sans-serif">TS</text></svg>
     </div>
     <div class="card-body">
       <h2>TypeScript 快速入门</h2>
