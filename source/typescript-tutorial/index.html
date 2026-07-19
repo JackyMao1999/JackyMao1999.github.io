@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeScript 快速入门教程 - 学练一体</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f1419;--surface:#1a2332;--border:#2d3b4f;--text:#e6edf3;--text-dim:#8b949e;--primary:#58a6ff;--primary-hover:#79c0ff;--success:#3fb950;--success-bg:rgba(63,185,80,.12);--error:#f85149;--error-bg:rgba(248,81,73,.12);--warning:#d29922;--sidebar-w:280px;--header-h:56px;--fs-base:15px;--fs-mono:13px;--fs-title:26px;--fs-desc:15px;--fs-code:13px;--fs-small:12px;--fs-sidebar:14px;--fs-tab:13px}
+body.light{--bg:#ffffff;--surface:#f6f8fa;--border:#d0d7de;--text:#1f2328;--text-dim:#656d76;--primary:#0969da;--primary-hover:#0550ae;--success:#1a7f37;--success-bg:rgba(26,127,55,.12);--error:#cf222e;--error-bg:rgba(207,34,46,.12);--warning:#9a6700}
+body.light #sidebar .section:hover{background:rgba(0,0,0,.03)}
+body.light #section-desc pre{background:#f6f8fa}
+body.light .exercise-hint{background:rgba(154,103,0,.08);border-color:rgba(154,103,0,.2)}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji";background:var(--bg);color:var(--text);overflow:hidden;height:100vh}
+a{color:var(--primary);text-decoration:none}
+header{height:var(--header-h);display:flex;align-items:center;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100}
+header h1{font-size:18px;font-weight:600;flex:1}
+header .version{font-size:12px;color:var(--text-dim);background:var(--border);padding:2px 10px;border-radius:4px;flex-shrink:0}
+#menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;margin-right:8px}
+#theme-toggle{background:none;border:none;cursor:pointer;font-size:18px;padding:4px 8px;border-radius:4px;margin-right:8px;transition:background .15s;line-height:1;flex-shrink:0}
+#theme-toggle:hover{background:rgba(255,255,255,.08)}
+body.light #theme-toggle:hover{background:rgba(0,0,0,.06)}
+#theme-toggle::before{content:'\2601'}
+body.light #theme-toggle::before{content:'\2600'}
+#font-controls{display:flex;gap:2px;margin-right:12px;align-items:center;flex-shrink:0}
+#font-controls .font-btn{background:none;border:1px solid var(--border);color:var(--text-dim);cursor:pointer;padding:2px 7px;border-radius:3px;font-size:12px;transition:all .15s;line-height:1.4;font-family:inherit}
+#font-controls .font-btn:hover{background:rgba(255,255,255,.08);color:var(--text)}
+body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
+#font-controls .font-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+#font-controls .font-btn[data-size="small"]{font-size:10px}
+#font-controls .font-btn[data-size="medium"]{font-size:12px}
+#font-controls .font-btn[data-size="large"]{font-size:14px}
+#app{display:flex;height:calc(100vh - var(--header-h));margin-top:var(--header-h)}
+#sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:12px 0}
+#sidebar .section{display:block;padding:10px 20px;cursor:pointer;font-size:var(--fs-sidebar);color:var(--text-dim);border-left:3px solid transparent;transition:all .15s;text-decoration:none}
+#sidebar .section:hover{color:var(--text);background:rgba(255,255,255,.04)}
+#sidebar .section.active{color:var(--primary);border-left-color:var(--primary);background:rgba(88,166,255,.08)}
+#sidebar .section .num{display:inline-block;width:20px;font-size:12px;color:var(--text-dim);margin-right:6px}
+#sidebar .section.active .num{color:var(--primary)}
+#sidebar .divider{height:1px;background:var(--border);margin:8px 12px}
+#sidebar .section .done{float:right;font-size:11px;color:var(--success)}
+
+/* Main content */
+#content{flex:1;min-width:0;overflow-y:auto;padding:28px 36px}
+#section-title{font-size:var(--fs-title);font-weight:700;margin-bottom:12px;padding-bottom:12px;border-bottom:2px solid var(--primary);display:inline-block}
+#section-progress{font-size:var(--fs-small);color:var(--text-dim);margin-bottom:16px}
+
+/* Tabs */
+.section-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0}
+.section-tab{padding:8px 18px;cursor:pointer;font-size:var(--fs-tab);color:var(--text-dim);border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;transition:all .15s;background:transparent;white-space:nowrap}
+.section-tab:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.section-tab.active{color:var(--primary);background:var(--surface);border-color:var(--border);position:relative}
+.section-tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--surface)}
+.section-tab .check{display:none;margin-left:5px;font-size:11px}
+.section-tab.done .check{display:inline;color:var(--success)}
+
+/* Description area */
+#section-desc{font-size:var(--fs-desc);line-height:1.8;color:var(--text-dim);margin-bottom:20px;max-width:860px}
+#section-desc h4{color:var(--text);font-size:16px;margin:18px 0 8px}
+#section-desc p{margin:8px 0}
+#section-desc code{background:var(--border);padding:2px 6px;border-radius:3px;font-size:13px;color:var(--primary)}
+#section-desc strong{color:var(--text)}
+#section-desc ul{margin:8px 0;padding-left:22px}
+#section-desc li{margin:5px 0}
+#section-desc pre{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin:10px 0;overflow-x:auto;font-size:13px;line-height:1.5;font-family:"SF Mono","Fira Code",monospace}
+#section-desc pre code{background:none;padding:0;color:var(--text);font-size:inherit}
+
+/* Exercise area */
+#exercise-area{display:none;margin-bottom:16px}
+#exercise-area.show{display:block}
+#exercise-title{font-size:16px;font-weight:600;color:var(--primary);margin-bottom:8px}
+#exercise-desc{font-size:var(--fs-desc);line-height:1.7;color:var(--text-dim);margin-bottom:10px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:6px}
+#exercise-desc code{background:var(--border);padding:1px 5px;border-radius:3px;font-size:13px;color:var(--primary)}
+#exercise-hint{display:none;font-size:13px;color:var(--warning);margin-bottom:10px;padding:10px 14px;background:rgba(210,153,34,.1);border:1px solid rgba(210,153,34,.25);border-radius:6px}
+#exercise-hint.show{display:block}
+#exercise-hint code{background:rgba(210,153,34,.15);padding:1px 5px;border-radius:3px}
+.toggle-hint{background:none;border:none;color:var(--warning);cursor:pointer;font-size:13px;padding:0;text-decoration:underline}
+.toggle-hint:hover{color:var(--primary-hover)}
+
+/* Editor */
+#editor-wrap{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px}
+#editor-container{height:380px}
+#editor-container.loading{display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:14px}
+
+/* Controls */
+#controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+#controls button{display:flex;align-items:center;gap:5px;padding:8px 18px;border:none;border-radius:6px;cursor:pointer;font-size:var(--fs-small);font-weight:500;transition:all .15s}
+#controls button:disabled{opacity:.4;cursor:not-allowed}
+#run-btn{background:var(--success);color:#fff}
+#run-btn:hover:not(:disabled){filter:brightness(1.15)}
+#run-btn.running{opacity:.7;pointer-events:none}
+#reset-btn{background:var(--border);color:var(--text)}
+#reset-btn:hover:not(:disabled){background:var(--text-dim);color:var(--bg)}
+#submit-btn{background:var(--primary);color:#fff;display:none}
+#submit-btn:hover:not(:disabled){background:var(--primary-hover)}
+#submit-btn.show{display:flex}
+#hint-btn{background:transparent;color:var(--warning);border:1px solid var(--warning)!important;display:none}
+#hint-btn.show{display:flex}
+#hint-btn:hover{background:rgba(210,153,34,.1)}
+#back-btn{background:var(--border);color:var(--text-dim);display:none;font-size:12px}
+#back-btn.show{display:flex}
+#back-btn:hover{color:var(--text)}
+#controls button svg{width:15px;height:15px;fill:currentColor;flex-shrink:0}
+
+/* Output */
+#output{display:none;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px}
+#output.show{display:block}
+#output-header{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--border);font-size:var(--fs-small);color:var(--text-dim)}
+#output-header .badge{font-size:11px;padding:2px 8px;border-radius:3px}
+#output-header .badge.success{background:var(--success-bg);color:var(--success)}
+#output-header .badge.error{background:var(--error-bg);color:var(--error)}
+#output-content{padding:16px;font-family:"SF Mono","Fira Code","Cascadia Code",monospace;font-size:var(--fs-mono);line-height:1.6;white-space:pre-wrap;word-break:break-word;min-height:50px;max-height:350px;overflow-y:auto;background:var(--bg);color:var(--text);margin:0}
+#output-content .out-log{color:var(--text)}
+#output-content .out-err{color:var(--error)}
+#output-content .out-info{color:var(--text-dim);font-style:italic}
+#output-content .out-js{color:var(--warning);font-size:12px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}
+
+/* Result items */
+.result-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;margin:4px 0;border-radius:4px;font-size:var(--fs-mono);line-height:1.5}
+.result-item.pass{background:var(--success-bg)}
+.result-item.fail{background:var(--error-bg)}
+.result-item .icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.result-item .icon.pass{color:var(--success)}
+.result-item .icon.fail{color:var(--error)}
+.result-item .detail{flex:1}
+.result-item .detail .args{color:var(--text-dim);font-size:12px}
+.result-item .detail .got{color:var(--error);font-size:12px}
+.result-item .detail .expected{color:var(--success);font-size:12px}
+.result-summary{font-size:15px;font-weight:600;padding:10px 0 4px}
+.result-summary.all-pass{color:var(--success)}
+.result-summary.has-fail{color:var(--error)}
+
+/* Scrollbar */
+#sidebar::-webkit-scrollbar,#content::-webkit-scrollbar{width:6px}
+#sidebar::-webkit-scrollbar-track,#content::-webkit-scrollbar-track{background:transparent}
+#sidebar::-webkit-scrollbar-thumb,#content::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* Loading */
+#loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s}
+#loading-overlay.hide{opacity:0;pointer-events:none}
+#loading-overlay .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading-overlay .text{color:var(--text-dim);font-size:14px}
+
+@media(max-width:820px){
+  #sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:90;transform:translateX(-100%);transition:transform .25s;width:260px;min-width:260px}
+  #sidebar.open{transform:translateX(0)}
+  #menu-toggle{display:block}
+  #content{padding:20px 14px}
+  #editor-container{height:260px}
+  #section-title{font-size:calc(var(--fs-title) - 4px)}
+  #section-desc{font-size:calc(var(--fs-desc) - 1px)}
+  #controls button{padding:7px 12px}
+  .section-tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:0}
+  .section-tab{padding:7px 12px}
+  #font-controls{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="text">正在加载 TypeScript 教程 ...</div>
+</div>
+
+<header>
+  <button id="menu-toggle" aria-label="菜单">&#9776;</button>
+  <button id="theme-toggle" aria-label="切换主题" title="切换暗色/淡色主题"></button>
+  <h1>TypeScript 快速入门教程</h1>
+  <div id="font-controls">
+    <button class="font-btn" data-size="small" title="小字号">A</button>
+    <button class="font-btn active" data-size="medium" title="中字号（默认）">A</button>
+    <button class="font-btn" data-size="large" title="大字号">A</button>
+  </div>
+  <span class="version">v5.3</span>
+</header>
+
+<div id="app">
+  <nav id="sidebar"></nav>
+
+  <main id="content">
+    <h2 id="section-title"></h2>
+    <div id="section-progress"></div>
+
+    <div class="section-tabs" id="section-tabs"></div>
+
+    <div id="section-desc"></div>
+
+    <div id="exercise-area">
+      <div id="exercise-title"></div>
+      <div id="exercise-desc"></div>
+      <div id="exercise-hint"></div>
+    </div>
+
+    <div id="editor-wrap">
+      <div id="editor-container" class="loading">加载编辑器中...</div>
+    </div>
+
+    <div id="controls">
+      <button id="back-btn">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        返回学习
+      </button>
+      <button id="run-btn">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        运行代码
+      </button>
+      <button id="submit-btn">
+        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        提交答案
+      </button>
+      <button id="hint-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        查看提示
+      </button>
+      <button id="reset-btn">
+        <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        重置代码
+      </button>
+    </div>
+
+    <div id="output">
+      <div id="output-header">
+        <span>输出结果</span>
+        <span id="output-status"></span>
+      </div>
+      <pre id="output-content"></pre>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/typescript@5.3.3/lib/typescript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+<script>
+// ==================== 教程章节数据 ====================
+const SECTIONS = [
+  {
+    id:'intro',title:'TypeScript 简介',
+    desc:`<p>在开始学习之前，先来理解一个核心问题：<strong>TypeScript 是什么？它为什么这么流行？</strong></p>
+<h4>JavaScript 的"自由"带来的问题</h4>
+<p>JavaScript 是一门非常灵活的语言。比如你可以这样写：</p>
+<pre><code>function add(a, b) { return a + b; }
+add(1, 2);    // 结果是 3
+add("1", 2);  // 结果是 "12" — 这不是你想要的！</code></pre>
+<p>问题在于：你无法限制 <code>a</code> 和 <code>b</code> 必须是数字。如果有人不小心传入字符串，JavaScript 不会报错，而是默默地拼接，导致难以发现的 Bug。</p>
+<h4>TypeScript 的解决方案</h4>
+<p>TypeScript 给 JavaScript 加上了<strong>类型系统</strong>，让你可以明确告诉程序：「这个变量是数字，那个是字符串」。如果类型用错了，TypeScript <strong>在写代码时就会提醒你</strong>。</p>
+<pre><code>function add(a: number, b: number): number {
+  return a + b;
+}
+add(1, 2);    // ✅ 3
+add("1", 2);  // ❌ 编辑器会显示红色波浪线！</code></pre>
+<h4>重要概念</h4>
+<ul><li><strong>TypeScript 是 JavaScript 的超集</strong> — 任何 <code>.js</code> 代码本身就是 <code>.ts</code> 代码</li>
+<li><strong>TypeScript 需要编译</strong> — 浏览器无法直接运行 TS，需要编译成 JS</li>
+<li><strong>类型是可选的</strong> — 你可以逐步给 JS 代码添加类型</li></ul>
+<h4>本教程的学习方式</h4>
+<p>每一章都包含：📖 详细讲解 → 💻 可运行示例 → ✏️ 练习题（自动批改）</p>
+<p>现在就试试下面的 <strong>greet 函数</strong>——试着把 <code>name</code> 的类型从 <code>string</code> 改成 <code>number</code>，看看编辑器的反应！</p>`,
+    code:`// 你的第一个 TypeScript 程序
+function greet(name: string): string {
+  return "你好, " + name + "!";
+}
+const message: string = greet("TypeScript");
+console.log(message);
+// 取消注释试试 — 编辑器会提示类型错误
+// const result: string = greet(42);
+const year: number = 2026;
+console.log("今年是 " + year + " 年");`,
+    exercises:[
+      {id:'intro-1',title:'编写 sayHello 函数',desc:'编写一个名为 <code>sayHello</code> 的函数，接收 <code>name: string</code> 参数，返回 <code>"Hello, " + name</code>。',hint:'function sayHello(name: string): string { return "Hello, " + name; }',starterCode:'// 编写 sayHello 函数\n// 参数: name: string\n// 返回值: string\n// 功能: 返回 "Hello, " + name',solution:'function sayHello(name: string): string {\n  return "Hello, " + name;\n}',fn:'sayHello',tests:[{args:['World'],expect:'Hello, World'},{args:['TypeScript'],expect:'Hello, TypeScript'},{args:['小明'],expect:'Hello, 小明'}]},
+      {id:'intro-2',title:'判断成年',desc:'编写 <code>isAdult</code> 函数，接收 <code>age: number</code>，返回 <code>boolean</code>。年龄 >= 18 返回 true，否则 false。',hint:'return age >= 18;',starterCode:'// 编写 isAdult 函数\n// 参数: age: number\n// 返回值: boolean\n// 功能: 年龄 >= 18 返回 true，否则 false',solution:'function isAdult(age: number): boolean {\n  return age >= 18;\n}',fn:'isAdult',tests:[{args:[20],expect:true},{args:[15],expect:false},{args:[18],expect:true},{args:[0],expect:false}]},
+      {id:'intro-3',title:'组合消息',desc:'编写 <code>createMessage</code>，接收 <code>name: string, age: number</code>，返回 <code>"我是 [name]，今年 [age] 岁"</code>。',hint:'使用模板字符串：`我是 ${name}，今年 ${age} 岁`',starterCode:'// 编写 createMessage 函数\n// 参数: name: string, age: number\n// 返回值: string\n// 功能: 返回 "我是 [name]，今年 [age] 岁"',solution:'function createMessage(name: string, age: number): string {\n  return \`我是 \${name}，今年 \${age} 岁\`;\n}',fn:'createMessage',tests:[{args:['小明',25],expect:'我是 小明，今年 25 岁'},{args:['小红',18],expect:'我是 小红，今年 18 岁'}]},
+      {id:'intro-4',title:'温度转换',desc:'编写 <code>celsiusToFahrenheit</code>，接收 <code>celsius: number</code>，返回 <code>number</code>。公式：华氏 = 摄氏 × 9/5 + 32。',hint:'return celsius * 9/5 + 32;',starterCode:'// 编写 celsiusToFahrenheit 函数\n// 参数: celsius: number\n// 返回值: number\n// 功能: 摄氏温度转华氏温度',solution:'function celsiusToFahrenheit(celsius: number): number {\n  return celsius * 9/5 + 32;\n}',fn:'celsiusToFahrenheit',tests:[{args:[0],expect:32},{args:[100],expect:212},{args:[-40],expect:-40},{args:[37],expect:98.6}]},
+    ]
+  },
+  {
+    id:'basic-types',title:'基础类型',
+    desc:`<p>TypeScript 的核心就是<strong>类型系统</strong>。每个变量都可以标注一个类型，告诉程序这个变量能存放什么数据。</p>
+<h4>标注类型的语法</h4>
+<p>在变量名后面加 <code>: 类型</code>：<code>let name: string = "小明";</code></p>
+<h4>最常用的基础类型</h4>
+<p><strong>string（字符串）</strong> — 文本数据，用引号包裹：<code>"hello"</code>、<code>'world'</code>、<code>\`模板字符串\`</code></p>
+<p><strong>number（数字）</strong> — 所有数字，不分整型浮点型：<code>42</code>、<code>3.14</code>、<code>-10</code></p>
+<p><strong>boolean（布尔值）</strong> — 只有 <code>true</code> 和 <code>false</code> 两个值</p>
+<p><strong>array（数组）</strong> — 两种写法：<code>number[]</code> 或 <code>Array&lt;number&gt;</code></p>
+<p><strong>tuple（元组）</strong> — 固定长度和类型的数组：<code>[string, number]</code></p>
+<p><strong>enum（枚举）</strong> — 给一组数字/字符串常量取名字：<code>enum Color { Red, Green, Blue }</code></p>
+<p><strong>any（任意类型）</strong> — 关闭类型检查，尽量少用</p>
+<p><strong>void（无返回值）</strong> — 函数没有返回值时使用</p>
+<p><strong>null / undefined</strong> — 空值类型</p>
+<h4>类型推断</h4>
+<p>TypeScript 很聪明，很多时候你不写类型，它也能自动推断出来：</p>
+<pre><code>let x = 10;      // TypeScript 推断 x 是 number
+let y = "hello"; // TypeScript 推断 y 是 string</code></pre>
+<p>但为了代码清晰，<strong>建议始终显式标注函数参数和返回值的类型</strong>。</p>`,
+    code:`// ===== 基础类型逐个看 =====
+// string
+const lang: string = "TypeScript";
+console.log("语言:", lang);
+// number（没有整型/浮点之分）
+const version: number = 5.3;
+const year: number = 2026;
+console.log("版本:", version, "年份:", year);
+// boolean
+const isAwesome: boolean = true;
+console.log("TypeScript 很赞?", isAwesome);
+// array
+const nums: number[] = [1, 2, 3, 4, 5];
+const fruits: Array<string> = ["苹果", "香蕉"];
+console.log("数字:", nums);
+// tuple
+const person: [string, number] = ["Alice", 25];
+console.log("姓名:", person[0], "年龄:", person[1]);
+// enum
+enum Direction { North, South, East, West }
+const dir: Direction = Direction.North;
+console.log("方向编号:", dir); // 0
+// any（谨慎使用！）
+let flexible: any = "可以是字符串";
+flexible = 42;
+console.log("any 类型:", flexible);
+// void
+function logMsg(msg: string): void {
+  console.log("[日志]", msg);
+}
+logMsg("void 函数不返回值");`,
+    exercises:[
+      {id:'basic-1',title:'声明并标注类型',desc:'声明 4 个变量并标注正确类型：<code>productName</code>(string)、<code>price</code>(number)、<code>isAvailable</code>(boolean)、<code>tags</code>(string[])。',hint:'const productName: string = "笔记本电脑";',starterCode:'// 声明变量并标注类型\n// - productName: string (产品名称)\n// - price: number (价格)\n// - isAvailable: boolean (是否可用)\n// - tags: string[] (标签数组)\n// 然后用 console.log 输出它们',solution:'const productName: string = "笔记本电脑";\nconst price: number = 4999;\nconst isAvailable: boolean = true;\nconst tags: string[] = ["电子", "办公"];\nconsole.log(productName, price, isAvailable, tags);',fn:'checkTypes'},
+      {id:'basic-2',title:'元组练习',desc:'创建一个 <code>[string, number, boolean]</code> 类型的元组 <code>student</code>，内容为 <code>"小明", 18, true</code>，然后 <code>console.log</code> 输出。',hint:'const student: [string, number, boolean] = ["小明", 18, true];',starterCode:'// 创建一个 [string, number, boolean] 类型的元组\n// 内容为: "小明", 18, true\n// 赋值给变量 student 并输出',solution:'const student: [string, number, boolean] = ["小明", 18, true];\nconsole.log(student);',fn:'tupleCheck'},
+      {id:'basic-3',title:'定义枚举',desc:'定义一个 <code>enum OrderStatus</code>，包含 <code>Pending=0, Processing=1, Shipped=2, Delivered=3</code>。创建一个变量 <code>status</code> 值为 <code>OrderStatus.Shipped</code>，输出它。',hint:'enum OrderStatus { Pending, Processing, Shipped, Delivered }',starterCode:'// 定义枚举 OrderStatus\n// 包含: Pending, Processing, Shipped, Delivered\n// 创建变量 status 赋值为 Shipped\n// 输出 status',solution:'enum OrderStatus { Pending, Processing, Shipped, Delivered }\nconst status: OrderStatus = OrderStatus.Shipped;\nconsole.log(status);',fn:'enumCheck'},
+      {id:'basic-4',title:'数组操作函数',desc:'编写 <code>doubleArray</code> 函数，接收 <code>nums: number[]</code>，返回每个元素乘以 2 的新数组。提示：用 <code>map</code> 方法。',hint:'return nums.map(n => n * 2);',starterCode:'// 编写 doubleArray 函数\n// 参数: nums: number[]\n// 返回值: number[]\n// 功能: 每个元素乘以 2',solution:'function doubleArray(nums: number[]): number[] {\n  return nums.map(n => n * 2);\n}',fn:'doubleArray',tests:[{args:[[1,2,3]],expect:'2,4,6'},{args:[[10,20]],expect:'20,40'},{args:[[0]],expect:'0'}]},
+      {id:'basic-5',title:'联合类型参数',desc:'编写 <code>formatId</code> 函数，接收 <code>id: string | number</code>，返回 <code>"ID: " + id</code>（string 类型）。',hint:'return "ID: " + id;',starterCode:'// 编写 formatId 函数\n// 参数: id: string | number\n// 返回值: string\n// 功能: 返回 "ID: " + id',solution:'function formatId(id: string | number): string {\n  return "ID: " + id;\n}',fn:'formatId',tests:[{args:[123],expect:'ID: 123'},{args:['abc'],expect:'ID: abc'}]},
+    ]
+  },
+  {
+    id:'interface-type',title:'接口与类型别名',
+    desc:`<p>当需要描述一个<strong>对象</strong>的形状时，就要用到接口（Interface）和类型别名（Type Alias）。</p>
+<h4>Interface（接口）</h4>
+<p>接口用来定义对象的<strong>结构</strong>——它有哪些属性，每个属性的类型是什么：</p>
+<pre><code>interface User {\n  name: string;\n  age: number;\n  email?: string;  // 可选属性\n  readonly id: number; // 只读\n}</code></pre>
+<p>特性：支持继承（<code>extends</code>）、支持声明合并（同名自动合并）。</p>
+<h4>Type Alias（类型别名）</h4>
+<p>类型别名更加灵活，可以表示任何类型：</p>
+<pre><code>type Point = { x: number; y: number };\ntype ID = string | number;  // 联合类型\ntype Status = "active" | "inactive";</code></pre>
+<h4>如何选择</h4>
+<ul><li><strong>优先用 interface</strong> — 定义对象结构时更直观，继承和合并更强大</li>
+<li><strong>需要联合/交叉类型</strong> — 用 type</li>
+<li><strong>需要原始类型别名</strong> — 用 type</li></ul>`,
+    code:`// ===== 接口 =====
+interface Person {
+  name: string;
+  age: number;
+  email?: string;      // 可选
+  readonly id: number; // 只读
+}
+const alice: Person = { name: "Alice", age: 30, id: 1 };
+console.log("Person:", alice);
+// 接口继承
+interface Employee extends Person {
+  salary: number;
+}
+const bob: Employee = { name: "Bob", age: 28, id: 2, salary: 15000 };
+console.log("Employee:", bob);
+// ===== 类型别名 =====
+type Point = { x: number; y: number };
+const origin: Point = { x: 0, y: 0 };
+console.log("坐标:", origin);
+// type 联合
+type Status = "active" | "inactive" | "pending";
+const s: Status = "active";
+console.log("状态:", s);
+// 交叉类型
+type Named = { name: string };
+type Aged = { age: number };
+type Person2 = Named & Aged;
+const tom: Person2 = { name: "Tom", age: 35 };
+console.log("Tom:", tom);`,
+    exercises:[
+      {id:'iface-1',title:'定义产品接口',desc:'定义 <code>interface Product</code>：<code>name: string</code>、<code>price: number</code>、<code>category?: string</code>（可选）、<code>readonly sku: string</code>。创建一个产品对象输出它。',hint:'interface Product { name: string; price: number; category?: string; readonly sku: string; }',starterCode:'// 定义 Product 接口\n// name: string\n// price: number\n// category?: string (可选)\n// readonly sku: string\n// 创建一个 Product 对象并输出',solution:'interface Product {\n  name: string;\n  price: number;\n  category?: string;\n  readonly sku: string;\n}\nconst product: Product = { name: "笔记本电脑", price: 5999, category: "电子", sku: "NB-001" };\nconsole.log(product);',fn:'ifaceCheck'},
+      {id:'iface-2',title:'接口继承',desc:'定义 <code>interface Animal</code>（<code>name: string</code>），<code>interface Dog extends Animal</code>（加上 <code>breed: string</code>）。创建一只狗输出。',hint:'interface Dog extends Animal { breed: string; }',starterCode:'// 定义 Animal 接口 { name: string }\n// 定义 Dog 接口继承 Animal，增加 breed: string\n// 创建一只狗对象并输出',solution:'interface Animal { name: string }\ninterface Dog extends Animal { breed: string }\nconst dog: Dog = { name: "旺财", breed: "金毛" };\nconsole.log(dog);',fn:'extendCheck'},
+      {id:'iface-3',title:'类型别名-联合',desc:'使用 <code>type</code> 定义 <code>Shape</code> 为 <code>"circle" | "square" | "triangle"</code>。编写 <code>drawShape</code> 函数接收 <code>Shape</code> 类型参数，返回 <code>"Drawing: " + shape</code>。',hint:'type Shape = "circle" | "square" | "triangle";',starterCode:'// 定义类型别名: type Shape = "circle" | "square" | "triangle"\n// 编写 drawShape 函数\n// 参数: shape: Shape\n// 返回值: string\n// 功能: 返回 "Drawing: " + shape',solution:'type Shape = "circle" | "square" | "triangle";\nfunction drawShape(shape: Shape): string {\n  return "Drawing: " + shape;\n}',fn:'drawShape',tests:[{args:['circle'],expect:'Drawing: circle'},{args:['square'],expect:'Drawing: square'},{args:['triangle'],expect:'Drawing: triangle'}]},
+      {id:'iface-4',title:'交叉类型',desc:'定义 <code>type HasName = { name: string }</code> 和 <code>type HasAge = { age: number }</code>。创建交叉类型 <code>type Person = HasName & HasAge</code>。编写 <code>createPerson</code> 函数返回一个 Person 对象。',hint:'type Person = HasName & HasAge;',starterCode:'// 定义 HasName = { name: string }\n// 定义 HasAge = { age: number }\n// 定义 Person = HasName & HasAge\n// 编写 createPerson 函数\n// 参数: name: string, age: number\n// 返回值: Person\n// 使用属性简写 { name, age }',solution:'type HasName = { name: string };\ntype HasAge = { age: number };\ntype Person = HasName & HasAge;\nfunction createPerson(name: string, age: number): Person {\n  return { name, age };\n}\nconsole.log(createPerson("小明", 25));\nconsole.log(createPerson("小红", 30));',fn:'createPerson',tests:[{args:['小明',25],expect:'{"name":"小明","age":25}'},{args:['小红',30],expect:'{"name":"小红","age":30}'}]},
+    ]
+  },
+  {
+    id:'functions',title:'函数类型',
+    desc:`<p>函数是 TypeScript 中类型标注最实用的场景。通过给参数和返回值加上类型，函数的用途一目了然。</p>
+<h4>参数类型与返回值类型</h4>
+<pre><code>function add(a: number, b: number): number {\n  return a + b;\n}</code></pre>
+<p><code>a: number, b: number</code> 声明了两个数字参数，<code>): number {</code> 声明了返回值是数字。</p>
+<h4>可选参数</h4>
+<p>用 <code>?</code> 标记参数是可选的：<code>function greet(name: string, greeting?: string)</code>。可选参数必须放在必选参数的<strong>后面</strong>。</p>
+<h4>默认参数</h4>
+<p>直接赋值：<code>function createUrl(path: string, base: string = "https://example.com")</code>。带默认值的参数自动成为可选参数。</p>
+<h4>剩余参数</h4>
+<p>用 <code>...</code> 把所有剩余参数收集到数组中：<code>function sum(...nums: number[])</code>。</p>
+<h4>函数重载</h4>
+<p>同一个函数名，根据参数类型不同返回不同类型。先写多个类型签名，再写实现：</p>
+<pre><code>function len(x: string): number;\nfunction len(x: any[]): number;\nfunction len(x: string | any[]): number {\n  return x.length;\n}</code></pre>`,
+    code:`// 基本函数
+function add(a: number, b: number): number {
+  return a + b;
+}
+console.log("add(3,5) =", add(3, 5));
+// 箭头函数
+const multiply = (a: number, b: number): number => a * b;
+console.log("multiply(4,7) =", multiply(4, 7));
+// 可选参数
+function greet(name: string, greeting?: string): string {
+  return (greeting || "你好") + ", " + name + "!";
+}
+console.log(greet("小明"));
+console.log(greet("小红", "Hello"));
+// 默认参数
+function createUrl(path: string, base: string = "https://example.com"): string {
+  return base + path;
+}
+console.log(createUrl("/api"));
+// 剩余参数
+function sumAll(...nums: number[]): number {
+  return nums.reduce((a, b) => a + b, 0);
+}
+console.log("sumAll(1,2,3,4,5) =", sumAll(1, 2, 3, 4, 5));`,
+    exercises:[
+      {id:'fn-1',title:'可选参数',desc:'编写 <code>introduce</code> 函数，接收 <code>name: string</code> 和可选参数 <code>age?: number</code>。如果有 age 返回 <code>"我是 [name]，[age] 岁"</code>，否则返回 <code>"我是 [name]"</code>。',hint:'使用 if (age !== undefined) 判断',starterCode:'// 编写 introduce 函数\n// 参数: name: string, age?: number (可选)\n// 返回值: string\n// 有 age 时返回 "我是 [name]，[age] 岁"\n// 无 age 时返回 "我是 [name]"',solution:'function introduce(name: string, age?: number): string {\n  if (age !== undefined) {\n    return \`我是 \${name}，\${age} 岁\`;\n  }\n  return \`我是 \${name}\`;\n}',fn:'introduce',tests:[{args:['小明',25],expect:'我是 小明，25 岁'},{args:['小红'],expect:'我是 小红'}]},
+      {id:'fn-2',title:'默认参数',desc:'编写 <code>greetUser</code> 函数，接收 <code>name: string</code> 和 <code>greeting: string = "你好"</code>，返回 <code>"[greeting], [name]!"</code>。',hint:'function greetUser(name: string, greeting: string = "你好"): string',starterCode:'// 编写 greetUser 函数\n// 参数: name: string, greeting: string = "你好"\n// 返回值: string\n// 功能: 返回 "[greeting], [name]!"',solution:'function greetUser(name: string, greeting: string = "你好"): string {\n  return greeting + ", " + name + "!";\n}',fn:'greetUser',tests:[{args:['小明'],expect:'你好, 小明!'},{args:['Tom','Hello'],expect:'Hello, Tom!'}]},
+      {id:'fn-3',title:'剩余参数求和',desc:'编写 <code>average</code> 函数，接收剩余参数 <code>...nums: number[]</code>，返回这些数字的平均值（总和 / 个数）。如果没传参数返回 0。',hint:'if (nums.length === 0) return 0;\nreturn nums.reduce((a,b) => a+b, 0) / nums.length;',starterCode:'// 编写 average 函数\n// 参数: ...nums: number[] (剩余参数)\n// 返回值: number\n// 功能: 返回所有数字的平均值\n// 注意: 没有参数时返回 0',solution:'function average(...nums: number[]): number {\n  if (nums.length === 0) return 0;\n  return nums.reduce((a, b) => a + b, 0) / nums.length;\n}',fn:'average',tests:[{args:[10,20,30],expect:20},{args:[5,15],expect:10},{args:[7],expect:7}]},
+      {id:'fn-4',title:'函数重载',desc:'编写重载函数 <code>getValue</code>：接收 <code>string</code> 返回 <code>string</code>，接收 <code>number</code> 返回 <code>number</code>。实现体中直接返回参数本身。',hint:'先写两个重载签名，再写实现签名',starterCode:'// 编写函数重载 getValue\n// 接收 string 返回 string\n// 接收 number 返回 number\n// 实现中直接返回参数本身\n// 提示: 需要两个重载签名',solution:'function getValue(x: string): string;\nfunction getValue(x: number): number;\nfunction getValue(x: string | number): string | number {\n  return x;\n}\nconsole.log(getValue("hello"));\nconsole.log(getValue(42));',fn:'getValue',tests:[{args:['hello'],expect:'hello'},{args:[42],expect:42}]},
+    ]
+  },
+  {
+    id:'classes',title:'类与面向对象',
+    desc:`<p>TypeScript 对 ES6 的 class 进行了<strong>增强</strong>，加入了访问修饰符和抽象类等面向对象特性。</p>
+<h4>访问修饰符</h4>
+<ul><li><code>public</code> — 默认值，任何地方都可以访问</li>
+<li><code>private</code> — 只能在当前类内部访问</li>
+<li><code>protected</code> — 在当前类和子类中可以访问</li>
+<li><code>readonly</code> — 只读属性，初始化后不能修改</li></ul>
+<h4>参数属性</h4>
+<p>TypeScript 提供了一种简写方式，在构造函数参数前加修饰符，自动声明并赋值同名属性：</p>
+<pre><code>class Person {\n  constructor(\n    public name: string,\n    private age: number\n  ) {}\n}\n// 等价于：\nclass Person {\n  public name: string;\n  private age: number;\n  constructor(name: string, age: number) {\n    this.name = name;\n    this.age = age;\n  }\n}</code></pre>
+<h4>抽象类</h4>
+<p>用 <code>abstract</code> 标记的类不能直接实例化，只能被继承。抽象方法子类必须实现。</p>`,
+    code:`// 参数属性简写
+class Animal {
+  constructor(
+    public name: string,
+    private age: number,
+    protected species: string
+  ) {}
+  speak(): void {
+    console.log(this.name + " 发出声音");
+  }
+  getAge(): number { return this.age; }
+}
+// 继承
+class Dog extends Animal {
+  constructor(name: string, age: number, public breed: string) {
+    super(name, age, "犬科");
+  }
+  speak(): void { console.log(this.name + ": 汪汪！"); }
+}
+const dog = new Dog("旺财", 3, "金毛");
+dog.speak();
+console.log("品种:", dog.breed);
+// 抽象类
+abstract class Shape {
+  abstract getArea(): number;
+  describe(): string { return "面积=" + this.getArea(); }
+}
+class Circle extends Shape {
+  constructor(private radius: number) { super(); }
+  getArea(): number { return Math.PI * this.radius ** 2; }
+}
+const c = new Circle(5);
+console.log(c.describe());`,
+    exercises:[
+      {id:'class-1',title:'创建基本类',desc:'创建一个 <code>Book</code> 类，构造器接收 <code>title: string</code>（public）、<code>author: string</code>（public）、<code>pages: number</code>（private）。添加 <code>getSummary(): string</code> 方法，返回 <code>"[title] by [author]"</code>。',hint:'class Book { constructor(public title: string, public author: string, private pages: number) {} }',starterCode:'// 创建 Book 类\n// 构造器参数: title: string (public), author: string (public), pages: number (private)\n// 方法 getSummary(): string 返回 "[title] by [author]"',solution:'class Book {\n  constructor(public title: string, public author: string, private pages: number) {}\n  getSummary(): string {\n    return this.title + " by " + this.author;\n  }\n}\nconst book = new Book("TypeScript入门", "张三", 200);\nconsole.log(book.getSummary());',fn:'bookCheck'},
+      {id:'class-2',title:'Getter/Setter',desc:'给 <code>Temperature</code> 类添加 <code>get celsius</code> 和 <code>set celsius</code>，内部用 <code>private _celsius: number</code> 存储。getter 返回摄氏度，setter 赋值。同时添加 <code>get fahrenheit</code> 返回摄氏×9/5+32。',hint:'get celsius(): number { return this._celsius; }',starterCode:'// 创建 Temperature 类\n// 构造器参数: private _celsius: number\n// get celsius(): number - 返回摄氏度\n// set celsius(value: number) - 设置摄氏度\n// get fahrenheit(): number - 返回华氏度 (celsius * 9/5 + 32)',solution:'class Temperature {\n  constructor(private _celsius: number) {}\n  get celsius(): number { return this._celsius; }\n  set celsius(value: number) { this._celsius = value; }\n  get fahrenheit(): number { return this._celsius * 9/5 + 32; }\n}\nconst t = new Temperature(25);\nconsole.log(t.celsius, "°C");\nconsole.log(t.fahrenheit, "°F");\nt.celsius = 30;\nconsole.log(t.celsius, "°C");\nconsole.log(t.fahrenheit, "°F");',fn:'tempCheck'},
+      {id:'class-3',title:'继承',desc:'创建 <code>Vehicle</code> 类（<code>make: string</code> public），<code>Car extends Vehicle</code> 添加 <code>doors: number</code>。给 Vehicle 添加 <code>honk(): string</code> 返回 <code>"Beep!"</code>，Car 重写为 <code>"Honk honk!"</code>。',hint:'class Car extends Vehicle { constructor(make: string, public doors: number) { super(make); } }',starterCode:'// 创建 Vehicle 类\n// 构造器参数: public make: string\n// 方法 honk(): string 返回 "Beep!"\n// 创建 Car 类继承 Vehicle\n// 构造器增加 public doors: number\n// 重写 honk() 返回 "Honk honk!"',solution:'class Vehicle {\n  constructor(public make: string) {}\n  honk(): string { return "Beep!"; }\n}\nclass Car extends Vehicle {\n  constructor(make: string, public doors: number) {\n    super(make);\n  }\n  honk(): string { return "Honk honk!"; }\n}\nconst car = new Car("Toyota", 4);\nconsole.log(car.honk());\nconsole.log(car.make, car.doors);',fn:'carCheck'},
+      {id:'class-4',title:'抽象类',desc:'创建 <code>abstract class Payment</code>，含抽象方法 <code>pay(amount: number): string</code>。创建 <code>CreditCard extends Payment</code> 实现 pay 方法，返回 <code>"Paid [amount] via credit card"</code>。',hint:'class CreditCard extends Payment { pay(amount: number): string { ... } }',starterCode:'// 创建抽象类 Payment\n// 抽象方法: pay(amount: number): string\n// 创建 CreditCard 继承 Payment\n// 实现 pay 方法返回 "Paid [amount] via credit card"',solution:'abstract class Payment {\n  abstract pay(amount: number): string;\n}\nclass CreditCard extends Payment {\n  pay(amount: number): string {\n    return "Paid " + amount + " via credit card";\n  }\n}\nconst payment = new CreditCard();\nconsole.log(payment.pay(100));\nconsole.log(payment.pay(250));',fn:'paymentCheck'},
+    ]
+  },
+  {
+    id:'generics',title:'泛型',
+    desc:`<p><strong>泛型（Generics）</strong>让你在定义函数、接口或类时<strong>不指定具体类型</strong>，而是在使用时才确定类型。这就像给代码留了一个"类型占位符"。</p>
+<h4>为什么需要泛型</h4>
+<p>假设你要写一个函数，接收一个值并原样返回。如果用 <code>any</code>：</p>
+<pre><code>function identity(arg: any): any { return arg; }</code></pre>
+<p>但这样丢失了类型信息。用泛型：</p>
+<pre><code>function identity&lt;T&gt;(arg: T): T { return arg; }\nconst x = identity("hello"); // x 是 string 类型\nconst y = identity(42);      // y 是 number 类型</code></pre>
+<p><code>T</code> 是一个<strong>类型参数</strong>，调用时才确定具体类型。</p>
+<h4>泛型约束</h4>
+<p>用 <code>extends</code> 限制类型参数的范围：</p>
+<pre><code>function logLength&lt;T extends { length: number }&gt;(arg: T): T {\n  console.log(arg.length);\n  return arg;\n}</code></pre>
+<p>这样 <code>T</code> 必须是含有 <code>length</code> 属性的类型（如 string、array）。</p>`,
+    code:`// 泛型函数
+function identity<T>(arg: T): T { return arg; }
+console.log("identity('hello'):", identity("hello"));
+console.log("identity(42):", identity(42));
+// 泛型接口
+interface Pair<K, V> { key: K; value: V; }
+const entry: Pair<string, number> = { key: "age", value: 30 };
+console.log("Pair:", entry);
+// 泛型类
+class Stack<T> {
+  private items: T[] = [];
+  push(item: T): void { this.items.push(item); }
+  pop(): T | undefined { return this.items.pop(); }
+  get size(): number { return this.items.length; }
+}
+const numStack = new Stack<number>();
+numStack.push(10); numStack.push(20); numStack.push(30);
+console.log("栈顶:", numStack.pop(), "大小:", numStack.size);
+// 泛型约束
+function logLength<T extends { length: number }>(arg: T): T {
+  console.log("长度:", arg.length);
+  return arg;
+}
+logLength("Hello");
+logLength([1, 2, 3]);`,
+    exercises:[
+      {id:'gen-1',title:'泛型恒等函数',desc:'编写泛型函数 <code>firstElement</code>，接收 <code>arr: T[]</code>，返回数组的第一个元素（类型为 <code>T | undefined</code>）。',hint:'function firstElement<T>(arr: T[]): T | undefined { return arr[0]; }',starterCode:'// 编写泛型函数 firstElement<T>\n// 参数: arr: T[]\n// 返回值: T | undefined\n// 功能: 返回数组第一个元素',solution:'function firstElement<T>(arr: T[]): T | undefined {\n  return arr[0];\n}\nconsole.log(firstElement([1, 2, 3]));\nconsole.log(firstElement(["a", "b"]));\nconsole.log(firstElement([]));',fn:'firstElement',tests:[{args:[[1,2,3]],expect:1},{args:[['a','b']],expect:'a'},{args:[[]],expect:undefined}]},
+      {id:'gen-2',title:'泛型接口',desc:'定义泛型接口 <code>interface Box&lt;T&gt; { value: T }</code>。编写 <code>createBox</code> 函数，接收 <code>value: T</code>，返回 <code>Box&lt;T&gt;</code>。',hint:'interface Box<T> { value: T }',starterCode:'// 定义泛型接口 Box<T> { value: T }\n// 编写 createBox<T> 函数\n// 参数: value: T\n// 返回值: Box<T>\n// 提示: return { value }',solution:'interface Box<T> {\n  value: T;\n}\nfunction createBox<T>(value: T): Box<T> {\n  return { value };\n}\nconsole.log(createBox(42));\nconsole.log(createBox("hello"));',fn:'createBox',tests:[{args:[42],expect:'{"value":42}'},{args:['hello'],expect:'{"value":"hello"}'}]},
+      {id:'gen-3',title:'泛型约束',desc:'编写泛型函数 <code>getProperty</code>，接收 <code>obj: T</code> 和 <code>key: K</code>（约束 <code>K extends keyof T</code>），返回 <code>T[K]</code>。测试对象为 <code>{ name: "Alice", age: 30 }</code>。',hint:'function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] { return obj[key]; }',starterCode:'// 编写泛型函数 getProperty<T, K extends keyof T>\n// 参数: obj: T, key: K\n// 返回值: T[K]\n// 功能: 返回对象的指定属性值\n// 提示: return obj[key]',solution:'function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {\n  return obj[key];\n}\nconst obj = { name: "Alice", age: 30 };\nconsole.log(getProperty(obj, "name"));\nconsole.log(getProperty(obj, "age"));',fn:'getProperty',tests:[{args:[{name:'Alice',age:30},'name'],expect:'Alice'},{args:[{name:'Alice',age:30},'age'],expect:30}]},
+      {id:'gen-4',title:'泛型类',desc:'创建泛型类 <code>Wrapper&lt;T&gt;</code>，有 <code>private _value: T</code>，<code>getValue(): T</code> 和 <code>setValue(value: T): void</code> 方法。创建一个 <code>Wrapper&lt;number&gt;</code> 实例，设置值 100 后获取并输出。',hint:'class Wrapper<T> { private _value: T; getValue(): T { return this._value; } setValue(v: T) { this._value = v; } }',starterCode:'// 创建泛型类 Wrapper<T>\n// 属性: private _value: T\n// 方法: getValue(): T\n// 方法: setValue(value: T): void\n// 创建 Wrapper<number> 实例并测试',solution:'class Wrapper<T> {\n  private _value!: T;\n  getValue(): T { return this._value; }\n  setValue(value: T): void { this._value = value; }\n}\nconst numWrapper = new Wrapper<number>();\nnumWrapper.setValue(100);\nconsole.log(numWrapper.getValue());\nconst strWrapper = new Wrapper<string>();\nstrWrapper.setValue("Hello");\nconsole.log(strWrapper.getValue());',fn:'wrapperCheck'},
+    ]
+  },
+  {
+    id:'advanced-types',title:'高级类型',
+    desc:`<p>TypeScript 提供了一系列高级类型工具，让你可以更精确地组合和操作类型。</p>
+<h4>联合类型（Union Types）</h4>
+<p>用 <code>|</code> 表示"或"：<code>string | number</code> 表示可以是字符串或数字。联合类型配合<strong>类型守卫</strong>（Type Guards）可以缩窄类型范围。</p>
+<h4>类型守卫</h4>
+<p>类型守卫是在运行时检查类型的表达式。TypeScript 会根据守卫条件自动缩窄类型：</p>
+<pre><code>function process(value: string | number) {\n  if (typeof value === "string") {\n    // 这里 value 被缩窄为 string\n    console.log(value.toUpperCase());\n  } else {\n    // 这里 value 被缩窄为 number\n    console.log(value.toFixed(2));\n  }\n}</code></pre>
+<h4>交叉类型（Intersection Types）</h4>
+<p>用 <code>&amp;</code> 表示"与"：<code>type C = A &amp; B</code> 表示同时拥有 A 和 B 的所有属性。</p>
+<h4>映射类型（Mapped Types）</h4>
+<p>基于已有类型的属性生成新类型：</p>
+<pre><code>type Readonly&lt;T&gt; = {\n  readonly [P in keyof T]: T[P];\n};</code></pre>`,
+    code:`// 联合类型
+function printId(id: string | number): void {
+  console.log("ID:", id);
+}
+printId("abc");
+printId(456);
+// 类型守卫
+function process(value: string | number): void {
+  if (typeof value === "string") {
+    console.log("大写:", value.toUpperCase());
+  } else {
+    console.log("平方:", value * value);
+  }
+}
+process("hello");
+process(7);
+// instanceof 守卫
+class Cat { meow() { console.log("喵~"); } }
+class Bird { fly() { console.log("飞走了~"); } }
+function handle(animal: Cat | Bird) {
+  if (animal instanceof Cat) animal.meow();
+  else animal.fly();
+}
+handle(new Cat());
+// 映射类型
+type ReadonlyPerson = {
+  readonly [P in keyof {name:string,age:number}]: {name:string,age:number}[P];
+};
+// 交叉类型
+type A = { a: number };
+type B = { b: string };
+type C = A & B;
+const obj: C = { a: 1, b: "hello" };
+console.log("交叉类型:", obj);`,
+    exercises:[
+      {id:'adv-1',title:'联合类型处理',desc:'编写 <code>handleInput</code> 函数，接收 <code>input: string | number</code>。如果是 string，返回 <code>"Text: " + input</code>；如果是 number，返回 <code>"Number: " + input</code>。',hint:'使用 typeof 守卫',starterCode:'// 编写 handleInput 函数\n// 参数: input: string | number\n// 返回值: string\n// 如果是 string 返回 "Text: " + input\n// 如果是 number 返回 "Number: " + input\n// 提示: 使用 typeof 守卫',solution:'function handleInput(input: string | number): string {\n  if (typeof input === "string") {\n    return "Text: " + input;\n  } else {\n    return "Number: " + input;\n  }\n}\nconsole.log(handleInput("hello"));\nconsole.log(handleInput(42));',fn:'handleInput',tests:[{args:['hello'],expect:'Text: hello'},{args:[42],expect:'Number: 42'}]},
+      {id:'adv-2',title:'自定义类型守卫',desc:'编写 <code>isString</code> 类型守卫函数：<code>function isString(value: unknown): value is string</code>。然后编写 <code>processValue</code>，如果 isString 则在控制台输出 <code>"String: " + value</code>，否则输出 <code>"Not a string"</code>。',hint:'function isString(value: unknown): value is string { return typeof value === "string"; }',starterCode:'// 编写 isString 类型守卫\n// function isString(value: unknown): value is string\n// 编写 processValue 函数\n// 如果 isString(value) 则返回 "String: " + value\n// 否则返回 "Not a string"',solution:'function isString(value: unknown): value is string {\n  return typeof value === "string";\n}\nfunction processValue(value: unknown): string {\n  if (isString(value)) {\n    return "String: " + value;\n  }\n  return "Not a string";\n}\nconsole.log(processValue("hello"));\nconsole.log(processValue(42));',fn:'processValue',tests:[{args:['hello'],expect:'String: hello'},{args:[42],expect:'Not a string'}]},
+      {id:'adv-3',title:'交叉类型',desc:'定义 <code>type HasName = { name: string }</code>、<code>type HasAge = { age: number }</code>、<code>type HasEmail = { email: string }</code>。创建交叉类型 <code>User = HasName & HasAge & HasEmail</code>。编写 <code>createUser</code> 函数返回 User。',hint:'type User = HasName & HasAge & HasEmail;',starterCode:'// 定义 HasName = { name: string }\n// 定义 HasAge = { age: number }\n// 定义 HasEmail = { email: string }\n// 定义 User = HasName & HasAge & HasEmail\n// 编写 createUser 函数返回 User 对象',solution:'type HasName = { name: string };\ntype HasAge = { age: number };\ntype HasEmail = { email: string };\ntype User = HasName & HasAge & HasEmail;\nfunction createUser(name: string, age: number, email: string): User {\n  return { name, age, email };\n}\nconsole.log(createUser("小明", 25, "xm@test.com"));',fn:'createUser',tests:[{args:['小明',25,'xm@test.com'],expect:'{"name":"小明","age":25,"email":"xm@test.com"}'}]},
+      {id:'adv-4',title:'映射类型实现',desc:'实现 <code>type Nullable&lt;T&gt; = { [P in keyof T]: T[P] | null }</code>。然后用它把 <code>interface User { name: string; age: number }</code> 转为可空版本，创建一个对象。',hint:'type Nullable<T> = { [P in keyof T]: T[P] | null };',starterCode:'// 定义 Nullable<T> 映射类型\n// type Nullable<T> = { [P in keyof T]: T[P] | null }\n// 定义 User 接口 { name: string; age: number }\n// 创建 NullableUser 对象并测试',solution:'type Nullable<T> = { [P in keyof T]: T[P] | null };\ninterface User { name: string; age: number }\ntype NullableUser = Nullable<User>;\nconst user: NullableUser = { name: null, age: null };\nuser.name = "小明";\nuser.age = 25;\nconsole.log(user);',fn:'nullableCheck'},
+    ]
+  },
+  {
+    id:'utility-types',title:'工具命令与内置类型',
+    desc:`<p>TypeScript 提供了一系列<strong>类型操作符</strong>和<strong>内置工具类型</strong>，让你能从已有类型灵活地派生新类型。</p>
+<h4>类型操作符</h4>
+<p><strong>typeof</strong> — 从<strong>值</strong>提取类型：</p>
+<pre><code>const user = { name: "Alice", age: 30 };\ntype UserType = typeof user;\n// 结果: { name: string; age: number }</code></pre>
+<p><strong>keyof</strong> — 获取对象类型的所有键：</p>
+<pre><code>interface Person { name: string; age: number; }\ntype K = keyof Person;  // "name" | "age"</code></pre>
+<p><strong>索引访问类型 T[K]</strong> — 获取属性的类型：</p>
+<pre><code>type NameType = Person["name"];  // string</code></pre>
+<h4>常用内置工具类型</h4>
+<ul><li><code>Partial&lt;T&gt;</code> — 所有属性变可选</li>
+<li><code>Required&lt;T&gt;</code> — 所有属性变必选</li>
+<li><code>Readonly&lt;T&gt;</code> — 所有属性变只读</li>
+<li><code>Pick&lt;T, K&gt;</code> — 选取部分属性</li>
+<li><code>Omit&lt;T, K&gt;</code> — 排除部分属性</li>
+<li><code>Record&lt;K, T&gt;</code> — 构造对象类型</li></ul>`,
+    code:`// typeof
+const user = { name: "Alice", age: 30, email: "alice@test.com" };
+type UserType = typeof user;
+// keyof
+interface Student { name: string; grade: number; major: string; }
+type StudentKey = keyof Student;  // "name"|"grade"|"major"
+// 泛型 + keyof
+function getProp<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+const stu: Student = { name: "Bob", grade: 90, major: "CS" };
+console.log("姓名:", getProp(stu, "name"));
+// 内置工具类型
+interface Task { title: string; description: string; completed: boolean; }
+const draft: Partial<Task> = { title: "学习 TS" };
+console.log("Partial:", draft);
+type TaskPreview = Pick<Task, "title" | "completed">;
+const preview: TaskPreview = { title: "学习 TS", completed: false };
+console.log("Pick:", preview);
+type NoDesc = Omit<Task, "description">;
+const simple: NoDesc = { title: "简单任务", completed: true };
+console.log("Omit:", simple);`,
+    exercises:[
+      {id:'util-1',title:'keyof 练习',desc:'定义 <code>interface Car { brand: string; year: number; color: string; }</code>。编写 <code>getCarProp</code> 函数，用 <code>keyof</code> 约束 key 参数，返回对应属性值。',hint:'function getCarProp<T, K extends keyof T>(car: T, key: K): T[K]',starterCode:'// 定义 Car 接口 { brand: string; year: number; color: string }\n// 编写 getCarProp<T, K extends keyof T> 函数\n// 参数: car: T, key: K\n// 返回值: T[K]\n// 功能: 安全地获取对象属性值',solution:'interface Car { brand: string; year: number; color: string; }\nfunction getCarProp<T, K extends keyof T>(car: T, key: K): T[K] {\n  return car[key];\n}\nconst myCar: Car = { brand: "Toyota", year: 2023, color: "red" };\nconsole.log(getCarProp(myCar, "brand"));\nconsole.log(getCarProp(myCar, "year"));',fn:'getCarProp',tests:[{args:[{brand:'Toyota',year:2023,color:'red'},'brand'],expect:'Toyota'},{args:[{brand:'Toyota',year:2023,color:'red'},'year'],expect:2023}]},
+      {id:'util-2',title:'Partial 与 Pick',desc:'定义 <code>interface Article { title: string; content: string; author: string; published: boolean; }</code>。用 <code>Pick</code> 创建 <code>ArticlePreview</code> 类型（只含 title 和 author）。编写 <code>createPreview</code> 函数，接收 <code>article: Article</code>，返回 <code>ArticlePreview</code>。',hint:'type ArticlePreview = Pick<Article, "title" | "author">;',starterCode:'// 定义 Article 接口\n// { title: string; content: string; author: string; published: boolean }\n// 定义 ArticlePreview = Pick<Article, "title" | "author">\n// 编写 createPreview 函数返回预览对象',solution:'interface Article { title: string; content: string; author: string; published: boolean; }\ntype ArticlePreview = Pick<Article, "title" | "author">;\nfunction createPreview(article: Article): ArticlePreview {\n  return { title: article.title, author: article.author };\n}\nconst preview = createPreview({ title: "TS教程", content: "...", author: "小明", published: true });\nconsole.log(preview);',fn:'createPreview',tests:[{args:[{title:'TS教程',content:'...',author:'小明',published:true}],expect:'{"title":"TS教程","author":"小明"}'}]},
+      {id:'util-3',title:'Record 类型',desc:'使用 <code>Record</code> 定义 <code>type PhoneBook = Record&lt;string, { phone: string; email: string }&gt;</code>。编写 <code>addContact</code> 函数，接收 <code>name, phone, email</code>，返回更新后的 PhoneBook。',hint:'type PhoneBook = Record<string, { phone: string; email: string }>;',starterCode:'// 定义 PhoneBook = Record<string, { phone: string; email: string }>\n// 编写 addContact 函数\n// 参数: book: PhoneBook, name: string, phone: string, email: string\n// 返回值: PhoneBook\n// 功能: 添加联系人到电话簿',solution:'type PhoneBook = Record<string, { phone: string; email: string }>;\nfunction addContact(book: PhoneBook, name: string, phone: string, email: string): PhoneBook {\n  book[name] = { phone, email };\n  return book;\n}\nconst book: PhoneBook = {};\nconst result = addContact(book, "小明", "13800138000", "xm@test.com");\nconsole.log(result);',fn:'addContact',tests:[{args:[{},'小明','13800138000','xm@test.com'],expect:'{"小明":{"phone":"13800138000","email":"xm@test.com"}}'}]},
+    ]
+  },
+  {
+    id:'modules',title:'模块化',
+    desc:`<p>当项目变大时，需要将代码拆分为多个文件。TypeScript 支持 ES Module 标准模块系统。</p>
+<h4>导出与导入</h4>
+<pre><code>// math.ts
+export function add(a: number, b: number): number {\n  return a + b;\n}\nexport const PI = 3.14159;\n// main.ts\nimport { add, PI } from './math';\nconsole.log(add(2, 3));\nconsole.log(PI);</code></pre>
+<h4>默认导出 vs 命名导出</h4>
+<ul><li><strong>命名导出</strong>：每个模块可以有多个，用 <code>export</code> 关键字</li>
+<li><strong>默认导出</strong>：每个模块只能有一个，用 <code>export default</code></li></ul>
+<p>由于浏览器限制无法直接运行模块代码，下面的示例用 <code>namespace</code> 模拟模块化概念。</p>`,
+    code:`// 使用 namespace 模拟模块化
+namespace MathUtils {
+  export function add(a: number, b: number): number {
+    return a + b;
+  }
+  export function multiply(a: number, b: number): number {
+    return a * b;
+  }
+  export const PI: number = 3.14159;
+  export class Calculator {
+    result = 0;
+    add(value: number): this { this.result += value; return this; }
+    getResult(): number { return this.result; }
+  }
+}
+// 模拟 import 使用
+console.log("add(10,20) =", MathUtils.add(10, 20));
+console.log("multiply(3,4) =", MathUtils.multiply(3, 4));
+console.log("PI =", MathUtils.PI);
+const calc = new MathUtils.Calculator();
+calc.add(5).add(10).add(15);
+console.log("计算器结果:", calc.getResult());
+// ---- 真实模块语法参考 ----
+// === math.ts ===
+// export function add(a: number, b: number) { return a + b; }
+// export const PI = 3.14159;
+// export default class Logger { log(msg: string) { console.log(msg); } }
+// === main.ts ===
+// import logger, { add, PI } from './math';
+// console.log(add(2, 3));
+// logger.log("模块化成功!");`
+  },
+  {
+    id:'project-setup', title:'TypeScript 项目配置',
+    desc:`<p>学到这里，你已经掌握了 TypeScript 语法。但如何在<strong>真实项目</strong>中使用它？这需要了解项目配置。</p>
+<h4>tsconfig.json 是什么</h4>
+<p>tsconfig.json 是 TypeScript 项目的<strong>配置文件</strong>，放在项目根目录。它告诉 TypeScript 编译器如何编译你的代码。</p>
+<h4>初始化项目</h4>
+<pre><code>npm init -y          # 先初始化 Node.js 项目
+npm install typescript --save-dev  # 安装 TypeScript
+npx tsc --init       # 生成 tsconfig.json</code></pre>
+<h4>常用配置选项</h4>
+<ul><li><strong>target</strong> — 编译到哪个 JS 版本。"ES2015"、"ES2020"、"ESNext"</li>
+<li><strong>module</strong> — 模块系统。"ES2015"、"CommonJS"、"ESNext"</li>
+<li><strong>strict</strong> — 开启所有严格类型检查。建议始终设为 true</li>
+<li><strong>outDir</strong> — 编译输出目录，如 "./dist"</li>
+<li><strong>rootDir</strong> — 源码目录，如 "./src"</li>
+<li><strong>include</strong> — 要编译的文件/目录</li>
+<li><strong>exclude</strong> — 排除的文件/目录</li></ul>
+<h4>一个最小配置示例</h4>
+<pre><code>{\n  "compilerOptions": {\n    "target": "ES2020",\n    "module": "ESNext",\n    "strict": true,\n    "outDir": "./dist",\n    "rootDir": "./src"\n  },\n  "include": ["src/**/*"],\n  "exclude": ["node_modules"]\n}</code></pre>
+<h4>编译项目</h4>
+<pre><code>npx tsc            # 编译整个项目
+npx tsc --watch    # 监听模式，文件变化自动编译</code></pre>`,
+    code:`// 这是一个典型 TypeScript 项目的示例代码
+// 在真实项目中，这些代码会放在 src/ 目录下
+// 通过 npx tsc 编译到 dist/ 目录
+
+interface Config {
+  appName: string;
+  port: number;
+  debug: boolean;
+}
+
+function loadConfig(): Config {
+  return {
+    appName: "MyApp",
+    port: 3000,
+    debug: false,
+  };
+}
+
+const config = loadConfig();
+console.log("应用配置:", config);
+console.log("提示: 将鼠标悬停在变量上查看类型");`,
+    exercises:[]
+  },
+  {
+    id:'async', title:'异步编程与 Promise',
+    desc:`<p>实际项目中大量使用<strong>异步操作</strong>：网络请求、文件读写、定时任务等。TypeScript 为异步编程提供了完善的类型支持。</p>
+<h4>Promise&lt;T&gt; 泛型</h4>
+<p>Promise 是一个泛型类型：<code>Promise&lt;T&gt;</code> 表示最终会返回一个 T 类型的值。</p>
+<pre><code>function fetchUser(id: number): Promise&lt;User&gt; {\n  return fetch(\`/api/users/\${id}\`).then(r => r.json());\n}</code></pre>
+<h4>async/await 的类型标注</h4>
+<p>async 函数<strong>始终返回 Promise</strong>，即使你返回的是普通值：</p>
+<pre><code>async function greet(name: string): Promise&lt;string&gt; {\n  return "Hello, " + name;\n}\n// 等价于：\nfunction greet(name: string): Promise&lt;string&gt; {\n  return Promise.resolve("Hello, " + name);\n}</code></pre>
+<h4>Promise.all 的类型推断</h4>
+<p>Promise.all 会自动推断出结果数组的元素类型：</p>
+<pre><code>const [user, posts] = await Promise.all([\n  fetchUser(1),\n  fetchPosts(1),\n]);\n// user 类型为 User，posts 类型为 Post[]</code></pre>
+<h4>错误处理</h4>
+<p>try/catch 中 catch 的参数类型默认为 <code>unknown</code>，需要类型守卫：</p>
+<pre><code>try {\n  await riskyOperation();\n} catch (error) {\n  if (error instanceof Error) {\n    console.log(error.message);\n  }\n}</code></pre>`,
+    code:`// 模拟异步操作
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function fetchData(): Promise<string> {
+  console.log("正在获取数据...");
+  await delay(500);  // 模拟网络延迟
+  return "数据加载完成!";
+}
+
+async function main(): Promise<void> {
+  const result = await fetchData();
+  console.log(result);
+}
+
+// 执行
+main().then(() => console.log("程序结束"));
+
+// Promise.all 示例
+async function fetchAll(): Promise<void> {
+  const [a, b] = await Promise.all([
+    Promise.resolve("结果A"),
+    Promise.resolve("结果B"),
+  ]);
+  console.log(a, b);
+}
+fetchAll();`,
+    exercises:[
+      {id:'async-1',title:'返回 Promise 的函数',desc:'编写 <code>createPromise</code> 函数，接收 <code>value: T</code>（泛型），返回 <code>Promise&lt;T&gt;</code>，使用 <code>Promise.resolve</code>。',hint:'function createPromise<T>(value: T): Promise<T> { return Promise.resolve(value); }',starterCode:'// 编写 createPromise<T> 函数\n// 参数: value: T\n// 返回值: Promise<T>\n// 功能: 返回 Promise.resolve(value)',solution:'function createPromise<T>(value: T): Promise<T> { return Promise.resolve(value); }',fn:'createPromise',tests:[{args:[42],expect:42},{args:['hello'],expect:'hello'}]},
+      {id:'async-2',title:'async 函数类型',desc:'编写 async 函数 <code>getGreeting</code>，接收 <code>name: string</code>，返回 <code>Promise&lt;string&gt;</code>，返回 <code>"Hello, " + name</code>。',hint:'async function getGreeting(name: string): Promise<string> { return "Hello, " + name; }',starterCode:'// 编写 async 函数 getGreeting\n// 参数: name: string\n// 返回值: Promise<string>\n// 功能: 返回 "Hello, " + name',solution:'async function getGreeting(name: string): Promise<string> { return "Hello, " + name; }',fn:'getGreeting',tests:[{args:['World'],expect:'Hello, World'},{args:['TypeScript'],expect:'Hello, TypeScript'}]},
+      {id:'async-3',title:'await 使用',desc:'编写 async 函数 <code>processValue</code>，接收 <code>n: number</code>。内部 await 一个 Promise（延迟 10ms），然后返回 <code>n * 2</code>。',hint:'await new Promise(r => setTimeout(r, 10)); return n * 2;',starterCode:'// 编写 async 函数 processValue\n// 参数: n: number\n// 返回值: Promise<number>\n// 内部 await 一个短延迟，然后返回 n * 2',solution:'async function processValue(n: number): Promise<number> {\n  await new Promise(r => setTimeout(r, 10));\n  return n * 2;\n}\nprocessValue(5).then(console.log);',fn:'processValue',tests:[{args:[5],expect:10},{args:[10],expect:20}]},
+      {id:'async-4',title:'Promise.all',desc:'编写 async 函数 <code>combine</code>，接收 <code>a: T, b: U</code>。使用 Promise.all 同时 resolve 两个值，返回 <code>[a, b]</code> 元组。',hint:'const results = await Promise.all([Promise.resolve(a), Promise.resolve(b)]); return results;',starterCode:'// 编写泛型 async 函数 combine<T, U>\n// 参数: a: T, b: U\n// 返回值: Promise<[T, U]>\n// 使用 Promise.all 同时 resolve 两个值',solution:'async function combine<T, U>(a: T, b: U): Promise<[T, U]> {\n  return await Promise.all([Promise.resolve(a), Promise.resolve(b)]) as [T, U];\n}',fn:'combine',tests:[{args:[1,'a'],expect:'[1,"a"]'},{args:[true,42],expect:'[true,42]'}]},
+    ]
+  },
+  {
+    id:'todo-project', title:'实战项目：Todo 管理器',
+    desc:`<p>让我们用 TypeScript 构建一个<strong>完整的 Todo 管理器</strong>。通过这个实战项目，你将把前面学到的所有知识串联起来。</p>
+<h4>项目结构</h4>
+<pre><code>todo-app/\n├── src/\n│   ├── types.ts    # 类型定义\n│   ├── todo.ts     # 核心逻辑\n│   └── main.ts     # 入口\n├── tsconfig.json\n└── package.json</code></pre>
+<h4>我们将实现的功能</h4>
+<ul><li>✅ 定义 Todo 数据模型</li>
+<li>✅ 添加新的 Todo</li>
+<li>✅ 列出所有 Todo</li>
+<li>✅ 标记 Todo 为完成</li>
+<li>✅ 删除 Todo</li></ul>
+<p>请按顺序完成下面的练习，逐步构建完整的 Todo 应用！</p>`,
+    code:`// 完整的 Todo 管理器示例
+enum TodoStatus {
+  Active = "active",
+  Completed = "completed"
+}
+
+interface Todo {
+  id: number;
+  title: string;
+  status: TodoStatus;
+  createdAt: Date;
+}
+
+class TodoManager {
+  private todos: Todo[] = [];
+  private nextId = 1;
+
+  add(title: string): Todo {
+    const todo: Todo = {
+      id: this.nextId++,
+      title,
+      status: TodoStatus.Active,
+      createdAt: new Date(),
+    };
+    this.todos.push(todo);
+    return todo;
+  }
+
+  list(): Todo[] { return [...this.todos]; }
+
+  complete(id: number): Todo | undefined {
+    const todo = this.todos.find(t => t.id === id);
+    if (todo) todo.status = TodoStatus.Completed;
+    return todo;
+  }
+
+  remove(id: number): boolean {
+    const idx = this.todos.findIndex(t => t.id === id);
+    if (idx === -1) return false;
+    this.todos.splice(idx, 1);
+    return true;
+  }
+}
+
+const manager = new TodoManager();
+manager.add("学习 TypeScript");
+manager.add("编写 Todo 应用");
+manager.add("提交代码");
+manager.complete(1);
+console.log("全部 Todo:", manager.list());
+manager.remove(3);
+console.log("删除后:", manager.list());`,
+    exercises:[
+      {id:'todo-1',title:'定义 Todo 模型',desc:'定义 <code>interface Todo</code>：<code>id: number</code>、<code>title: string</code>、<code>completed: boolean</code>。编写 <code>createTodo</code> 函数接收 <code>title: string</code>，返回 <code>Todo</code> 对象。id 从 1 开始自增（用全局变量 <code>let nextId = 1</code>），completed 默认为 false。',hint:'let nextId = 1;\ninterface Todo { id: number; title: string; completed: boolean; }',starterCode:'// 定义 Todo 接口\n// 属性: id: number, title: string, completed: boolean\n// 编写 createTodo 函数\n// 使用全局 nextId 自增作为 id\n// completed 默认为 false',solution:'let nextId = 1;\ninterface Todo { id: number; title: string; completed: boolean; }\nfunction createTodo(title: string): Todo {\n  return { id: nextId++, title, completed: false };\n}',fn:'createTodo',tests:[{args:['学习TS'],expect:'{"id":1,"title":"学习TS","completed":false}'},{args:['写代码'],expect:'{"id":2,"title":"写代码","completed":false}'}]},
+      {id:'todo-2',title:'Todo 列表函数',desc:'编写 <code>getActiveTodos</code> 函数，接收 <code>todos: Todo[]</code>，返回 <code>Todo[]</code>，只返回 <code>completed === false</code> 的项。',hint:'return todos.filter(t => !t.completed);',starterCode:'// 编写 getActiveTodos 函数\n// 参数: todos: Todo[]\n// 返回值: Todo[] (只含未完成的)\n// 提示: 使用 filter 方法',solution:'function getActiveTodos(todos: Todo[]): Todo[] {\n  return todos.filter(t => !t.completed);\n}',fn:'getActiveTodos',tests:[{args:[[{id:1,title:'a',completed:false},{id:2,title:'b',completed:true}]],expect:'[{"id":1,"title":"a","completed":false}]'}]},
+      {id:'todo-3',title:'标记完成',desc:'编写 <code>markCompleted</code> 函数，接收 <code>todos: Todo[]</code> 和 <code>id: number</code>，返回 <code>Todo | undefined</code>。找到对应 id 的 Todo，将 completed 设为 true，返回它。没找到返回 undefined。',hint:'const todo = todos.find(t => t.id === id); if (todo) todo.completed = true; return todo;',starterCode:'// 编写 markCompleted 函数\n// 参数: todos: Todo[], id: number\n// 返回值: Todo | undefined\n// 找到 id 对应的 Todo 设为已完成',solution:'function markCompleted(todos: Todo[], id: number): Todo | undefined {\n  const todo = todos.find(t => t.id === id);\n  if (todo) todo.completed = true;\n  return todo;\n}',fn:'markCompleted',tests:[{args:[[{id:1,title:'a',completed:false},{id:2,title:'b',completed:false}],1],expect:'{"id":1,"title":"a","completed":true}'},{args:[[{id:1,title:'a',completed:false}],999],expect:undefined}]},
+      {id:'todo-4',title:'统计函数',desc:'编写 <code>getStats</code> 函数，接收 <code>todos: Todo[]</code>，返回 <code>{ total: number; active: number; completed: number }</code>。分别统计总数、未完成数、已完成数。',hint:'const total = todos.length;\nconst completed = todos.filter(t => t.completed).length;\nconst active = total - completed;',starterCode:'// 编写 getStats 函数\n// 参数: todos: Todo[]\n// 返回值: { total: number; active: number; completed: number }\n// 统计总数、未完成数、已完成数',solution:'function getStats(todos: Todo[]): { total: number; active: number; completed: number } {\n  const total = todos.length;\n  const completed = todos.filter(t => t.completed).length;\n  return { total, active: total - completed, completed };\n}',fn:'getStats',tests:[{args:[[{id:1,title:'a',completed:false},{id:2,title:'b',completed:true},{id:3,title:'c',completed:false}]],expect:'{"total":3,"active":2,"completed":1}'}]},
+    ]
+  },
+  {
+    id:'type-defs', title:'第三方库与类型定义',
+    desc:`<p>实际开发中会大量使用第三方库（npm 包）。TypeScript 通过<strong>类型定义文件</strong>让这些库也能获得类型支持。</p>
+<h4>@types/xxx</h4>
+<p>许多流行的 JavaScript 库没有内置 TypeScript 类型，但社区通过 <code>@types/</code> 提供了类型定义：</p>
+<pre><code>npm install lodash\nnpm install @types/lodash --save-dev  # 类型定义</code></pre>
+<p>安装后，你就可以在 TypeScript 中<strong>直接 import 并使用</strong>，编辑器会自动提示所有 API 的类型。</p>
+<h4>.d.ts 文件</h4>
+<p>.d.ts 文件（声明文件）只包含类型信息，不包含实现。你可以查看它们来了解库的类型。</p>
+<pre><code>// 一个简单的 .d.ts 示例\ndeclare module "my-library" {\n  export function doSomething(value: string): number;\n}</code></pre>
+<h4>DefinitelyTyped</h4>
+<p><a href="https://github.com/DefinitelyTyped/DefinitelyTyped" target="_blank">DefinitelyTyped</a> 是社区维护的巨型类型定义仓库，几乎覆盖了所有流行的 JavaScript 库。</p>
+<h4>开启 DOM 类型</h4>
+<p>在 tsconfig.json 中设置 <code>"lib": ["DOM", "ES2020"]</code>，就能获得浏览器 API 的类型支持：</p>
+<pre><code>const button = document.querySelector("button");\n// button 类型为 HTMLButtonElement | null\nbutton?.addEventListener("click", () => {\n  console.log("点击了!");\n});</code></pre>`,
+    code:`// DOM 类型示例（需要在 tsconfig 中开启 "lib": ["DOM"]）
+// 这里模拟 DOM 操作的结构
+
+interface FakeElement {
+  tagName: string;
+  textContent: string;
+  addEventListener(event: string, handler: () => void): void;
+}
+
+function createElement(tag: string): FakeElement {
+  return {
+    tagName: tag,
+    textContent: "",
+    addEventListener(event: string, handler: () => void) {
+      console.log(\`[\${this.tagName}] 绑定了 \${event} 事件\`);
+    },
+  };
+}
+
+const button = createElement("button");
+button.textContent = "点击我";
+button.addEventListener("click", () => {
+  console.log("按钮被点击了!");
+});
+console.log("元素:", button.tagName, button.textContent);`,
+    exercises:[]
+  }
+];
+
+// ==================== 全局状态 ====================
+let editor = null;
+let editorReady = false;
+let currentSectionId = 'intro';
+let currentTab = 'learn';
+let currentExerciseIndex = -1;
+let isRunning = false;
+let exerciseResults = {};  // { sectionId: { exerciseId: true/false } }
+
+const originalCodes = {};
+SECTIONS.forEach(s => { originalCodes[s.id] = s.code; });
+
+// ==================== 练习进度持久化 ====================
+function loadProgress() {
+  try {
+    const saved = localStorage.getItem('ts-tutorial-progress');
+    if (saved) exerciseResults = JSON.parse(saved);
+  } catch(e) {}
+}
+function saveProgress() {
+  try {
+    localStorage.setItem('ts-tutorial-progress', JSON.stringify(exerciseResults));
+  } catch(e) {}
+}
+function markExerciseDone(sectionId, exerciseId) {
+  if (!exerciseResults[sectionId]) exerciseResults[sectionId] = {};
+  exerciseResults[sectionId][exerciseId] = true;
+  saveProgress();
+}
+
+// ==================== 初始化 ====================
+function init() {
+  hideLoading();
+  loadProgress();
+  loadPreferences();
+  renderSidebar();
+  setupKeyboardShortcut();
+  setupMenuToggle();
+  setupButtons();
+  createEditor();
+}
+
+function setupButtons() {
+  const runBtn = document.getElementById('run-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const submitBtn = document.getElementById('submit-btn');
+  const hintBtn = document.getElementById('hint-btn');
+  const backBtn = document.getElementById('back-btn');
+  if (runBtn) runBtn.addEventListener('click', runCode);
+  if (resetBtn) resetBtn.addEventListener('click', resetCode);
+  if (submitBtn) submitBtn.addEventListener('click', submitExercise);
+  if (hintBtn) hintBtn.addEventListener('click', toggleHint);
+  if (backBtn) backBtn.addEventListener('click', goBackToLearn);
+
+  // 主题切换
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+
+  // 字号控制
+  document.querySelectorAll('.font-btn').forEach(btn => {
+    btn.addEventListener('click', () => setFontSize(btn.dataset.size));
+  });
+}
+
+function hideLoading() {
+  const el = document.getElementById('loading-overlay');
+  if (el) el.classList.add('hide');
+}
+
+// ==================== 侧边栏 ====================
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  sidebar.innerHTML = SECTIONS.map((s, i) => {
+    const done = exerciseResults[s.id];
+    const count = s.exercises ? s.exercises.length : 0;
+    const doneCount = done ? Object.keys(done).length : 0;
+    const doneMark = count > 0 && doneCount >= count ? ' <span class="done">✓全部</span>' : '';
+    return '<a class="section" data-id="' + s.id + '" href="javascript:void(0)">'
+      + '<span class="num">' + (i + 1) + '.</span> ' + s.title + doneMark
+    + '</a>';
+  }).join('<div class="divider"></div>');
+  sidebar.addEventListener('click', (e) => {
+    const el = e.target.closest('.section');
+    if (el) {
+      const id = el.dataset.id;
+      if (id !== currentSectionId) {
+        loadSection(id);
+        document.getElementById('sidebar').classList.remove('open');
+      }
+    }
+  });
+}
+
+function highlightSidebar(id) {
+  document.querySelectorAll('#sidebar .section').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === id);
+  });
+}
+
+// ==================== 章节加载 ====================
+function loadSection(id) {
+  const section = SECTIONS.find(s => s.id === id);
+  if (!section) return;
+  currentSectionId = id;
+  currentTab = 'learn';
+  currentExerciseIndex = -1;
+
+  document.getElementById('section-title').textContent = section.title;
+  document.getElementById('section-desc').innerHTML = section.desc;
+  document.getElementById('content').scrollTop = 0;
+  highlightSidebar(id);
+  document.getElementById('output').classList.remove('show');
+
+  // 更新进度
+  updateProgress(section);
+
+  // 标签页
+  renderTabs(section);
+
+  // 显示学习内容，隐藏练习区
+  document.getElementById('section-desc').style.display = 'block';
+  document.getElementById('exercise-area').classList.remove('show');
+  document.getElementById('submit-btn').classList.remove('show');
+  document.getElementById('hint-btn').classList.remove('show');
+  document.getElementById('back-btn').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(section.code);
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function updateProgress(section) {
+  const el = document.getElementById('section-progress');
+  if (!section.exercises || section.exercises.length === 0) {
+    el.textContent = '';
+    return;
+  }
+  const done = exerciseResults[section.id] || {};
+  const doneCount = Object.keys(done).length;
+  const total = section.exercises.length;
+  el.textContent = '练习进度: ' + doneCount + '/' + total + (doneCount >= total ? ' 🎉 全部完成!' : '');
+}
+
+// ==================== 标签页 ====================
+function renderTabs(section) {
+  const tabsEl = document.getElementById('section-tabs');
+  let html = '<div class="section-tab active" data-tab="learn">📖 学习</div>';
+  if (section.exercises) {
+    section.exercises.forEach((ex, i) => {
+      const done = exerciseResults[section.id] && exerciseResults[section.id][ex.id];
+      html += '<div class="section-tab' + (done ? ' done' : '') + '" data-tab="' + i + '">练习 ' + (i+1) + (done ? '<span class="check">✓</span>' : '') + '</div>';
+    });
+  }
+  tabsEl.innerHTML = html;
+
+  tabsEl.querySelectorAll('.section-tab').forEach(el => {
+    el.addEventListener('click', () => {
+      const tab = el.dataset.tab;
+      if (tab === 'learn') {
+        switchToLearn(section);
+      } else {
+        switchToExercise(section, parseInt(tab));
+      }
+    });
+  });
+}
+
+function switchToLearn(section) {
+  currentTab = 'learn';
+  currentExerciseIndex = -1;
+
+  document.querySelectorAll('#section-tabs .section-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === 'learn');
+  });
+
+  document.getElementById('section-desc').style.display = 'block';
+  document.getElementById('exercise-area').classList.remove('show');
+  document.getElementById('submit-btn').classList.remove('show');
+  document.getElementById('hint-btn').classList.remove('show');
+  document.getElementById('back-btn').classList.remove('show');
+  document.getElementById('output').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(section.code);
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function switchToExercise(section, index) {
+  if (!section.exercises || !section.exercises[index]) return;
+
+  currentTab = 'exercise';
+  currentExerciseIndex = index;
+  const ex = section.exercises[index];
+
+  document.querySelectorAll('#section-tabs .section-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === 'learn' || el.dataset.tab === String(index));
+  });
+  // Mark the exercise tab as active
+  document.querySelectorAll('#section-tabs .section-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === String(index));
+  });
+
+  document.getElementById('section-desc').style.display = 'none';
+  document.getElementById('exercise-area').classList.add('show');
+  document.getElementById('exercise-title').textContent = ex.title;
+  document.getElementById('exercise-desc').innerHTML = ex.desc;
+  document.getElementById('exercise-hint').innerHTML = ex.hint || '';
+  document.getElementById('exercise-hint').classList.remove('show');
+  document.getElementById('submit-btn').classList.add('show');
+  document.getElementById('hint-btn').classList.add('show');
+  document.getElementById('back-btn').classList.add('show');
+  document.getElementById('output').classList.remove('show');
+
+  if (editor) {
+    editor.setValue(ex.starterCode);
+    const model = editor.getModel();
+    if (model) model.undo();
+  }
+}
+
+function goBackToLearn() {
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (section) switchToLearn(section);
+}
+
+function toggleHint() {
+  const hint = document.getElementById('exercise-hint');
+  hint.classList.toggle('show');
+  document.getElementById('hint-btn').textContent = hint.classList.contains('show') ? '隐藏提示' : '查看提示';
+}
+
+// ==================== Monaco Editor ====================
+function createEditor() {
+  if (editorReady) return;
+  editorReady = true;
+
+  require.config({
+    paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }
+  });
+
+  require(['vs/editor/editor.main'], () => {
+    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+      target: monaco.languages.typescript.ScriptTarget.ES2015,
+      strict: true,
+      noImplicitAny: true,
+      module: monaco.languages.typescript.ModuleKind.None,
+      allowNonTsExtensions: true,
+    });
+
+    const container = document.getElementById('editor-container');
+    if (!container) return;
+    container.classList.remove('loading');
+    container.innerHTML = '';
+    container.style.height = '380px';
+
+    const savedTheme = localStorage.getItem('ts-theme') || 'dark';
+    const isLight = savedTheme === 'light';
+    if (isLight) document.body.classList.add('light');
+    const monacoTheme = isLight ? 'vs' : 'vs-dark';
+
+    editor = monaco.editor.create(container, {
+      value: SECTIONS[0].code,
+      language: 'typescript',
+      theme: monacoTheme,
+      minimap: { enabled: false },
+      fontSize: 14,
+      lineNumbers: 'on',
+      scrollBeyondLastLine: false,
+      automaticLayout: true,
+      wordWrap: 'on',
+      tabSize: 2,
+      renderWhitespace: 'selection',
+      padding: { top: 12 },
+    });
+
+    loadSection(currentSectionId);
+
+    editor.onDidChangeModelContent(() => {
+      const lineCount = editor.getModel().getLineCount();
+      const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
+      container.style.height = newHeight + 'px';
+      editor.layout();
+    });
+  });
+}
+
+// ==================== 运行代码 ====================
+function runCode() {
+  if (isRunning || !editor) return;
+
+  const btn = document.getElementById('run-btn');
+  btn.classList.add('running');
+  isRunning = true;
+
+  const code = editor.getValue();
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+
+  try {
+    const result = ts.transpileModule(code, {
+      compilerOptions: { target: ts.ScriptTarget.ES2015, module: ts.ModuleKind.None, strict: true, removeComments: false }
+    });
+    const jsCode = result.outputText.trim();
+
+    const logs = [];
+    const originalLog = console.log;
+    const originalError = console.error;
+
+    console.log = function() {
+      logs.push('<span class="out-log">' + escapeHtml(Array.from(arguments).map(formatValue).join(' ')) + '</span>');
+    };
+    console.error = function() {
+      logs.push('<span class="out-err">' + escapeHtml(Array.from(arguments).map(formatValue).join(' ')) + '</span>');
+    };
+
+    try {
+      const cleanJs = jsCode.replace(/^"use strict";?\s*/, '');
+      new Function(cleanJs)();
+    } catch (e) {
+      logs.push('<span class="out-err">⛔ 运行时错误: ' + escapeHtml(e.message) + '</span>');
+    } finally {
+      console.log = originalLog;
+      console.error = originalError;
+    }
+
+    let html = logs.join('\n');
+    if (html === '') html = '<span class="out-info">✓ 代码已执行（无输出内容）</span>';
+    html += '<div class="out-js">▸ 编译后的 JS:<br>' + escapeHtml(jsCode) + '</div>';
+
+    outputContent.innerHTML = html;
+    statusEl.innerHTML = '<span class="badge success">✓ 执行成功</span>';
+    output.classList.add('show');
+  } catch (e) {
+    outputContent.innerHTML = '<span class="out-err">⛔ 编译错误: ' + escapeHtml(e.message) + '</span>';
+    statusEl.innerHTML = '<span class="badge error">✗ 编译失败</span>';
+    output.classList.add('show');
+  }
+
+  btn.classList.remove('running');
+  isRunning = false;
+}
+
+function resetCode() {
+  if (!editor) return;
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (currentTab === 'learn' || currentExerciseIndex === -1) {
+    editor.setValue(section.code);
+  } else if (section.exercises && section.exercises[currentExerciseIndex]) {
+    editor.setValue(section.exercises[currentExerciseIndex].starterCode);
+  }
+  document.getElementById('output').classList.remove('show');
+}
+
+// ==================== 提交练习 ====================
+function submitExercise() {
+  if (isRunning || !editor) return;
+
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (!section || !section.exercises || currentExerciseIndex < 0) return;
+
+  const exercise = section.exercises[currentExerciseIndex];
+  const userCode = editor.getValue();
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+
+  output.classList.add('show');
+
+  if (!exercise.tests || exercise.tests.length === 0) {
+    outputContent.innerHTML = '<span class="out-info">此练习没有测试用例，请手动运行代码验证。</span>';
+    statusEl.innerHTML = '';
+    return;
+  }
+
+  if (!exercise.fn) {
+    // 没有指定函数名，尝试直接编译运行
+    outputContent.innerHTML = '<span class="out-info">此练习需要手动验证，请点击"运行代码"查看输出。</span>';
+    statusEl.innerHTML = '';
+    return;
+  }
+
+  try {
+    const result = ts.transpileModule(userCode, {
+      compilerOptions: { target: ts.ScriptTarget.ES2015, module: ts.ModuleKind.None, strict: true }
+    });
+    const jsCode = result.outputText.trim();
+
+    let passedCount = 0;
+    let failedCount = 0;
+    let detailsHtml = '';
+
+    // 提取函数并运行测试
+    try {
+      const wrappedCode = '"use strict";\n' + jsCode + ';\nreturn ' + exercise.fn + ';';
+      let fn;
+      try {
+        fn = new Function(wrappedCode)();
+      } catch (e) {
+        // try without returning the function - maybe it's a class or other construct
+        const ctx = {};
+        new Function('"use strict";\n' + jsCode).call(ctx);
+        // Try to get from global-like scope
+        fn = new Function('return ' + exercise.fn + ';')();
+      }
+
+      if (typeof fn !== 'function') {
+        outputContent.innerHTML = '<span class="out-err">⛔ 无法找到函数 <code>' + escapeHtml(exercise.fn) + '</code>。请确保你定义的函数名正确。</span>';
+        statusEl.innerHTML = '<span class="badge error">✗ 提交失败</span>';
+        return;
+      }
+
+      exercise.tests.forEach((test, i) => {
+        try {
+          const actual = fn(...test.args);
+          const actualStr = typeof actual === 'object' ? JSON.stringify(actual) : String(actual);
+          const expectedStr = typeof test.expect === 'object' ? JSON.stringify(test.expect) : String(test.expect);
+          const passed = actualStr === expectedStr;
+
+          if (passed) passedCount++;
+          else failedCount++;
+
+          detailsHtml += '<div class="result-item ' + (passed ? 'pass' : 'fail') + '">';
+          detailsHtml += '<div class="icon ' + (passed ? 'pass' : 'fail') + '">' + (passed ? '✓' : '✗') + '</div>';
+          detailsHtml += '<div class="detail">';
+          detailsHtml += '<div>测试 ' + (i + 1) + ': <code>' + escapeHtml(exercise.fn) + '(' + escapeHtml(test.args.map(a => JSON.stringify(a)).join(', ')) + ')</code></div>';
+          if (!passed) {
+            detailsHtml += '<div class="got">你的结果: ' + escapeHtml(actualStr) + '</div>';
+            detailsHtml += '<div class="expected">期望结果: ' + escapeHtml(expectedStr) + '</div>';
+          } else {
+            detailsHtml += '<div class="expected">结果: ' + escapeHtml(actualStr) + ' ✓</div>';
+          }
+          detailsHtml += '</div></div>';
+        } catch (e) {
+          failedCount++;
+          detailsHtml += '<div class="result-item fail">';
+          detailsHtml += '<div class="icon fail">✗</div>';
+          detailsHtml += '<div class="detail">';
+          detailsHtml += '<div>测试 ' + (i + 1) + ': 运行时错误</div>';
+          detailsHtml += '<div class="got">' + escapeHtml(e.message) + '</div>';
+          detailsHtml += '</div></div>';
+        }
+      });
+    } catch (e) {
+      outputContent.innerHTML = '<span class="out-err">⛔ 编译/执行错误: ' + escapeHtml(e.message) + '</span>';
+      statusEl.innerHTML = '<span class="badge error">✗ 编译失败</span>';
+      return;
+    }
+
+    const allPassed = failedCount === 0;
+    const summary = '<div class="result-summary ' + (allPassed ? 'all-pass' : 'has-fail') + '">'
+      + (allPassed ? '🎉 全部通过！' : '😅 通过了 ' + passedCount + '/' + (passedCount + failedCount) + ' 个测试')
+      + ' (' + passedCount + ' 通过, ' + failedCount + ' 失败)</div>';
+
+    outputContent.innerHTML = summary + detailsHtml;
+    statusEl.innerHTML = '<span class="badge ' + (allPassed ? 'success' : 'error') + '">'
+      + (allPassed ? '✓ 通过' : '✗ 未通过') + '</span>';
+
+    if (allPassed) {
+      markExerciseDone(section.id, exercise.id);
+      // 更新侧边栏和标签页标记
+      renderSidebar();
+      renderTabs(section);
+      updateProgress(section);
+    }
+
+  } catch (e) {
+    outputContent.innerHTML = '<span class="out-err">⛔ 编译错误: ' + escapeHtml(e.message) + '</span>';
+    statusEl.innerHTML = '<span class="badge error">✗ 编译失败</span>';
+    output.classList.add('show');
+  }
+}
+
+// ==================== 工具函数 ====================
+function formatValue(val) {
+  if (val === null) return 'null';
+  if (val === undefined) return 'undefined';
+  if (typeof val === 'object') {
+    try { return JSON.stringify(val, null, 2); }
+    catch(e) { return String(val); }
+  }
+  return String(val);
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ==================== 主题切换 ====================
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  const theme = isLight ? 'light' : 'dark';
+  localStorage.setItem('ts-theme', theme);
+  if (editor) monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark');
+}
+
+// ==================== 字号控制 ====================
+function setFontSize(level) {
+  const sizes = {
+    small: { base:'13px', mono:'12px', title:'22px', desc:'13px', code:'12px', small:'11px', sidebar:'12px', tab:'12px' },
+    medium: { base:'15px', mono:'14px', title:'26px', desc:'15px', code:'13px', small:'12px', sidebar:'14px', tab:'13px' },
+    large: { base:'17px', mono:'16px', title:'30px', desc:'17px', code:'15px', small:'13px', sidebar:'15px', tab:'14px' },
+  };
+  const s = sizes[level] || sizes.medium;
+  const root = document.documentElement;
+  root.style.setProperty('--fs-base', s.base);
+  root.style.setProperty('--fs-mono', s.mono);
+  root.style.setProperty('--fs-title', s.title);
+  root.style.setProperty('--fs-desc', s.desc);
+  root.style.setProperty('--fs-code', s.code);
+  root.style.setProperty('--fs-small', s.small);
+  root.style.setProperty('--fs-sidebar', s.sidebar);
+  root.style.setProperty('--fs-tab', s.tab);
+  if (editor) editor.updateOptions({ fontSize: parseInt(s.mono) });
+
+  document.querySelectorAll('.font-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.size === level);
+  });
+  localStorage.setItem('ts-font-size', level);
+}
+
+function loadPreferences() {
+  const savedSize = localStorage.getItem('ts-font-size') || 'medium';
+  const savedTheme = localStorage.getItem('ts-theme') || 'dark';
+  if (savedTheme === 'light') document.body.classList.add('light');
+  if (savedSize !== 'medium') setFontSize(savedSize);
+  else document.querySelector('.font-btn[data-size="medium"]')?.classList.add('active');
+}
+
+function setupKeyboardShortcut() {
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      if (currentTab === 'exercise' && currentExerciseIndex >= 0) {
+        submitExercise();
+      } else {
+        runCode();
+      }
+    }
+  });
+}
+
+function setupMenuToggle() {
+  document.getElementById('menu-toggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+}
+
+// ==================== 启动 ====================
+function boot() {
+  if (typeof ts === 'undefined') {
+    showError('加载 TypeScript 编译器失败，请刷新页面重试');
+    return;
+  }
+  if (typeof require === 'undefined') {
+    showError('加载 Monaco Editor 失败，请刷新页面重试');
+    return;
+  }
+  init();
+}
+
+function showError(msg) {
+  hideLoading();
+  const container = document.getElementById('editor-container');
+  if (container) container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">' + escapeHtml(msg) + '</div>';
+}
+
+if (document.readyState === 'complete') {
+  boot();
+} else {
+  window.addEventListener('load', boot);
+}
+
+setTimeout(() => {
+  hideLoading();
+  if (!editor) {
+    const container = document.getElementById('editor-container');
+    if (container && container.classList.contains('loading')) {
+      container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">⛔ Monaco Editor 加载超时，请检查网络连接后刷新页面</div>';
+    }
+    loadPreferences();
+    renderSidebar();
+    setupButtons();
+    setupKeyboardShortcut();
+    setupMenuToggle();
+    loadSection(currentSectionId);
+  }
+}, 15000);
+</script>
+</body>
+</html>

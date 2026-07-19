@@ -30,6 +30,9 @@ navbar:
     - name: 分类
       icon: fa-solid fa-folder-open
       url: categories/
+    - name: 教程
+      icon: fa-solid fa-graduation-cap
+      url: tutorials/
     - name: 关于
       icon: fa-solid fa-user
       url: about/
