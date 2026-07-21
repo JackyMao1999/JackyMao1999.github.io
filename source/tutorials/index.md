@@ -44,7 +44,7 @@ layout: docs
     </div>
   </a>
 
-  <a href="/go-tutorial/" class="tutorial-card" target="_blank" rel="noopener noreferrer">
+  <a href="/go-tutorial/" class="tutorial-card">
     <div class="card-icon">
       <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="25" fill="#00ADD8"/><text x="25" y="35" text-anchor="middle" font-size="24" fill="#fff" font-weight="bold" font-family="Arial,sans-serif">Go</text></svg>
     </div>

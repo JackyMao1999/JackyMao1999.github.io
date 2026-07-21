@@ -208,7 +208,6 @@ body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
   </main>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
 <script>
 // ==================== 教程章节数据 ====================
 const SECTIONS = [
@@ -1048,6 +1047,40 @@ function init() {
   createEditor();
 }
 
+function runCode() {
+  if (isRunning || !editor) return;
+  isRunning = true;
+  const btn = document.getElementById('run-btn');
+  if (btn) btn.classList.add('running');
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">⏳ 正在执行 ...</span>';
+  setTimeout(() => {
+    outputContent.innerHTML = '<span class="out-info">浏览器环境暂不支持直接运行 Go，请将代码复制到本地 Go 环境执行。</span>';
+    if (statusEl) statusEl.innerHTML = '<span class="badge info" style="background:var(--border);color:var(--text-dim)">ⓘ 提示</span>';
+    if (btn) btn.classList.remove('running');
+    isRunning = false;
+  }, 500);
+}
+
+function submitExercise() {
+  if (isRunning || !editor) return;
+  const section = SECTIONS.find(s => s.id === currentSectionId);
+  if (!section || !section.exercises || currentExerciseIndex < 0) return;
+  const output = document.getElementById('output');
+  const outputContent = document.getElementById('output-content');
+  const statusEl = document.getElementById('output-status');
+  output.classList.add('show');
+  outputContent.innerHTML = '<span class="out-info">⏳ 正在判题 ...</span>';
+  setTimeout(() => {
+    outputContent.innerHTML = '<span class="out-info">浏览器环境暂不支持自动判题，请在本地 Go 环境运行测试。</span>';
+    if (statusEl) statusEl.innerHTML = '<span class="badge info" style="background:var(--border);color:var(--text-dim)">ⓘ 提示</span>';
+    isRunning = false;
+  }, 500);
+}
+
 function setupButtons() {
   const runBtn = document.getElementById('run-btn');
   const resetBtn = document.getElementById('reset-btn');
@@ -1129,9 +1162,7 @@ function loadSection(id) {
 
   if (editor) {
     editor.setValue(section.code);
-    const model = editor.getModel();
-    if (model) model.undo();
-  }
+    }
 }
 
 function updateProgress(section) {
@@ -1187,9 +1218,7 @@ function switchToLearn(section) {
 
   if (editor) {
     editor.setValue(loadCachedCode(section.code));
-    const model = editor.getModel();
-    if (model) model.undo();
-  }
+    }
 }
 
 function switchToExercise(section, index) {
@@ -1216,9 +1245,7 @@ function switchToExercise(section, index) {
 
   if (editor) {
     editor.setValue(loadCachedCode(ex.starterCode));
-    const model = editor.getModel();
-    if (model) model.undo();
-  }
+    }
 }
 
 function goBackToLearn() {
@@ -1232,54 +1259,41 @@ function toggleHint() {
   document.getElementById('hint-btn').textContent = hint.classList.contains('show') ? '隐藏提示' : '查看提示';
 }
 
-// ==================== Monaco Editor ====================
 function createEditor() {
   if (editorReady) return;
   editorReady = true;
 
-  require.config({
-    paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }
+  const container = document.getElementById('editor-container');
+  if (!container) return;
+  container.classList.remove('loading');
+  container.innerHTML = '<textarea id="editor" style="width:100%;height:100%;background:var(--bg);color:var(--text);border:none;outline:none;resize:none;font-family:\"SF Mono\",\"Fira Code\",\"Cascadia Code\",monospace;font-size:14px;padding:12px;tab-size:4;white-space:pre;overflow-wrap:normal;overflow-x:auto;line-height:1.5"></textarea>';
+
+  const ta = document.getElementById('editor');
+  editor = {
+    getValue: () => ta.value,
+    setValue: (v) => { ta.value = v; },
+  };
+  const savedTheme = localStorage.getItem('go-theme') || 'light';
+  if (savedTheme === 'light') document.body.classList.add('light');
+
+  ta.value = loadCachedCode(SECTIONS[0].code);
+
+  ta.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const s = ta.selectionStart, en = ta.selectionEnd;
+      ta.value = ta.value.substring(0, s) + '  ' + ta.value.substring(en);
+      ta.selectionStart = ta.selectionEnd = s + 2;
+    }
   });
 
-  require(['vs/editor/editor.main'], () => {
-    const container = document.getElementById('editor-container');
-    if (!container) return;
-    container.classList.remove('loading');
-    container.innerHTML = '';
-    container.style.height = '380px';
-
-    const savedTheme = localStorage.getItem('go-theme') || 'light';
-    const isLight = savedTheme === 'light';
-    if (isLight) document.body.classList.add('light');
-    const monacoTheme = isLight ? 'vs' : 'vs-dark';
-
-    editor = monaco.editor.create(container, {
-      value: SECTIONS[0].code,
-      language: 'go',
-      theme: monacoTheme,
-      minimap: { enabled: false },
-      fontSize: 14,
-      lineNumbers: 'on',
-      scrollBeyondLastLine: false,
-      automaticLayout: true,
-      wordWrap: 'on',
-      tabSize: 4,
-      renderWhitespace: 'selection',
-      padding: { top: 12 },
-    });
-
-    loadSection(currentSectionId);
-
-    let saveTimer;
-    editor.onDidChangeModelContent(() => {
-      const lineCount = editor.getModel().getLineCount();
-      const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
-      container.style.height = newHeight + 'px';
-      editor.layout();
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveCode, 500);
-    });
+  let saveTimer;
+  ta.addEventListener('input', () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveCode, 500);
   });
+
+  loadSection(currentSectionId);
 }
 
 
@@ -1298,9 +1312,7 @@ function resetCode() {
 // ==================== 主题切换 ====================
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
-  const theme = isLight ? 'light' : 'dark';
-  localStorage.setItem('go-theme', theme);
-  if (editor) monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark');
+  localStorage.setItem('go-theme', isLight ? 'light' : 'dark');
 }
 
 // ==================== 字号控制 ====================
@@ -1320,8 +1332,7 @@ function setFontSize(level) {
   root.style.setProperty('--fs-small', s.small);
   root.style.setProperty('--fs-sidebar', s.sidebar);
   root.style.setProperty('--fs-tab', s.tab);
-  if (editor) editor.updateOptions({ fontSize: parseInt(s.mono) });
-
+  
   document.querySelectorAll('.font-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.size === level);
   });
@@ -1357,17 +1368,11 @@ function setupMenuToggle() {
 
 // ==================== 启动 ====================
 function boot() {
-  if (typeof require === 'undefined') {
-    showError('加载 Monaco Editor 失败，请刷新页面重试');
-    return;
-  }
   init();
 }
 
 function showError(msg) {
   hideLoading();
-  const container = document.getElementById('editor-container');
-  if (container) container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">' + escHtml(msg) + '</div>';
 }
 
 if (document.readyState === 'complete') {
@@ -1376,21 +1381,6 @@ if (document.readyState === 'complete') {
   window.addEventListener('load', boot);
 }
 
-setTimeout(() => {
-  hideLoading();
-  if (!editor) {
-    const container = document.getElementById('editor-container');
-    if (container && container.classList.contains('loading')) {
-      container.innerHTML = '<div style="color:#f85149;padding:40px;text-align:center;font-size:15px">⛔ Monaco Editor 加载超时，请检查网络连接后刷新页面</div>';
-    }
-    loadPreferences();
-    renderSidebar();
-    setupButtons();
-    setupKeyboardShortcut();
-    setupMenuToggle();
-    loadSection(currentSectionId);
-  }
-}, 15000);
 </script>
 </body>
 </html>
