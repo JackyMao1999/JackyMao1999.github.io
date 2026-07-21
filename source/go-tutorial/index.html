@@ -134,6 +134,8 @@ body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
   #font-controls{display:none}
 }
 </style>
+<script src="wasm/wasm_exec.js"></script>
+<script src="wasm/gorunner.js"></script>
 </head>
 <body>
 
@@ -1049,36 +1051,148 @@ function init() {
 
 function runCode() {
   if (isRunning || !editor) return;
+  const code = editor.getValue();
+
   isRunning = true;
   const btn = document.getElementById('run-btn');
-  if (btn) btn.classList.add('running');
   const output = document.getElementById('output');
   const outputContent = document.getElementById('output-content');
   const statusEl = document.getElementById('output-status');
+  if (btn) btn.classList.add('running');
   output.classList.add('show');
   outputContent.innerHTML = '<span class="out-info">⏳ 正在执行 ...</span>';
-  setTimeout(() => {
-    outputContent.innerHTML = '<span class="out-info">浏览器环境暂不支持直接运行 Go，请将代码复制到本地 Go 环境执行。</span>';
-    if (statusEl) statusEl.innerHTML = '<span class="badge info" style="background:var(--border);color:var(--text-dim)">ⓘ 提示</span>';
-    if (btn) btn.classList.remove('running');
-    isRunning = false;
-  }, 500);
+
+  _runGo(code, 
+    function(stdout) {
+      const out = stdout || '';
+      outputContent.innerHTML = out
+        ? escHtml(out).replace(/\n/g, '<br>')
+        : '<span class="out-info">\u2713 代码已执行（无输出）</span>';
+      if (statusEl) statusEl.innerHTML = '<span class="badge success">\u2713 执行成功</span>';
+      if (btn) btn.classList.remove('running');
+      isRunning = false;
+    },
+    function(stderr) {
+      outputContent.innerHTML = '<span class="out-err">\u26D4 ' + escHtml(stderr) + '</span>';
+      if (statusEl) statusEl.innerHTML = '<span class="badge error">\u2717 执行失败</span>';
+      if (btn) btn.classList.remove('running');
+      isRunning = false;
+    }
+  );
 }
 
 function submitExercise() {
   if (isRunning || !editor) return;
+  isRunning = true;
+
   const section = SECTIONS.find(s => s.id === currentSectionId);
-  if (!section || !section.exercises || currentExerciseIndex < 0) return;
+  if (!section || !section.exercises || currentExerciseIndex < 0) {
+    isRunning = false;
+    return;
+  }
+
+  const exercise = section.exercises[currentExerciseIndex];
+  const userCode = editor.getValue();
   const output = document.getElementById('output');
   const outputContent = document.getElementById('output-content');
   const statusEl = document.getElementById('output-status');
+  const submitBtn = document.getElementById('submit-btn');
+  const runBtn = document.getElementById('run-btn');
+
   output.classList.add('show');
   outputContent.innerHTML = '<span class="out-info">⏳ 正在判题 ...</span>';
-  setTimeout(() => {
-    outputContent.innerHTML = '<span class="out-info">浏览器环境暂不支持自动判题，请在本地 Go 环境运行测试。</span>';
-    if (statusEl) statusEl.innerHTML = '<span class="badge info" style="background:var(--border);color:var(--text-dim)">ⓘ 提示</span>';
+  if (submitBtn) submitBtn.classList.add('running');
+
+  if (!exercise.tests || exercise.tests.length === 0) {
+    outputContent.innerHTML = '<span class="out-info">此练习无测试用例，请点击"运行代码"查看输出。</span>';
+    if (statusEl) statusEl.innerHTML = '';
+    if (submitBtn) submitBtn.classList.remove('running');
     isRunning = false;
-  }, 500);
+    return;
+  }
+
+  if (!exercise.fn) {
+    outputContent.innerHTML = '<span class="out-info">此练习需要手动验证，请点击"运行代码"查看输出。</span>';
+    if (statusEl) statusEl.innerHTML = '';
+    if (submitBtn) submitBtn.classList.remove('running');
+    isRunning = false;
+    return;
+  }
+
+  var testsWithNoExpect = exercise.tests.every(function(t) { return t.noexpect; });
+  if (testsWithNoExpect) {
+    outputContent.innerHTML = '<span class="out-info">此练习需要手动验证，请点击"运行代码"查看输出。</span>';
+    if (statusEl) statusEl.innerHTML = '';
+    if (submitBtn) submitBtn.classList.remove('running');
+    isRunning = false;
+    return;
+  }
+
+  _runGoTest(userCode, exercise.fn, exercise.tests,
+    function(result) {
+      if (submitBtn) submitBtn.classList.remove('running');
+      if (runBtn) runBtn.classList.remove('running');
+      isRunning = false;
+
+      if (result.error) {
+        outputContent.innerHTML = '<span class="out-err">\u26D4 ' + escHtml(result.error) + '</span>';
+        if (statusEl) statusEl.innerHTML = '<span class="badge error">\u2717 编译失败</span>';
+        return;
+      }
+
+      var results = result.results;
+      if (!results || results.length === 0) {
+        outputContent.innerHTML = '<span class="out-info">无测试结果</span>';
+        return;
+      }
+
+      var allPassed = true;
+      var html = '';
+      for (var i = 0; i < results.length; i++) {
+        var r = results[i];
+        if (r.error) {
+          allPassed = false;
+          html += '<div class="result-item fail">'
+            + '<span class="icon fail">\u2717</span>'
+            + '<div class="detail">'
+            + '<div>测试 ' + (i + 1) + ': ' + escHtml(r.args) + '</div>'
+            + '<div class="got">错误: ' + escHtml(r.error) + '</div>'
+            + '</div></div>';
+        } else if (r.passed) {
+          html += '<div class="result-item pass">'
+            + '<span class="icon pass">\u2713</span>'
+            + '<div class="detail">'
+            + '<div>测试 ' + (i + 1) + ': ' + escHtml(r.args) + '</div>'
+            + '<div class="expected">结果: ' + escHtml(String(r.got)) + '</div>'
+            + '</div></div>';
+        } else {
+          allPassed = false;
+          html += '<div class="result-item fail">'
+            + '<span class="icon fail">\u2717</span>'
+            + '<div class="detail">'
+            + '<div>测试 ' + (i + 1) + ': ' + escHtml(r.args) + '</div>'
+            + '<div class="got">输出: ' + escHtml(String(r.got)) + '</div>'
+            + '<div class="expected">期望: ' + escHtml(String(r.expected)) + '</div>'
+            + '</div></div>';
+        }
+      }
+
+      html += '<div class="result-summary ' + (allPassed ? 'all-pass' : 'has-fail') + '">'
+        + (allPassed ? '\uD83C\uDF89 全部通过！' : '\u274C 部分测试未通过')
+        + '</div>';
+
+      outputContent.innerHTML = html;
+      if (statusEl) statusEl.innerHTML = allPassed
+        ? '<span class="badge success">\u2713 全部通过</span>'
+        : '<span class="badge error">\u2717 未完全通过</span>';
+
+      if (allPassed) {
+        markExerciseDone(currentSectionId, exercise.id);
+        renderSidebar();
+        renderTabs();
+      }
+    }
+  );
 }
 
 function setupButtons() {
