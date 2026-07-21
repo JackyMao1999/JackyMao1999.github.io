@@ -1,127 +1,152 @@
-<div id="pet-rabbit">
-  <div class="pet-body">
-    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="60" cy="80" rx="28" ry="24" fill="#8B6914"/>
-      <ellipse cx="60" cy="84" rx="18" ry="14" fill="#C4A265"/>
-      <circle cx="60" cy="50" r="20" fill="#8B6914"/>
-      <ellipse cx="46" cy="54" rx="8" ry="6" fill="#A0783C"/>
-      <ellipse cx="74" cy="54" rx="8" ry="6" fill="#A0783C"/>
-      <ellipse cx="60" cy="56" rx="7" ry="5" fill="#C4A265"/>
-      <ellipse cx="60" cy="54" rx="2.5" ry="2" fill="#5C4018"/>
-      <circle cx="51" cy="47" r="3.5" fill="#1a1a1a"/>
-      <circle cx="52" cy="46" r="1.2" fill="#fff"/>
-      <circle cx="69" cy="47" r="3.5" fill="#1a1a1a"/>
-      <circle cx="70" cy="46" r="1.2" fill="#fff"/>
-      <ellipse class="ear-left" cx="43" cy="28" rx="6" ry="14" fill="#8B6914" transform="rotate(-15, 43, 28)"/>
-      <ellipse class="ear-left" cx="43" cy="28" rx="3.5" ry="10" fill="#C4A265" transform="rotate(-15, 43, 28)"/>
-      <ellipse class="ear-right" cx="77" cy="28" rx="6" ry="14" fill="#8B6914" transform="rotate(15, 77, 28)"/>
-      <ellipse class="ear-right" cx="77" cy="28" rx="3.5" ry="10" fill="#C4A265" transform="rotate(15, 77, 28)"/>
-      <ellipse cx="44" cy="90" rx="6" ry="4" fill="#8B6914"/>
-      <ellipse cx="76" cy="90" rx="6" ry="4" fill="#8B6914"/>
-      <circle cx="34" cy="82" r="6" fill="#C4A265"/>
-      <line x1="48" y1="55" x2="30" y2="52" stroke="#5C4018" stroke-width="0.6"/>
-      <line x1="48" y1="57" x2="28" y2="58" stroke="#5C4018" stroke-width="0.6"/>
-      <line x1="72" y1="55" x2="90" y2="52" stroke="#5C4018" stroke-width="0.6"/>
-      <line x1="72" y1="57" x2="92" y2="58" stroke="#5C4018" stroke-width="0.6"/>
-    </svg>
-    <div class="pet-name">彪子</div>
-  </div>
-  <div class="pet-bubble" hidden></div>
+<audio id="music-audio" preload="none"></audio>
 
-  <div class="pet-menu">
-    <div class="pet-menu-item music-item">
-      <button id="pet-music-btn">
-        <i class="fa-solid fa-play"></i>
-        <span>音乐播放</span>
-      </button>
-      <div id="pet-music-tooltip" hidden>
-        <i class="fa-solid fa-music"></i>
-        <span class="song-name">加载中...</span>
-      </div>
+<div id="floating-music">
+  <button id="music-toggle" title="音乐播放器">
+    <i class="fa-solid fa-play"></i>
+  </button>
+  <div id="music-panel">
+    <button class="music-ctrl" id="music-prev" title="上一首"><i class="fa-solid fa-backward-step"></i></button>
+    <button class="music-ctrl" id="music-pp" title="播放/暂停"><i class="fa-solid fa-play"></i></button>
+    <button class="music-ctrl" id="music-next" title="下一首"><i class="fa-solid fa-forward-step"></i></button>
+    <div id="music-meta">
+      <span id="music-title"></span>
+      <span id="music-artist"></span>
     </div>
+    <span id="music-time">00:00</span>
   </div>
 </div>
 
-<audio id="pet-music-audio" preload="none"></audio>
-
 <script>
 (function() {
-  // --- 封面页隐藏导航栏 ---
   var header = document.getElementById('l_header');
   if (header && document.getElementById('cover')) {
     header.style.display = 'none';
   }
 
-  var SONG_ID = '1836021414';
-  var SONG_NAME = '黄金时代';
-  var SONG_ARTIST = '声音碎片乐队';
+  var PLAYLIST = [
+    { id: '1836021414', title: '黄金时代', artist: '声音碎片乐队' }
+  ];
 
-  // --- 兔子 ---
-  var pet = document.getElementById('pet-rabbit');
-  var bubble = pet.querySelector('.pet-bubble');
-  var timer;
-  function say(text) {
-    bubble.textContent = text;
-    bubble.hidden = false;
-    clearTimeout(timer);
-    timer = setTimeout(function() { bubble.hidden = true; }, 2000);
-  }
-  pet.querySelector('.pet-body').addEventListener('click', function(e) {
-    e.stopPropagation();
-    pet.classList.remove('pet-hop');
-    void pet.offsetWidth;
-    pet.classList.add('pet-hop');
-    var msgs = ['🐰 嗯？', '🐰 干嘛呀', '🐰 抱抱~', '🐰 好吃吗', '🐰 困了zzz'];
-    say(msgs[Math.floor(Math.random() * msgs.length)]);
-  });
-  setInterval(function() {
-    if (Math.random() > 0.45) {
-      pet.classList.remove('pet-ear-twitch');
-      void pet.offsetWidth;
-      pet.classList.add('pet-ear-twitch');
-      setTimeout(function() { pet.classList.remove('pet-ear-twitch'); }, 350);
-    }
-  }, 2500);
+  var audio = document.getElementById('music-audio');
+  var toggleBtn = document.getElementById('music-toggle');
+  var ppBtn = document.getElementById('music-pp');
+  var prevBtn = document.getElementById('music-prev');
+  var nextBtn = document.getElementById('music-next');
+  var titleEl = document.getElementById('music-title');
+  var artistEl = document.getElementById('music-artist');
+  var timeEl = document.getElementById('music-time');
 
-  // --- 音乐 ---
-  var musicBtn = document.getElementById('pet-music-btn');
-  var tooltip = document.getElementById('pet-music-tooltip');
-  var songNameEl = tooltip.querySelector('.song-name');
-  var audio = document.getElementById('pet-music-audio');
+  var currentTrack = 0;
   var playing = false;
-  var songInfo = SONG_NAME + ' - ' + SONG_ARTIST;
 
-  function playMusic() {
-    audio.src = '/music/' + SONG_ID + '.mp3';
-    audio.play();
+  function formatTime(s) {
+    if (isNaN(s) || s === Infinity) return '00:00';
+    var m = Math.floor(s / 60);
+    var sec = Math.floor(s % 60);
+    return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
   }
 
-  function stopMusic() {
-    audio.pause();
-    audio.currentTime = 0;
+  function loadTrack() {
+    var track = PLAYLIST[currentTrack];
+    titleEl.textContent = track.title;
+    artistEl.textContent = track.artist;
+    timeEl.textContent = '00:00';
+    audio.src = '/music/' + track.id + '.mp3';
+    audio.load();
   }
 
-  musicBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    if (playing) {
-      playing = false;
-      musicBtn.innerHTML = '<i class="fa-solid fa-play"></i><span>音乐播放</span>';
-      musicBtn.classList.remove('playing');
-      stopMusic();
+  function setPlaying(state) {
+    playing = state;
+    var icon = state ? 'fa-pause' : 'fa-play';
+    toggleBtn.innerHTML = '<i class="fa-solid ' + icon + '"></i>';
+    ppBtn.innerHTML = '<i class="fa-solid ' + icon + '"></i>';
+
+    if (state) {
+      toggleBtn.classList.add('playing');
+      var promise = audio.play();
+      if (promise && promise.catch) {
+        promise.catch(function() {
+          setPlaying(false);
+        });
+      }
     } else {
-      playing = true;
-      musicBtn.innerHTML = '<i class="fa-solid fa-pause"></i><span>暂停</span>';
-      musicBtn.classList.add('playing');
-      songNameEl.textContent = songInfo;
-      playMusic();
+      toggleBtn.classList.remove('playing');
+      audio.pause();
+    }
+  }
+
+  toggleBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (playing) setPlaying(false);
+    else setPlaying(true);
+  });
+
+  ppBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (playing) setPlaying(false);
+    else setPlaying(true);
+  });
+
+  prevBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (PLAYLIST.length <= 1) return;
+    currentTrack = (currentTrack - 1 + PLAYLIST.length) % PLAYLIST.length;
+    var wasPlaying = playing;
+    setPlaying(false);
+    loadTrack();
+    if (wasPlaying) {
+      audio.addEventListener('canplay', function onReady() {
+        audio.removeEventListener('canplay', onReady);
+        setPlaying(true);
+      }, { once: true });
     }
   });
 
-  musicBtn.addEventListener('mouseenter', function() {
-    if (songInfo) { tooltip.hidden = false; }
+  nextBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (PLAYLIST.length <= 1) return;
+    currentTrack = (currentTrack + 1) % PLAYLIST.length;
+    var wasPlaying = playing;
+    setPlaying(false);
+    loadTrack();
+    if (wasPlaying) {
+      audio.addEventListener('canplay', function onReady() {
+        audio.removeEventListener('canplay', onReady);
+        setPlaying(true);
+      }, { once: true });
+    }
   });
-  musicBtn.addEventListener('mouseleave', function() {
-    tooltip.hidden = true;
+
+  audio.addEventListener('timeupdate', function() {
+    timeEl.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
   });
+
+  audio.addEventListener('loadedmetadata', function() {
+    timeEl.textContent = '00:00 / ' + formatTime(audio.duration);
+  });
+
+  audio.addEventListener('ended', function() {
+    if (PLAYLIST.length <= 1) {
+      setPlaying(false);
+      audio.currentTime = 0;
+      timeEl.textContent = '00:00 / ' + formatTime(audio.duration);
+      return;
+    }
+    currentTrack = (currentTrack + 1) % PLAYLIST.length;
+    loadTrack();
+    setPlaying(true);
+  });
+
+  audio.addEventListener('error', function() {
+    setPlaying(false);
+    timeEl.textContent = '加载失败';
+  });
+
+  if (PLAYLIST.length <= 1) {
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+  }
+
+  loadTrack();
 })();
 </script>
