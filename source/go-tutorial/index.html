@@ -134,6 +134,7 @@ body.light #font-controls .font-btn:hover{background:rgba(0,0,0,.06)}
   #font-controls{display:none}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
 <script src="wasm/wasm_exec.js"></script>
 <script src="wasm/gorunner.js"></script>
 </head>
@@ -1377,37 +1378,49 @@ function createEditor() {
   if (editorReady) return;
   editorReady = true;
 
-  const container = document.getElementById('editor-container');
-  if (!container) return;
-  container.classList.remove('loading');
-  container.innerHTML = '<textarea id="editor" style="width:100%;height:100%;background:var(--bg);color:var(--text);border:none;outline:none;resize:none;font-family:\"SF Mono\",\"Fira Code\",\"Cascadia Code\",monospace;font-size:14px;padding:12px;tab-size:4;white-space:pre;overflow-wrap:normal;overflow-x:auto;line-height:1.5"></textarea>';
-
-  const ta = document.getElementById('editor');
-  editor = {
-    getValue: () => ta.value,
-    setValue: (v) => { ta.value = v; },
-  };
-  const savedTheme = localStorage.getItem('go-theme') || 'light';
-  if (savedTheme === 'light') document.body.classList.add('light');
-
-  ta.value = loadCachedCode(SECTIONS[0].code);
-
-  ta.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      const s = ta.selectionStart, en = ta.selectionEnd;
-      ta.value = ta.value.substring(0, s) + '  ' + ta.value.substring(en);
-      ta.selectionStart = ta.selectionEnd = s + 2;
-    }
+  require.config({
+    paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }
   });
 
-  let saveTimer;
-  ta.addEventListener('input', () => {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(saveCode, 500);
-  });
+  require(['vs/editor/editor.main'], () => {
+    const container = document.getElementById('editor-container');
+    if (!container) return;
+    container.classList.remove('loading');
+    container.innerHTML = '';
+    container.style.height = '380px';
 
-  loadSection(currentSectionId);
+    const savedTheme = localStorage.getItem('go-theme') || 'light';
+    const isLight = savedTheme === 'light';
+    if (isLight) document.body.classList.add('light');
+    const monacoTheme = isLight ? 'vs' : 'vs-dark';
+
+    editor = monaco.editor.create(container, {
+      value: loadCachedCode(SECTIONS[0].code),
+      language: 'go',
+      theme: monacoTheme,
+      minimap: { enabled: false },
+      fontSize: 14,
+      lineNumbers: 'on',
+      scrollBeyondLastLine: false,
+      automaticLayout: true,
+      wordWrap: 'on',
+      tabSize: 4,
+      renderWhitespace: 'selection',
+      padding: { top: 12 },
+    });
+
+    loadSection(currentSectionId);
+
+    let saveTimer;
+    editor.onDidChangeModelContent(() => {
+      const lineCount = editor.getModel().getLineCount();
+      const newHeight = Math.min(Math.max(lineCount * 22, 200), 600);
+      container.style.height = newHeight + 'px';
+      editor.layout();
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveCode, 500);
+    });
+  });
 }
 
 
@@ -1427,6 +1440,7 @@ function resetCode() {
 function toggleTheme() {
   const isLight = document.body.classList.toggle('light');
   localStorage.setItem('go-theme', isLight ? 'light' : 'dark');
+  if (editor) monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark');
 }
 
 // ==================== 字号控制 ====================
@@ -1446,6 +1460,7 @@ function setFontSize(level) {
   root.style.setProperty('--fs-small', s.small);
   root.style.setProperty('--fs-sidebar', s.sidebar);
   root.style.setProperty('--fs-tab', s.tab);
+  if (editor) editor.updateOptions({ fontSize: parseInt(s.mono) });
   
   document.querySelectorAll('.font-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.size === level);
